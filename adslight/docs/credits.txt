@@ -1,0 +1,79 @@
+Credits
+===============
+
+Originally developed by Pascal Le Boustouller as "MyAds" module.
+
+Persons who participated in the improvement of the module
+
+Nickname:Luc Bizet
+Website:www.luc-bizet.fr
+Version:AdsLight [Author]
+Overview:Improvements, corrections, reDesign for a lighter module : 'AdsLight'
+
+
+Nickname:Simon Roberts
+Website:www.chronolabs.coop
+Website:XOOPS Support Website EN
+Version:AdsLight 1.x
+Overview:Plugin Xpayment
+
+
+Nickname:TXMod Xoops
+Website:www.txmodxoops.org
+Version:AdsLight 1.x
+Overview:Traduzione italiana
+
+
+Nickname:Patrick Seegers
+Website:Vanuit Den Helder
+Website:Nederlandstalige XOOPS Support Website
+Version:AdsLight 1.056
+Overview:Dutch Vertaling
+
+
+Nickname:Saba
+Website:sitio : Gornja Orahovica
+Website:Webmaster : Xoops Bosnu i Hercegovinu
+Version:AdsLight 1.055
+Overview:Prijevod Bosanskih
+
+
+Nickname:aitor
+Website:sitio : Uskola Informatica
+Website:Administrador : Xoops España
+Version:AdsLight
+Overview:Traducción al español utf8 del módulo. Y buenos consejos...
+
+
+Nickname:scasmar
+Website:Miembros : Xoops España
+Version:AdsLight 1.052
+Overview:Traducción al español del módulo.
+
+
+Nickname:Nikita
+Website:www.aideordi.com
+Version:AdsLight 1.00
+Overview:Author of the url rewriting, and various improvements and corrections.
+
+
+Nickname:John Mordo user jlm69 at www.xoops.org
+Website:www.jlmzone.com
+Version:Classifieds [Author]
+Overview:Improvements and corrections. Started with the MyAds module and made MANY, MANY changes
+
+
+Nickname:Grandoc
+Website:www.olivet-online.com
+Version:Classifieds
+Overview:Improvements and corrections.
+
+
+Nickname:Pascal Le Boustouller [ Original Author ]
+Website:-
+Version:MyAds module
+Overview:Original Author
+
+----------------------------------
+Franch map was obtained from:
+http://www.ligams.com/blog/serveur-web/carte-de-france-flash

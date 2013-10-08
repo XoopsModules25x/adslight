@@ -1,0 +1,93 @@
+<{if $adslight_active_menu == 1 }>
+<{include file='db:adslight_menu.html'}>
+<{/if}>
+<{include file='db:adslight_search.html'}>
+<br />
+<{if $ad_exists}>
+<table>
+<tr>
+<td>
+<!-- Stard Block Ads -->
+<h1><{$title}></h1>
+<strong><{$type}></strong>
+<strong><{$price_price}></strong>
+<{$price_typeprice}>&nbsp;-&nbsp;<{$usure_typeusure}>&nbsp;
+<{$admin}>
+<hr />
+<br />
+<{if $sold}>
+<br /><{$sold}><br /><span style="color: #cccccc;  text-decoration: line-through;"><{$desctext}></span><{else}>
+<{$desctext}>
+<{/if}>
+<{if $adslight_active_bookmark == 1 }>
+<br /><hr />
+<{include file='db:adslight_bookmark.html'}>
+<{/if}>
+<br /><hr />
+<{if $photo != "0"}>
+<{section name=i loop=$pics_array}>
+	<a href="<{$path_uploads}>/midsize/resized_<{$pics_array[i].url}>" target ="_self" rel="lightbox[album]" title="<{$pics_array[i].desc}>">
+	<img class="thumb" src="<{$path_uploads}>/thumbs/thumb_<{$pics_array[i].url}>" rel="lightbox" title="<{$pics_array[i].desc}>" />
+    </a>&nbsp;&nbsp;
+<{/section}>
+<{else}>
+	<div>
+		<img src="<{$xoops_url}>/modules/adslight/images/nophoto_item.gif" alt="no photo" />&nbsp;&nbsp;
+		<img src="<{$xoops_url}>/modules/adslight/images/nophoto_item.gif" alt="no photo" />&nbsp;&nbsp;
+		<img src="<{$xoops_url}>/modules/adslight/images/nophoto_item.gif" alt="no photo" />
+    </div>
+<{/if}>
+<{if $xoops_isuser}>
+<{if $adslight_active_xpayement == 1 }>
+<!-- xpayment -->
+ <{if $purchasable && !$sold && $price_amount > 0}>
+  <{include file="db:adslight_xpayment_form.html"}>
+  </ tr>
+  <{/if}>
+<!-- xpayment -->
+<{/if}><{/if}>
+<br />
+<div align="center"><strong>[ <{$link_main}> | <{$link_cat}> ]</strong></div>
+</td><!-- End Block Ads -->
+<td><!-- Start Block Right -->
+<br />
+<table border="0" cellspacing="1" class="outer" style="width:200px;">
+<tr><td class="blockright">
+<{$date}><br />
+<strong><{$local_head}></strong> <{$local_town}><br /> 
+<strong><{$country_head}></strong> <{$local_country}><br />
+<hr />
+<{$submitter}><br />
+<{$user_profile}><br />
+<{$printA}><br />
+<{$friend}><br />
+<hr />
+<{$add_photos}><br />
+<{$modifyads}><br />
+<{$deleteads}><br />
+<{$alerteabus}><br />
+<br />
+<{if $local_country}>
+<img class="mapsgoogle" src="http://maps.google.com/maps/api/staticmap?size=200x200&maptype=roadmap\&markers=size:mid|color:red|<{$local_town}>+<{$local_country}>&sensor=false" />
+<{/if}>
+</td></tr>
+</table>
+<!-- End Block de Droite -->
+</td>
+</tr>
+</table>
+<!-- Block Comment -->
+<div style="text-align: center; padding: 3px; margin:3px;">
+  <{$commentsnav}>
+  <{$lang_notice}>
+</div>
+<div style="margin:3px; padding: 3px;">
+<{if $comment_mode == "flat"}>
+  <{include file="db:system_comments_flat.html"}>
+<{elseif $comment_mode == "thread"}>
+  <{include file="db:system_comments_thread.html"}>
+<{elseif $comment_mode == "nest"}>
+  <{include file="db:system_comments_nest.html"}>
+<{/if}>
+</div>
+<{/if}>

@@ -1,0 +1,37 @@
+LANGUAGE DIFFERENCES
+=====================
+
+Below are language differences from a version to next version.
+
+Legend :
++ Added
+- Removed
+* Modified
+x renamed
+
+---------------------------------------
+2.2 Beta 1  2013-03-13
+---------------------------------------
+
+admin.php:
+--------------
+//2.2
+define("_AM_ADSLIGHT_ADSMENU_PLUGIN", "List of Plugins");
+
+
+// Block Admin New Annonces
+define('_AM_ADSLIGHT_ADSMENU_NEW', 'New in this version');
+define('_AM_ADSLIGHT_ADSMENU_NEWTXT', ' <b>AdsLight Version 2 :</b><br />
+<br /><b>- Bookmark: </b> you can now enable the bookmarks in the ads.<br />
+<br /><b>- Template Announcements: </b> template ads has improved.<br />
+<br /><b>- Google Maps: </b> Adding Google Map in the ads.<br />
+<br /><b>- RSS Feeds: </b>The RSS feed is available by categories.<br />
+<br /><b>- Menu: </b> Optimization menu. You can disable it in the preferences modules. <br />
+<br /><b>- Files Languages: </b>  the files languages ??(English) have been improved.<br />
+<br /><b>- SEO: </b> the module has been improved for a better ranking..<br />
+<br /><b>- Hack Xpayment: </b> The module can be used with Xpayment. (Thanks Simon Roberts)<br />
+');
+
+
+define("_AM_ADSLIGHT_SEND_PLUGIN", "Send a Plugin");
+define("_AM_ADSLIGHT_SEND_TRANSLATION", "Send Translation");

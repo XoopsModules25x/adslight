@@ -1,0 +1,32 @@
+
+.footing    { background-color: #f90; margin-bottom: 5px; padding: 3px; border: solid 1px #d3d3d3 }
+.blockadsdelete  { background-color: #ffe9c6; padding: 3px 3px 3px 10px; border-style: solid; border-color: #fff }
+.blockadsdelete:hover    { background-color: #ccc; padding: 3px 3px 3px 10px; border-style: solid; border-color: #fff }
+.blockcontacttitle    { color: #fff; font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; background-color: #efefef; padding: 2px 3px 2px 10px }
+.blockcontact { color: #333333; font-weight: normal; background-color: #efefef; padding: 3px 3px 3px 10px }
+.blockdesctexte { color: #333; background-color: #fff; padding: 3px 10px }
+.blockdesctown { font-weight: normal; background-color: #ffc; padding: 3px 10px }
+.blockcontact:hover { color: #333333; font-weight: normal; background-color: #ffc; padding: 3px 3px 3px 10px }
+.thumb:hover   { padding: 3px; border: solid 1px #ff6203 }
+ul#album_photos { margin: 0; padding: 0; width: 99% }
+form#submitpicture { padding: 2px; border: dotted 1px #999999 }
+form.lado { width: 20px; height: 20px; float: right }
+form#deleteform { }
+form#editform { }
+.yogerrors { color: #ff0000; background-color: #ffeaf4; border-width: thick; border-color: #ff0000 }
+ul#album_photos:after { font-size: 1px; visibility: hidden; display: block; width: 100%; clear: both; content: "." }
+ul#album_photos li { list-style: none; margin-bottom: 10px; width: 33%; float: left }
+ul#album_photos li div.photo_in_album { text-align: center; padding: 2px; height: 295px; border: dotted 1px #999999 }
+ul#album_photos li div.photo_in_album:hover { background-color: #ffffe1 }
+ul#album_photos li div.photo_in_album img { padding: 2px; border: solid 3px #333 }
+ul#album_photos li div.photo_in_album a:hover img { border-color: #f60 }
+ul#album_photos li div.photo_in_album a:hover { color: #f60 }
+img#thumb { padding: 3px; border: solid 1px #d3d3d3 }
+img#thumb:hover { padding: 3px; border: solid 1px #ff6203 }
+.catlist     { color: #00a6eb; font-size: 10pt; font-weight: bold; background-image: url("../images/saq.gif"); background-repeat: no-repeat; background-position: left center; margin-top: 0; margin-right: 0; margin-left: 0; padding: 2px 2px 2px 18px; vertical-align: middle }
+.catlist:hover    { color: #f58215; font-size: 10pt; font-weight: bold; background-image: url("../images/saq_2.gif"); background-repeat: no-repeat; background-position: left center; margin-top: 0; margin-right: 0; margin-left: 0; padding: 2px 2px 2px 18px; vertical-align: middle }
+.hideIMG    { margin: 25px 0 0 80px; position: absolute; z-index: 2; width: 250px; height: 50px; filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0)   }
+.bullinfo  { background-color: #fff; margin: 5px 0 5px 30px; width: auto; height: 50px; border: solid 2px #ccc }
+.bullinfotext  { color: #333; margin-right: 0; margin-bottom: 0; padding: 15px 15px 15px 20px }
+.twtgtitle { color: #333; font-size: 14px; font-weight: bold }
+.twtgtxt   { color: #333; font-size: 12px; padding-right: 30px; padding-bottom: 30px; padding-left: 30px }

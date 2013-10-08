@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" name="russian" ?>
+<data>
+	<config>
+		<enableRegions><![CDATA[true]]></enableRegions>
+		<enableZoomParis><![CDATA[true]]></enableZoomParis>
+		<colorLink><![CDATA[D3D4D6]]></colorLink>
+		<colorHover><![CDATA[FFAE00]]></colorHover>
+		<alphaLink><![CDATA[0.8]]></alphaLink>
+		<alphaHover><![CDATA[1]]></alphaHover>
+		<enableToolTip><![CDATA[true]]></enableToolTip>
+	</config>
+	<departements>
+		<dep num='01' href='search.php?query=Ain&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Ain</dep>
+		<dep num='02' href='search.php?query=Aisne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Aisne</dep>
+		<dep num='03' href='search.php?query=Allier&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Allier</dep>
+		<dep num='04' href='search.php?query=Alpes+de+Haute+Provence&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Alpes-de-Haute-Provence</dep>
+		<dep num='05' href='search.php?query=Hautes+Alpes&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Hautes-Alpes</dep>
+		<dep num='06' href='search.php?query=Alpes+Maritimes&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Alpes-Maritimes</dep>
+		<dep num='07' href='search.php?query=Ardeche&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Ardèche</dep>
+		<dep num='08' href='search.php?query=Ardennes&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Ardennes</dep>
+		<dep num='09' href='search.php?query=Ariege&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Ariège</dep>
+		<dep num='10' href='search.php?query=Aube&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Aube</dep>
+		<dep num='11' href='search.php?query=Aude&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Aude</dep>
+		<dep num='12' href='search.php?query=Aveyron&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Aveyron</dep>
+		<dep num='13' href='search.php?query=Bouches+du+Rhone&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Bouches-du-Rhône</dep>
+		<dep num='14' href='search.php?query=Calvados&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Calvados</dep>
+		<dep num='15' href='search.php?query=Cantal&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Cantal</dep>
+		<dep num='16' href='search.php?query=Charente&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Charente</dep>
+		<dep num='17' href='search.php?query=Charente+Maritime&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Charente-Maritime</dep>
+		<dep num='18' href='search.php?query=Cher&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Cher</dep>
+		<dep num='19' href='search.php?query=Correze&andor=AND&mids%5B%5D=58&submit=Search&action=results'>>Corrèze</dep>
+		<dep num='2A' href='search.php?query=Corse+du+Sud&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Corse-du-Sud</dep>
+		<dep num='2B' href='search.php?query=Haute+Corse&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haute-Corse</dep>
+		<dep num='21' href='search.php?query=Cote+d%27Or&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Côte-d'Or</dep>
+		<dep num='22' href='search.php?query=Cotes+d%27Armor&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Côtes-d'Armor</dep>
+		<dep num='23' href='search.php?query=Creuse&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Creuse</dep>
+		<dep num='24' href='search.php?query=Dordogne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Dordogne</dep>
+		<dep num='25' href='search.php?query=Doubs&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Doubs</dep>
+		<dep num='26' href='search.php?query=Drome&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Drôme</dep>
+		<dep num='27' href='search.php?query=Eure&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Eure</dep>
+		<dep num='28' href='search.php?query=Eure+et+Loir&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Eure-et-Loir</dep>
+		<dep num='29' href='search.php?query=Finistere&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Finistère</dep>
+		<dep num='30' href='search.php?query=Gard&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Gard</dep>
+		<dep num='31' href='search.php?query=Haute+Garonne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haute-Garonne</dep>
+		<dep num='32' href='search.php?query=Gers&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Gers</dep>
+		<dep num='33' href='search.php?query=Gironde&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Gironde</dep>
+		<dep num='34' href='search.php?query=Herault&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Hérault</dep>
+		<dep num='35' href='search.php?query=Ille+et+Vilaine&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Ille-et-Vilaine</dep>
+		<dep num='36' href='search.php?query=Indre&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Indre</dep>
+		<dep num='37' href='search.php?query=Indre+et+Loire&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Indre-et-Loire</dep>
+		<dep num='38' href='search.php?query=Isere&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Isère</dep>
+		<dep num='39' href='search.php?query=Jura&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Jura</dep>
+		<dep num='40' href='search.php?query=Landes&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Landes</dep>
+		<dep num='41' href='search.php?query=Loir+et+Cher&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Loir-et-Cher</dep>
+		<dep num='42' href='search.php?query=Loire&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Loire</dep>
+		<dep num='43' href='search.php?query=Haute+Loire&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haute-Loire</dep>
+		<dep num='44' href='search.php?query=Loire+Atlantique&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Loire-Atlantique</dep>
+		<dep num='45' href='search.php?query=Loiret&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Loiret</dep>
+		<dep num='46' href='search.php?query=Lot&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Lot</dep>
+		<dep num='47' href='search.php?query=Lot+et+Garonne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Lot-et-Garonne</dep>
+		<dep num='48' href='search.php?query=Lozere&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Lozère</dep>
+		<dep num='49' href='search.php?query=Maine+et+Loire&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Maine-et-Loire</dep>
+		<dep num='50' href='search.php?query=Manche&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Manche</dep>
+		<dep num='51' href='search.php?query=Marne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Marne</dep>
+		<dep num='52' href='search.php?query=Haute+Marne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haute-Marne</dep>
+		<dep num='53' href='search.php?query=Mayenne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Mayenne</dep>
+		<dep num='54' href='search.php?query=Meurthe+et+Moselle&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Meurthe-et-Moselle</dep>
+		<dep num='55' href='search.php?query=Meuse&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Meuse</dep>
+		<dep num='56' href='search.php?query=Morbihan&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Morbihan</dep>
+		<dep num='57' href='search.php?query=Moselle&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Moselle</dep>
+		<dep num='58' href='search.php?query=Nievre&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Nièvre</dep>
+		<dep num='59' href='search.php?query=Nord&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Nord</dep>
+		<dep num='60' href='search.php?query=Oise&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Oise</dep>
+		<dep num='61' href='search.php?query=Orne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Orne</dep>
+		<dep num='62' href='search.php?query=Pas+de+Calais&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Pas-de-Calais</dep>
+		<dep num='63' href='search.php?query=Puy+de+Dome&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Puy-de-Dôme</dep>
+		<dep num='64' href='search.php?query=Pyrenees+Atlantiques&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Pyrénées-Atlantiques</dep>
+		<dep num='65' href='search.php?query=Hautes+Pyrenees&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Hautes-Pyrénées</dep>
+		<dep num='66' href='search.php?query=Pyrenees+Orientales&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Pyrénées-Orientales</dep>
+		<dep num='67' href='search.php?query=Bas+Rhin&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Bas-Rhin</dep>
+		<dep num='68' href='search.php?query=Haut+Rhin&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haut-Rhin</dep>
+		<dep num='69' href='search.php?query=Rhône&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Rhône</dep>
+		<dep num='70' href='search.php?query=Haute+Saone&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haute-Saône</dep>
+		<dep num='71' href='search.php?query=Saone+et+Loire&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Saône-et-Loire</dep>
+		<dep num='72' href='search.php?query=Sarthe&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Sarthe</dep>
+		<dep num='73' href='search.php?query=Savoie&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Savoie</dep>
+		<dep num='74' href='search.php?query=Haute+Savoie&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haute-Savoie</dep>
+		<dep num='75' href='search.php?query=Paris&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Paris</dep>
+		<dep num='76' href='search.php?query=Seine+Maritime&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Seine-Maritime</dep>
+		<dep num='77' href='search.php?query=Seine+et+Marne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Seine-et-Marne</dep>
+		<dep num='78' href='search.php?query=Yvelines&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Yvelines</dep>
+		<dep num='79' href='search.php?query=Deux+Sevres&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Deux-Sèvres</dep>
+		<dep num='80' href='search.php?query=Somme&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Somme</dep>
+		<dep num='81' href='search.php?query=Tarn&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Tarn</dep>
+		<dep num='82' href='search.php?query=Tarn+et+Garonne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Tarn-et-Garonne</dep>
+		<dep num='83' href='search.php?query=Var&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Var</dep>
+		<dep num='84' href='search.php?query=Vaucluse&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Vaucluse</dep>
+		<dep num='85' href='search.php?query=Vendee&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Vendée</dep>
+		<dep num='86' href='search.php?query=Vienne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Vienne</dep>
+		<dep num='87' href='search.php?query=Haute+Vienne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Haute-Vienne</dep>
+		<dep num='88' href='search.php?query=Vosges&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Vosges</dep>
+		<dep num='89' href='search.php?query=Yonne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Yonne</dep>
+		<dep num='90' href='search.php?query=Territoire+de+Belfort&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Territoire de Belfort</dep>
+		<dep num='91' href='search.php?query=Essonne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Essonne</dep>
+		<dep num='92' href='search.php?query=Hauts+de+Seine&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Hauts-de-Seine</dep>
+		<dep num='93' href='search.php?query=Seine+Saint+Denis&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Seine-Saint-Denis</dep>
+		<dep num='94' href='search.php?query=Val+de+Marne&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Val-de-Marne</dep>
+		<dep num='95' href='search.php?query=Val+d%27Oise&andor=AND&mids%5B%5D=58&submit=Search&action=results'>Val-d'Oise</dep>
+	</departements>
+</data>

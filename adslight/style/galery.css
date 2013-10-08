@@ -1,0 +1,50 @@
+
+ul#album_photos {
+	width: 99%;
+	padding: 0;
+	margin: 0;
+}
+
+form#submitpicture {	border: 1px dotted #999999;
+	padding: 2px;}
+
+form.lado {float:right;width:20px;height:20px;}
+form#deleteform {}
+form#editform {}
+.yogerrors {color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick;}
+ul#album_photos:after {
+	content: ".";
+	width: 100%;
+	clear: both;
+	display: block;
+	visibility: hidden;
+	font-size: 1px;
+}
+ul#album_photos li {
+	list-style: none;
+	width: 33%;
+	float: left;
+	margin-bottom: 10px;
+}
+ul#album_photos li div.photo_in_album {
+height:295px;
+text-align:center;
+border: 1px dotted #999999;
+padding:2px;
+	
+}
+ul#album_photos li div.photo_in_album:hover {
+background-color:#FFFFE1;
+	
+}
+
+ul#album_photos li div.photo_in_album img  { padding: 2px; border: solid 3px #333 }
+ul#album_photos li div.photo_in_album a:hover img {
+	border-color: #f60;
+}
+ul#album_photos li div.photo_in_album a:hover {
+	color: #f60;
+}
+img#thumb { padding: 3px; border: solid 1px #d3d3d3 }
+img#thumb:hover { padding: 3px; border: solid 1px #ff6203 }
+
