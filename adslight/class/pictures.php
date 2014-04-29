@@ -23,9 +23,7 @@
 /**
 * Protection against inclusion outside the site
 */
-if (!defined("XOOPS_ROOT_PATH")) {
-die("XOOPS root path not defined");
-}
+// defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
 
 /**
 * Includes of form objects and uploader
@@ -46,6 +44,10 @@ class jlm_pictures extends XoopsObject
 {
     var $db;
 // constructor
+    /**
+     * @param null $id
+     * @param null $lid
+     */
     function jlm_pictures ($id=null, $lid=null)
     {
         $this->db =& XoopsDatabaseFactory::getDatabaseConnection();
@@ -68,6 +70,9 @@ class jlm_pictures extends XoopsObject
 
     }
 
+    /**
+     * @param $id
+     */
     function load($id)
     {
         global $mydirname;
@@ -79,6 +84,16 @@ class jlm_pictures extends XoopsObject
         }
     }
 
+    /**
+     * @param array  $criteria
+     * @param bool   $asobject
+     * @param string $sort
+     * @param string $order
+     * @param int    $limit
+     * @param int    $start
+     *
+     * @return array
+     */
     function getAll_pictures($criteria=array(), $asobject=false, $sort="cod_img", $order="ASC", $limit=0, $start=0)
     {
         global $mydirname;
@@ -92,7 +107,7 @@ class jlm_pictures extends XoopsObject
             }
             $where_query = substr($where_query, 0, -4);
         } elseif ( !is_array($criteria) && $criteria) {
-            $where_query = " WHERE ".$criteria;
+            $where_query = " WHERE {$criteria}";
         }
         if (!$asobject) {
             $sql = "SELECT cod_img FROM ".$db->prefix("adslight_pictures")."$where_query ORDER BY $sort $order";
@@ -139,11 +154,13 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     }
 
     /**
-    * retrieve a light_pictures
-    *
-    * @param int $id of the light_pictures
-    * @return mixed reference to the {@link light_pictures} object, FALSE if failed
-    */
+     * retrieve a light_pictures
+     *
+     * @param int $id of the light_pictures
+     * @param     $lid
+     *
+     * @return mixed reference to the {@link light_pictures} object, FALSE if failed
+     */
     function &get($id,$lid) {
 
             global $mydirname;
@@ -163,13 +180,14 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
                 return false;
     }
 
-/**
-* insert a new light_pictures in the database
-*
-* @param object $light_pictures reference to the {@link light_pictures} object
-* @param bool $force
-* @return bool FALSE if failed, TRUE if already present and unchanged or successful
-*/
+    /**
+     * insert a new light_pictures in the database
+     *
+     * @param object $jlm_pictures
+     * @param bool   $force
+     * @internal param object $light_pictures reference to the {@link light_pictures} object object
+     * @return bool FALSE if failed, TRUE if already present and unchanged or successful
+     */
     function insert(&$jlm_pictures, $force = false)
     {
         global $xoopsConfig, $lid, $mydirname;
@@ -347,14 +365,16 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     }
 
     /**
-    * Render a form to send pictures
-    *
-    * @param int $maxbytes the maximum size of a picture
-    * @param object $xoopsTpl the one in which the form will be rendered
-    * @return bool TRUE
-    *
-    * obs: Some functions wont work on php 4 so edit lines down under acording to your version
-    */
+     * Render a form to send pictures
+     *
+     * @param        $uid
+     * @param        $lid
+     * @param int    $maxbytes the maximum size of a picture
+     * @param object $xoopsTpl the one in which the form will be rendered
+     * @return bool TRUE
+     *
+     * obs: Some functions wont work on php 4 so edit lines down under acording to your version
+     */
     function renderFormSubmit($uid,$lid,$maxbytes,$xoopsTpl)
     {
         global $mydirname, $main_lang, $xoopsUser;

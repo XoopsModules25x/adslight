@@ -1,25 +1,31 @@
----------------------------------------
-2.2 Beta 2  2013-05-10
----------------------------------------
+2.2 Beta 3        2014-04-23
+=================================
+- updated currency to use locale
+- moved all images, CSS, and JS files to /assets (mamba)
+- renamed .html Smarty templates to .tpl (mamba)
+
+
+2.2 Beta 2          2013-05-10
+=================================
 - phone number will show only when selected by the user as the way to contact (chefry/mamba)
 - moved hard-coded 404 error text to language file (mamba)
 - fixed: ad owner cannot edit his ad, when set to "inactive" (surfinsaxman/mamba)
 - removed encoded footer (mamba)
 
----------------------------------------
-2.2 Beta 1  2013-03-13
----------------------------------------
+TODO:
+- You can select 'contact by telephone' and leave the field telephone blank, or enter letters.
+- When I try to upgrade to a premium member, the premium.php is missing
 
+
+2.2 Beta 1          2013-03-13
+=================================
 - Converted to XOOPS 2.5.5 Admin GUI (mamba)
 - fixed minor bugs (cesag/mamba)
 - add: dynamic configuration of Text Editors in Preferences (mamba)
 
-#################################################
 
--------------------------------------------------
-Version: 2.1 beta
-Date:    25.05.2011
--------------------------------------------------
+2.1 beta                25.05.2011
+=================================
 - Activation / désactivation du menu
 - Activation des liens Bookmark
 ( choix possible entre plusieurs style de Bookmark )
@@ -35,80 +41,64 @@ Date:    25.05.2011
 - Début d'amélioration des Tables SQL
 - Traduction en italien, portugais du brésil et polonais
 + petites corrections du code source (plus léger, plus rapide, mieux présenté).
-+ Optimisations des fichiers languages (French) 
++ Optimisations des fichiers languages (French)
 pour gagner encore un peu en temps d'affichage
 
-#################################################
 
--------------------------------------------------
-Version: 1.06
-Date:    09.05.2010
--------------------------------------------------
-- La partie Admin a été revue. 
+1.06                09.05.2010
+=================================
+- La partie Admin a été revue.
 - Certaines parties du code a était améliorer
 + traduction Néerlandais
 
-#################################################
 
--------------------------------------------------
-Version: 1.055
-Date:    01.05.2010
--------------------------------------------------
+1.055               01.05.2010
+=================================
 - Traduction "bosanski" ( by Saba xoopsba.org )
 - Correction Bugs
 
-#################################################
 
--------------------------------------------------
-Version: 1.054
-Date:    03.04.2010
--------------------------------------------------
+1.054               03.04.2010
+=================================
 - Cache requête sql
 - Changement des images catŽgories
 - Traduction Allemand UTF-8
-+ Divers corrections 
++ Divers corrections
 
-#################################################
--------------------------------------------------
-Version: 1.053
-Date:    07.03.2010
--------------------------------------------------
+
+1.053               07.03.2010
+=================================
 - intégration Maps, carte de France ( avec possibilité de rajouter d'autres cartes facilement )
 - Meta Keywords + Meta description (catégories)
-- intégration de Pub, entre les annonces, et dans les catégories. 
+- intégration de Pub, entre les annonces, et dans les catégories.
 ( Adscence par exemple )
-+ Diverses corrections 
++ Diverses corrections
 
-#################################################
-Version: 1.05 
-Date:    03.02.2010
--------------------------------------------------
+
+1.05                03.02.2010
+=================================
 - Code all&eacute;ger + rapide
-+ Divers corrections... 
++ Divers corrections...
 
-#################################################
--------------------------------------------------
-Version: 1.04
-Date:    03.02.2010
--------------------------------------------------
+
+1.04                03.02.2010
+=================================
 - Am&eacute;lioration de la page cat&eacute;gories ( Admin )
 - Am&eacute;lioration de la page index ( Admin )
-+ Divers corrections... 
++ Divers corrections...
 
-#################################################
-Version: 1.0.3 Beta
-Date:    01.02.2010
--------------------------------------------------
+
+1.0.3 Beta             01.02.2010
+=================================
 - Pr&eacute;sentation cat&eacute;gories sur la page d'accueil
 - Images cat&eacute;gories page d'accueil
 - Annonce Google entre les annonces en page d'accueil
 - Traduction Spanish
-+ Divers corrections... 
++ Divers corrections...
 
-#################################################
-Version: 1.0.2 Beta
-Date:    30.01.2010
--------------------------------------------------
+
+1.0.2 Beta             30.01.2010
+=================================
 - Notifications dans les cat&eacute;gories
 - Affichage des sous-cat&eacute;gories en page index
 - Option d'affichage des miniatures en page d'index

@@ -20,6 +20,9 @@
 -------------------------------------------------------------------------
 */
 
+/**
+ * Class ClassifiedsTree
+ */
 class ClassifiedsTree
 {
     var $table;
@@ -29,7 +32,12 @@ class ClassifiedsTree
     var $title;
     var $db;
 
-function ClassifiedsTree($table_name, $id_name, $pid_name)
+    /**
+     * @param $table_name
+     * @param $id_name
+     * @param $pid_name
+     */
+    function ClassifiedsTree($table_name, $id_name, $pid_name)
     {
         $this->db =& XoopsDatabaseFactory::getDatabaseConnection();
         $this->table = $table_name;
@@ -37,7 +45,12 @@ function ClassifiedsTree($table_name, $id_name, $pid_name)
         $this->pid = $pid_name;
     }
 
-function getFirstChild($sel_id, $order="")
+    /**
+     * @param        $sel_id
+     * @param string $order
+     *
+     * @return array
+     */function getFirstChild($sel_id, $order="")
     {
         $arr =array();
         $sql = 'SELECT SQL_CACHE * FROM '.$this->table.' WHERE '.$this->pid.'='.$sel_id.'';
@@ -63,7 +76,11 @@ function getFirstChild($sel_id, $order="")
         return $arr;
     }
 
-function getFirstChildId($sel_id)
+    /**
+     * @param $sel_id
+     *
+     * @return array
+     */function getFirstChildId($sel_id)
     {
         $idarray =array();
         $result = $this->db->query('SELECT SQL_CACHE '.$this->id.' FROM '.$this->table.' WHERE '.$this->pid.'='.mysql_real_escape_string($sel_id).'');
@@ -84,7 +101,13 @@ function getFirstChildId($sel_id)
         return $idarray;
     }
 
-function getAllChildId($sel_id, $order='', $idarray = array())
+    /**
+     * @param        $sel_id
+     * @param string $order
+     * @param array  $idarray
+     *
+     * @return array
+     */function getAllChildId($sel_id, $order='', $idarray = array())
     {
         $sql = 'SELECT SQL_CACHE '.$this->id.' FROM '.$this->table.' WHERE '.$this->pid.'='.mysql_real_escape_string($sel_id).'';
 
@@ -94,7 +117,7 @@ function getAllChildId($sel_id, $order='', $idarray = array())
 }
 
         if ($order != '') {
-            $sql .= ' ORDER BY '.$order.'';
+            $sql .= " ORDER BY {$order}";
         }
         $result=$this->db->query($sql);
         $count = $this->db->getRowsNum($result);
@@ -109,7 +132,13 @@ function getAllChildId($sel_id, $order='', $idarray = array())
         return $idarray;
     }
 
-function getAllParentId($sel_id, $order='', $idarray = array())
+    /**
+     * @param        $sel_id
+     * @param string $order
+     * @param array  $idarray
+     *
+     * @return array
+     */function getAllParentId($sel_id, $order='', $idarray = array())
     {
         $sql = 'SELECT '.$this->pid.' FROM '.$this->table.' WHERE '.$this->id.'='.mysql_real_escape_string($sel_id).'';
 
@@ -119,7 +148,7 @@ function getAllParentId($sel_id, $order='', $idarray = array())
 }
 
         if ($order != '') {
-            $sql .= ' ORDER BY '.$order.'';
+            $sql .= " ORDER BY {$order}";
         }
         $result=$this->db->query($sql);
         list($r_id) = $this->db->fetchRow($result);
@@ -132,7 +161,13 @@ function getAllParentId($sel_id, $order='', $idarray = array())
         return $idarray;
     }
 
-function getPathFromId($sel_id, $title, $path='')
+    /**
+     * @param        $sel_id
+     * @param        $title
+     * @param string $path
+     *
+     * @return string
+     */function getPathFromId($sel_id, $title, $path='')
     {
         $result = $this->db->query('SELECT '.$this->pid.', '.$title.' FROM '.$this->table.' WHERE '.$this->id.'='.mysql_real_escape_string($sel_id).'');
 
@@ -156,7 +191,15 @@ function getPathFromId($sel_id, $title, $path='')
         return $path;
     }
 
-function makeMySelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onchange="")
+    /**
+     * @param        $title
+     * @param string $order
+     * @param int    $preset_id
+     * @param int    $none
+     * @param string $sel_name
+     * @param string $onchange
+     */
+    function makeMySelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onchange="")
     {
         if ($sel_name == '') {
             $sel_name = $this->id;
@@ -203,7 +246,14 @@ if (is_array($categories) && count($categories) > 0) {
         echo '</select>';
     }
 
-function getNicePathFromId($sel_id, $title, $funcURL, $path="")
+    /**
+     * @param        $sel_id
+     * @param        $title
+     * @param        $funcURL
+     * @param string $path
+     *
+     * @return string
+     */function getNicePathFromId($sel_id, $title, $funcURL, $path="")
     {
 
         $sql = 'SELECT SQL_CACHE '.$this->pid.', '.$title.' FROM '.$this->table.' WHERE '.$this->id.'='.mysql_real_escape_string($sel_id).'';
@@ -215,7 +265,7 @@ function getNicePathFromId($sel_id, $title, $funcURL, $path="")
         $myts =& MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
 
-        $arrow = '<img src="'.XOOPS_URL.'/modules/adslight/images/arrow.gif" alt="&raquo;" />';
+        $arrow = '<img src="'.XOOPS_URL.'/modules/adslight/assets/images/arrow.gif" alt="&raquo;" />';
 
         $path = '&nbsp;&nbsp;'.$arrow.'&nbsp;&nbsp;<a title="'._ADSLIGHT_ANNONCES.' '.$name.'" href="'.$funcURL.''.$this->id.'='.mysql_real_escape_string($sel_id).'">'.$name.'</a>'.$path.'';
 
@@ -227,7 +277,12 @@ function getNicePathFromId($sel_id, $title, $funcURL, $path="")
         return $path;
     }
 
-function getIdPathFromId($sel_id, $path='')
+    /**
+     * @param        $sel_id
+     * @param string $path
+     *
+     * @return string
+     */function getIdPathFromId($sel_id, $path='')
     {
         $result = $this->db->query('SELECT SQL_CACHE '.$this->pid.' FROM '.$this->table.' WHERE '.$this->id.'='.mysql_real_escape_string($sel_id).'');
         if ( $this->db->getRowsNum($result) == 0 ) {
@@ -243,7 +298,13 @@ function getIdPathFromId($sel_id, $path='')
         return $path;
     }
 
-function getAllChild($sel_id=0,$order='',$parray = array())
+    /**
+     * @param int    $sel_id
+     * @param string $order
+     * @param array  $parray
+     *
+     * @return array
+     */function getAllChild($sel_id=0,$order='',$parray = array())
     {
     $sql = 'SELECT SQL_CACHE * FROM '.$this->table.' WHERE '.$this->pid.'='.mysql_real_escape_string($sel_id).'';
 
@@ -253,7 +314,7 @@ function getAllChild($sel_id=0,$order='',$parray = array())
     }
 
         if ($order != '') {
-            $sql .= ' ORDER BY '.$order.'';
+            $sql .= " ORDER BY {$order}";
         }
 
         $result = $this->db->query($sql);
@@ -269,7 +330,14 @@ function getAllChild($sel_id=0,$order='',$parray = array())
         return $parray;
     }
 
-function getChildTreeArray($sel_id=0,$order='',$parray = array(),$r_prefix='')
+    /**
+     * @param int    $sel_id
+     * @param string $order
+     * @param array  $parray
+     * @param string $r_prefix
+     *
+     * @return array
+     */function getChildTreeArray($sel_id=0,$order='',$parray = array(),$r_prefix='')
     {
     global $mydirname;
 
@@ -281,7 +349,7 @@ if (is_array($categories) && count($categories) > 0) {
 }
 
         if ($order != '') {
-            $sql .= ' ORDER BY '.$order.'';
+            $sql .= " ORDER BY {$order}";
         }
         $result = $this->db->query($sql);
         $count = $this->db->getRowsNum($result);
@@ -297,7 +365,15 @@ if (is_array($categories) && count($categories) > 0) {
         return $parray;
     }
 
-function makeAdSelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onchange="")
+    /**
+     * @param        $title
+     * @param string $order
+     * @param int    $preset_id
+     * @param int    $none
+     * @param string $sel_name
+     * @param string $onchange
+     */
+    function makeAdSelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onchange="")
 {
         global  $xoopsModuleConfig, $myts, $xoopsDB, $pathIcon16;
         require XOOPS_ROOT_PATH.'/modules/adslight/include/gtickets.php';
@@ -308,7 +384,7 @@ function makeAdSelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onc
 
         $sql = 'select '.$this->id.', '.$title.', ordre FROM '.$this->table.' WHERE '.$this->pid.'=0';
         if ($order != '') {
-            $sql .= ' ORDER BY '.$order.'';
+            $sql .= " ORDER BY {$order}";
         }
         $result = $xoopsDB->query($sql);
         while ( list($catid, $name, $ordre) = $xoopsDB->fetchRow($result) ) {
@@ -344,7 +420,14 @@ function makeAdSelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onc
 
     }
 
-function getChildTreeMapArray($sel_id=0,$order="",$parray = array(),$r_prefix="")
+    /**
+     * @param int    $sel_id
+     * @param string $order
+     * @param array  $parray
+     * @param string $r_prefix
+     *
+     * @return array
+     */function getChildTreeMapArray($sel_id=0,$order="",$parray = array(),$r_prefix="")
 {
         global $xoopsDB;
         $sql = 'select SQL_CACHE * FROM '.$this->table.' WHERE '.$this->pid.'='.mysql_real_escape_string($sel_id).'';
@@ -355,7 +438,7 @@ function getChildTreeMapArray($sel_id=0,$order="",$parray = array(),$r_prefix=""
     }
 
         if ($order != '') {
-            $sql .= ' ORDER BY '.$order.'';
+            $sql .= " ORDER BY {$order}";
         }
         $result = $xoopsDB->query($sql);
         $count = $xoopsDB->getRowsNum($result);
@@ -371,7 +454,10 @@ function getChildTreeMapArray($sel_id=0,$order="",$parray = array(),$r_prefix=""
         return $parray;
     }
 
-function getCategoryList()
+    /**
+     * @return array
+     */
+    function getCategoryList()
     {
         $result = $this->db->query('SELECT SQL_CACHE cid, pid, title FROM '.$this->table);
         $ret = array();

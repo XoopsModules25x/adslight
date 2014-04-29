@@ -9,7 +9,7 @@ http://lokeshdhakar.com/projects/lightbox2/
 Licensed under the Creative Commons Attribution 2.5 License - http://creativecommons.org/licenses/by/2.5/
 - free for use in both personal and commercial projects
 - attribution requires leaving author name, author link, and the license info intact
-	
+
 Thanks
 - Scott Upton(uptonic.com), Peter-Paul Koch(quirksmode.com), and Thomas Fuchs(mir.aculo.us) for ideas, libs, and snippets.
 - Artemy Tregubenko (arty.name) for cleanup and help in updating to latest proto-aculous in v2.05.
@@ -48,8 +48,8 @@ lightbox = new Lightbox options
   LightboxOptions = (function() {
 
     function LightboxOptions() {
-      this.fileLoadingImage = 'extra/lightbox/images/loading.gif';
-      this.fileCloseImage = 'extra/lightbox/images/close.png';
+      this.fileLoadingImage = 'assets/lightbox/images/loading.gif';
+      this.fileCloseImage = 'assets/lightbox/images/close.png';
       this.resizeDuration = 300;
       this.fadeDuration = 300;
       this.labelImage = "Image";

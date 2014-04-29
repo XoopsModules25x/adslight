@@ -1,23 +1,23 @@
 <?php
 /*
 -------------------------------------------------------------------------
-                     ADSLIGHT 2: Module for Xoops                           
+                     ADSLIGHT 2: Module for Xoops
 
         Redesigned and ameliorate By iluc user at www.frxoops.org
-		Started with the Classifieds module and made MANY changes 
+        Started with the Classifieds module and made MANY changes
         Website: http://www.limonads.com
         Contact: adslight.translate@gmail.com
 -------------------------------------------------------------------------
-             Original credits below Version History                       
+             Original credits below Version History
 ##########################################################################
 #                    Classified Module for Xoops                         #
 #  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
 #      Started with the MyAds module and made MANY changes               #
 ##########################################################################
- Original Author: Pascal Le Boustouller                                   
- Author Website: pascal.e-xoops@perso-search.com                         
- Licence Type  : GPL                                                     
-------------------------------------------------------------------------- 
+ Original Author: Pascal Le Boustouller
+ Author Website: pascal.e-xoops@perso-search.com
+ Licence Type  : GPL
+-------------------------------------------------------------------------
 */
 define("_ADSLIGHT_ADDON","Addon");
 define("_ADSLIGHT_ANNONCES","Classified Ads");
@@ -62,7 +62,7 @@ define("_ADSLIGHT_OTHER","If your want to place another ad ");
 define("_ADSLIGHT_TEAM","Team");
 define("_ADSLIGHT_ACTUALY","There are");
 define("_ADSLIGHT_ADVERTISEMENTS","Ad(s) active");
-	//define("_ADSLIGHT_DISPO","available until");
+    //define("_ADSLIGHT_DISPO","available until");
 define("_ADSLIGHT_MODADMIN","Change this Ad (administrator)");
 define("_ADSLIGHT_AND","and");
 define("_ADSLIGHT_WAIT3","Ad(s) waiting to be approved");
@@ -74,7 +74,7 @@ define("_ADSLIGHT_VIEWANN2","See your Ad");
 define("_ADSLIGHT_ACCESADMIN","MyAds Administration");
 define("_ADSLIGHT_NOANNINCAT","There are no advertisements in this category");
 define("_ADSLIGHT_INCAT","in");
-define("_ADSLIGHT_CAT2","categories"); 
+define("_ADSLIGHT_CAT2","categories");
 // addlisting.php //
 define("_ADSLIGHT_DESC","Description");
 define("_ADSLIGHT_ADDANNONCE2","Add a Classified Ad in this category");
@@ -125,7 +125,7 @@ define("_ADSLIGHT_VALIDEMAIL","Email is required.");
 define("_ADSLIGHT_VALIDSUBMITTER","Name is required.");
 define("_ADSLIGHT_VALIDMSG","Please correct these errors to save the listing.");
 // display-image.php //
-define("_ADSLIGHT_CLOSEF","Close this window");	
+define("_ADSLIGHT_CLOSEF","Close this window");
 // listing-p-f.php //
 define("_ADSLIGHT_EXTRANN","This advertisement is from the classified ads section on the website ");
 define("_ADSLIGHT_SENDTO","<b>Send this advertisement to a friend</b><br><br>You can send ad No ");
@@ -152,13 +152,13 @@ define("_RETURNANN","Return classified ads listing");
 define("_ADSLIGHT_ANNDEL","Classified Ad selected has been deleted");
 define("_ADSLIGHT_ANNMOD2","Classified Ad selected has been modified");
 define("_ADSLIGHT_NOMODIMG","Your Classified Ad includes a photo<br />(pictures may not be changed)");
-define("_ADSLIGHT_DU","added on");   
+define("_ADSLIGHT_DU","added on");
 define("_ADSLIGHT_MODIFBEFORE","Changes to this Classified Ad must be approved by the administrator and it will be queued for approval");
 define("_ADSLIGHT_SENDBY","Added by:");
 define("_ADSLIGHT_NUMANNN","Classified Ad No.:");
 define("_ADSLIGHT_NEWPICT","New image:");
 define("_ADSLIGHT_ACTUALPICT","Current image:");
-define("_ADSLIGHT_DELPICT","Delete this image"); 
+define("_ADSLIGHT_DELPICT","Delete this image");
 // contact.php //
 define("_ADSLIGHT_CONTACTAUTOR","Contact the author of this Classified Ad");
 define("_ADSLIGHT_TEXTAUTO","The message automatically sends the first three fields, your name, your email, and your telephone number, you don't need to enter them again in your message.");
@@ -188,7 +188,7 @@ define("_ADSLIGHT_MESSAGE_END","End of message.");
 define("_ADSLIGHT_SECURE_SEND","This message was sent using a secure contact form, the sender does not know your email address.");
 // message end //
 define("_ADSLIGHT_HOW_LONG","How long do you want the listing shown.");
-define("_ADSLIGHT_WILL_LAST","This listing will last.");	
+define("_ADSLIGHT_WILL_LAST","This listing will last.");
 //for search on index page
 define("_ADSLIGHT_SEARCHRESULTS","Classified Ads Search Results");
 define("_ADSLIGHT_SEARCH_LISTINGS","Search Listings: ");
@@ -361,7 +361,7 @@ define("_ADSLIGHT_REPORTMESSAGE","Believes that this announcement is illegal and
 //index.php >> Infos Bulle //
 define("_ADSLIGHT_ADD_LISTING_BULL","To add a listing<br />Thank you for ");
 define("_ADSLIGHT_ADD_LISTING_SUB","register");
-define("_ADSLIGHT_ADD_LISTING_BULLOK","You can add or<br />Ads: ");
+define("_ADSLIGHT_ADD_LISTING_BULLOK","You can add new Ads<br />: ");
 define("_ADSLIGHT_ADD_LISTING_SUBOK","Click here");
 //index.php >> Title Menu //
 define("_ADSLIGHT_ADD_TITLEMENU1","Edit/delete your ads, or also reported as [Reserved] ...");
@@ -374,12 +374,12 @@ define("_ADSLIGHT_ADD_TITLEMENU8","You must be logged in to read your messages."
 define("_ADSLIGHT_ADD_TITLEMENU9","You must be logged in to see your profile.");
 define("_ADSLIGHT_ADD_TITLEMENU10","View or edit your profile here.");
 //viewcats.php >> Infos Bulle //
-define("_ADSLIGHT_ADD_LISTING_BULLCATS","You can add or<br />ads in this category<br />");
-define("_ADSLIGHT_ADD_LISTING_BULLCATSOK","To add one or<br />ads in this category<br />Thank you for ");
+define("_ADSLIGHT_ADD_LISTING_BULLCATS","You can add <br />ads in this category<br />");
+define("_ADSLIGHT_ADD_LISTING_BULLCATSOK","To add one or more <br />ads in this category<br />Thank you for ");
 // Reserved
 //define("_ADSLIGHT_RESERVED","Reserved");
 // tips_writing_ad.php
-define("_ADSLIGHT_TIPSWRITE","All good advice<br />write your ads for many");
+define("_ADSLIGHT_TIPSWRITE","Our tips for you<br />on how to write your ads");
 define("_ADSLIGHT_TIPSWRITE_TITLE","The Tips on writing your ad");
 define("_ADSLIGHT_TIPSWRITE_TEXT","<strong> 1. One or more photos </strong> <br /> <br />
 The first contact with visitors qu'auront your ad will be a photo or photos of the item you sell. <br /> It is advisable to put a photo or photos of your object. <Br />
@@ -422,7 +422,7 @@ define("_MN_ADSLIGHT_ERROR404_TEXT",'<table class="errorMsg" border="0" cellpadd
 <tr>
 <td>
 <center>
-	<h1>Error 404</h1><br /><br />
+    <h1>Error 404</h1><br /><br />
 </center>
 </td>
 </tr>

@@ -1,23 +1,23 @@
 <?php
 /*
 -------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops                           
+                     ADSLIGHT 2 : Module for Xoops
 
         Redesigned and ameliorate By iluc user at www.frxoops.org
-		Started with the Classifieds module and made MANY changes 
+        Started with the Classifieds module and made MANY changes
         Website : http://www.limonads.com
         Contact : adslight.translate@gmail.com
 -------------------------------------------------------------------------
-             Original credits below Version History                       
+             Original credits below Version History
 ##########################################################################
 #                    Classified Module for Xoops                         #
 #  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
 #      Started with the MyAds module and made MANY changes               #
 ##########################################################################
- Original Author: Pascal Le Boustouller                                   
- Author Website : pascal.e-xoops@perso-search.com                         
- Licence Type   : GPL                                                     
-------------------------------------------------------------------------- 
+ Original Author: Pascal Le Boustouller
+ Author Website : pascal.e-xoops@perso-search.com
+ Licence Type   : GPL
+-------------------------------------------------------------------------
 */
 // The name of this module
 define("_MI_ADSLIGHT_NAME","adslight");
@@ -94,10 +94,10 @@ define("_MI_ADSLIGHT_SUPPORT","Support this software");
 define("_MI_ADSLIGHT_OP","Read my opinion");
 define("_MI_ADSLIGHT_PREMIUM","Ads Premium");
 define("_MI_ADSLIGHT_PREMIUM_DESC","Who can select days listing will last");
-define("_MI_ADSLIGHT_CATEGORY_NOTIFY","Category"); 
+define("_MI_ADSLIGHT_CATEGORY_NOTIFY","Category");
 define("_MI_ADSLIGHT_CATEGORY_NOTIFYDSC","Notification options that apply to the current category.");
-define("_MI_ADSLIGHT_NOTIFY","Listing"); 
-define("_MI_ADSLIGHT_NOTIFYDSC","Notification options that apply to the current listing.");	
+define("_MI_ADSLIGHT_NOTIFY","Listing");
+define("_MI_ADSLIGHT_NOTIFYDSC","Notification options that apply to the current listing.");
 define("_MI_ADSLIGHT_GLOBAL_NOTIFY","Whole Module");
 define("_MI_ADSLIGHT_GLOBAL_NOTIFYDSC","Global advert notification options.");
 define("_MI_ADSLIGHT_NEWPOST_NOTIFY","New Listing");
@@ -159,8 +159,8 @@ define("_MI_ADSLIGHT_LINKUPLOAD_TI","Link to your uploads directory");
 define("_MI_ADSLIGHT_LINKUPLOAD_DE","This is the address of the root of your uploads <br />like http://www.yoursite.com/uploads");
 define("_MI_ADSLIGHT_MAXFILEBYTES_T","Max size in bytes");
 define("_MI_ADSLIGHT_MAXFILEBYTES_D","This the maximum size a file of your pictue can have in bytes <br />like 512000 for 500 KB");
-define("_MI_ADSLIGHT_EDITOR","Editor to use:");
-define("_MI_ADSLIGHT_LIST_EDITORS","Select the editor to use.");
+define("_MI_ADSLIGHT_EDITOR","Editor to use by Users:");
+define("_MI_ADSLIGHT_LIST_EDITORS","Select the editor to use by Users.");
 define("_MI_ADSLIGHT_LIGHTBOX","Lightbox effects");
 define("_MI_ADSLIGHT_LIGHTBOX_DESC","Use the lightbox effects when viewing photos.");
 define("_MI_ADSLIGHT_USE_COUNTRY","Use the Country Field");
@@ -171,8 +171,8 @@ define("_MI_ADSLIGHT_ALMOST","When to send notice that the ad is about to expire
 define("_MI_ADSLIGHT_ALMOST_DESC","in days");
 define("_MI_ADSLIGHT_MAIN_CAT","Allow users to add listings in the main categories");
 define("_MI_ADSLIGHT_MAIN_CAT_DESC","or just allow adding listings in sub-categoreies");
-define("_MI_ADSLIGHT_ADMIN_EDITOR","Editor to use for admin:");
-define("_MI_ADSLIGHT_LIST_ADMIN_EDITORS","Select the editor to use on the admin side.");
+define("_MI_ADSLIGHT_ADMIN_EDITOR","Editor to use by Admin:");
+define("_MI_ADSLIGHT_LIST_ADMIN_EDITORS","Select the editor to use by the Admin");
 define("_MI_ADSLIGHT_CAT_DESC","Category Description");
 define("_MI_ADSLIGHT_DESC_CAT_DESC","Add a description for each category.");
 define("_MI_ADSLIGHT_MUST_ADD_CAT","You must add a category first.");
@@ -185,8 +185,8 @@ define("_MI_ADSLIGHT_USE_CAPTCHA_DESC","Select to Use Captcha");
 // Menu AdsLight
 define("_MI_ADSLIGHT_SMENU1","Your Listings");
 define("_MI_ADSLIGHT_SMENU2","Submit");
-define("_MI_ADSLIGHT_SMENU3","Search"); 
-// support.php 
+define("_MI_ADSLIGHT_SMENU3","Search");
+// support.php
 define("_MI_ADSLIGHT_SUPPORT01"," If you wish to suggest an improvement:<br /><br />- A correction<br />- A translation<br />- A suggestion<br />- Report a Bug<br />");
 define("_MI_ADSLIGHT_SUPPORT02","Join us at the Support Forum AdsLight");
 define("_MI_ADSLIGHT_SUPPORT03","> Support Forum AdsLight <");
@@ -202,10 +202,10 @@ define("_MI_ADSLIGHT_ACTIVE_REWRITEURL","Enable URL Rewrite");
 define("_MI_ADSLIGHT_ACTIVE_REWRITEURL_DESC","Enable URL rewriting for a better ranking.<br/>To install the rewrite, thank you to read the file README.txt");
 // Activer thumbs_index
 define("_MI_ADSLIGHT_ACTIVE_THUMBSINDEX","Enable Snapshot page index");
-define("_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC","Enable the display of thumbnail images to homepage<br/>If it is off an icon <img src='".XOOPS_URL."/modules/adslight/images/camera_photo.png' width='24px' ><br/> indicates whether or not there is a picture in the ad.");
+define("_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC","Enable the display of thumbnail images to homepage<br/>If it is off an icon <img src='".XOOPS_URL."/modules/adslight/assets/images/camera_photo.png' width='24px' ><br/> indicates whether or not there is a picture in the ad.");
 // Activer thumbs_cats
 define("_MI_ADSLIGHT_ACTIVE_THUMBSCATS","Enable Snapshot in categories");
-define("_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC","Enable the display of thumbnail pictures in the categories<br/>If it is off an icon <img src='".XOOPS_URL."/modules/adslight/images/camera_photo.png' width='24px' ><br/> indicates whether or not there is a picture in the ad.");
+define("_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC","Enable the display of thumbnail pictures in the categories<br/>If it is off an icon <img src='".XOOPS_URL."/modules/adslight/assets/images/camera_photo.png' width='24px' ><br/> indicates whether or not there is a picture in the ad.");
 // Code Adscence index
 define("_MI_ADSLIGHT_ADSLIGHT_INDEX_CODE","Code additional home page");
 define("_MI_ADSLIGHT_ADSLIGHT_INDEX_CODE_DESC","Put your adsense code or other here");
@@ -223,7 +223,7 @@ define("_MI_ADSLIGHT_ADSLIGHT_CATS_CODE_DESC","Google adsence code or code of a 
 define("_MI_ADSLIGHT_THEMESET","Choice of template set");
 // Méta Description / keywords Categories
 define("_MI_ADSLIGHT_CAT_META","Allow the seizure Meta description, Meta keywords categories?");
-define("_MI_ADSLIGHT_CAT_META_DESCRIPTION","If you set this option to 'Yes',<br/> 
+define("_MI_ADSLIGHT_CAT_META_DESCRIPTION","If you set this option to 'Yes',<br/>
 You can write data meta keywords and description for each category<br/>( Recommend to a better ranking. )");
 // Version 1.0.51
 // tips_writing_ad.php
@@ -257,3 +257,7 @@ define("_MI_ADSLIGHT_CURRENCY","ISO currency code");
 define("_MI_ADSLIGHT_LISTING_COST","The registration will be charged at this rate per day");
 define("_MI_ADSLIGHT_PURCHASELISTING","Inscriptions Purchasable");
 define('_MI_ADSLIGHT_PURCHASELISTING_DESC',"These are the categories that the cost per day to list an ad");
+//2.2
+
+define("_MI_ADSLIGHT_ADVISE_TITLE","Our Advise");
+define("_MI_ADSLIGHT_ADVISE_TEXT","Here goes your text");

@@ -1,23 +1,23 @@
 <?php
 /*
 -------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops                           
+                     ADSLIGHT 2 : Module for Xoops
 
         Redesigned and ameliorate By iluc user at www.frxoops.org
-		Started with the Classifieds module and made MANY changes 
+        Started with the Classifieds module and made MANY changes
         Website : http://www.limonads.com
         Contact : adslight.translate@gmail.com
 -------------------------------------------------------------------------
-             Original credits below Version History                       
+             Original credits below Version History
 ##########################################################################
 #                    Classified Module for Xoops                         #
 #  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
 #      Started with the MyAds module and made MANY changes               #
 ##########################################################################
- Original Author: Pascal Le Boustouller                                   
- Author Website : pascal.e-xoops@perso-search.com                         
- Licence Type   : GPL                                                     
-------------------------------------------------------------------------- 
+ Original Author: Pascal Le Boustouller
+ Author Website : pascal.e-xoops@perso-search.com
+ Licence Type   : GPL
+-------------------------------------------------------------------------
 */
 define("_AM_ADSLIGHT_CONF","Ads Configuration");
 define("_AM_ADSLIGHT_ADDON","Addons");
@@ -95,7 +95,7 @@ define("_AM_ADSLIGHT_ORDRECLASS","Category Order:");
 define("_AM_ADSLIGHT_ORDREALPHA","Sort alphabetically");
 define("_AM_ADSLIGHT_ORDREPERSO","Personalised Order");
 define("_AM_ADSLIGHT_BIGCAT","Main Category");
-define("_AM_ADSLIGHT_HELP1","<b>To add a category:</b> click on the image <img src=\"".XOOPS_URL."/modules/adslight/images/plus.gif\" border=0 width=10 height=10 alt=\"Add a category\"> alongside the category you want to add the category under.<p><b>To change or delete a category:</b> click on the name of the category");
+define("_AM_ADSLIGHT_HELP1","<b>To add a category:</b> click on the image <img src=\"".XOOPS_URL."/modules/adslight/assets/images/plus.gif\" border=0 width=10 height=10 alt=\"Add a category\"> alongside the category you want to add the category under.<p><b>To change or delete a category:</b> click on the name of the category");
 define("_AM_ADSLIGHT_HELP2","<B>Category Order:</B> integer in brackets corresponds to the order within the superior category or of the principal category. Negative integers can be used.: -1");
 // fichier pref.php //
 define("_AM_ADSLIGHT_CONFSAVE","Configuration saved");
@@ -199,7 +199,7 @@ define("_AM_ADSLIGHT_PERSONS_PARTICIP_NAME","Nickname");
 define("_AM_ADSLIGHT_PERSONS_PARTICIP_WEBSITE","Website");
 define("_AM_ADSLIGHT_PERSONS_PARTICIP_VERSION","Version");
 define("_AM_ADSLIGHT_PERSONS_PARTICIP_DESC","Overview");
-//groupperms.php 
+//groupperms.php
 define("_AM_ADSLIGHT_GPERM_G_ADD","Can add" ) ;
 define("_AM_ADSLIGHT_CAT2GROUPDESC","Check the categories which allow you to access" ) ;
 define("_AM_ADSLIGHT_GROUPPERMDESC","Select groups allowed to submit ads." ) ;

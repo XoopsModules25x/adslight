@@ -1,5 +1,5 @@
 <{if $adslight_active_menu == 1 }>
-<{include file='db:adslight_menu.html'}>
+<{include file='db:adslight_menu.tpl'}>
 <{/if}>
 <br />
 <table cellspacing="0" class="outer" style="width:100%;">
@@ -49,7 +49,7 @@
       </table>
 	</td>
 </tr><tr>
-		
+
 	</tr>
 </table>
 <br /><br /><{$nav_page}><br /><br />

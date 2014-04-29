@@ -20,10 +20,13 @@
 -------------------------------------------------------------------------
 */
 
- if (!defined('XOOPS_ROOT_PATH')) {
-    die('XOOPS root path not defined');
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
+/**
+ * @param $options
+ *
+ * @return array
+ */
 function adslight_show($options)
 {
 include_once XOOPS_ROOT_PATH."/modules/adslight/include/functions.php";
@@ -71,6 +74,11 @@ include_once XOOPS_ROOT_PATH."/modules/adslight/include/functions.php";
     return $block;
 }
 
+/**
+ * @param $options
+ *
+ * @return string
+ */
 function adslight_edit($options)
 {
  global $xoopsDB;

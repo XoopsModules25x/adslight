@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-defined("XOOPS_ROOT_PATH") or die("XOOPS root path not defined");
+// defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
 
 $path = dirname(dirname(dirname(dirname(__FILE__))));
 include_once $path . '/mainfile.php';
@@ -44,45 +44,45 @@ $adminmenu[$i]['link'] = "admin/index.php";
 $adminmenu[$i]["icon"]  = $pathIcon32 . '/home.png';
 
 //global $xoopsModule;
-$i++;
+++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU0;
 $adminmenu[$i]['link'] = "admin/main.php";
 $adminmenu[$i]['icon'] =  $pathIcon32 . '/dashboard.png';
-$i++;
+++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU1;
 $adminmenu[$i]['link'] = "admin/map.php";
 $adminmenu[$i]['icon'] =  $pathIcon32 . '/category.png';
-$i++;
+++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU5;
 $adminmenu[$i]['link'] = "admin/options.php";
-$adminmenu[$i]['icon'] = "images/icons/preferences.png";
-$i++;
+$adminmenu[$i]['icon'] = "assets/images/icons/preferences.png";
+++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU2;
 $adminmenu[$i]['link'] = "admin/groupperms.php";
 $adminmenu[$i]['icon'] =  $pathIcon32 . '/permissions.png';
-//$i++;
+//++$i;
 //if (isset($xoopsModule) && $xoopsModule->getVar('dirname') == basename(dirname(dirname(__FILE__)))) {
 //$adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU3;
 //$adminmenu[$i]['link'] = '../../modules/system/admin.php?fct=blocksadmin&amp;selvis=-1&amp;selmod=-2&amp;selgrp=-1&amp;selgen=' . $xoopsModule->getVar('mid');
 //}
-//$adminmenu[$i]['icon'] = "images/icons/window.png";
-//$i++;
+//$adminmenu[$i]['icon'] = "assets/images/icons/window.png";
+//++$i;
 /*$adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU9;
 $adminmenu[$i]['link'] = "index.php";
-$adminmenu[$i]['icon'] = "images/icons/up_alt.png"; */
-//$i++;
+$adminmenu[$i]['icon'] = "assets/images/icons/up_alt.png"; */
+//++$i;
 //$adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU10;
 //$adminmenu[$i]['link'] = "../system/admin.php?fct=modulesadmin&op=update&module=adslight";
-//$adminmenu[$i]['icon'] = "images/icons/refresh.png";
-//$i++;
+//$adminmenu[$i]['icon'] = "assets/images/icons/refresh.png";
+//++$i;
 /* $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU11;
 $adminmenu[$i]['link'] = "admin/support_forum.php";
-$adminmenu[$i]['icon'] = "images/icons/discussion.png"; */
-$i++;
+$adminmenu[$i]['icon'] = "assets/images/icons/discussion.png"; */
+++$i;
 $adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
 $adminmenu[$i]["link"]  = "admin/about.php";
 $adminmenu[$i]["icon"]  = $pathIcon32 . '/about.png';
-//$i++;
+//++$i;
 //$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
 //$adminmenu[$i]["link"]  = "admin/about0.php";
 //$adminmenu[$i]["icon"]  = $pathIcon32 . '/about.png';

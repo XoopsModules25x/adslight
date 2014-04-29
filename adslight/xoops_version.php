@@ -1,47 +1,42 @@
 <?php
 /*
 -------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops                           
+                     ADSLIGHT 2 : Module for Xoops
 
         Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-		Started with the Classifieds module and made MANY changes 
+        Started with the Classifieds module and made MANY changes
         Website : http://www.luc-bizet.fr
         Contact : adslight.translate@gmail.com
 -------------------------------------------------------------------------
-             Original credits below Version History                       
+             Original credits below Version History
 ##########################################################################
 #                    Classified Module for Xoops                         #
 #  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
 #      Started with the MyAds module and made MANY changes               #
 ##########################################################################
- Original Author: Pascal Le Boustouller                                   
- Author Website : pascal.e-xoops@perso-search.com                         
- Licence Type   : GPL                                                     
-------------------------------------------------------------------------- 
+ Original Author: Pascal Le Boustouller
+ Author Website : pascal.e-xoops@perso-search.com
+ Licence Type   : GPL
+-------------------------------------------------------------------------
 */
 
-	if (!defined('XOOPS_ROOT_PATH')){ exit(); }
-	
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
 // Select Maps
 $path = XOOPS_ROOT_PATH.'/modules/adslight/maps';
-if ($handle = opendir($path))
-{
-	while (false !== ($file = readdir($handle)))
-	{
-	   if (!is_dir($path.'.'.$file) && $file != '.' && $file != '..' && $file != 'index.html')
-		{
-		$maps_name=$file;
-		$adslight_maps[$maps_name]=$file;
-	      }
-	}
+if ($handle = opendir($path)) {
+    while (false !== ($file = readdir($handle))) {
+       if (!is_dir($path.'.'.$file) && $file != '.' && $file != '..' && $file != 'index.html') {
+        $maps_name=$file;
+        $adslight_maps[$maps_name]=$file;
+          }
+    }
    closedir($handle);
 }
 
 // sql customized language file
 global $xoopsConfig;
- if( file_exists( XOOPS_ROOT_PATH.'/modules/adslight/sql/' . $xoopsConfig['language'] . '/mysql.sql') )
-	{
+ if ( file_exists( XOOPS_ROOT_PATH.'/modules/adslight/sql/' . $xoopsConfig['language'] . '/mysql.sql') ) {
     $adslight_sql = 'sql/' . $xoopsConfig['language'] . '/mysql.sql' ;
      } else {
     $adslight_sql = 'sql/english/mysql.sql';
@@ -56,36 +51,31 @@ $modversion['help']        = 'page=help';
 $modversion['license'] = 'GPL';
 $modversion['license_file'] = 'http://www.gnu.org/licenses/gpl.html';
 $modversion['official'] = 0;
-$modversion['image'] = 'images/adslight.png';
-$modversion['dirname'] = 'adslight';
+$modversion['image'] = 'assets/images/adslight.png';
+$modversion['dirname'] = basename(dirname(__FILE__));
 
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 //about
-$modversion['release_date']        = '2013/02/02';
+$modversion["module_status"]       = "Beta 3 ";
+$modversion['release_date']        = '2014/04/23';
 $modversion["module_website_url"]  = "www.xoops.org";
 $modversion["module_website_name"] = "XOOPS";
-$modversion["module_status"]       = "Beta 2";
-$modversion['min_php']             = '5.2';
-$modversion['min_xoops']           = "2.5.6";
+$modversion['min_php']             = '5.3.7';
+$modversion['min_xoops']           = "2.5.7";
 $modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array(
-    'mysql'  => '5.0.7',
-    'mysqli' => '5.0.7'
-);
-
+$modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 
 $modversion['sqlfile']['mysql'] = $adslight_sql;
 $modversion['onInstall'] = 'include/install.php';
 $modversion['onUpdate'] = 'include/update_function.php';
 
-
 $modversion["release"] = '25-05-2011';
 $modversion['support_site_url']	= 'http://#';
 $modversion['support_site_name'] = 'AdsLight';
 
-// Tables crée depuis le fichier sql
+// Tables crÃ©e depuis le fichier sql
 $modversion['tables'][0] = 'adslight_categories';
 $modversion['tables'][1] = 'adslight_ip_log';
 $modversion['tables'][2] = 'adslight_listing';
@@ -96,7 +86,6 @@ $modversion['tables'][6] = 'adslight_item_votedata';
 $modversion['tables'][7] = 'adslight_user_votedata';
 $modversion['tables'][8] = 'adslight_replies';
 $modversion['tables'][9] = 'adslight_usure';
-
 
 // Pour l'administration
 $modversion['hasAdmin'] = 1;
@@ -109,52 +98,52 @@ $modversion['adminmenu'] = 'admin/menu.php';
 global $xoopsModuleConfig;
 
 
-$modversion['templates'][1]['file'] = 'adslight_index.html';
+$modversion['templates'][1]['file'] = 'adslight_index.tpl';
 $modversion['templates'][1]['description'] = '';
 
-$modversion['templates'][2]['file'] = 'adslight_category.html';
+$modversion['templates'][2]['file'] = 'adslight_category.tpl';
 $modversion['templates'][2]['description'] = '';
 
-$modversion['templates'][3]['file'] = 'adslight_item.html';
+$modversion['templates'][3]['file'] = 'adslight_item.tpl';
 $modversion['templates'][3]['description'] = '';
 
-$modversion['templates'][4]['file'] = 'adslight_rate_item.html';
+$modversion['templates'][4]['file'] = 'adslight_rate_item.tpl';
 $modversion['templates'][4]['description'] = '';
 
-$modversion['templates'][5]['file'] = 'adslight_rate_user.html';
+$modversion['templates'][5]['file'] = 'adslight_rate_user.tpl';
 $modversion['templates'][5]['description'] = '';
 
-$modversion['templates'][6]['file'] = 'adslight_view_photos.html';
+$modversion['templates'][6]['file'] = 'adslight_view_photos.tpl';
 $modversion['templates'][6]['description'] = '';
 
-$modversion['templates'][7]['file'] = 'adslight_addlisting.html';
+$modversion['templates'][7]['file'] = 'adslight_addlisting.tpl';
 $modversion['templates'][7]['description'] = '';
 
-$modversion['templates'][8]['file'] = 'adslight_members.html';
+$modversion['templates'][8]['file'] = 'adslight_members.tpl';
 $modversion['templates'][8]['description'] = '';
 
-$modversion['templates'][9]['file'] = 'adslight_replies.html';
+$modversion['templates'][9]['file'] = 'adslight_replies.tpl';
 $modversion['templates'][9]['description'] = '';
 
-$modversion['templates'][10]['file'] = 'adslight_tips_writing_ad.html';
+$modversion['templates'][10]['file'] = 'adslight_tips_writing_ad.tpl';
 $modversion['templates'][10]['description'] = '';
 
-$modversion['templates'][11]['file'] = 'adslight_search.html';
+$modversion['templates'][11]['file'] = 'adslight_search.tpl';
 $modversion['templates'][11]['description'] = '';
 
-$modversion['templates'][12]['file'] = 'adslight_search_result.html';
+$modversion['templates'][12]['file'] = 'adslight_search_result.tpl';
 $modversion['templates'][12]['description'] = '';
 
-$modversion['templates'][13]['file'] = 'adslight_maps.html';
+$modversion['templates'][13]['file'] = 'adslight_maps.tpl';
 $modversion['templates'][13]['description'] = '';
 
-$modversion['templates'][14]['file'] = 'adslight_menu.html';
+$modversion['templates'][14]['file'] = 'adslight_menu.tpl';
 $modversion['templates'][14]['description'] = '';
 
-$modversion['templates'][15]['file'] = 'adslight_bookmark.html';
+$modversion['templates'][15]['file'] = 'adslight_bookmark.tpl';
 $modversion['templates'][15]['description'] = '';
 
-$modversion['templates'][16]['file'] = 'adslight_xpayment_form.html';
+$modversion['templates'][16]['file'] = 'adslight_xpayment_form.tpl';
 $modversion['templates'][16]['description'] = '';
 
 // Blocs
@@ -164,7 +153,7 @@ $modversion['blocks'][1]['description'] = _MI_ADSLIGHT_BNAME1_DESC;
 $modversion['blocks'][1]['show_func'] = 'adslight_show';
 $modversion['blocks'][1]['edit_func'] = 'adslight_edit';
 $modversion['blocks'][1]['options'] = 'date|10|25|0';
-$modversion['blocks'][1]['template'] = 'adslight_block_new.html';
+$modversion['blocks'][1]['template'] = 'adslight_block_new.tpl';
 
 $modversion['blocks'][2]['file'] = 'ads.php';
 $modversion['blocks'][2]['name'] = _MI_ADSLIGHT_BNAME2;
@@ -172,7 +161,7 @@ $modversion['blocks'][2]['description'] = _MI_ADSLIGHT_BNAME2_DESC;
 $modversion['blocks'][2]['show_func'] = 'adslight_show';
 $modversion['blocks'][2]['edit_func'] = 'adslight_edit';
 $modversion['blocks'][2]['options'] = 'hits|10|25|0';
-$modversion['blocks'][2]['template'] = 'adslight_block_top.html';
+$modversion['blocks'][2]['template'] = 'adslight_block_top.tpl';
 
 $modversion['blocks'][3]['file'] = 'ads_2.php';
 $modversion['blocks'][3]['name'] = _MI_ADSLIGHT_BNAME3;
@@ -180,13 +169,13 @@ $modversion['blocks'][3]['description'] = _MI_ADSLIGHT_BNAME3_DESC;
 $modversion['blocks'][3]['show_func'] = 'adslight_b2_show';
 $modversion['blocks'][3]['edit_func'] = 'adslight_b2_edit';
 $modversion['blocks'][3]['options'] = 'date|10|25|0';
-$modversion['blocks'][3]['template'] = 'adslight_block2_new.html';
+$modversion['blocks'][3]['template'] = 'adslight_block2_new.tpl';
 
 $modversion['blocks'][4]['file'] = 'adslight_add.php';
 $modversion['blocks'][4]['name'] = _MI_ADSLIGHT_ADDMENU;
 $modversion['blocks'][4]['description'] = _MI_ADSLIGHT_ADDMENU_DESC;
 $modversion['blocks'][4]['show_func'] = 'b_adslight_add';
-$modversion['blocks'][4]['template'] = 'adslight_block_add.html';
+$modversion['blocks'][4]['template'] = 'adslight_block_add.tpl';
 
 // Bloc Map_France //
 $modversion['blocks'][5]['file'] = 'maps.php';
@@ -194,7 +183,7 @@ $modversion['blocks'][5]['name'] = _MI_ADSLIGHT_MAPFRANCE;
 $modversion['blocks'][5]['description'] = _MI_ADSLIGHT_MAPFRANCE_DESC;
 $modversion['blocks'][5]['show_func'] = 'adslight_maps_show';
 $modversion['blocks'][5]['edit_func'] = 'adslight_maps_edit';
-$modversion['blocks'][5]['template'] = 'adslight_block_maps.html';
+$modversion['blocks'][5]['template'] = 'adslight_block_maps.tpl';
 
 // Menu
 $modversion['hasMain'] = 1;
@@ -203,13 +192,13 @@ global $xoopsUser;
 if ($xoopsUser) {
 
 $member_usid = (is_object($xoopsUser))? $xoopsUser->getVar('uid'): 0;
-		$modversion['sub'][1]['name'] = _MI_ADSLIGHT_SMENU2;
-		$modversion['sub'][1]['url'] = 'add.php';
-		$modversion['sub'][3]['name'] = _MI_ADSLIGHT_SMENU3;
-		$modversion['sub'][3]['url'] = 'search.php';
-		$modversion['sub'][2]['name'] = _MI_ADSLIGHT_SMENU1;
-    	$modversion['sub'][2]['url'] = 'members.php?usid='.$member_usid.'';
-}		
+        $modversion['sub'][1]['name'] = _MI_ADSLIGHT_SMENU2;
+        $modversion['sub'][1]['url'] = 'add.php';
+        $modversion['sub'][3]['name'] = _MI_ADSLIGHT_SMENU3;
+        $modversion['sub'][3]['url'] = 'search.php';
+        $modversion['sub'][2]['name'] = _MI_ADSLIGHT_SMENU1;
+        $modversion['sub'][2]['url'] = 'members.php?usid='.$member_usid.'';
+}
 
 // Recherche
 $modversion['hasSearch'] = 1;
@@ -229,7 +218,7 @@ $modversion['comments']['callback']['approve'] = 'adslight_com_approve';
 $modversion['comments']['callback']['update'] = 'adslight_com_update';
 
 
-// Préférences
+// PrÃ©fÃ©rences
 $modversion['hasconfig'] = 1;
 
 $modversion['config'][0]['name'] = 'adslight_currency';
@@ -639,14 +628,14 @@ $modversion['config'][52]['title'] = '_MI_ADSLIGHT_TITLE_TIPS_WRITE';
 $modversion['config'][52]['description'] = '_MI_ADSLIGHT_TITLEDESC_TIPS_WRITE';
 $modversion['config'][52]['formtype'] = 'textbox' ;
 $modversion['config'][52]['valuetype'] = 'text' ;
-$modversion['config'][52]['default'] = 'Les conseils';
+$modversion['config'][52]['default'] = '_MI_ADSLIGHT_ADVISE_TITLE';
 
 $modversion['config'][53]['name'] = 'adslight_tips_writetxt';
 $modversion['config'][53]['title'] = '_MI_ADSLIGHT_TEXT_TIPS_WRITE';
 $modversion['config'][53]['description'] = '_MI_ADSLIGHT_TEXTDESC_TIPS_WRITE';
 $modversion['config'][53]['formtype'] = 'textarea';
 $modversion['config'][53]['valuetype'] = 'text';
-$modversion['config'][53]['default'] = 'Votre texte ici';
+$modversion['config'][53]['default'] = '_MI_ADSLIGHT_ADVISE_TEXT';
 
 $modversion['config'][54]['name'] = 'adslight_active_xpayment';
 $modversion['config'][54]['title'] = '_MI_ADSLIGHT_ACTIVE_XPAYMENT';
@@ -662,7 +651,7 @@ $modversion['hasNotification'] = 1;
 $modversion['notification']['lookup_file'] = 'include/notification.inc.php';
 $modversion['notification']['lookup_func'] = 'adslight_notify_iteminfo';
 
-//Catégories
+//CatÃ©gories
 $modversion['notification']['category'][1]['name'] = 'category';
 $modversion['notification']['category'][1]['title'] = _MI_ADSLIGHT_CATEGORY_NOTIFY;
 $modversion['notification']['category'][1]['description'] = _MI_ADSLIGHT_CATEGORY_NOTIFYDSC;
@@ -687,7 +676,7 @@ $modversion['notification']['category'][3]['extraParams'] = array('pa');
 
 
 
-// AdsLight notifications nouvels annonces dans cette catégories
+// AdsLight notifications nouvels annonces dans cette catÃ©gories
 $modversion['notification']['event'][1]['name'] = 'new_listing';
 $modversion['notification']['event'][1]['category'] = 'category';
 $modversion['notification']['event'][1]['title'] = _MI_ADSLIGHT_NEWPOST_NOTIFY;
@@ -695,8 +684,8 @@ $modversion['notification']['event'][1]['caption'] = _MI_ADSLIGHT_NEWPOST_NOTIFY
 $modversion['notification']['event'][1]['description'] = _MI_ADSLIGHT_NEWPOST_NOTIFYDSC;
 $modversion['notification']['event'][1]['mail_template'] = 'listing_newpost_notify';
 $modversion['notification']['event'][1]['mail_subject'] = _MI_ADSLIGHT_NEWPOST_NOTIFYSBJ;
- 
-// AdsliGht Nouvel annonce dans toute les catégories
+
+// AdsliGht Nouvel annonce dans toute les catÃ©gories
 $modversion['notification']['event'][2]['name'] = 'new_listing';
 $modversion['notification']['event'][2]['category'] = 'global';
 $modversion['notification']['event'][2]['title'] = _MI_ADSLIGHT_GLOBAL_NEWPOST_NOTIFY;

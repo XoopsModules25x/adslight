@@ -1,7 +1,7 @@
 <{if $adslight_active_menu == 1 }>
-<{include file='db:adslight_menu.html'}>
+<{include file='db:adslight_menu.tpl'}>
 <{/if}>
-<{include file='db:adslight_search.html'}>
+<{include file='db:adslight_search.tpl'}>
 <br />
 <table border="0" cellspacing="0" cellpadding="0" align="center">
 	<td colspan="2" valign="top"></td>
@@ -47,7 +47,7 @@
 					<{$last_head_local}>
 					</td>
 			      </tr>
-			</table> 
+			</table>
 <{if $use_extra_code == 1}>
 <{foreach from=$items item=item name=items}>
 <{if $smarty.foreach.items.iteration eq $index_code_place}>
@@ -56,8 +56,8 @@
 <{else}>
 <table><tr><td align="center"><{$index_extra_code}></td></tr></table>
 <{/if}>
-<{/if}>   
-<table border="0" cellpadding="0" cellspacing="0" style="width:100%;">        
+<{/if}>
+<table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
 				<tr class='<{cycle values="odd,even"}>'>
                     <{if $xoops_isadmin}>
 					<td width="20">

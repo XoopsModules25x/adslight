@@ -31,6 +31,9 @@ if (isset($_REQUEST['op'])) {
 
 #  function AdsNewCat
 #####################################################
+/**
+ * @param $cat
+ */
 function AdsNewCat($cat)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $mydirname;
@@ -71,7 +74,7 @@ $cat_keywords = '';
     echo "<tr>
       <td class=\"even\">"._AM_ADSLIGHT_IMGCAT."  </td><td class=\"odd\" colspan=2><select name=\"img\" onChange=\"showimage()\">";
 
-    $rep = XOOPS_ROOT_PATH."/modules/adslight/images/img_cat";
+    $rep = XOOPS_ROOT_PATH."/modules/adslight/assets/images/img_cat";
     $handle=opendir($rep);
     while ($file = readdir($handle)) {
         $filelist[] = $file;
@@ -88,7 +91,7 @@ $cat_keywords = '';
             }
         }
     }
-    echo "</select>&nbsp;&nbsp;<img src=\"".XOOPS_URL."/modules/adslight/images/img_cat/default.png\" name=\"avatar\" align=\"absmiddle\"><br/><b>"._AM_ADSLIGHT_REPIMGCAT."</b><br/>../modules/adslight/images/img_cat/..</td></tr>";
+    echo "</select>&nbsp;&nbsp;<img src=\"".XOOPS_URL."/modules/adslight/assets/images/img_cat/default.png\" name=\"avatar\" align=\"absmiddle\"><br/><b>"._AM_ADSLIGHT_REPIMGCAT."</b><br/>../modules/adslight/assets/images/img_cat/..</td></tr>";
 
         echo "<tr><td class=\"even\">"._AM_ADSLIGHT_DISPLPRICE2." </td><td class=\"odd\" colspan=2><input type=\"radio\" name=\"affprice\" value=\"1\" checked>"._AM_ADSLIGHT_OUI."&nbsp;&nbsp; <input type=\"radio\" name=\"affprice\" value=\"0\">"._AM_ADSLIGHT_NON." ("._AM_ADSLIGHT_INTHISCAT.")</td></tr>";
 
@@ -114,6 +117,9 @@ $cat_keywords = '';
 
 #  function AdsModCat
 #####################################################
+/**
+ * @param $cid
+ */
 function AdsModCat($cid)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $mydirname;
@@ -151,7 +157,7 @@ function AdsModCat($cid)
     echo "<tr>
     <td class=\"even\">"._AM_ADSLIGHT_IMGCAT."  </td><td class=\"odd\"><select name=\"img\" onChange=\"showimage()\">";
 
-    $rep = XOOPS_ROOT_PATH."/modules/adslight/images/img_cat";
+    $rep = XOOPS_ROOT_PATH."/modules/adslight/assets/images/img_cat";
     $handle=opendir($rep);
     while ($file = readdir($handle)) {
         $filelist[] = $file;
@@ -168,7 +174,7 @@ function AdsModCat($cid)
             }
         }
     }
-        echo "</select>&nbsp;&nbsp;<img src=\"".XOOPS_URL."/modules/adslight/images/img_cat/$imgs\" name=\"avatar\" align=\"absmiddle\"><br/><b>"._AM_ADSLIGHT_REPIMGCAT."</b><br/>../modules/adslight/images/img_cat/..</td></tr>";
+        echo "</select>&nbsp;&nbsp;<img src=\"".XOOPS_URL."/modules/adslight/assets/images/img_cat/$imgs\" name=\"avatar\" align=\"absmiddle\"><br/><b>"._AM_ADSLIGHT_REPIMGCAT."</b><br/>../modules/adslight/assets/images/img_cat/..</td></tr>";
 
         echo "<tr><td class=\"even\">"._AM_ADSLIGHT_DISPLPRICE2." </td><td class=\"odd\" colspan=2><input type=\"radio\" name=\"affprice\" value=\"1\""; if ($affprice == "1")
         echo "checked";
@@ -212,6 +218,18 @@ function AdsModCat($cid)
 
 #  function AdsModCatS
 #####################################################
+/**
+ * @param $cidd
+ * @param $cid
+ * @param $img
+ * @param $title
+ * @param $cat_desc
+ * @param $cat_keywords
+ * @param $ordre
+ * @param $affprice
+ * @param $cat_moderate
+ * @param $moderate_subcat
+ */
 function AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $ordre, $affprice, $cat_moderate, $moderate_subcat)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname;
@@ -232,6 +250,17 @@ function AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $ordre,
 
     #  function AdsAddCat
 #####################################################
+/**
+ * @param $title
+ * @param $cat_desc
+ * @param $cat_keywords
+ * @param $cid
+ * @param $img
+ * @param $ordre
+ * @param $affprice
+ * @param $cat_moderate
+ * @param $moderate_subcat
+ */
 function AdsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affprice, $cat_moderate, $moderate_subcat)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname;
@@ -256,6 +285,10 @@ function AdsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affpri
 
 #  function AdsDelCat
 #####################################################
+/**
+ * @param     $cid
+ * @param int $ok
+ */
 function AdsDelCat($cid, $ok=0)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $mydirname;

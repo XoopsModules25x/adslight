@@ -69,7 +69,7 @@ switch ($action) {
 $xoopsTpl = new XoopsTpl();
 $xoopsTpl->clear_cache('db:system_block_user.html');
 $xoopsTpl->clear_cache('db:system_userinfo.html');
-$xoopsTpl->clear_cache('db:profile_userinfo.html');
+$xoopsTpl->clear_cache('db:profile_userinfo.tpl');
     break;
   case 'remove_template':
     unlink(XOOPS_ROOT_PATH.'/themes/'.$config_theme->getConfValueForOutput().'/modules/'.$file);

@@ -22,6 +22,12 @@
 
 $RSS_Content = array();
 
+/**
+ * @param $item
+ * @param $type
+ *
+ * @return array
+ */
 function RSS_Tags($item, $type)
 {
         $y = array();
@@ -50,6 +56,9 @@ function RSS_Tags($item, $type)
         return $y;
 }
 
+/**
+ * @param $channel
+ */
 function RSS_Channel($channel)
 {
     global $RSS_Content;
@@ -69,6 +78,9 @@ function RSS_Channel($channel)
     }
 }
 
+/**
+ * @param $url
+ */
 function RSS_Retrieve($url)
 {
     global $RSS_Content;
@@ -86,6 +98,9 @@ function RSS_Retrieve($url)
 
 }
 
+/**
+ * @param $url
+ */
 function RSS_RetrieveLinks($url)
 {
     global $RSS_Content;
@@ -108,6 +123,12 @@ function RSS_RetrieveLinks($url)
 
 }
 
+/**
+ * @param     $url
+ * @param int $size
+ *
+ * @return string
+ */
 function RSS_Links($url, $size = 15)
 {
     global $RSS_Content;
@@ -132,6 +153,13 @@ function RSS_Links($url, $size = 15)
 
 }
 
+/**
+ * @param     $url
+ * @param int $size
+ * @param int $site
+ *
+ * @return string
+ */
 function RSS_Display($url, $size = 15, $site = 0)
 {
     global $RSS_Content;
@@ -161,7 +189,7 @@ function RSS_Display($url, $size = 15, $site = 0)
         }
         $title = $article["title"];
         $link = $article["link"];
-        $page .= "<tr class=\"even\"><td width=\"300\"><img src=\"../images/admin/info_button.png\" border=0 /> <a href=\"$link\">$title</a><br />";
+        $page .= "<tr class=\"even\"><td width=\"300\"><img src=\"../assets/images/admin/info_button.png\" border=0 /> <a href=\"$link\">$title</a><br />";
 
         $description = $article["description"];
         if ($description != false) {
@@ -183,6 +211,14 @@ function RSS_Display($url, $size = 15, $site = 0)
 
 }
 
+/**
+ * @param     $url
+ * @param int $size
+ * @param int $site
+ * @param int $withdate
+ *
+ * @return string
+ */
 function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
 {
     global $RSS_Content;
@@ -214,7 +250,7 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
         $title = $article["title"];
         $link = $article["link"];
 
-        $page .= "<img src=\"../images/admin/comment.png\" border=0 />&nbsp;&nbsp;&nbsp;<a href=\"$link\">$title</a><br /><br />";
+        $page .= "<img src=\"../assets/images/admin/comment.png\" border=0 />&nbsp;&nbsp;&nbsp;<a href=\"$link\">$title</a><br /><br />";
 
     if ($type==0) {
              $page .="</b>";

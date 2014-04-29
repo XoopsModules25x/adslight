@@ -1,23 +1,23 @@
 <?php
 /*
 -------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops                           
+                     ADSLIGHT 2 : Module for Xoops
 
         Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-		Started with the Classifieds module and made MANY changes 
+        Started with the Classifieds module and made MANY changes
         Website : http://www.luc-bizet.fr
         Contact : adslight.translate@gmail.com
 -------------------------------------------------------------------------
-             Original credits below Version History                       
+             Original credits below Version History
 ##########################################################################
 #                    Classified Module for Xoops                         #
 #  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
 #      Started with the MyAds module and made MANY changes               #
 ##########################################################################
- Original Author: Pascal Le Boustouller                                   
- Author Website : pascal.e-xoops@perso-search.com                         
- Licence Type   : GPL                                                     
-------------------------------------------------------------------------- 
+ Original Author: Pascal Le Boustouller
+ Author Website : pascal.e-xoops@perso-search.com
+ Licence Type   : GPL
+-------------------------------------------------------------------------
 */
 
 if ($_POST['submit']) {
@@ -32,7 +32,7 @@ if ($_POST['submit']) {
     $tele      = !isset($_REQUEST['tele']) ? NULL : $_REQUEST['tele'];
     // end define vars
 
-    include("header.php");
+    include 'header.php';
 
     $module_id = $xoopsModule->getVar('mid');
 
@@ -56,7 +56,6 @@ if ($_POST['submit']) {
     }
     global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $myts, $meta;
     require_once(XOOPS_ROOT_PATH . "/modules/adslight/include/gtickets.php");
-
 
     if (!$xoopsGTicket->check(true, 'token')) {
         redirect_header(
@@ -166,10 +165,9 @@ if ($_POST['submit']) {
 } else {
     $lid = intval($_GET['lid']);
 
-    include("header.php");
+    include 'header.php';
 
     global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $myts, $meta;
-
 
     $module_id = $xoopsModule->getVar('mid');
     if (is_object($xoopsUser)) {
@@ -192,30 +190,31 @@ if ($_POST['submit']) {
     require_once(XOOPS_ROOT_PATH . "/modules/adslight/include/gtickets.php");
     include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
 
-
     include(XOOPS_ROOT_PATH . "/header.php");
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     $time     = time();
     $ipnumber = "$_SERVER[REMOTE_ADDR]";
     echo "<script type=\"text/javascript\">
-          function verify() {
+          function verify()
+          {
                 var msg = \"" . _ADSLIGHT_VALIDERORMSG . "\\n__________________________________________________\\n\\n\";
                 var errors = \"FALSE\";
-				if (window.document.cont.namep.value == \"\") {
+                if (window.document.cont.namep.value == \"\") {
                         errors = \"TRUE\";
                         msg += \"" . _ADSLIGHT_VALIDSUBMITTER . "\\n\";
                 }
-				if (window.document.cont.post.value == \"\") {
+                if (window.document.cont.post.value == \"\") {
                         errors = \"TRUE\";
                         msg += \"" . _ADSLIGHT_VALIDEMAIL . "\\n\";
                 }
-				if (window.document.cont.messtext.value == \"\") {
+                if (window.document.cont.messtext.value == \"\") {
                         errors = \"TRUE\";
                         msg += \"" . _ADSLIGHT_VALIDMESS . "\\n\";
                 }
                 if (errors == \"TRUE\") {
                         msg += \"__________________________________________________\\n\\n" . _ADSLIGHT_VALIDMSG . "\\n\";
                         alert(msg);
+
                         return false;
                 }
           }
@@ -261,14 +260,14 @@ if ($_POST['submit']) {
     echo "<table class='outer'><tr><td>" . _ADSLIGHT_YOUR_IP . "&nbsp;
         <img src=\"" . XOOPS_URL . "/modules/adslight/ip_image.php\" alt=\"\" /><br />" . _ADSLIGHT_IP_LOGGED . "
         </td></tr></table>
-	<br />";
+    <br />";
     echo "<input type=\"hidden\" name=\"ip_id\" value=\"\" />";
     echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" />";
     echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" />";
     echo "<input type=\"hidden\" name=\"date\" value=\"$time\" />";
     echo "<p><input type=\"submit\" name=\"submit\" value=\"" . _ADSLIGHT_SENDFR . "\" /></p>
 " . $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__, 1800, 'token') . "
-	</form>";
+    </form>";
 }
 echo "</td></tr></table>";
 include(XOOPS_ROOT_PATH . "/footer.php");

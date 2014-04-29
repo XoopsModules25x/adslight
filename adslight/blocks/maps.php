@@ -20,12 +20,15 @@
 -------------------------------------------------------------------------
 */
 
- if (!defined('XOOPS_ROOT_PATH')) {
-    die('XOOPS root path not defined');
-}
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
-// <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/images/map.png
+// <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/assets/images/map.png
 
+/**
+ * @param $options
+ *
+ * @return array
+ */
 function adslight_maps_show($options)
 {
     global $xoopsDB, $xoopsModuleConfig, $xoopsConfig, $blockdirname, $xoopsTpl, $block_lang;
@@ -40,7 +43,7 @@ function adslight_maps_show($options)
 
     $block['title'] = "".constant($block_lang."_TITLE")."";
 
-    $block['imgmapsurl'] = '<a title="Recherche dans votre r&eacute;gion" href="'.XOOPS_URL.'/modules/adslight/maps.php"><img src="'.XOOPS_URL.'/modules/adslight/maps/'.$xoopsConfig['language'].'/images/map.png" alt="Recherche dans votre r&eacute;gion" border="0"></a><br />';
+    $block['imgmapsurl'] = '<a title="Recherche dans votre r&eacute;gion" href="'.XOOPS_URL.'/modules/adslight/maps.php"><img src="'.XOOPS_URL.'/modules/adslight/maps/'.$xoopsConfig['language'].'/assets/images/map.png" alt="Recherche dans votre r&eacute;gion" border="0"></a><br />';
 
     $block['link'] = "<a href=\"".XOOPS_URL."/modules/$blockdirname/\"><b>".constant($block_lang."_ALL_LISTINGS")."</b></a><br />";
     $block['add'] = "<a href=\"".XOOPS_URL."/modules/$blockdirname/\"><b>".constant($block_lang."_ADDNOW")."</b></a><br />";
@@ -48,6 +51,11 @@ function adslight_maps_show($options)
     return $block;
 }
 
+/**
+ * @param $options
+ *
+ * @return string
+ */
 function adslight_maps_edit($options)
 {
  global $xoopsDB;

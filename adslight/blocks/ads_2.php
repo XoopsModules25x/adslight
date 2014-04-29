@@ -20,10 +20,13 @@
 -------------------------------------------------------------------------
 */
 
-    if (!defined('XOOPS_ROOT_PATH')) {
-    die('XOOPS root path not defined');
-    }
+defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
 
+/**
+ * @param $options
+ *
+ * @return array
+ */
 function adslight_b2_show($options)
 {
     global $xoopsDB, $xoopsModuleConfig, $blockdirname, $block_lang;
@@ -77,10 +80,10 @@ function adslight_b2_show($options)
     $a_item['price_symbol'] = $xoopsModuleConfig["".$blockdirname."_money"];
 
     if ($status == 2) {
-    $a_item['sold'] = "<img src=\"images/sold.gif\" align=\"left\" alt=\"\">";
+    $a_item['sold'] = "<img src=\"assets/images/sold.gif\" align=\"left\" alt=\"\">";
     }
 
-    $a_item['no_photo'] = "<a href=\"".XOOPS_URL."/modules/$blockdirname/viewads.php?lid=".addslashes($myrow['lid'])."\"><img class=\"thumb\" src=\"".XOOPS_URL."/modules/$blockdirname/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$ad_title\"></a>";
+    $a_item['no_photo'] = "<a href=\"".XOOPS_URL."/modules/$blockdirname/viewads.php?lid=".addslashes($myrow['lid'])."\"><img class=\"thumb\" src=\"".XOOPS_URL."/modules/$blockdirname/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$ad_title\"></a>";
 
     if ($myrow["photo"] != "") {
 //	$updir = $xoopsModuleConfig["".$blockdirname."_link_upload"];
@@ -111,6 +114,11 @@ function adslight_b2_show($options)
     return $block;
     }
 
+/**
+ * @param $options
+ *
+ * @return string
+ */
 function adslight_b2_edit($options)
 {
  global $xoopsDB;

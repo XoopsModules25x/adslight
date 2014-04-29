@@ -1,7 +1,7 @@
 <{if $adslight_active_menu == 1 }>
-<{include file='db:adslight_menu.html'}>
+<{include file='db:adslight_menu.tpl'}>
 <{/if}>
-<{include file='db:adslight_search.html'}>
+<{include file='db:adslight_search.tpl'}>
 <br />
 <{$select_go_cats}>
 <br /><br />
@@ -68,13 +68,13 @@
       <div align="center">
 				<strong><{$lang_sortby}></strong>
 				<{$lang_title}>
-				<font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=titleA"><img src="images/up.gif" align="top" alt="<{$lang_titleatoz}>" border="0" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=titleD"><img src="images/down.gif" border="0" align="top" alt="<{$lang_titleztoa}>" /></a>&nbsp;
+				<font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=titleA"><img src="assets/images/up.gif" align="top" alt="<{$lang_titleatoz}>" border="0" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=titleD"><img src="assets/images/down.gif" border="0" align="top" alt="<{$lang_titleztoa}>" /></a>&nbsp;
 				<{$lang_price}>
-				<span style="color: #1d1d1d; ">: </span><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=priceA"><img src="images/up.gif" border="0" align="top" alt="<{$lang_pricelow}>" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=priceD"><img src="images/down.gif" border="0" align="top" alt="<{$lang_pricehigh}>" /></a>&nbsp;
+				<span style="color: #1d1d1d; ">: </span><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=priceA"><img src="assets/images/up.gif" border="0" align="top" alt="<{$lang_pricelow}>" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=priceD"><img src="assets/images/down.gif" border="0" align="top" alt="<{$lang_pricehigh}>" /></a>&nbsp;
 				<{$lang_date}>
-				<font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateA"><img src="images/up.gif" border="0" align="top" alt="<{$lang_dateold}>" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateD"><img src="images/down.gif" border="0" align="top" alt="<{$lang_datenew}>" /></a>&nbsp;
+				<font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateA"><img src="assets/images/up.gif" border="0" align="top" alt="<{$lang_dateold}>" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateD"><img src="assets/images/down.gif" border="0" align="top" alt="<{$lang_datenew}>" /></a>&nbsp;
 				<{$lang_popularity}>
-				<font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=hitsA"><img src="images/up.gif" border="0" align="top" alt="<{$lang_popularityleast}>" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=hitsD"><img src="images/down.gif" border="0" align="top" alt="<{$lang_popularitymost}>" /></a><br />
+				<font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=hitsA"><img src="assets/images/up.gif" border="0" align="top" alt="<{$lang_popularityleast}>" /></a><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=hitsD"><img src="assets/images/down.gif" border="0" align="top" alt="<{$lang_popularitymost}>" /></a><br />
 				<br />
 				<font color="#ff6203">
 					<{$lang_cursortedby}>
@@ -88,8 +88,8 @@
 <table><tr><td align="center"><{$banner}></td></tr></table>
 <{else}>
 		<table><tr><td align="center"><{$index_extra_code}></td></tr></table>
-				<{/if}><{/if}>   
-			<table border="0" cellpadding="0" cellspacing="0" style="width:100%;">        
+				<{/if}><{/if}>
+			<table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
 				<tr class=<{cycle values="odd,even"}>>
                     <{if $xoops_isadmin}>
 					<td width="20">

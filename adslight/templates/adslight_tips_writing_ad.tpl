@@ -1,7 +1,7 @@
 <{if $adslight_active_menu == 1 }>
-<{include file='db:adslight_menu.html'}>
+<{include file='db:adslight_menu.tpl'}>
 <{/if}>
-<{include file='db:adslight_search.html'}>
+<{include file='db:adslight_search.tpl'}>
 <br />
 <table cellspacing="1" border="0" style="width:100%;">
 <tr>

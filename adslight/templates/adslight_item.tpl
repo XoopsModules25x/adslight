@@ -1,7 +1,7 @@
 <{if $adslight_active_menu == 1 }>
-<{include file='db:adslight_menu.html'}>
+<{include file='db:adslight_menu.tpl'}>
 <{/if}>
-<{include file='db:adslight_search.html'}>
+<{include file='db:adslight_search.tpl'}>
 <br />
 <{if $ad_exists}>
 <table>
@@ -21,7 +21,7 @@
 <{/if}>
 <{if $adslight_active_bookmark == 1 }>
 <br /><hr />
-<{include file='db:adslight_bookmark.html'}>
+<{include file='db:adslight_bookmark.tpl'}>
 <{/if}>
 <br /><hr />
 <{if $photo != "0"}>
@@ -32,16 +32,16 @@
 <{/section}>
 <{else}>
 	<div>
-		<img src="<{$xoops_url}>/modules/adslight/images/nophoto_item.gif" alt="no photo" />&nbsp;&nbsp;
-		<img src="<{$xoops_url}>/modules/adslight/images/nophoto_item.gif" alt="no photo" />&nbsp;&nbsp;
-		<img src="<{$xoops_url}>/modules/adslight/images/nophoto_item.gif" alt="no photo" />
+		<img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo" />&nbsp;&nbsp;
+		<img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo" />&nbsp;&nbsp;
+		<img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo" />
     </div>
 <{/if}>
 <{if $xoops_isuser}>
 <{if $adslight_active_xpayement == 1 }>
 <!-- xpayment -->
  <{if $purchasable && !$sold && $price_amount > 0}>
-  <{include file="db:adslight_xpayment_form.html"}>
+  <{include file="db:adslight_xpayment_form.tpl"}>
   </ tr>
   <{/if}>
 <!-- xpayment -->
@@ -54,7 +54,7 @@
 <table border="0" cellspacing="1" class="outer" style="width:200px;">
 <tr><td class="blockright">
 <{$date}><br />
-<strong><{$local_head}></strong> <{$local_town}><br /> 
+<strong><{$local_head}></strong> <{$local_town}><br />
 <strong><{$country_head}></strong> <{$local_country}><br />
 <hr />
 <{$submitter}><br />

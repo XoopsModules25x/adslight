@@ -71,7 +71,7 @@ function Index()
 
 ///////// Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
-          echo "<img src='../images/admin/error_button.png' border=0 /></td><td>";
+          echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
         echo "<font color=\"#00B4C4\"><b>"._AM_ADSLIGHT_THEREIS."</b></font> <b>$numrows</b> <font color=\"#00B4C4\">"._AM_ADSLIGHT_WAIT."</b></font>";
         echo "</td></tr></table><br />";
 
@@ -79,7 +79,7 @@ function Index()
         } else {
 
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
-        echo "<img src='../images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
+        echo "<img src='../assets/images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
         echo "<font color='#00B4C4'><b>"._AM_ADSLIGHT_NOANNVAL."</b></font>";
         echo '</td></tr></table><br />';
 
@@ -111,6 +111,9 @@ function Index()
 
 #  function ModifyAds
 #####################################################
+/**
+ * @param $lid
+ */
 function ModifyAds($lid)
 {
     global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $mydirname, $admin_lang;
@@ -280,6 +283,28 @@ function ModifyAds($lid)
 #  function ModifyAdsS
 #####################################################
 
+/**
+ * @param $lid
+ * @param $cat
+ * @param $title
+ * @param $status
+ * @param $expire
+ * @param $type
+ * @param $desctext
+ * @param $tel
+ * @param $price
+ * @param $typeprice
+ * @param $typeusure
+ * @param $date
+ * @param $email
+ * @param $submitter
+ * @param $town
+ * @param $country
+ * @param $contactby
+ * @param $premium
+ * @param $valid
+ * @param $photo
+ */
 function ModifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
@@ -307,6 +332,10 @@ function ModifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
 
 #  function ListingDel
 #####################################################
+/**
+ * @param $lid
+ * @param $photo
+ */
 function ListingDel($lid, $photo)
 {
      global $xoopsDB, $mydirname, $admin_lang;

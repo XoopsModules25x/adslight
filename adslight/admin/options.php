@@ -131,6 +131,9 @@ function Index()
 
 #  function ListingAddType
 #####################################################
+/**
+ * @param $type
+ */
 function ListingAddType($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
@@ -166,6 +169,9 @@ function ListingAddType($type)
 
 #  function ListingModType
 #####################################################
+/**
+ * @param $id_type
+ */
 function ListingModType($id_type)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mydirname, $admin_lang;
@@ -195,6 +201,10 @@ function ListingModType($id_type)
 
 #  function ListingModTypeS
 #####################################################
+/**
+ * @param $id_type
+ * @param $nom_type
+ */
 function ListingModTypeS($id_type, $nom_type)
 {
     global $xoopsDB,$xoopsConfig, $myts, $mydirname, $admin_lang;
@@ -209,6 +219,9 @@ function ListingModTypeS($id_type, $nom_type)
 
 #  function ListingDelType
 #####################################################
+/**
+ * @param $id_type
+ */
 function ListingDelType($id_type)
 {
     global $xoopsDB, $mydirname, $admin_lang;
@@ -221,6 +234,9 @@ function ListingDelType($id_type)
 
 #  function ListingAddPrice
 #####################################################
+/**
+ * @param $type
+ */
 function ListingAddPrice($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
@@ -255,6 +271,9 @@ function ListingAddPrice($type)
 
 #  function ListingModPrice
 #####################################################
+/**
+ * @param $id_price
+ */
 function ListingModPrice($id_price)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mydirname, $admin_lang;
@@ -286,6 +305,10 @@ function ListingModPrice($id_price)
 
 #  function ListingModPriceS
 #####################################################
+/**
+ * @param $id_price
+ * @param $nom_price
+ */
 function ListingModPriceS($id_price, $nom_price)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
@@ -300,6 +323,9 @@ function ListingModPriceS($id_price, $nom_price)
 
 #  function ListingDelPrice
 #####################################################
+/**
+ * @param $id_price
+ */
 function ListingDelPrice($id_price)
 {
     global $xoopsDB, $mydirname, $admin_lang;
@@ -312,6 +338,9 @@ function ListingDelPrice($id_price)
 
 #  function ListingAddUsure
 #####################################################
+/**
+ * @param $type
+ */
 function ListingAddUsure($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
@@ -346,6 +375,9 @@ function ListingAddUsure($type)
 
 #  function ListingModUsure
 #####################################################
+/**
+ * @param $id_usure
+ */
 function ListingModUsure($id_usure)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mydirname, $admin_lang;
@@ -377,6 +409,10 @@ function ListingModUsure($id_usure)
 
 #  function ListingModUsureS
 #####################################################
+/**
+ * @param $id_usure
+ * @param $nom_usure
+ */
 function ListingModUsureS($id_usure, $nom_usure)
 {
     global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
@@ -391,6 +427,9 @@ function ListingModUsureS($id_usure, $nom_usure)
 
 #  function ListingDelUsure
 #####################################################
+/**
+ * @param $id_usure
+ */
 function ListingDelUsure($id_usure)
 {
     global $xoopsDB, $mydirname, $admin_lang;

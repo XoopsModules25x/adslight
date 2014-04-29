@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" name="russian" ?>
+<?xml version="1.0" encoding="UTF-8" name="russian" ?>
 <data>
 	<config>
 		<enableRegions><![CDATA[true]]></enableRegions>

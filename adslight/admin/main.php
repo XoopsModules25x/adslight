@@ -51,14 +51,14 @@ echo "<table width=\"50%\" border=\"0\" cellspacing=\"8\" cellpadding=\"0\">
 $resultat_site = "http://www.i-luc.fr/release/release.html";
 $page1 = implode("", file("$resultat_site"));
 if (preg_match("1.07",$page1)) { echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
-  echo "<img src='../images/admin/info_button_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
+  echo "<img src='../assets/images/admin/info_button_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
   echo "<font color='#00B4C4'><b>"._AM_ADSLIGHT_RELEASEOK."- AdsLigh 1.07</b></font>";
   echo "</td></tr></table><br />";
 
 } else {
 
   echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
-  echo "<img src='../images/admin/error_button_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEDOWNLOAD.\" /></td><td>";
+  echo "<img src='../assets/images/admin/error_button_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEDOWNLOAD.\" /></td><td>";
   echo "<font color='#FE0101'><b>"._AM_ADSLIGHT_RELEASEISNOTOK."</b></font><br />";
   echo "<a href='http://www.i-luc.fr/adslight/modules/TDMDownloads/visit.php?cid=1&lid=3'>"._AM_ADSLIGHT_RELEASEDOWNLOAD." > AdsLight 1.08</a></td></tr></table><br />";
 
@@ -71,14 +71,14 @@ if (preg_match("1.07",$page1)) { echo "<table class='outer' border=0 cellspacing
     if ($numrows>0) {
 
            echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
-          echo "<img src='../images/admin/error_button.png' border=0 /></td><td>";
+          echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
         echo "<font color=\"#00B4C4\"><b>"._AM_ADSLIGHT_THEREIS."</b></font> <b>$numrows</b> <font color=\"#00B4C4\">"._AM_ADSLIGHT_WAIT."</b></font>";
         echo "</td></tr></table><br />";
 
         } else {
 
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
-        echo "<img src='../images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
+        echo "<img src='../assets/images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
         echo "<font color='#00B4C4'><b>"._AM_ADSLIGHT_NOANNVAL."</b></font>";
         echo '</td></tr></table><br />';
 
@@ -91,15 +91,15 @@ if (preg_match("1.07",$page1)) { echo "<table class='outer' border=0 cellspacing
           echo '<table width="50%" border="0" class="outer">
                   <tr><th align="left">'._AM_ADSLIGHT_ADSMENU_TITLE.'</th></tr>
 
-                 <tr class="odd"><td><img src="../images/admin/report_go.png" border=0 />
+                 <tr class="odd"><td><img src="../assets/images/admin/report_go.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/adslight/admin/validate_ads.php">'._AM_ADSLIGHT_ADSMENU_VALIDADS.'</a>
                   </td></tr>
 
-                 <tr class="even"><td><img src="../images/admin/report_magnify.png" border=0 />
+                 <tr class="even"><td><img src="../assets/images/admin/report_magnify.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/adslight/admin/view_ads.php">'._AM_ADSLIGHT_ADSMENU_VIEWADS.'</a>
                   </td></tr>
 
-                  <tr class="odd"><td><img src="../images/admin/report_add.png" border=0 />
+                  <tr class="odd"><td><img src="../assets/images/admin/report_add.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/adslight/admin/modify_ads.php">'._AM_ADSLIGHT_ADS_MODIFADS.'</a>
                   </td></tr>
 
@@ -148,10 +148,10 @@ if (preg_match("1.07",$page1)) { echo "<table class='outer' border=0 cellspacing
 
 
           echo '</td></tr>
-                  <tr class="odd"><td><img src="../images/admin/user_go.png" border=0 />
+                  <tr class="odd"><td><img src="../assets/images/admin/user_go.png" border=0 />
                   <a href="'._AM_ADSLIGHT_MENURSSFORUM_LINK1.'">'._AM_ADSLIGHT_MENURSSFORUM_GOFORUM.'</a>  |
 
-                  <img src="../images/admin/vcard_add.png" border=0 />
+                  <img src="../assets/images/admin/vcard_add.png" border=0 />
                   <a href="'._AM_ADSLIGHT_MENURSSFORUM_LINK2.'">'._AM_ADSLIGHT_MENURSSFORUM_SUBSCRIT.'</a>  |
                   </td></tr>
                   </table>';
@@ -205,11 +205,11 @@ $Num4 = mysql_num_rows(mysql_query("select * from ".$xoopsDB->prefix("xoopscomme
           echo '<table width=100 border="0" class="outer"><tr>
                    <th width="50%" align="left">'._AM_ADSLIGHT_CATMENU_TITLE.'</th></tr>
 
-                  <tr class="odd"><td><img src="../images/admin/chart_organisation_add.png" border=0 />
+                  <tr class="odd"><td><img src="../assets/images/admin/chart_organisation_add.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/adslight/admin/category.php?op=AdsNewCat&cid=0">'._AM_ADSLIGHT_CATMENU_CATEGORY.'</a>
                   </td></tr>
 
-                  <tr class="even"><td><img src="../images/admin/chart_organisation.png" border=0 />
+                  <tr class="even"><td><img src="../assets/images/admin/chart_organisation.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/adslight/admin/map.php">'._AM_ADSLIGHT_CATMENU_MODIFCAT.'</a>
                   </td></tr>
 
@@ -219,15 +219,15 @@ $Num4 = mysql_num_rows(mysql_query("select * from ".$xoopsDB->prefix("xoopscomme
           echo '<table width=100 border="0" class="outer"><tr>
                 <th align="left">'._AM_ADSLIGHT_USERMENU_TITLE.'</th></tr>
 
-                  <tr class="odd"><td><img src="../images/admin/email_forward.png" border=0 />
+                  <tr class="odd"><td><img src="../assets/images/admin/email_forward.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/system/admin.php?fct=mailusers">'._AM_ADSLIGHT_USERMENU_SENDMAIL.'</a>
                   </td></tr>
 
-                  <tr class="even"><td><img src="../images/admin/comment_user.png" border=0 />
+                  <tr class="even"><td><img src="../assets/images/admin/comment_user.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/system/admin.php?fct=comments">'._AM_ADSLIGHT_USERMENU_COMMENT.'</a>
                   </td></tr>
 
-                 <tr class="odd"><td><img src="../images/admin/web_layout.png" border=0 />
+                 <tr class="odd"><td><img src="../assets/images/admin/web_layout.png" border=0 />
                  <a href="'.XOOPS_URL.'/modules/system/admin.php?fct=banners">'._AM_ADSLIGHT_USERMENU_BAMMIER.'</a>
                  </td></tr>
 
@@ -237,11 +237,11 @@ $Num4 = mysql_num_rows(mysql_query("select * from ".$xoopsDB->prefix("xoopscomme
           echo '<table width=100 border="0" class="outer"><tr>
                 <th align="left">'._AM_ADSLIGHT_DOWNLOADS_TITLE.'</th></tr>
 
-                  <tr class="odd"><td><img src="../images/admin/brick.png" border=0 />
+                  <tr class="odd"><td><img src="../assets/images/admin/brick.png" border=0 />
                   <a href="http://sourceforge.net/projects/adslight/files/Plugins%20AdsLight/">'._AM_ADSLIGHT_DOWNLOADS_PLUGINS.'</a>
                   </td></tr>
 
-                  <!-- <tr class="even"><td><img src="../images/admin/world.png" border=0 />
+                  <!-- <tr class="even"><td><img src="../assets/images/admin/world.png" border=0 />
                   <a href="http://www.i-luc.fr/adslight/modules/TDMDownloads/index.php">'._AM_ADSLIGHT_DOWNLOADS_MAPS.'</a>
                   </td></tr> -->
 
@@ -252,23 +252,23 @@ $Num4 = mysql_num_rows(mysql_query("select * from ".$xoopsDB->prefix("xoopscomme
 
                   <tr><th align="left">'._AM_ADSLIGHT_DEVLLP_TITLE.'</th></tr>
 
-                 <tr class="odd"><td><img src="../images/admin/page_white_code.png" border=0 />
+                 <tr class="odd"><td><img src="../assets/images/admin/page_white_code.png" border=0 />
                  <a href="mailto:adslight.translate@gmail.com?subject=Hack AdsLight">'._AM_ADSLIGHT_DEVLLP_HACK.'</a>
                  </td></tr>
 
-                 <tr class="even"><td><img src="../images/admin/page_white_world.png" border=0 />
+                 <tr class="even"><td><img src="../assets/images/admin/page_white_world.png" border=0 />
                  <a href="mailto:adslight.translate@gmail.com?subject=Traduction AdsLight">'._AM_ADSLIGHT_DEVLLP_TRANSLATE.'</a>
                  </td></tr>
 
-                  <tr class="odd"><td><img src="../images/admin/page_white_text.png" border=0 />
+                  <tr class="odd"><td><img src="../assets/images/admin/page_white_text.png" border=0 />
                   <a href="mailto:adslight.translate@gmail.com?subject=Correction AdsLight">'._AM_ADSLIGHT_DEVLLP_CORRECTION.'</a>
                   </td></tr>
 
-                  <tr class="even"><td><img src="../images/admin/page_white_flash.png" border=0 />
+                  <tr class="even"><td><img src="../assets/images/admin/page_white_flash.png" border=0 />
                   <a href="mailto:adslight.translate@gmail.com?subject=Correction AdsLight">'._AM_ADSLIGHT_DEVLLP_MAPFLASH.'</a>
                   </td></tr>
 
-              <!--	<tr class="odd"><td><img src="../images/admin/group.png" border=0 />
+              <!--	<tr class="odd"><td><img src="../assets/images/admin/group.png" border=0 />
                   <a href="'.XOOPS_URL.'/modules/adslight/admin/support_forum.php">'._AM_ADSLIGHT_DEVLLP_FORUM.'</a>
                   </td></tr> -->
 

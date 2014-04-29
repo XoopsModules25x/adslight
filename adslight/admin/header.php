@@ -29,7 +29,13 @@ if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
 
 IF (!@ include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.admin.php"):
 
-function loadModuleAdminMenu($currentoption, $breadcrumb = "")
+    /**
+     * @param        $currentoption
+     * @param string $breadcrumb
+     *
+     * @return string
+     */
+    function loadModuleAdminMenu($currentoption, $breadcrumb = "")
 {
     if (!$adminmenu = $GLOBALS["xoopsModule"]->getAdminMenu()) {
         return false;
