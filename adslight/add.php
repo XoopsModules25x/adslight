@@ -20,12 +20,12 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 $myts =& MyTextSanitizer::getInstance();// MyTextSanitizer object
 require XOOPS_ROOT_PATH."/modules/adslight/include/gtickets.php";
 include XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 include XOOPS_ROOT_PATH."/class/module.errorhandler.php";
-include 'include/functions.php';
+include_once __DIR__ . '/include/functions.php';
 // include_once XOOPS_ROOT_PATH."/class/captcha/xoopscaptcha.php";
 
 $erh = new ErrorHandler; //ErrorHandler object
@@ -112,7 +112,7 @@ if ($_POST["title"]=="") {
     $newid = $xoopsDB->genId($xoopsDB->prefix("adslight_listing")."_lid_seq");
 
     $sql = sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", $xoopsDB->prefix("adslight_listing"), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid);
-    $xoopsDB->query($sql) or $erh->show("0013");
+    $xoopsDB->query($sql) || $erh->show("0013");
 
     $lid = $xoopsDB->getInsertId();
 
@@ -263,12 +263,12 @@ $cat_perms = adslight_MygetItemIds('adslight_submit');
         redirect_header(XOOPS_URL."/modules/adslight/index.php", 3, _NOPERM);
         exit();
     }
-//// Début Menu déroulant /////
+//// Dï¿½but Menu dï¿½roulant /////
 ob_start();
     $mytree->makeMySelBox('title','title', $cid,'cid');
     $form->addElement(new XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_contents()), true);
      ob_end_clean();
-//// Fin Menu déroulant /////
+//// Fin Menu dï¿½roulant /////
 
 $category = $xoopsDB->query("select title, cat_moderate from ".$xoopsDB->prefix("adslight_categories")." where cid=".mysql_real_escape_string($cid)."");
 

@@ -44,7 +44,7 @@
                 }
             }
             if ($bnum) {
-                $n_funcnum++;
+                ++$n_funcnum;
                 $modversion['blocks'][$n_funcnum]['file'] = $fblock['func_file'];
                 $modversion['blocks'][$n_funcnum]['name'] = $fblock['name'];
                 $modversion['blocks'][$n_funcnum]['description'] = $fblock['name'];
@@ -60,7 +60,7 @@
                         $local_msgs[] = "Option's values of the cloned block <b>".$fblock['name']."</b> will be kept. (value = <b>".$fblock['options']."</b>)";
                     } elseif (count($old_vals) < count($def_vals)) {
                         // the number of parameters is increased
-                        for ($j=0; $j < count($old_vals); $j++) {
+                        for ($j=0; $j < count($old_vals); ++$j) {
                             $def_vals[$j] = $old_vals[$j];
                         }
                         $modversion['blocks'][$n_funcnum]['options'] = implode("|",$def_vals);
@@ -95,7 +95,7 @@
                     $modversion['blocks'][$i]['options'] = $fblock['options'];
                     $local_msgs[] = "Option's values of the block <b>".$fblock['name']."</b> will be kept. (value = <b>".$fblock['options']."</b>)";
                 } elseif (count($old_vals) < count($def_vals)) {
-                    for ($j=0; $j < count($old_vals); $j++) {
+                    for ($j=0; $j < count($old_vals); ++$j) {
                         $def_vals[$j] = $old_vals[$j];
                     }
                     $modversion['blocks'][$i]['options'] = implode("|",$def_vals);

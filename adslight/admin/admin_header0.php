@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include_once '../../../include/cp_header.php';
+include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 include_once $GLOBALS['xoops']->path( "/modules/adslight/include/gtickets.php");
 include_once $GLOBALS['xoops']->path( "/modules/adslight/include/functions.php");

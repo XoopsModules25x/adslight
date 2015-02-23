@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH.'/modules/adslight/include/gtickets.php';
 
 $myts =& MyTextSanitizer::getInstance();
@@ -47,7 +47,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'),'cid','pid
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsUser, $xoopsTpl, $myts, $mytree, $meta, $mid, $mydirname, $main_lang, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsUser, $xoopsTpl, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
@@ -168,14 +168,14 @@ while ($myrow = $xoopsDB->fetchArray($result)) {
                     $subcategories .= '<br />';
                 }
                 $subcategories .= '-&nbsp;<a href="'.XOOPS_URL.'/modules/adslight/viewcats.php?cid='.$ele['cid'].'">'.$chtitle.'</a>';
-                $space++;
-                $chcount++;
+                ++$space;
+                ++$chcount;
                 $content .= $ele['title'].' ';
             }
         }
     }
         $xoopsTpl->append('categories', array('image' => $img, 'id' => $myrow['cid'], 'title' => $myts->htmlSpecialChars($myrow['title']), 'new' => categorynewgraphic($myrow['cid']), 'subcategories' => $subcategories, 'totallisting' => $totallisting, 'count' => $count));
-         $count++;
+         ++$count;
     }
 }
     $cat_perms = '';
@@ -185,7 +185,7 @@ if (is_array($categories) && count($categories) > 0) {
 
     list($ads) = $xoopsDB->fetchRow($xoopsDB->query("select SQL_CACHE COUNT(*)  FROM ".$xoopsDB->prefix('adslight_listing')." WHERE valid='Yes' AND status!='1' $cat_perms"));
 
-    list($catt) = $xoopsDB->fetchRow($xoopsDB->query("select COUNT(*)  FROM ".$xoopsDB->prefix("".$mydirname."_categories").""));
+    list($catt) = $xoopsDB->fetchRow($xoopsDB->query("select COUNT(*)  FROM ".$xoopsDB->prefix("".$moduleDirName."_categories").""));
 
     $submit_perms = adslight_MygetItemIds('adslight_submit');
 
@@ -310,7 +310,7 @@ while (list($cod_img, $pic_lid, $uid_owner, $url)=$xoopsDB->fetchRow($resultp)) 
 
     }
             $a_item['hits'] = $hits;
-            $rank++;
+            ++$rank;
             $xoopsTpl->append('items', $a_item);
             }
         }

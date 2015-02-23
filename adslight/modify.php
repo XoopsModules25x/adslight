@@ -20,9 +20,9 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
-$mydirname = basename( dirname( __FILE__ ) ) ;
-$main_lang =  '_' . strtoupper( $mydirname ) ;
+include_once __DIR__ . '/header.php';
+$moduleDirName = basename( __DIR__ ) ;
+$main_lang =  '_' . strtoupper( $moduleDirName ) ;
 require_once( XOOPS_ROOT_PATH."/modules/adslight/include/gtickets.php" ) ;
 $myts =& MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
@@ -50,7 +50,7 @@ if (!$gperm_handler->checkRight("adslight_submit", $perm_itemid, $groups, $modul
  */
 function ListingDel($lid, $ok)
 {
-    global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $mydirname, $main_lang;
+    global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
     $result = $xoopsDB->query("select usid FROM ".$xoopsDB->prefix("adslight_listing")." where lid=".mysql_real_escape_string($lid)."");
     list($usid) = $xoopsDB->fetchRow($result);
@@ -99,7 +99,7 @@ function ListingDel($lid, $ok)
  */
 function DelReply($r_lid, $ok)
 {
-    global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $mydirname, $main_lang;
+    global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
     $result = $xoopsDB->query("select l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ".$xoopsDB->prefix("adslight_listing")." l LEFT JOIN ".$xoopsDB->prefix("adslight_replies")." r ON l.lid=r.lid  where r.r_lid=".mysql_real_escape_string($r_lid)."");
     list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
@@ -128,7 +128,7 @@ function DelReply($r_lid, $ok)
  */
 function ModAd($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $xoopsUser, $xoopsTheme, $myts, $xoopsLogger, $mydirname, $main_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $xoopsUser, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
     include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
     include_once XOOPS_ROOT_PATH."/modules/adslight/include/functions.php";
@@ -379,7 +379,7 @@ function ModAd($lid)
  */
 function ModAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModuleConfig, $myts, $xoopsLogger, $mydirname, $main_lang, $xoopsGTicket;
+    global $xoopsDB, $xoopsConfig, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang, $xoopsGTicket;
 
     if ( ! $xoopsGTicket->check( true , 'token' ) ) {
         redirect_header(XOOPS_URL."/modules/adslight/index.php", 3,$xoopsGTicket->getErrors());

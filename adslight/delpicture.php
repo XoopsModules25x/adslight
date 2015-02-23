@@ -20,21 +20,21 @@
 -------------------------------------------------------------------------
 */
 
-$mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
-$main_lang =  '_' . strtoupper( $mydirname ) ;
+$moduleDirName = basename( dirname( __DIR__ ) ) ;
+$main_lang =  '_' . strtoupper( $moduleDirName ) ;
 
 /**
  * Xoops Header
  */
-include_once '../../mainfile.php';
-include_once '../../header.php';
-include_once '../../class/criteria.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
+include_once XOOPS_ROOT_PATH . '/header.php';
+include_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**
  * Module classes
  */
 
-include 'class/pictures.php';
+include __DIR__ . '/class/pictures.php';
 
 /**
  * Check if using XoopsCube (by jlm69)
@@ -110,4 +110,4 @@ $xoopsDB->queryF("UPDATE ".$xoopsDB->prefix("adslight_listing")." SET photo=phot
 /**
  * Close page
  */
-include '../../footer.php';
+include_once XOOPS_ROOT_PATH . '/footer.php';

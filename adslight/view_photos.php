@@ -23,14 +23,14 @@
 /**
  * Xoops header
  */
-include_once '../../mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoopsOption['template_main'] = "adslight_view_photos.tpl";
-include_once '../../header.php';
+include_once XOOPS_ROOT_PATH . '/header.php';
 
 /**
  * Module classes
  */
-include 'class/pictures.php';
+include_once __DIR__ . '/class/pictures.php';
 if ( isset($_GET['lid'])) {
         $lid = $_GET['lid'];
         } else {
@@ -239,4 +239,4 @@ include XOOPS_ROOT_PATH.'/include/comment_view.php';
 /**
  * Closing the page
  */
-include '../../footer.php';
+include XOOPS_ROOT_PATH . '/footer.php';

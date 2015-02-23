@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 
 if ( isset($_GET['cod_img']) ) {
     $cod_img = intval($_GET['cod_img']);

@@ -18,8 +18,8 @@
  * @version    $Id $
  */
 
-require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/include/cp_header.php';
-include_once dirname(__FILE__) . '/admin_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 xoops_cp_header();
 
@@ -28,4 +28,4 @@ xoops_cp_header();
     echo $indexAdmin->addNavigation('index.php');
     echo $indexAdmin->renderIndex();
 
-include 'admin_footer.php';
+include_once __DIR__ . '/admin_footer.php';

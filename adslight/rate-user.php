@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 include_once XOOPS_ROOT_PATH."/class/module.errorhandler.php";
 $myts =& MyTextSanitizer::getInstance(); // MyTextSanitizer object
 include_once XOOPS_ROOT_PATH."/modules/adslight/include/functions.php";
@@ -87,7 +87,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $newid = $xoopsDB->genId($xoopsDB->prefix("adslight_user_votedata")."_ratingid_seq");
     $datetime = time();
     $sql = sprintf("INSERT INTO %s (ratingid, usid, ratinguser, rating, ratinghostname, ratingtimestamp) VALUES (%u, %u, %u, %u, '%s', %u)", $xoopsDB->prefix("adslight_user_votedata"), $newid, $usid, $ratinguser, $rating, $ip, $datetime);
-    $xoopsDB->query($sql) or $eh->show("0013");
+    $xoopsDB->query($sql) || $eh->show("0013");
 
     //All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
     updateUrating($usid);
@@ -114,6 +114,6 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $xoopsTpl->assign('lang_donotvote', constant("_ADSLIGHT_DONOTVOTE"));
     $xoopsTpl->assign('lang_rateit', constant("_ADSLIGHT_RATEIT"));
     $xoopsTpl->assign('lang_cancel', _CANCEL);
-    $xoopsTpl->assign('mydirname', $mydirname);
+    $xoopsTpl->assign('mydirname', $moduleDirName);
     include XOOPS_ROOT_PATH.'/footer.php';
 }

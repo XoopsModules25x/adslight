@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 //include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 
 if (isset($_REQUEST['op'])) {
@@ -29,7 +29,7 @@ if (isset($_REQUEST['op'])) {
     $op = 'liste';
 }
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 xoops_cp_header();
 //loadModuleAdminMenu(3, "");
 

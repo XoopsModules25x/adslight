@@ -23,7 +23,7 @@
 /**
 * Protection against inclusion outside the site
 */
-// defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
 /**
 * Includes of form objects and uploader
@@ -75,7 +75,7 @@ class jlm_pictures extends XoopsObject
      */
     function load($id)
     {
-        global $mydirname;
+        global $moduleDirName;
         $sql = 'SELECT * FROM '.$this->db->prefix("adslight_pictures").' WHERE cod_img='.$id.'';
         $myrow = $this->db->fetchArray($this->db->query($sql));
         $this->assignVars($myrow);
@@ -96,7 +96,7 @@ class jlm_pictures extends XoopsObject
      */
     function getAll_pictures($criteria=array(), $asobject=false, $sort="cod_img", $order="ASC", $limit=0, $start=0)
     {
-        global $mydirname;
+        global $moduleDirName;
         $db =& XoopsDatabaseFactory::getDatabaseConnection();
         $ret = array();
         $where_query = "";
@@ -163,7 +163,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      */
     function &get($id,$lid) {
 
-            global $mydirname;
+            global $moduleDirName;
 
             $sql = 'SELECT * FROM '.$this->db->prefix("adslight_pictures").' WHERE cod_img='.$id.' and lid='.$lid.'';
             if (!$result = $this->db->query($sql)) {
@@ -190,7 +190,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      */
     function insert(&$jlm_pictures, $force = false)
     {
-        global $xoopsConfig, $lid, $mydirname;
+        global $xoopsConfig, $lid, $moduleDirName;
         if (get_class($jlm_pictures) != 'jlm_pictures') {
                 return false;
         }
@@ -262,7 +262,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      */
     function delete(&$jlm_pictures, $force = false)
     {
-        global $mydirname;
+        global $moduleDirName;
 
         if (get_class($jlm_pictures) != 'jlm_pictures') {
             return false;
@@ -290,7 +290,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     function &getObjects($criteria = null, $id_as_key = false)
     {
 
-        global $mydirname;
+        global $moduleDirName;
 
         $ret = array();
         $limit = $start = 0;
@@ -329,7 +329,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     */
     function getCount($criteria = null)
     {
-        global $mydirname;
+        global $moduleDirName;
 
         $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix("adslight_pictures");
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -352,7 +352,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     */
     function deleteAll($criteria = null)
     {
-    global $mydirname;
+    global $moduleDirName;
         $sql = 'DELETE FROM '.$this->db->prefix("adslight_pictures");
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere();
@@ -377,7 +377,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      */
     function renderFormSubmit($uid,$lid,$maxbytes,$xoopsTpl)
     {
-        global $mydirname, $main_lang, $xoopsUser;
+        global $moduleDirName, $main_lang, $xoopsUser;
         $form = new XoopsThemeForm(constant("_ADSLIGHT_SUBMIT_PIC_TITLE"), "form_picture", "".XOOPS_URL."/modules/adslight/add_photo.php?lid=$lid&uid=".$xoopsUser->getVar('uid')."", "post", true);
         $field_url = new XoopsFormFile(constant("_ADSLIGHT_SELECT_PHOTO"), "sel_photo", 2000000);
         $field_desc = new XoopsFormText(constant("_ADSLIGHT_CAPTION"), "caption", 35, 55);
@@ -434,7 +434,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     */
     function renderFormEdit($caption,$cod_img,$filename)
     {
-        global $mydirname, $main_lang;
+        global $moduleDirName, $main_lang;
 
         $form 		= new XoopsThemeForm(_ADSLIGHT_EDIT_CAPTION, "form_picture", "editdesc.php", "post", true);
         $field_desc 	= new XoopsFormText($caption, "caption", 35, 55);

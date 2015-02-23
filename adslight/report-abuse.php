@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 require_once( XOOPS_ROOT_PATH."/modules/adslight/include/gtickets.php" ) ;
 include(XOOPS_ROOT_PATH."/modules/adslight/include/functions.php");
 
@@ -29,7 +29,7 @@ include(XOOPS_ROOT_PATH."/modules/adslight/include/functions.php");
  */
 function ReportAbuse($lid)
 {
-   global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $xoopsUser, $xoopsTheme, $xoopsLogger, $mydirname, $main_lang;
+   global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $xoopsUser, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
     include XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
     include XOOPS_ROOT_PATH."/header.php";
@@ -88,7 +88,7 @@ echo "</table><br />
  */
 function MailAd($lid, $yname, $ymail, $fname, $fmail)
 {
-    global $xoopsConfig, $xoopsUser, $xoopsTpl, $xoopsDB, $xoopsModule, $xoopsModuleConfig, $myts, $xoopsLogger, $mydirname, $main_lang;
+    global $xoopsConfig, $xoopsUser, $xoopsTpl, $xoopsDB, $xoopsModule, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
 if ($xoopsModuleConfig["adslight_use_captcha"] == '1') {
     xoops_load("xoopscaptcha");

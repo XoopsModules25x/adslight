@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 // Select Maps
 $path = XOOPS_ROOT_PATH.'/modules/adslight/maps';
@@ -50,16 +50,16 @@ $modversion['author'] = 'Luc Bizet **';
 $modversion['help']        = 'page=help';
 $modversion['license'] = 'GPL';
 $modversion['license_file'] = 'http://www.gnu.org/licenses/gpl.html';
-$modversion['official'] = 0;
+ $modversion['official'] = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
 $modversion['image'] = 'assets/images/adslight.png';
-$modversion['dirname'] = basename(dirname(__FILE__));
+$modversion['dirname'] = basename(__DIR__);
 
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 //about
 $modversion["module_status"]       = "Beta 3 ";
-$modversion['release_date']        = '2014/04/23';
+$modversion['release_date']        = '2015/02/23';
 $modversion["module_website_url"]  = "www.xoops.org";
 $modversion["module_website_name"] = "XOOPS";
 $modversion['min_php']             = '5.3.7';

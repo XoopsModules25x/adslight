@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH.'/modules/adslight/include/gtickets.php';
 xoops_load("XoopsLocal");
 $myts =& MyTextSanitizer::getInstance();
@@ -59,7 +59,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'),'cid','pid
  */
 function viewads($lid=0)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $myts, $meta, $mydirname, $main_lang, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
     $GLOBALS['xoopsOption']['template_main'] = "adslight_item.tpl";
@@ -140,7 +140,7 @@ if ($xoopsUser) {
     $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM );
     $xoopsTpl->assign('add_from_sitename', $xoopsConfig['sitename']);
     $xoopsTpl->assign('ad_exists', $recordexist);
-    $xoopsTpl->assign('mydirname', $mydirname);
+    $xoopsTpl->assign('mydirname', $moduleDirName);
 
     $count = 0;
     $x=0;
@@ -175,7 +175,7 @@ if ($xoopsUser) {
             $ctitle = $myts->htmlSpecialChars($ctitle);
             $varid[$x]=$ccid;
             $varnom[$x]=$ctitle;
-            $x++;
+            ++$x;
         }
         $x=$x-1;
     }
@@ -359,7 +359,7 @@ $user_profile = XoopsUser::getUnameFromId($usid);
 $xoopsTpl->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="'._ADSLIGHT_PROFILE.'" />&nbsp;&nbsp;<a rel="nofollow" href="'.XOOPS_URL.'/user.php?usid='.addslashes($usid).'">'._ADSLIGHT_PROFILE.' '.$user_profile.'</a>');
 
 if ($photo != '') {
-include 'class/pictures.php';
+include_once __DIR__ . '/class/pictures.php';
 
 $criteria_lid = new criteria('lid',$lid);
 $criteria_uid = new criteria('uid',$usid);

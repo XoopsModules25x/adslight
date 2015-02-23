@@ -20,9 +20,9 @@
 -------------------------------------------------------------------------
 */
 
-include '../../mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 
-$mydirname = basename( dirname( __FILE__ ) ) ;
+$moduleDirName = basename( __DIR__ ) ;
 
 $com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {

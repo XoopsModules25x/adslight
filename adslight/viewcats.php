@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH.'/modules/adslight/include/gtickets.php';
 xoops_load("XoopsLocal");
 $myts =& MyTextSanitizer::getInstance();
@@ -62,7 +62,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'),'cid','pid
  */
 function Adsview ($cid=0,$min=0,$orderby,$show=0)
 {
-    global $xoopsDB, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsModuleConfig, $myts, $mytree, $imagecat, $meta, $mydirname, $main_lang, $xoopsUser, $mid, $prem_perm, $xoopsModule ;
+    global $xoopsDB, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsModuleConfig, $myts, $mytree, $imagecat, $meta, $moduleDirName, $main_lang, $xoopsUser, $mid, $prem_perm, $xoopsModule ;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
@@ -235,14 +235,14 @@ if (in_array($sub_ele['cid'], $categories)) {
 
                  $infercategories .= '&nbsp;('.adslight_getTotalItems($sub_ele['cid']).')';
                 $infercategories .= '&nbsp;'.categorynewgraphic($sub_ele['cid']).'';
-                $space++;
-                $chcount++;
+                ++$space;
+                ++$chcount;
             }
         }
 
             $xoopsTpl->append('subcategories', array('title' => $myts->htmlSpecialChars($ele['title']), 'id' => $ele['cid'], 'infercategories' => $infercategories, 'totallisting' => $totallisting, ''));
 
-            $scount++;
+            ++$scount;
     $xoopsTpl->assign('lang_subcat', _ADSLIGHT_AVAILAB);
         }
     }
@@ -377,7 +377,7 @@ if ($trows > "0") {
 }
 
             $a_item['hits'] = $hits;
-            $rank++;
+            ++$rank;
             $xoopsTpl->append('items', $a_item);
         }
 
@@ -401,7 +401,7 @@ if ($trows > "0") {
             } else {
                 $pagenav .= "<a href='viewcats.php?cid=$cid&min=$mintemp&orderby=$orderby&show=$show'>$counter</a> ";
             }
-            $counter++;
+            ++$counter;
         }
         if ($trows >$max) {
             $pagenav .= "<a href='viewcats.php?cid=$cid&min=$max&orderby=$orderby&show=$show'>";

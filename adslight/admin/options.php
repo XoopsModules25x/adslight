@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 if (isset($_REQUEST['op'])) {
     $op = $_REQUEST['op'];
@@ -31,8 +31,8 @@ if (isset($_REQUEST['op'])) {
 #####################################################
 function Index()
 {
-    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $mydirname, $admin_lang;
-    include 'header.php';
+    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName, $admin_lang;
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(2, "");
 
@@ -136,11 +136,11 @@ function Index()
  */
 function ListingAddType($type)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query("select  COUNT(*)  FROM ".$xoopsDB->prefix("adslight_type")." where nom_type='$type'"));
     if ($numrows>0) {
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(2, "");
 
@@ -174,8 +174,8 @@ function ListingAddType($type)
  */
 function ListingModType($id_type)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mydirname, $admin_lang;
-    include 'header.php';
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>"._AM_ADSLIGHT_MODTYPE."</legend>";
@@ -207,7 +207,7 @@ function ListingModType($id_type)
  */
 function ListingModTypeS($id_type, $nom_type)
 {
-    global $xoopsDB,$xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB,$xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     $nom_type = $myts->htmlSpecialChars($nom_type);
 
@@ -224,7 +224,7 @@ function ListingModTypeS($id_type, $nom_type)
  */
 function ListingDelType($id_type)
 {
-    global $xoopsDB, $mydirname, $admin_lang;
+    global $xoopsDB, $moduleDirName, $admin_lang;
 
     $xoopsDB->query("delete from ".$xoopsDB->prefix("adslight_type")." where id_type='$id_type'");
 
@@ -239,11 +239,11 @@ function ListingDelType($id_type)
  */
 function ListingAddPrice($type)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query("select  COUNT(*)  FROM ".$xoopsDB->prefix("adslight_price")." where nom_price='$type'"));
     if ($numrows>0) {
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(2, "");
 
@@ -276,9 +276,9 @@ function ListingAddPrice($type)
  */
 function ListingModPrice($id_price)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>"._AM_ADSLIGHT_MODPRICE."</legend>";
@@ -311,7 +311,7 @@ function ListingModPrice($id_price)
  */
 function ListingModPriceS($id_price, $nom_price)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     $nom_price = $myts->htmlSpecialChars($nom_price);
 
@@ -328,7 +328,7 @@ function ListingModPriceS($id_price, $nom_price)
  */
 function ListingDelPrice($id_price)
 {
-    global $xoopsDB, $mydirname, $admin_lang;
+    global $xoopsDB, $moduleDirName, $admin_lang;
 
     $xoopsDB->query("delete from ".$xoopsDB->prefix("adslight_price")." where id_price='$id_price'");
 
@@ -343,11 +343,11 @@ function ListingDelPrice($id_price)
  */
 function ListingAddUsure($type)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query("select  COUNT(*)  FROM ".$xoopsDB->prefix("adslight_usure")." where nom_usure='$type'"));
     if ($numrows>0) {
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(2, "");
 
@@ -380,9 +380,9 @@ function ListingAddUsure($type)
  */
 function ListingModUsure($id_usure)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>"._AM_ADSLIGHT_MODUSURE."</legend>";
@@ -415,7 +415,7 @@ function ListingModUsure($id_usure)
  */
 function ListingModUsureS($id_usure, $nom_usure)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     $nom_usure = $myts->htmlSpecialChars($nom_usure);
 
@@ -432,7 +432,7 @@ function ListingModUsureS($id_usure, $nom_usure)
  */
 function ListingDelUsure($id_usure)
 {
-    global $xoopsDB, $mydirname, $admin_lang;
+    global $xoopsDB, $moduleDirName, $admin_lang;
 
     $xoopsDB->query("delete from ".$xoopsDB->prefix("adslight_usure")." where id_usure='$id_usure'");
 

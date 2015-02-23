@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 require_once( XOOPS_ROOT_PATH."/modules/adslight/include/gtickets.php" ) ;
 include(XOOPS_ROOT_PATH."/modules/adslight/include/functions.php");
 
@@ -29,7 +29,7 @@ include(XOOPS_ROOT_PATH."/modules/adslight/include/functions.php");
  */
 function PrintAd($lid)
 {
-    global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $mydirname, $main_lang;
+    global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
     $currenttheme = $xoopsConfig['theme_set'];
 

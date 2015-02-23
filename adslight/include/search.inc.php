@@ -39,7 +39,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
     $visible = false;
     }
 
-    global $xoopsDB, $xoopsModuleConfig, $mydirname;
+    global $xoopsDB, $xoopsModuleConfig, $moduleDirName;
 
     $sql = "SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM ".$xoopsDB->prefix("adslight_listing")." WHERE valid='Yes' AND status!='1' AND date<=".time()."";
 

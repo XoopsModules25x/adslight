@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-require_once '../../../include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
     include_once(XOOPS_ROOT_PATH."/class/template.php");

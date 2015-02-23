@@ -24,11 +24,11 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-include '../../mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 global $xoopsModuleConfig;
 
 if ($xoopsModuleConfig["active_rewriteurl"] > 0) {
-    include 'seo_url.php';
+    include_once __DIR__ . '/seo_url.php';
 }
 
 $myts =& MyTextSanitizer::getInstance();

@@ -27,7 +27,7 @@ foreach ($_REQUEST as $key => $val) {
 
 $xoopsOption['pagetype'] = "search";
 
-include '../../mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $xmid              = $xoopsModule->getVar('mid');
 $config_handler    =& xoops_gethandler('config');
@@ -96,7 +96,7 @@ $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
 if ($action == 'search') {
     include XOOPS_ROOT_PATH . '/header.php';
-    include 'include/searchform.php';
+    include_once __DIR__ . '/include/searchform.php';
     $search_form->display();
     include XOOPS_ROOT_PATH . '/footer.php';
     exit();
@@ -146,12 +146,9 @@ switch ($action) {
         }
         include XOOPS_ROOT_PATH . "/header.php";
 
+
 // for xoops 2.2.x versions
-        if (file_exists("language/" . $xoopsConfig['language'] . "/main.php")) {
-            include_once 'language/' . $xoopsConfig['language'] . "/main.php";
-} else {
-            include_once 'language/english/main.php';
-        }
+        xoops_loadLanguage('main', $moduleDirName);
 // end
 
         echo "<h3>" . _ADSLIGHT_SEARCHRESULTS . "</h3>\n";
@@ -207,8 +204,7 @@ switch ($action) {
                         echo "" . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . "";
 
                         echo "</td><td width=\"20%\">";
-                        echo "" . $xoopsModuleConfig["adslight_money"] . "
-" . $myts->htmlSpecialChars($results[$i]['price']) . "</a>&nbsp;" . $myts->htmlSpecialChars($results[$i]['typeprice']) . "</a>";
+                        echo "" . $xoopsModuleConfig["adslight_money"] . "" . $myts->htmlSpecialChars($results[$i]['price']) . "</a>&nbsp;" . $myts->htmlSpecialChars($results[$i]['typeprice']) . "</a>";
 
                         echo "</td></tr><tr><td>";
                         echo "<small>";
@@ -232,7 +228,7 @@ switch ($action) {
             unset($results);
             unset($module);
         }
-        include 'include/searchform.php';
+        include_once __DIR__ . '/include/searchform.php';
         $search_form->display();
         break;
     case "showall":
@@ -241,10 +237,10 @@ switch ($action) {
         include XOOPS_ROOT_PATH . "/header.php";
 
 // for xoops 2.2.x versions
-        if (file_exists("language/" . $xoopsConfig['language'] . "/main.php")) {
-            include_once 'language/' . $xoopsConfig['language'] . "/main.php";
+        if (file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . "/main.php")) {
+            include_once __DIR__ . '/language/' . $xoopsConfig['language'] . "/main.php";
 } else {
-            include_once 'language/english/main.php';
+            include_once __DIR__ . '/language/english/main.php';
         }
 // end
         $xoopsTpl->assign('imgscss', XOOPS_URL . "/modules/adslight/style/adslight.css");
@@ -347,7 +343,7 @@ switch ($action) {
         } else {
             echo '<p>' . _SR_NOMATCH . '</p>';
         }
-        include 'include/searchform.php';
+        include_once __DIR__ . '/include/searchform.php';
         $search_form->display();
         echo '</p>
     ';

@@ -34,7 +34,7 @@ class GD
      */
     function GD($location)
     {
-        $imageinfo = @getimagesize($location) or exit('Unknown picture');
+        $imageinfo = @getimagesize($location) || exit('Unknown picture');
 
         $this -> width = $imageinfo['0'];
         $this -> height = $imageinfo['1'];
@@ -91,7 +91,7 @@ class GD
     {
         $rgb = array();
 
-        if (is_array($color) AND count($color) == '3') {
+        if (is_array($color) && count($color) == '3') {
             $rgb['r'] = $color['0'];
             $rgb['g'] = $color['1'];
             $rgb['b'] = $color['2'];
@@ -104,7 +104,7 @@ class GD
         }
 
         foreach (array('r', 'g', 'b') as $value) {
-            if (!array_key_exists($value, $rgb) OR $rgb[$value] < 0 OR $rgb[$value] > 255 OR !is_numeric($rgb[$value])) {
+            if (!array_key_exists($value, $rgb) || $rgb[$value] < 0 || $rgb[$value] > 255 || !is_numeric($rgb[$value])) {
                 exit('Wrong color');
             }
         }
@@ -147,7 +147,7 @@ class GD
      */
     function add_text($text, $font, $color, $x, $y)
     {
-        if ($font < 1 OR $font > 5) {
+        if ($font < 1 || $font > 5) {
             exit('Wrong font');
         }
 

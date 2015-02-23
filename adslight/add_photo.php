@@ -20,20 +20,20 @@
 -------------------------------------------------------------------------
 */
 
-$mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
-$main_lang =  '_' . strtoupper( $mydirname ) ;
+$moduleDirName = basename( dirname( __DIR__ ) ) ;
+$main_lang =  '_' . strtoupper( $moduleDirName ) ;
 
 /**
  * Xoops header ...
  */
-include_once '../../mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoopsOption['template_main'] = "adslight_index.tpl";
-include_once '../../header.php';
+include_once XOOPS_ROOT_PATH . '/header.php';
 
 /**
  * Modules class includes
  */
-include 'class/pictures.php';
+include_once __DIR__ . '/class/pictures.php';
 
 /**
  * Factory of pictures created
@@ -99,4 +99,4 @@ if ($xCube) {
 /**
  * Close page
  */
-include '../../footer.php';
+include_once XOOPS_ROOT_PATH . '/footer.php';

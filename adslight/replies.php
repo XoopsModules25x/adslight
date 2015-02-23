@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 include(XOOPS_ROOT_PATH."/modules/adslight/include/functions.php");
 $myts =& MyTextSanitizer::getInstance(); // MyTextSanitizer object
 $module_id = $xoopsModule->getVar('mid');
@@ -139,7 +139,7 @@ include XOOPS_ROOT_PATH."/header.php";
             } else {
                 $pagenav .= "<a href='replies.php?lid=$lid&min=$mintemp&show=$show'>$counter</a> ";
             }
-            $counter++;
+            ++$counter;
         }
         if ($trows>$max) {
             $pagenav .= "<a href='replies.php?lid=$lid&min=$max&show=$show'>";
