@@ -134,7 +134,6 @@ if (preg_match("1.07",$page1)) { echo "<table class='outer' border=0 cellspacing
                   </tr>
                   </table><br />';
 
-
     /*
  ////	RSS AdsLight Forum
 

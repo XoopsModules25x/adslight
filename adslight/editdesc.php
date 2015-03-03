@@ -98,12 +98,6 @@ if ($uid == $picture->getVar('uid_owner')) {
     }
 }
 
-
-
-
-
-
-
 /**
  * Creating the factory  and the criteria to edit the desc of the picture
  * The user must be the owner

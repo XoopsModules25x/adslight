@@ -256,7 +256,7 @@ $cat_perms = adslight_MygetItemIds('adslight_submit');
         exit();
     }
 
-    $category = $xoopsDB->query("select title, cat_moderate from ".$xoopsDB->prefix("adslight_categories")." where cid=".	mysql_real_escape_string($cid)."");
+    $category = $xoopsDB->query("select title, cat_moderate from ".$xoopsDB->prefix("adslight_categories")." where cid=".    mysql_real_escape_string($cid)."");
 
     list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
     $form->addElement(new XoopsFormLabel(_ADSLIGHT_CAT3, "<b>$cat_title</b>"));
@@ -333,7 +333,7 @@ if ($cat_moderate =="1") {
     $form->display();
     $xoopsTpl->assign('submit_form', ob_get_contents());
     ob_end_clean();
-} else {	// User can't see any category
+} else {    // User can't see any category
     redirect_header(XOOPS_URL.'/index.php', 3, _NOPERM);
     exit();
     }

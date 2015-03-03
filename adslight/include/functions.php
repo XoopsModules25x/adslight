@@ -371,6 +371,7 @@ function adslight_convertorderbytrans($orderby)
             if ($orderby == "date DESC")   $orderbyTrans = ""._ADSLIGHT_DATENEW."";
             if ($orderby == "price ASC")  $orderbyTrans = _ADSLIGHT_PRICELTOH;
             if ($orderby == "price DESC") $orderbyTrans = ""._ADSLIGHT_PRICEHTOL."";
+
             return $orderbyTrans;
 }
 
@@ -388,6 +389,7 @@ function adslight_convertorderbytrans($orderby)
             if ($orderby == "date DESC")            $orderby = "dateD";
             if ($orderby == "hits DESC")          $orderby = "hitsD";
             if ($orderby == "price DESC")        $orderby = "priceD";
+
             return $orderby;
 }
 
@@ -747,6 +749,7 @@ function adslight_NameType($type)
 global $xoopsDB;
             $sql=$xoopsDB->query("select nom_type from ".$xoopsDB->prefix("adslight_type")." WHERE id_type=".mysql_real_escape_string($type)."");
             list($nom_type) = $xoopsDB->fetchRow($sql);
+
 return $nom_type;
 }
 

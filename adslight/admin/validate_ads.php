@@ -75,7 +75,6 @@ function Index()
         echo "<font color=\"#00B4C4\"><b>"._AM_ADSLIGHT_THEREIS."</b></font> <b>$numrows</b> <font color=\"#00B4C4\">"._AM_ADSLIGHT_WAIT."</b></font>";
         echo "</td></tr></table><br />";
 
-
 ///// Liste des ID	///// Soumis par ///// 	Titre	/////  Description	/////  Date d'ajout
         echo "<table width='100%' border='0' class='outer'>";
         $rank = 1;
@@ -412,7 +411,6 @@ function ModifyAds($lid)
             </tr>
             <tr class='head' border='1'>";
 
-
         if ($contactby == 1) { $contactselect = _AM_ADSLIGHT_CONTACT_BY_EMAIL; }
            if ($contactby == 2) { $contactselect = _AM_ADSLIGHT_CONTACT_BY_PM; }
            if ($contactby == 3) { $contactselect = _AM_ADSLIGHT_CONTACT_BY_BOTH; }
@@ -720,8 +718,6 @@ function ListingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     exit();
 }
 
-
-
 #####################################################
 #####################################################
 
@@ -740,7 +736,6 @@ if (!isset($_POST['op']) && isset($_GET['op']) ) {
 if (!isset($op)) {
     $op = '';
 }
-
 
 switch ($op) {
 

@@ -146,7 +146,7 @@ function ModAd($lid)
     redirect_header(XOOPS_URL."/modules/adslight/index.php", 3, _NOPERM);
     exit();
     }
-    } else {	// User can't see any category
+    } else {    // User can't see any category
     redirect_header(XOOPS_URL.'/index.php', 3, _NOPERM);
     exit();
     }
@@ -243,8 +243,6 @@ function ModAd($lid)
     </tr>";
     echo "<tr><td class=\"head\">"._ADSLIGHT_PRICE2." </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" /> ". $xoopsModuleConfig["adslight_money"];
 
-
-
     $result3 = $xoopsDB->query("select nom_price, id_price from ".$xoopsDB->prefix("adslight_price")." order by id_price");
     echo " <select name=\"typeprice\">";
     while (list($nom_price, $id_price) = $xoopsDB->fetchRow($result3)) {
@@ -278,8 +276,6 @@ function ModAd($lid)
     <td width='30%' class='head'>"._ADSLIGHT_HOW_LONG." </td><td class='head'><input type=\"text\" name=\"expire\" size=\"3\" maxlength=\"3\" value=\"$expire\" />  "._ADSLIGHT_DAY."</td>
     </tr>";
     }
-
-
 
 /// Type d'annonce
     echo "<tr>
@@ -354,7 +350,6 @@ function ModAd($lid)
             }
     }
 }
-
 
 /**
  * @param $lid

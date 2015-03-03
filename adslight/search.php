@@ -146,7 +146,6 @@ switch ($action) {
         }
         include XOOPS_ROOT_PATH . "/header.php";
 
-
 // for xoops 2.2.x versions
         xoops_loadLanguage('main', $moduleDirName);
 // end

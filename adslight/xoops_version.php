@@ -72,7 +72,7 @@ $modversion['onInstall'] = 'include/install.php';
 $modversion['onUpdate'] = 'include/update_function.php';
 
 $modversion["release"] = '25-05-2011';
-$modversion['support_site_url']	= 'http://#';
+$modversion['support_site_url']    = 'http://#';
 $modversion['support_site_name'] = 'AdsLight';
 
 // Tables crée depuis le fichier sql
@@ -93,10 +93,8 @@ $modversion['system_menu'] = 1;
 $modversion['adminindex'] = 'admin/index.php';
 $modversion['adminmenu'] = 'admin/menu.php';
 
-
 // Templates
 global $xoopsModuleConfig;
-
 
 $modversion['templates'][1]['file'] = 'adslight_index.tpl';
 $modversion['templates'][1]['description'] = '';
@@ -216,7 +214,6 @@ $modversion['comments']['extraParams'] = array('usid');
 $modversion['comments']['callbackFile'] = 'include/comment_functions.php';
 $modversion['comments']['callback']['approve'] = 'adslight_com_approve';
 $modversion['comments']['callback']['update'] = 'adslight_com_update';
-
 
 // Préférences
 $modversion['hasconfig'] = 1;
@@ -673,8 +670,6 @@ $modversion['notification']['category'][3]['title'] = _MI_ADSLIGHT_GLOBAL_NOTIFY
 $modversion['notification']['category'][3]['description'] = _MI_ADSLIGHT_GLOBAL_NOTIFYDSC;
 $modversion['notification']['category'][3]['subscribe_from'] = 'index.php';
 $modversion['notification']['category'][3]['extraParams'] = array('pa');
-
-
 
 // AdsLight notifications nouvels annonces dans cette catégories
 $modversion['notification']['event'][1]['name'] = 'new_listing';

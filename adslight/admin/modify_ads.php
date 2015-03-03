@@ -75,14 +75,12 @@ function Index()
         echo "<font color=\"#00B4C4\"><b>"._AM_ADSLIGHT_THEREIS."</b></font> <b>$numrows</b> <font color=\"#00B4C4\">"._AM_ADSLIGHT_WAIT."</b></font>";
         echo "</td></tr></table><br />";
 
-
         } else {
 
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
         echo "<img src='../assets/images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
         echo "<font color='#00B4C4'><b>"._AM_ADSLIGHT_NOANNVAL."</b></font>";
         echo '</td></tr></table><br />';
-
 
     }
 
@@ -105,9 +103,6 @@ function Index()
 
    xoops_cp_footer();
 }
-
-
-
 
 #  function ModifyAds
 #####################################################
@@ -175,8 +170,6 @@ function ModifyAds($lid)
     <option value=\"2\">"._AM_ADSLIGHT_CONTACT_BY_PM."</option>
     <option value=\"3\">"._AM_ADSLIGHT_CONTACT_BY_BOTH."</option>
     <option value=\"4\">"._AM_ADSLIGHT_CONTACT_BY_PHONE."</option></select></td></tr>";
-
-
 
                 echo "<tr><td class='head'>"._AM_ADSLIGHT_STATUS."</td><td class='head'><input type=\"radio\" name=\"status\" value=\"0\"";
                 if ($status == "0") {
@@ -279,7 +272,6 @@ function ModifyAds($lid)
     }
 }
 
-
 #  function ModifyAdsS
 #####################################################
 
@@ -365,7 +357,6 @@ function ListingDel($lid, $photo)
     redirect_header("modify_ads.php",1,_AM_ADSLIGHT_ANNDEL);
     exit();
 }
-
 
 #####################################################
 #####################################################

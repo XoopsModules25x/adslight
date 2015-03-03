@@ -75,7 +75,6 @@ function Index()
         echo "<font color=\"#00B4C4\"><b>"._AM_ADSLIGHT_THEREIS."</b></font> <b>$numrows</b> <b><font color=\"#00B4C4\">"._AM_ADSLIGHT_ADSVALIDE."</b></font>";
         echo "</td></tr></table><br />";
 
-
 ///// Liste des ID	///// Soumis par ///// 	Titre	/////  Description	/////  Date d'ajout
         echo "<table width='100%' border='0' class='outer'>";
         $rank = 1;
@@ -695,8 +694,6 @@ function ListingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     exit();
 }
 
-
-
 #####################################################
 #####################################################
 
@@ -715,7 +712,6 @@ if (!isset($_POST['op']) && isset($_GET['op']) ) {
 if (!isset($op)) {
     $op = '';
 }
-
 
 switch ($op) {
 
