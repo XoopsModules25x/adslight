@@ -20,20 +20,20 @@
 -------------------------------------------------------------------------
 */
 
-$mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
-$main_lang =  '_' . strtoupper( $mydirname ) ;
+$moduleDirName = basename( dirname( __DIR__ ) ) ;
+$main_lang =  '_' . strtoupper( $moduleDirName ) ;
 
 /**
  * Xoops Header
  */
-include_once '../../mainfile.php';
-include_once '../../header.php';
-include_once '../../class/criteria.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
+include_once XOOPS_ROOT_PATH . '/header.php';
+include_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**
  * Include modules classes
  */
-include 'class/pictures.php';
+include_once __DIR__ . '/class/pictures.php';
 
 /**
  * Check if using XoopsCube (by jlm69)
@@ -98,12 +98,6 @@ if ($uid == $picture->getVar('uid_owner')) {
     }
 }
 
-
-
-
-
-
-
 /**
  * Creating the factory  and the criteria to edit the desc of the picture
  * The user must be the owner
@@ -129,4 +123,4 @@ $album_factory->renderFormEdit($caption,$cod_img,$url);
 /**
  * Close page
  */
-include '../../footer.php';
+include XOOPS_ROOT_PATH . '/footer.php';

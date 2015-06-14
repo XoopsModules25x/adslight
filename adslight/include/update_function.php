@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include_once XOOPS_ROOT_PATH.'/modules/adslight/include/functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
 /**
  * @param $xoopsModule
  *
@@ -28,13 +28,34 @@ include_once XOOPS_ROOT_PATH.'/modules/adslight/include/functions.php';
  */
 function xoops_module_update_adslight(&$xoopsModule)
 {
-        $db =& XoopsDatabaseFactory::getDatabaseConnection();
+    global $xoopsDB;
 
-        $sql = "ALTER TABLE `".$db->prefix('adslight_listing')."` MODIFY `price` decimal(20,2) NOT NULL default '0.00' AFTER `tel` ;";
-        $db->query($sql);
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix('adslight_listing') . "` MODIFY `price` decimal(20,2) NOT NULL default '0.00' AFTER `tel` ;";
+    $xoopsDB->query($sql);
 
-        $sql = "ALTER TABLE `".$db->prefix('adslight_listing')."` MODIFY `photo` varchar(100) NOT NULL default '0';";
-        $db->query($sql);
+    $sql = "ALTER TABLE `" . $xoopsDB->prefix('adslight_listing') . "` MODIFY `photo` varchar(100) NOT NULL default '0';";
+    $xoopsDB->query($sql);
+
+    // remove old html template files
+    $template_directory = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/templates/";
+    $template_list      = array_diff(scandir($template_directory), array('..', '.'));
+    foreach ($template_list as $k => $v) {
+        $fileinfo = new SplFileInfo($template_directory . $v);
+        if ($fileinfo->getExtension() == 'html' && $fileinfo->getFilename() != 'index.html') {
+            @unlink($template_directory . $v);
+        }
+    }
+
+    xoops_load('xoopsfile');
+
+    //remove /images directory
+    $imagesDirectory = XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/images/";
+    $folderHandler = XoopsFile::getHandler("folder", $imagesDirectory);
+    $folderHandler->delete($imagesDirectory);
+
+     //delete .html entries from the tpl table
+     $sql = "DELETE FROM " . $xoopsDB->prefix("tplfile") . " WHERE `tpl_module` = '" .$module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+     $xoopsDB->queryF($sql);
 
     return true;
 }

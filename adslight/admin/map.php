@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 if (isset($_REQUEST['op'])) {
     $op = $_REQUEST['op'];
@@ -29,8 +29,8 @@ if (isset($_REQUEST['op'])) {
 
 $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-global $mytree, $xoopsDB, $xoopsModuleConfig, $mydirname;
-include 'header.php';
+global $mytree, $xoopsDB, $xoopsModuleConfig, $moduleDirName;
+include_once __DIR__ . '/header.php';
 xoops_cp_header();
 //loadModuleAdminMenu(1, "");
 

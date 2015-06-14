@@ -32,7 +32,7 @@ if ($_POST['submit']) {
     $tele      = !isset($_REQUEST['tele']) ? NULL : $_REQUEST['tele'];
     // end define vars
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
 
     $module_id = $xoopsModule->getVar('mid');
 
@@ -165,7 +165,7 @@ if ($_POST['submit']) {
 } else {
     $lid = intval($_GET['lid']);
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
 
     global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $myts, $meta;
 

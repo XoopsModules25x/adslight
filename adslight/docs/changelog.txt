@@ -1,8 +1,9 @@
-2.2 Beta 3        2014-04-23
+2.2 Beta 3        NOT RELEASED
 =================================
 - updated currency to use locale
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
+- added routine to delete .html templates (slider84)
 
 
 2.2 Beta 2          2013-05-10

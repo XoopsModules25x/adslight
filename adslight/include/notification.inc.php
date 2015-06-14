@@ -20,9 +20,9 @@
 -------------------------------------------------------------------------
 */
 
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
-    $mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
+    $moduleDirName = basename( dirname( __DIR__ ) ) ;
 
 /**
  * @param $category
@@ -32,9 +32,9 @@ defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
  */
 function adslight_notify_iteminfo($category, $item_id)
 {
-  global $xoopsDB, $mydirname;
+  global $xoopsDB, $moduleDirName;
     $module_handler =& xoops_gethandler('module');
-    $module =& $module_handler->getByDirname("$mydirname");
+    $module =& $module_handler->getByDirname("$moduleDirName");
 
     if ($category=='global') {
         $item['name'] = '';

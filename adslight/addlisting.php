@@ -19,12 +19,12 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-include 'header.php';
+include_once __DIR__ . '/header.php';
 $myts =& MyTextSanitizer::getInstance();// MyTextSanitizer object
 require_once XOOPS_ROOT_PATH."/modules/adslight/include/gtickets.php";
 include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 include_once XOOPS_ROOT_PATH."/class/module.errorhandler.php";
-include 'include/functions.php';
+include_once __DIR__ . '/include/functions.php';
 
 $erh = new ErrorHandler; //ErrorHandler object
 
@@ -56,7 +56,7 @@ $erh = new ErrorHandler; //ErrorHandler object
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
     if (empty($xoopsUser)) {
-    redirect_header(XOOPS_URL."/user.php",2,_ADS_MUSTREGFIRST);
+    redirect_header(XOOPS_URL."/user.php",2,_MA_ADSLIGHT_MUSTREGFIRST);
     exit();
 }
 
@@ -104,7 +104,7 @@ if ( !empty($_POST['cid']) ) {
     $newid = $xoopsDB->genId($xoopsDB->prefix("adslight_listing")."_lid_seq");
 
     $sql = sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", $xoopsDB->prefix("adslight_listing"), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid);
-    $xoopsDB->query($sql) or $erh->show("0013");
+    $xoopsDB->query($sql) || $erh->show("0013");
 
     $lid = $xoopsDB->getInsertId();
 
@@ -256,7 +256,7 @@ $cat_perms = adslight_MygetItemIds('adslight_submit');
         exit();
     }
 
-    $category = $xoopsDB->query("select title, cat_moderate from ".$xoopsDB->prefix("adslight_categories")." where cid=".	mysql_real_escape_string($cid)."");
+    $category = $xoopsDB->query("select title, cat_moderate from ".$xoopsDB->prefix("adslight_categories")." where cid=".    mysql_real_escape_string($cid)."");
 
     list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
     $form->addElement(new XoopsFormLabel(_ADSLIGHT_CAT3, "<b>$cat_title</b>"));
@@ -333,7 +333,7 @@ if ($cat_moderate =="1") {
     $form->display();
     $xoopsTpl->assign('submit_form', ob_get_contents());
     ob_end_clean();
-} else {	// User can't see any category
+} else {    // User can't see any category
     redirect_header(XOOPS_URL.'/index.php', 3, _NOPERM);
     exit();
     }

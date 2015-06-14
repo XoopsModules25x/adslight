@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 require_once( XOOPS_ROOT_PATH."/modules/adslight/include/gtickets.php" ) ;
 
 $myts =& MyTextSanitizer::getInstance();
@@ -52,7 +52,7 @@ if (!$gperm_handler->checkRight("adslight_premium", $perm_itemid, $groups, $modu
 #####################################################
 function tips_writing()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsUser, $xoopsTpl, $myts, $mytree, $meta, $mid, $mydirname, $main_lang, $prem_perm;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsUser, $xoopsTpl, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm;
 
     $GLOBALS['xoopsOption']['template_main'] = "adslight_tips_writing_ad.tpl";
     include XOOPS_ROOT_PATH."/header.php";

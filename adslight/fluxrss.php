@@ -21,8 +21,8 @@
 */
 
 header('Content-Type: application/rss+xml; charset=UTF-8');
-include 'header.php';
-include 'include/functions.php';
+include_once __DIR__ . '/header.php';
+include_once __DIR__ . '/include/functions.php';
 
 // var_dump($xoopsModuleConfig);die();
 

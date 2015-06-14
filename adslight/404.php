@@ -25,7 +25,7 @@ if (file_exists('mainfile.php')) {
 } elseif (file_exists('../mainfile.php')) {
     include '../mainfile.php';
 } else {
-    include '../../mainfile.php';
+    include dirname(dirname(__DIR__)) . '/mainfile.php';
 }
 include(XOOPS_ROOT_PATH . '/header.php');
 

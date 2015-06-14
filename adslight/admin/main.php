@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 if (isset($_REQUEST['op'])) {
     $op = $_REQUEST['op'];
@@ -32,11 +32,11 @@ if (isset($_REQUEST['op'])) {
 #####################################################
 function Index()
 {
-    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $mydirname;
+    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName;
 //    include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
   //  require_once("adsligh_rsslib.php");
 
     xoops_cp_header();
@@ -133,7 +133,6 @@ if (preg_match("1.07",$page1)) { echo "<table class='outer' border=0 cellspacing
 
                   </tr>
                   </table><br />';
-
 
     /*
  ////	RSS AdsLight Forum

@@ -310,3 +310,5 @@ define("_AM_ADSLIGHT_SEND_PLUGIN","Send a Plugin");
 define("_AM_ADSLIGHT_SEND_TRANSLATION","Send Translation");
 
 define("_AM_ADSLIGHT_ACTIONS","Actions");
+define("_AM_ADSLIGHT_ERRORPRICE","Price error");
+define("_AM_ADSLIGHT_ERRORUSURE","Sorry, we have encountered an Error");

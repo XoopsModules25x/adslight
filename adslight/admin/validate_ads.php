@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 if (isset($_REQUEST['op'])) {
     $op = $_REQUEST['op'];
@@ -32,11 +32,11 @@ if (isset($_REQUEST['op'])) {
 #####################################################
 function Index()
 {
-    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $mydirname, $admin_lang;
+    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(0, "");
 
@@ -74,7 +74,6 @@ function Index()
           echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
         echo "<font color=\"#00B4C4\"><b>"._AM_ADSLIGHT_THEREIS."</b></font> <b>$numrows</b> <font color=\"#00B4C4\">"._AM_ADSLIGHT_WAIT."</b></font>";
         echo "</td></tr></table><br />";
-
 
 ///// Liste des ID	///// Soumis par ///// 	Titre	/////  Description	/////  Date d'ajout
         echo "<table width='100%' border='0' class='outer'>";
@@ -176,7 +175,7 @@ function Index()
         echo "<input type=\"hidden\" name=\"premium\" value=\"$premium\">";
         echo "<input type=\"hidden\" name=\"photo\" value=\"$photo\">";
         echo "</form><br /></td></tr>";
-        $rank++;
+        ++$rank;
         }
 
         echo '</td></tr></table>
@@ -219,11 +218,11 @@ function Index()
 function IndexView($lid)
 {
 
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(0, "");
 
@@ -362,14 +361,14 @@ function IndexView($lid)
  */
 function ModifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
     $id_price='';
     $nom_price='';
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(0, "");
 
@@ -411,7 +410,6 @@ function ModifyAds($lid)
             <td>"._AM_ADSLIGHT_COUNTRY." </td><td><input type=\"text\" name=\"country\" size=\"40\" value=\"$country\"></td>
             </tr>
             <tr class='head' border='1'>";
-
 
         if ($contactby == 1) { $contactselect = _AM_ADSLIGHT_CONTACT_BY_EMAIL; }
            if ($contactby == 2) { $contactselect = _AM_ADSLIGHT_CONTACT_BY_PM; }
@@ -554,7 +552,7 @@ function ModifyAds($lid)
  */
 function ModifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     $title = $myts->htmlSpecialChars($title);
     $status = $myts->htmlSpecialChars($status);
@@ -585,7 +583,7 @@ function ModifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
  */
 function ListingDel($lid, $photo)
 {
-     global $xoopsDB, $mydirname, $admin_lang;
+     global $xoopsDB, $moduleDirName, $admin_lang;
 
     $result2 = $xoopsDB->query("select p.url FROM ".$xoopsDB->prefix("adslight_listing")." l LEFT JOIN ".$xoopsDB->prefix("adslight_pictures")." p  ON l.lid=p.lid where l.lid=".mysql_real_escape_string($lid)."");
 
@@ -639,7 +637,7 @@ function ListingDel($lid, $photo)
  */
 function ListingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $admin_lang;
 
     $title = $myts->htmlSpecialChars($title);
     $status = $myts->htmlSpecialChars($status);
@@ -720,8 +718,6 @@ function ListingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     exit();
 }
 
-
-
 #####################################################
 #####################################################
 
@@ -740,7 +736,6 @@ if (!isset($_POST['op']) && isset($_GET['op']) ) {
 if (!isset($op)) {
     $op = '';
 }
-
 
 switch ($op) {
 

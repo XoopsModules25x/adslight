@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 
 if (isset($_REQUEST['op'])) {
     $op = $_REQUEST['op'];
@@ -32,11 +32,11 @@ if (isset($_REQUEST['op'])) {
 #####################################################
 function Index()
 {
-    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $mydirname, $admin_lang;
+    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(0, "");
 
@@ -75,14 +75,12 @@ function Index()
         echo "<font color=\"#00B4C4\"><b>"._AM_ADSLIGHT_THEREIS."</b></font> <b>$numrows</b> <font color=\"#00B4C4\">"._AM_ADSLIGHT_WAIT."</b></font>";
         echo "</td></tr></table><br />";
 
-
         } else {
 
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
         echo "<img src='../assets/images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
         echo "<font color='#00B4C4'><b>"._AM_ADSLIGHT_NOANNVAL."</b></font>";
         echo '</td></tr></table><br />';
-
 
     }
 
@@ -106,9 +104,6 @@ function Index()
    xoops_cp_footer();
 }
 
-
-
-
 #  function ModifyAds
 #####################################################
 /**
@@ -116,11 +111,11 @@ function Index()
  */
 function ModifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
     xoops_cp_header();
 //    loadModuleAdminMenu(0, "");
     $id_price='';
@@ -175,8 +170,6 @@ function ModifyAds($lid)
     <option value=\"2\">"._AM_ADSLIGHT_CONTACT_BY_PM."</option>
     <option value=\"3\">"._AM_ADSLIGHT_CONTACT_BY_BOTH."</option>
     <option value=\"4\">"._AM_ADSLIGHT_CONTACT_BY_PHONE."</option></select></td></tr>";
-
-
 
                 echo "<tr><td class='head'>"._AM_ADSLIGHT_STATUS."</td><td class='head'><input type=\"radio\" name=\"status\" value=\"0\"";
                 if ($status == "0") {
@@ -279,7 +272,6 @@ function ModifyAds($lid)
     }
 }
 
-
 #  function ModifyAdsS
 #####################################################
 
@@ -307,7 +299,7 @@ function ModifyAds($lid)
  */
 function ModifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
     $title = $myts->htmlSpecialChars($title);
     $status = $myts->htmlSpecialChars($status);
@@ -338,7 +330,7 @@ function ModifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
  */
 function ListingDel($lid, $photo)
 {
-     global $xoopsDB, $mydirname, $admin_lang;
+     global $xoopsDB, $moduleDirName, $admin_lang;
 
     $result2 = $xoopsDB->query("select p.url FROM ".$xoopsDB->prefix("adslight_listing")." l LEFT JOIN ".$xoopsDB->prefix("adslight_pictures")." p  ON l.lid=p.lid where l.lid=".mysql_real_escape_string($lid)."");
 
@@ -365,7 +357,6 @@ function ListingDel($lid, $photo)
     redirect_header("modify_ads.php",1,_AM_ADSLIGHT_ANNDEL);
     exit();
 }
-
 
 #####################################################
 #####################################################

@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 /**
  * @param $options
@@ -35,7 +35,7 @@ include_once XOOPS_ROOT_PATH."/modules/adslight/include/functions.php";
     $block = array();
     $myts =& MyTextSanitizer::getInstance();
 
-    $blockdirname = basename( dirname( dirname( __FILE__ ) ) ) ;
+    $blockdirname = basename( dirname( __DIR__ ) ) ;
     $block_lang = '_MB_' . strtoupper( $blockdirname ) ;
 
     $block['title'] = "".constant($block_lang."_TITLE")."";
@@ -82,7 +82,7 @@ include_once XOOPS_ROOT_PATH."/modules/adslight/include/functions.php";
 function adslight_edit($options)
 {
  global $xoopsDB;
-    $blockdirname = basename( dirname( dirname( __FILE__ ) ) ) ;
+    $blockdirname = basename( dirname( __DIR__ ) ) ;
     $block_lang = '_MB_' . strtoupper( $blockdirname ) ;
 
     $form = constant($block_lang."_ORDER")."&nbsp;<select name='options[]'>";

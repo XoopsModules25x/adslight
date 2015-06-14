@@ -20,9 +20,9 @@
 -------------------------------------------------------------------------
 */
 // comment callback functions
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
-    $mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
+    $moduleDirName = basename( dirname( __DIR__ ) ) ;
 if (isset($usid)) {
     /**
      * @param $usid

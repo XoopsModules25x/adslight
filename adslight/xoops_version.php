@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-defined('XOOPS_ROOT_PATH') || die('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 // Select Maps
 $path = XOOPS_ROOT_PATH.'/modules/adslight/maps';
@@ -50,16 +50,16 @@ $modversion['author'] = 'Luc Bizet **';
 $modversion['help']        = 'page=help';
 $modversion['license'] = 'GPL';
 $modversion['license_file'] = 'http://www.gnu.org/licenses/gpl.html';
-$modversion['official'] = 0;
+ $modversion['official'] = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
 $modversion['image'] = 'assets/images/adslight.png';
-$modversion['dirname'] = basename(dirname(__FILE__));
+$modversion['dirname'] = basename(__DIR__);
 
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 //about
 $modversion["module_status"]       = "Beta 3 ";
-$modversion['release_date']        = '2014/04/23';
+$modversion['release_date']        = '2015/02/23';
 $modversion["module_website_url"]  = "www.xoops.org";
 $modversion["module_website_name"] = "XOOPS";
 $modversion['min_php']             = '5.3.7';
@@ -72,7 +72,7 @@ $modversion['onInstall'] = 'include/install.php';
 $modversion['onUpdate'] = 'include/update_function.php';
 
 $modversion["release"] = '25-05-2011';
-$modversion['support_site_url']	= 'http://#';
+$modversion['support_site_url']    = 'http://#';
 $modversion['support_site_name'] = 'AdsLight';
 
 // Tables crée depuis le fichier sql
@@ -93,10 +93,8 @@ $modversion['system_menu'] = 1;
 $modversion['adminindex'] = 'admin/index.php';
 $modversion['adminmenu'] = 'admin/menu.php';
 
-
 // Templates
 global $xoopsModuleConfig;
-
 
 $modversion['templates'][1]['file'] = 'adslight_index.tpl';
 $modversion['templates'][1]['description'] = '';
@@ -216,7 +214,6 @@ $modversion['comments']['extraParams'] = array('usid');
 $modversion['comments']['callbackFile'] = 'include/comment_functions.php';
 $modversion['comments']['callback']['approve'] = 'adslight_com_approve';
 $modversion['comments']['callback']['update'] = 'adslight_com_update';
-
 
 // Préférences
 $modversion['hasconfig'] = 1;
@@ -673,8 +670,6 @@ $modversion['notification']['category'][3]['title'] = _MI_ADSLIGHT_GLOBAL_NOTIFY
 $modversion['notification']['category'][3]['description'] = _MI_ADSLIGHT_GLOBAL_NOTIFYDSC;
 $modversion['notification']['category'][3]['subscribe_from'] = 'index.php';
 $modversion['notification']['category'][3]['extraParams'] = array('pa');
-
-
 
 // AdsLight notifications nouvels annonces dans cette catégories
 $modversion['notification']['event'][1]['name'] = 'new_listing';

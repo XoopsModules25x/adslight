@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 include(XOOPS_ROOT_PATH."/modules/adslight/include/functions.php");
 $myts =& MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
@@ -61,7 +61,7 @@ if ($xoopsUser && $xoopsUser->isAdmin($xoopsModule->mid())) {
     $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM." ".$xoopsConfig['sitename']);
     $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM );
     $xoopsTpl->assign('add_from_sitename', $xoopsConfig['sitename']);
-    $xoopsTpl->assign('mydirname', $mydirname);
+    $xoopsTpl->assign('mydirname', $moduleDirName);
     $xoopsTpl->assign('comments_head', _ADSLIGHT_COMMENTS_HEAD);
     $xoopsTpl->assign('lang_user_rating', _ADSLIGHT_USER_RATING);
     $xoopsTpl->assign('lang_ratethisuser', _ADSLIGHT_RATETHISUSER);
@@ -72,7 +72,7 @@ if ($xoopsUser && $xoopsUser->isAdmin($xoopsModule->mid())) {
     $xoopsTpl->assign('expires_head', _ADSLIGHT_EXPIRES_ON);
     $xoopsTpl->assign('all_user_listings', _ADSLIGHT_ALL_USER_LISTINGS);
     $xoopsTpl->assign('nav_main', '<a href="index.php">'._ADSLIGHT_MAIN.'</a>');
-    $xoopsTpl->assign('mydirname', $mydirname);
+    $xoopsTpl->assign('mydirname', $moduleDirName);
 
     $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="'.XOOPS_URL.'/modules/adslight/style/adslight.css" type="text/css" media="all" />');
 
@@ -263,7 +263,7 @@ $updir = $xoopsModuleConfig['adslight_link_upload'];
             } else {
                 $pagenav .= "<a href='members.php?usid=$usid&min=$mintemp&show=$show'>$counter</a> ";
             }
-            $counter++;
+            ++$counter;
         }
         if ($trows>$max) {
             $pagenav .= "<a href='members.php?usid=$usid&min=$max&show=$show'>";

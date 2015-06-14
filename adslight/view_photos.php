@@ -23,14 +23,14 @@
 /**
  * Xoops header
  */
-include_once '../../mainfile.php';
+include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xoopsOption['template_main'] = "adslight_view_photos.tpl";
-include_once '../../header.php';
+include_once XOOPS_ROOT_PATH . '/header.php';
 
 /**
  * Module classes
  */
-include 'class/pictures.php';
+include_once __DIR__ . '/class/pictures.php';
 if ( isset($_GET['lid'])) {
         $lid = $_GET['lid'];
         } else {
@@ -172,7 +172,6 @@ $header_lightbox = '<link rel="stylesheet" href="style/galery.css" type="text/cs
  * Assigning smarty variables
  */
 
-
 $sql = "SELECT title FROM ".$xoopsDB->prefix("adslight_listing")." where lid=".$lid." and valid='Yes'";
 $result=$xoopsDB->query($sql);
 while (list($title) = $xoopsDB->fetchRow($result)) {
@@ -180,16 +179,12 @@ while (list($title) = $xoopsDB->fetchRow($result)) {
         $xoopsTpl->assign('lang_showcase',_ADSLIGHT_SHOWCASE);
     }
 
-
-
 $xoopsTpl->assign('lang_not_premium', sprintf(_ADSLIGHT_BMCANHAVE,$xoopsModuleConfig["adslight_not_premium"]));
 
 $xoopsTpl->assign('lang_no_prem_nb', sprintf(_ADSLIGHT_PREMYOUHAVE,$pictures_number));
 
 $upgrade = "<a href=\"premium.php\"><strong> "._ADSLIGHT_UPGRADE_NOW."</strong></a>";
 $xoopsTpl->assign('lang_upgrade_now',$upgrade);
-
-
 
 $xoopsTpl->assign('lang_max_nb_pict', sprintf(_ADSLIGHT_YOUCANHAVE,$xoopsModuleConfig["adslight_nb_pict"]));
 $xoopsTpl->assign('lang_nb_pict', sprintf(_ADSLIGHT_YOUHAVE,$pictures_number));
@@ -239,4 +234,4 @@ include XOOPS_ROOT_PATH.'/include/comment_view.php';
 /**
  * Closing the page
  */
-include '../../footer.php';
+include XOOPS_ROOT_PATH . '/footer.php';

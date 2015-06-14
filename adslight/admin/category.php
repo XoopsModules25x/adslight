@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'admin_header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 if (isset($_REQUEST['op'])) {
@@ -36,11 +36,11 @@ if (isset($_REQUEST['op'])) {
  */
 function AdsNewCat($cat)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $mydirname;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
 
 //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>"._AM_ADSLIGHT_ADDSUBCAT."</legend>";
@@ -122,11 +122,11 @@ $cat_keywords = '';
  */
 function AdsModCat($cid)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $mydirname;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include 'header.php';
+    include_once __DIR__ . '/header.php';
 
 //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>". _AM_ADSLIGHT_MODIFCAT . "</legend>";
@@ -232,7 +232,7 @@ function AdsModCat($cid)
  */
 function AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $ordre, $affprice, $cat_moderate, $moderate_subcat)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
 
     $title = $myts->htmlSpecialChars($title);
 
@@ -263,7 +263,7 @@ function AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $ordre,
  */
 function AdsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affprice, $cat_moderate, $moderate_subcat)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $mydirname;
+    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
 
     $title = $myts->htmlSpecialChars($title);
     $moderate_subcat = intval($moderate_subcat);
@@ -291,7 +291,7 @@ function AdsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affpri
  */
 function AdsDelCat($cid, $ok=0)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $mydirname;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $moduleDirName;
 
     if (intval($ok)==1) {
         $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
@@ -302,7 +302,7 @@ function AdsDelCat($cid, $ok=0)
         exit();
     } else {
 
-        include 'header.php';
+        include_once __DIR__ . '/header.php';
 //        loadModuleAdminMenu(1, "");
 
         OpenTable();

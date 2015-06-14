@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include 'header.php';
+include_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH.'/modules/adslight/include/gtickets.php';
 xoops_load("XoopsLocal");
 $myts =& MyTextSanitizer::getInstance();
@@ -62,7 +62,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'),'cid','pid
  */
 function Adsview ($cid=0,$min=0,$orderby,$show=0)
 {
-    global $xoopsDB, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsModuleConfig, $myts, $mytree, $imagecat, $meta, $mydirname, $main_lang, $xoopsUser, $mid, $prem_perm, $xoopsModule ;
+    global $xoopsDB, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsModuleConfig, $myts, $mytree, $imagecat, $meta, $moduleDirName, $main_lang, $xoopsUser, $mid, $prem_perm, $xoopsModule ;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
@@ -147,7 +147,7 @@ if ($xoopsUser && is_array($submit_perms) && count($submit_perms) > 0) {
         redirect_header(XOOPS_URL.'/modules/adslight/index.php', 3, _NOPERM);
         exit();
     }
-    } else {	// User can't see any category
+    } else {    // User can't see any category
     redirect_header(XOOPS_URL.'/index.php', 3, _NOPERM);
     exit();
     }
@@ -160,18 +160,14 @@ $xoopsTpl->assign('module_name', $xoopsModule->getVar('name'));
 $xoopsTpl->assign('category_path', $pathstring);
 $xoopsTpl->assign('category_id', $cid);
 
-
  $countresult=$xoopsDB->query('select COUNT(*) FROM '.$xoopsDB->prefix('adslight_listing').' where  cid='.mysql_real_escape_string($cid).' AND valid="Yes" AND status!="1"');
             list($trow) = $xoopsDB->fetchRow($countresult);
             $trows = $trow;
-
 
 $cat_perms = "";
     if (is_array($categories) && count($categories) > 0) {
     $cat_perms .= ' AND cid IN ('.implode(',', $categories).') ';
     }
-
-
 
 $result = $xoopsDB->query('select cid, pid, title, cat_desc, cat_keywords from '.$xoopsDB->prefix('adslight_categories').' where cid='.mysql_real_escape_string($cid).' '.$cat_perms.'');
     list($cid, $pid, $title, $cat_desc, $cat_keywords) = $xoopsDB->fetchRow($result);
@@ -180,7 +176,6 @@ $xoopsTpl->assign('cat_desc',$cat_desc);
 $xoopsTpl->assign('cat_title', _ADSLIGHT_ANNONCES." ".$title);
 $xoopsTpl->assign('cat_keywords',$cat_keywords);
 $xoopsTpl->assign('xoops_pagetitle', $title);
-
 
 if ($cat_desc > "0") {
 // meta description & keywords tags for categories
@@ -196,7 +191,7 @@ $xoTheme->addMeta('meta', 'keywords', ''.substr($cat_keywords_clean,0,1000));
 
     $add_listing = ''._ADSLIGHT_ADD_LISTING_BULLCATS.'<a href="addlisting.php?cid='.addslashes($cid).'">'._ADSLIGHT_ADD_LISTING_SUBOK.'</a>
 ';
-    } else {	// User can't see any category
+    } else {    // User can't see any category
     $add_listing = ''._ADSLIGHT_ADD_LISTING_BULLCATSOK.'<a href="'.XOOPS_URL.'/register.php">'._ADSLIGHT_ADD_LISTING_SUB.'</a>.
 ';
     }
@@ -235,14 +230,14 @@ if (in_array($sub_ele['cid'], $categories)) {
 
                  $infercategories .= '&nbsp;('.adslight_getTotalItems($sub_ele['cid']).')';
                 $infercategories .= '&nbsp;'.categorynewgraphic($sub_ele['cid']).'';
-                $space++;
-                $chcount++;
+                ++$space;
+                ++$chcount;
             }
         }
 
             $xoopsTpl->append('subcategories', array('title' => $myts->htmlSpecialChars($ele['title']), 'id' => $ele['cid'], 'infercategories' => $infercategories, 'totallisting' => $totallisting, ''));
 
-            $scount++;
+            ++$scount;
     $xoopsTpl->assign('lang_subcat', _ADSLIGHT_AVAILAB);
         }
     }
@@ -377,7 +372,7 @@ if ($trows > "0") {
 }
 
             $a_item['hits'] = $hits;
-            $rank++;
+            ++$rank;
             $xoopsTpl->append('items', $a_item);
         }
 
@@ -401,7 +396,7 @@ if ($trows > "0") {
             } else {
                 $pagenav .= "<a href='viewcats.php?cid=$cid&min=$mintemp&orderby=$orderby&show=$show'>$counter</a> ";
             }
-            $counter++;
+            ++$counter;
         }
         if ($trows >$max) {
             $pagenav .= "<a href='viewcats.php?cid=$cid&min=$max&orderby=$orderby&show=$show'>";

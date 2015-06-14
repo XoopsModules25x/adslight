@@ -19,12 +19,12 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-// defined("XOOPS_ROOT_PATH") || die("XOOPS root path not defined");
+// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
 
-$path = dirname(dirname(dirname(dirname(__FILE__))));
+$path = dirname(dirname(dirname(__DIR__)));
 include_once $path . '/mainfile.php';
 
-$dirname         = basename(dirname(dirname(__FILE__)));
+$dirname         = basename(dirname(__DIR__));
 $module_handler  = xoops_gethandler('module');
 $module          = $module_handler->getByDirname($dirname);
 $pathIcon32      = $module->getInfo('icons32');
@@ -61,7 +61,7 @@ $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU2;
 $adminmenu[$i]['link'] = "admin/groupperms.php";
 $adminmenu[$i]['icon'] =  $pathIcon32 . '/permissions.png';
 //++$i;
-//if (isset($xoopsModule) && $xoopsModule->getVar('dirname') == basename(dirname(dirname(__FILE__)))) {
+//if (isset($xoopsModule) && $xoopsModule->getVar('dirname') == basename(dirname(__DIR__))) {
 //$adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU3;
 //$adminmenu[$i]['link'] = '../../modules/system/admin.php?fct=blocksadmin&amp;selvis=-1&amp;selmod=-2&amp;selgrp=-1&amp;selgen=' . $xoopsModule->getVar('mid');
 //}

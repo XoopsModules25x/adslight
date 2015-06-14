@@ -339,7 +339,7 @@ if (is_array($categories) && count($categories) > 0) {
      * @return array
      */function getChildTreeArray($sel_id=0,$order='',$parray = array(),$r_prefix='')
     {
-    global $mydirname;
+    global $moduleDirName;
 
         $sql = 'SELECT SQL_CACHE * FROM '.$this->table.' WHERE '.$this->pid.'='.mysql_real_escape_string($sel_id).'';
 

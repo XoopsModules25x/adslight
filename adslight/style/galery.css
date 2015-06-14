@@ -11,7 +11,9 @@ form#submitpicture {	border: 1px dotted #999999;
 form.lado {float:right;width:20px;height:20px;}
 form#deleteform {}
 form#editform {}
-.yogerrors {color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick;}
+.yogerrors {color:#FF0000; background-color:#FFEAF4;
+    border: thick #FF0000;
+}
 ul#album_photos:after {
 	content: ".";
 	width: 100%;
@@ -31,11 +33,11 @@ height:295px;
 text-align:center;
 border: 1px dotted #999999;
 padding:2px;
-	
+
 }
 ul#album_photos li div.photo_in_album:hover {
 background-color:#FFFFE1;
-	
+
 }
 
 ul#album_photos li div.photo_in_album img  { padding: 2px; border: solid 3px #333 }

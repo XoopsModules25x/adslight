@@ -24,9 +24,7 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-if (!defined("XOOPS_ROOT_PATH") || !defined("XOOPS_URL") ) {
-    exit();
-}
+// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
 
 define('REAL_MODULE_NAME', 'adslight');
 define('SEO_MODULE_NAME', 'annonces');

@@ -20,8 +20,8 @@
 -------------------------------------------------------------------------
 */
 
-    $mydirname = basename( dirname( dirname( __FILE__ ) ) ) ;
-    $main_lang =  '_' . strtoupper( $mydirname ) ;
+    $moduleDirName = basename( dirname( __DIR__ ) ) ;
+    $main_lang =  '_' . strtoupper( $moduleDirName ) ;
     require_once( XOOPS_ROOT_PATH."/modules/adslight/include/gtickets.php" ) ;
     include_once XOOPS_ROOT_PATH.'/class/xoopstree.php';
     $myts =& MyTextSanitizer::getInstance();
@@ -29,7 +29,7 @@
 function ExpireAd()
 {
 
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $meta, $mydirname, $main_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $meta, $moduleDirName, $main_lang;
 
     $datenow = time();
 
@@ -159,7 +159,7 @@ $xoopsDB->queryF("update ".$xoopsDB->prefix("adslight_listing")." set remind='1'
  */
 function updateUrating($sel_id)
 {
-        global $xoopsDB, $xoopsUser, $mydirname, $main_lang;
+        global $xoopsDB, $xoopsUser, $moduleDirName, $main_lang;
 
 if (isset($_GET['usid']) ) {
     $usid = intval($_GET['usid']);
@@ -178,7 +178,7 @@ if (isset($_GET['usid']) ) {
         $finalrating = number_format($finalrating, 4);
         $query =  "UPDATE ".$xoopsDB->prefix("adslight_listing")." SET user_rating=$finalrating, user_votes=$votesDB WHERE usid=".mysql_real_escape_string($sel_id)."";
         //echo $query;
-            $xoopsDB->query($query) or exit();
+            $xoopsDB->query($query) || exit();
 }
 
 //updates rating data in itemtable for a given user
@@ -187,7 +187,7 @@ if (isset($_GET['usid']) ) {
  */
 function updateIrating($sel_id)
 {
-        global $xoopsDB, $xoopsUser, $mydirname, $main_lang;
+        global $xoopsDB, $xoopsUser, $moduleDirName, $main_lang;
 
 if (isset($_GET['lid']) ) {
     $lid = intval($_GET['lid']);
@@ -206,7 +206,7 @@ if (isset($_GET['lid']) ) {
         $finalrating = number_format($finalrating, 4);
         $query =  "UPDATE ".$xoopsDB->prefix("adslight_listing")." SET item_rating=$finalrating, item_votes=$votesDB WHERE lid=".mysql_real_escape_string($sel_id)."";
         //echo $query;
-            $xoopsDB->query($query) or exit();
+            $xoopsDB->query($query) || exit();
 }
 
 /**
@@ -217,7 +217,7 @@ if (isset($_GET['lid']) ) {
  */
 function adslight_getTotalItems($sel_id, $status="")
 {
-    global $xoopsDB, $mytree, $mydirname;
+    global $xoopsDB, $mytree, $moduleDirName;
     $categories = adslight_MygetItemIds("adslight_view");
     $count = 0;
     $arr = array();
@@ -250,7 +250,7 @@ function adslight_getTotalItems($sel_id, $status="")
  */
 function adslight_MygetItemIds($permtype)
 {
-    global $xoopsUser, $mydirname;
+    global $xoopsUser, $moduleDirName;
     static $permissions = array();
     if (is_array($permissions) && array_key_exists($permtype, $permissions)) {
         return $permissions[$permtype];
@@ -303,7 +303,7 @@ function adslight_getmoduleoption($option, $repmodule='adslight')
 
 function ShowImg()
 {
-global $mydirname;
+global $moduleDirName;
     echo "<script type=\"text/javascript\">\n";
     echo "<!--\n\n";
     echo "function showimage() {\n";
@@ -371,6 +371,7 @@ function adslight_convertorderbytrans($orderby)
             if ($orderby == "date DESC")   $orderbyTrans = ""._ADSLIGHT_DATENEW."";
             if ($orderby == "price ASC")  $orderbyTrans = _ADSLIGHT_PRICELTOH;
             if ($orderby == "price DESC") $orderbyTrans = ""._ADSLIGHT_PRICEHTOL."";
+
             return $orderbyTrans;
 }
 
@@ -388,6 +389,7 @@ function adslight_convertorderbytrans($orderby)
             if ($orderby == "date DESC")            $orderby = "dateD";
             if ($orderby == "hits DESC")          $orderby = "hitsD";
             if ($orderby == "price DESC")        $orderby = "priceD";
+
             return $orderby;
 }
 
@@ -403,7 +405,7 @@ function adslight_convertorderbytrans($orderby)
  */
 function adslight_getEditor($caption, $name, $value = "", $width = '100%', $height ='300px', $supplemental='')
 {
-    global $xoopsModuleConfig, $mydirname;
+    global $xoopsModuleConfig, $moduleDirName;
 $editor = false;
 $x22=false;
 $xv=str_replace('XOOPS ','',XOOPS_VERSION);
@@ -516,7 +518,7 @@ $editor_configs["height"] = "300px";
  */
 function adslight_adminEditor($caption, $name, $value = "", $width = '100%', $height ='300px', $supplemental='')
 {
-    global $xoopsModuleConfig, $mydirname;
+    global $xoopsModuleConfig, $moduleDirName;
 $editor = false;
 $x22=false;
 $xv=str_replace('XOOPS ','',XOOPS_VERSION);
@@ -662,7 +664,7 @@ function jlm_ads_AddField($field, $table)
  */
 function adslight_getCatNameFromId($cid)
 {
-           global $xoopsDB, $xoopsConfig, $myts, $xoopsUser, $mydirname;
+           global $xoopsDB, $xoopsConfig, $myts, $xoopsUser, $moduleDirName;
 
            $sql = "SELECT SQL_CACHE title FROM ".$xoopsDB->prefix("adslight_categories")." WHERE cid = '$cid'";
 
@@ -747,6 +749,7 @@ function adslight_NameType($type)
 global $xoopsDB;
             $sql=$xoopsDB->query("select nom_type from ".$xoopsDB->prefix("adslight_type")." WHERE id_type=".mysql_real_escape_string($type)."");
             list($nom_type) = $xoopsDB->fetchRow($sql);
+
 return $nom_type;
 }
 
