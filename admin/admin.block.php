@@ -21,4 +21,4 @@
 */
 
 include_once __DIR__ . '/header.php';
-header("Location: ".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&selmod=".$xoopsModule->getVar("mid"));
+header('Location: ' . XOOPS_URL . '/modules/system/admin.php?fct=blocksadmin&selmod=' . $xoopsModule->getVar('mid'));

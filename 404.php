@@ -36,4 +36,4 @@ $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
 
 echo _MN_ADSLIGHT_ERROR404_TEXT;
 
-include(XOOPS_ROOT_PATH . "/footer.php");
+include(XOOPS_ROOT_PATH . '/footer.php');

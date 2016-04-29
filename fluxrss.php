@@ -26,29 +26,36 @@ include_once __DIR__ . '/include/functions.php';
 
 // var_dump($xoopsModuleConfig);die();
 
-$allads = returnAllAdsFluxRss() ;
-$base_xoops = "http://".$_SERVER["SERVER_NAME"].substr($_SERVER["REQUEST_URI"], 0, strpos($_SERVER["REQUEST_URI"], "modules")) ;
+$allads     = returnAllAdsFluxRss();
+$base_xoops = 'http://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], 'modules'));
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
 <rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">
 <channel>
-<title>".$xoopsConfig["sitename"]."</title>
-<link>".$base_xoops."</link>
-<description>".$xoopsConfig["slogan"]."</description>
-<language>fr</language>";
+<title>" . $xoopsConfig['sitename'] . '</title>
+<link>' . $base_xoops . '</link>
+<description>' . $xoopsConfig['slogan'] . '</description>
+<language>fr</language>';
 
-$adslink = "http://".$_SERVER["SERVER_NAME"].substr($_SERVER["REQUEST_URI"], 0, strrpos($_SERVER["REQUEST_URI"], "/")) ;
+$adslink = 'http://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'));
 
-for ($i=0; $i<count($allads); ++$i) {
-
-echo "<item>
-<title>".$allads[$i]["title"]."</title>
-<description><![CDATA[".stripslashes($allads[$i]["desctext"])."<br><strong>Ville:</strong> ".htmlspecialchars($allads[$i]["town"])." - <strong>Prix:</strong> ".htmlspecialchars($allads[$i]["price"])."&#8364; <br />";
-echo "]]></description>
-<link><![CDATA[".$adslink."/viewads.php?lid=".$allads[$i]["lid"]."]]></link>
-<guid><![CDATA[".$adslink."/viewads.php?lid=".$allads[$i]["lid"]."]]></guid>
-<pubDate>".date("D, d M Y H:i:s +0100", $allads[$i]['date'])."</pubDate>
-</item>" ;
+for ($i = 0, $iMax = count($allads); $i < $iMax; ++$i) {
+    echo '<item>
+<title>' .
+         $allads[$i]['title'] .
+         '</title>
+<description><![CDATA[' .
+         stripslashes($allads[$i]['desctext']) .
+         '<br><strong>Ville:</strong> ' .
+         htmlspecialchars($allads[$i]['town']) .
+         ' - <strong>Prix:</strong> ' .
+         htmlspecialchars($allads[$i]['price']) .
+         '&#8364; <br>';
+    echo ']]></description>
+<link><![CDATA[' . $adslink . '/viewads.php?lid=' . $allads[$i]['lid'] . ']]></link>
+<guid><![CDATA[' . $adslink . '/viewads.php?lid=' . $allads[$i]['lid'] . ']]></guid>
+<pubDate>' . date('D, d M Y H:i:s +0100', $allads[$i]['date']) . '</pubDate>
+</item>';
 }
-echo "</channel>
-</rss>";
+echo '</channel>
+</rss>';

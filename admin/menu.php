@@ -19,13 +19,13 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-// defined("XOOPS_ROOT_PATH") || exit("XOOPS root path not defined");
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 $path = dirname(dirname(dirname(__DIR__)));
 include_once $path . '/mainfile.php';
 
 $dirname         = basename(dirname(__DIR__));
-$module_handler  = xoops_gethandler('module');
+$module_handler  = xoops_getHandler('module');
 $module          = $module_handler->getByDirname($dirname);
 $pathIcon32      = $module->getInfo('icons32');
 $pathModuleAdmin = $module->getInfo('dirmoduleadmin');
@@ -37,29 +37,29 @@ if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig
 
 include_once $fileinc;
 
-$adminmenu = array();
-$i=0;
-$adminmenu[$i]["title"] = _AM_MODULEADMIN_HOME;
-$adminmenu[$i]['link'] = "admin/index.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/home.png';
+$adminmenu              = array();
+$i                      = 0;
+$adminmenu[$i]['title'] = _AM_MODULEADMIN_HOME;
+$adminmenu[$i]['link']  = 'admin/index.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
 
 //global $xoopsModule;
 ++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU0;
-$adminmenu[$i]['link'] = "admin/main.php";
-$adminmenu[$i]['icon'] =  $pathIcon32 . '/dashboard.png';
+$adminmenu[$i]['link']  = 'admin/main.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/dashboard.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU1;
-$adminmenu[$i]['link'] = "admin/map.php";
-$adminmenu[$i]['icon'] =  $pathIcon32 . '/category.png';
+$adminmenu[$i]['link']  = 'admin/map.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/category.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU5;
-$adminmenu[$i]['link'] = "admin/options.php";
-$adminmenu[$i]['icon'] = "assets/images/icons/preferences.png";
+$adminmenu[$i]['link']  = 'admin/options.php';
+$adminmenu[$i]['icon']  = 'assets/images/icons/preferences.png';
 ++$i;
 $adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU2;
-$adminmenu[$i]['link'] = "admin/groupperms.php";
-$adminmenu[$i]['icon'] =  $pathIcon32 . '/permissions.png';
+$adminmenu[$i]['link']  = 'admin/groupperms.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/permissions.png';
 //++$i;
 //if (isset($xoopsModule) && $xoopsModule->getVar('dirname') == basename(dirname(__DIR__))) {
 //$adminmenu[$i]['title'] = _MI_ADSLIGHT_ADMENU3;
@@ -80,8 +80,8 @@ $adminmenu[$i]['link'] = "admin/support_forum.php";
 $adminmenu[$i]['icon'] = "assets/images/icons/discussion.png"; */
 ++$i;
 $adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
-$adminmenu[$i]["link"]  = "admin/about.php";
-$adminmenu[$i]["icon"]  = $pathIcon32 . '/about.png';
+$adminmenu[$i]['link']  = 'admin/about.php';
+$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
 //++$i;
 //$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
 //$adminmenu[$i]["link"]  = "admin/about0.php";

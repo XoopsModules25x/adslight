@@ -4,6 +4,10 @@
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
 - added routine to delete .html templates (slider84)
+- intval to (int) (mamba)
+- XOOPS 2.5.8, PHP7 (mamba)
+- unnecessary Double Quotes (mamba)
+- unnecessary Parentheses (mamba)
 
 
 2.2 Beta 2          2013-05-10
@@ -21,7 +25,7 @@ TODO:
 2.2 Beta 1          2013-03-13
 =================================
 - Converted to XOOPS 2.5.5 Admin GUI (mamba)
-- fixed minor bugs (cesag/mamba)
+- fixed minor bugs (cesagonchu/mamba)
 - add: dynamic configuration of Text Editors in Preferences (mamba)
 
 

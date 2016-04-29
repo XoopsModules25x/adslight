@@ -19,15 +19,18 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-include_once XOOPS_ROOT_PATH.'/class/xoopstree.php';
+include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
+/**
+ * @return mixed
+ */
 function b_adslight_add()
 {
-global $xoopsDB;
+    global $xoopsDB;
 
-    $xt = new XoopsTree($xoopsDB->prefix("adslight_categories"),'cid','pid');
-    $jump = XOOPS_URL."/modules/adslight/addlisting.php?cid=";
+    $xt   = new XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $jump = XOOPS_URL . '/modules/adslight/addlisting.php?cid=';
     ob_start();
-    $xt->makeMySelBox('title','title',0,1, 'pid', "location=\"".$jump."\"+this.options[this.selectedIndex].value");
+    $xt->makeMySelBox('title', 'title', 0, 1, 'pid', "location=\"" . $jump . "\"+this.options[this.selectedIndex].value");
     $block['selectbox'] = ob_get_contents();
     ob_end_clean();
 

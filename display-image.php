@@ -22,24 +22,24 @@
 
 include_once __DIR__ . '/header.php';
 
-if ( isset($_GET['cod_img']) ) {
-    $cod_img = intval($_GET['cod_img']);
+if (isset($_GET['cod_img'])) {
+    $cod_img = (int)$_GET['cod_img'];
 } else {
-    redirect_header("index.php",1, _ADSLIGHT_VALIDATE_FAILED);
+    redirect_header('index.php', 1, _ADSLIGHT_VALIDATE_FAILED);
 }
 xoops_header();
 
 global $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
 $currenttheme = getTheme();
 
-$result=$xoopsDB->query("select url FROM ".$xoopsDB->prefix("adslight_picture")." WHERE cod_img = ".mysql_real_escape_string($cod_img)."");
+$result      = $xoopsDB->query('select url FROM ' . $xoopsDB->prefix('adslight_picture') . ' WHERE cod_img = ' . $xoopsDB->escape($cod_img) . '');
 $recordexist = $xoopsDB->getRowsNum($result);
 
 if ($recordexist) {
-    list($url)=$xoopsDB->fetchRow($result);
-    echo "<br /><br /><center><img class=\"thumb\" src=\"photo/$url\" border=0></center>";
+    list($url) = $xoopsDB->fetchRow($result);
+    echo "<br><br><center><img class=\"thumb\" src=\"photo/$url\" border=0></center>";
 }
 
-echo "<table><tr><td><center><a href=#  onClick='window.close()'>"._ADSLIGHT_CLOSEF."</a></center></td></tr></table>";
+echo "<table><tr><td><center><a href=#  onClick='window.close()'>" . _ADSLIGHT_CLOSEF . '</a></center></td></tr></table>';
 
 xoops_footer();
