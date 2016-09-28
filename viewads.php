@@ -217,7 +217,7 @@ function viewads($lid = 0)
 
             $contact_pm = '<a href="' . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . addslashes($usid) . '">&nbsp;' . _ADSLIGHT_CONTACT_BY_PM . '</a>';
         }
-        if ($viewcount_judge == true) {
+        if (true === $viewcount_judge) {
             $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid) . '');
         }
         if ($item_votes == 1) {
