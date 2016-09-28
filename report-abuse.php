@@ -21,11 +21,13 @@
 */
 
 include_once __DIR__ . '/header.php';
-require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
-include(XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php');
+require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
 
 /**
  * @param $lid
+ *
+ * @return void
  */
 function ReportAbuse($lid)
 {
@@ -34,7 +36,8 @@ function ReportAbuse($lid)
     include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     include XOOPS_ROOT_PATH . '/header.php';
 
-    $result = $xoopsDB->query('select lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . ' where lid=' . $xoopsDB->escape($lid) . '');
+    $lid    = (int)$lid;
+    $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
     list($lid, $title, $type) = $xoopsDB->fetchRow($result);
 
     $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
@@ -66,10 +69,10 @@ function ReportAbuse($lid)
       <td class='even'><input class=\"textbox\" type=\"hidden\" name=\"fmail\" value=\"$iddee\"/></td>
     </tr>";
 
-    if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
+    if ('1' == $xoopsModuleConfig['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
-        $jlm_captcha = (new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false));
+        $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
         echo '</td></tr>';
     }
@@ -92,7 +95,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
 {
     global $xoopsConfig, $xoopsUser, $xoopsTpl, $xoopsDB, $xoopsModule, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
-    if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
+    if ('1' == $xoopsModuleConfig['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -100,11 +103,12 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
         }
     }
 
-    $result = $xoopsDB->query('select lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM ' .
-                              $xoopsDB->prefix('adslight_listing') .
-                              ' where lid=' .
-                              $xoopsDB->escape($lid) .
-                              '');
+    $lid    = (int)$lid;
+    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM '
+                              . $xoopsDB->prefix('adslight_listing')
+                              . ' WHERE lid='
+                              . $xoopsDB->escape($lid)
+                              . '');
     list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
@@ -144,7 +148,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['NO_REPLY']           = _ADSLIGHT_NOREPLY;
     $subject                    = '' . _ADSLIGHT_REPORTSUBJET . ' ' . $xoopsConfig['sitename'] . '';
 
-    $xoopsMailer = xoops_getMailer();
+    $xoopsMailer =& xoops_getMailer();
     $xoopsMailer->multimailer->isHTML(true);
     $xoopsMailer->useMail();
     $xoopsMailer->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
@@ -170,25 +174,14 @@ $ymail = !empty($_POST['ymail']) ? $myts->addSlashes($_POST['ymail']) : '';
 $fname = !empty($_POST['fname']) ? $myts->addSlashes($_POST['fname']) : '';
 $fmail = !empty($_POST['fmail']) ? $myts->addSlashes($_POST['fmail']) : '';
 
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = (int)$_GET['lid'];
-} else {
-    $lid = (int)$_POST['lid'];
-}
-
-$op = '';
-if (!empty($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (!empty($_POST['op'])) {
-    $op = $_POST['op'];
-}
+$lid = XoopsRequest::getInt('lid', 0);
+$op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
-
     case 'ReportAbuse':
-        include(XOOPS_ROOT_PATH . '/header.php');
+        include XOOPS_ROOT_PATH . '/header.php';
         ReportAbuse($lid);
-        include(XOOPS_ROOT_PATH . '/footer.php');
+        include XOOPS_ROOT_PATH . '/footer.php';
         break;
 
     case 'MailAd':
@@ -196,7 +189,6 @@ switch ($op) {
         break;
 
     default:
-        redirect_header('index.php', 1, '' . _RETURNGLO . '');
+        redirect_header('index.php', 1, _RETURNGLO);
         break;
-
 }

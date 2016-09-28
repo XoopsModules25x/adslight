@@ -45,7 +45,7 @@ class jlm_pictures extends XoopsObject
     // constructor
     /**
      * @param null $id
-     * @param null $lid
+     * @param null|array $lid
      */
     public function __construct($id = null, $lid = null)
     {
@@ -92,8 +92,14 @@ class jlm_pictures extends XoopsObject
      *
      * @return array
      */
-    public function getAll_pictures($criteria = array(), $asobject = false, $sort = 'cod_img', $order = 'ASC', $limit = 0, $start = 0)
-    {
+    public function getAll_pictures(
+        $criteria = array(),
+        $asobject = false,
+        $sort = 'cod_img',
+        $order = 'ASC',
+        $limit = 0,
+        $start = 0
+    ) {
         global $moduleDirName;
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = array();
@@ -164,7 +170,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     {
         global $moduleDirName;
 
-        $sql = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' and lid=' . $lid . '';
+        $sql = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' AND lid=' . $lid . '';
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -361,8 +367,8 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
     {
         global $moduleDirName, $main_lang, $xoopsUser;
-        $form       =
-            new XoopsThemeForm(constant('_ADSLIGHT_SUBMIT_PIC_TITLE'), 'form_picture', '' . XOOPS_URL . "/modules/adslight/add_photo.php?lid=$lid&uid=" . $xoopsUser->getVar('uid') . '', 'post', true);
+        $form       = new XoopsThemeForm(constant('_ADSLIGHT_SUBMIT_PIC_TITLE'), 'form_picture', '' . XOOPS_URL . "/modules/adslight/add_photo.php?lid=$lid&uid=" . $xoopsUser->getVar('uid') . '',
+                                         'post', true);
         $field_url  = new XoopsFormFile(constant('_ADSLIGHT_SELECT_PHOTO'), 'sel_photo', 2000000);
         $field_desc = new XoopsFormText(constant('_ADSLIGHT_CAPTION'), 'caption', 35, 55);
         $form->setExtra('enctype="multipart/form-data"');
@@ -479,8 +485,17 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      * @param  int  $maxfileheight the maximum height in pixels that a pic can have
      * @return bool FALSE if upload fails or database fails
      */
-    public function receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)
-    {
+    public function receivePicture(
+        $title,
+        $path_upload,
+        $thumbwidth,
+        $thumbheight,
+        $pictwidth,
+        $pictheight,
+        $maxfilebytes,
+        $maxfilewidth,
+        $maxfileheight
+    ) {
         global $xoopsUser, $xoopsDB, $_POST, $_FILES, $lid;
         //busca id do user logado
         $uid = $xoopsUser->getVar('uid');
@@ -500,9 +515,9 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
             //now let s upload the file
             if (!$uploader->upload()) {
                 // if there are errors lets return them
-                echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center\"><p>" .
-                     $uploader->getErrors() .
-                     '</p></div>';
+                echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center\"><p>"
+                     . $uploader->getErrors()
+                     . '</p></div>';
 
                 return false;
             } else {

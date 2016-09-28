@@ -23,40 +23,37 @@
 include_once __DIR__ . '/admin_header.php';
 //include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-} else {
-    $op = 'liste';
-}
+$op = XoopsRequest::getCmd('op', 'liste');
 
 include_once __DIR__ . '/header.php';
 xoops_cp_header();
 //loadModuleAdminMenu(3, "");
-
+echo $adminObject->addNavigation(basename(__FILE__));
 echo '<br><br>';
 global $xoopsDB;
-$countresult = $xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories') . '');
+$countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories') . '');
 list($cat_row) = $xoopsDB->fetchRow($countresult);
 $cat_rows = $cat_row;
 if ($cat_rows == '0') {
     echo '' . _MI_ADSLIGHT_MUST_ADD_CAT . '';
 } else {
-    $permtoset                = isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
+    //$permtoset= isset($_POST['permtoset']) ? intval($_POST['permtoset']) : 1;
+    $permtoset                = XoopsRequest::getInt('permtoset', 1, 'POST');
     $selected                 = array('', '', '');
     $selected[$permtoset - 1] = ' selected';
-    echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='javascript: document.jselperm.submit()'><option value='1'" .
-         $selected[0] .
-         '>' .
-         _MI_ADSLIGHT_VIEWFORM .
-         "</option><option value='2'" .
-         $selected[1] .
-         '>' .
-         _MI_ADSLIGHT_SUBMITFORM .
-         "</option><option value='3'" .
-         $selected[2] .
-         '>' .
-         _MI_ADSLIGHT_PREMIUM .
-         '</option></select></td><td></tr></table></form>';
+    echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='javascript: document.jselperm.submit()'><option value='1'"
+         . $selected[0]
+         . '>'
+         . _MI_ADSLIGHT_VIEWFORM
+         . "</option><option value='2'"
+         . $selected[1]
+         . '>'
+         . _MI_ADSLIGHT_SUBMITFORM
+         . "</option><option value='3'"
+         . $selected[2]
+         . '>'
+         . _MI_ADSLIGHT_PREMIUM
+         . '</option></select></td><td></tr></table></form>';
     $module_id = $xoopsModule->getVar('mid');
 
     switch ($permtoset) {

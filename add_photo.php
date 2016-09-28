@@ -27,7 +27,7 @@ $main_lang     = '_' . strtoupper($moduleDirName);
  * Xoops header ...
  */
 include dirname(dirname(__DIR__)) . '/mainfile.php';
-$xoopsOption['template_main'] = 'adslight_index.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 include_once XOOPS_ROOT_PATH . '/header.php';
 
 /**

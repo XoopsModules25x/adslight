@@ -46,12 +46,12 @@ $modversion['name']         = 'AdsLight';
 $modversion['version']      = '2.2';
 $modversion['description']  = _MI_ADSLIGHT_DESC;
 $modversion['credits']      = 'AdsLight';
-$modversion['author']       = 'Luc Bizet **';
+$modversion['author']       = 'Luc Bizet';
 $modversion['help']         = 'page=help';
 $modversion['license']      = 'GPL';
 $modversion['license_file'] = 'http://www.gnu.org/licenses/gpl.html';
 $modversion['official']     = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']        = 'assets/images/logo_module.png';
+$modversion['image']        = 'assets/images/logoModule.png';
 $modversion['dirname']      = basename(__DIR__);
 
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
@@ -59,19 +59,19 @@ $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 //about
 $modversion['module_status']       = 'Beta 3 ';
-$modversion['release_date']        = '2016/04/27';
+$modversion['release_date']        = '2016/09/27';
 $modversion['module_website_url']  = 'www.xoops.org';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
 $modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.1';
+$modversion['min_admin']           = '1.2';
 $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 
 $modversion['sqlfile']['mysql'] = $adslight_sql;
 $modversion['onInstall']        = 'include/install.php';
 $modversion['onUpdate']         = 'include/update_function.php';
 
-$modversion['release']           = '25-04-2016';
+$modversion['release']           = '27-09-2016';
 $modversion['support_site_url']  = 'http://#';
 $modversion['support_site_name'] = 'AdsLight';
 
@@ -259,7 +259,16 @@ $modversion['config'][5]['description'] = '';
 $modversion['config'][5]['formtype']    = 'select';
 $modversion['config'][5]['valuetype']   = 'int';
 $modversion['config'][5]['default']     = '15';
-$modversion['config'][5]['options']     = array('10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30, '35' => 35, '40' => 40, '50' => 50);
+$modversion['config'][5]['options']     = array(
+    '10' => 10,
+    '15' => 15,
+    '20' => 20,
+    '25' => 25,
+    '30' => 30,
+    '35' => 35,
+    '40' => 40,
+    '50' => 50
+);
 
 $modversion['config'][6]['name']        = 'adslight_newad';
 $modversion['config'][6]['title']       = '_MI_ADSLIGHT_VIEWNEWCLASS';
@@ -408,7 +417,10 @@ $modversion['config'][25]['description'] = '';
 $modversion['config'][25]['formtype']    = 'select';
 $modversion['config'][25]['valuetype']   = 'text';
 $modversion['config'][25]['default']     = 'title';
-$modversion['config'][25]['options']     = array('_MI_ADSLIGHT_ORDREALPHA' => 'title', '_MI_ADSLIGHT_ORDREPERSO' => 'ordre');
+$modversion['config'][25]['options']     = array(
+    '_MI_ADSLIGHT_ORDREALPHA' => 'title',
+    '_MI_ADSLIGHT_ORDREPERSO' => 'ordre'
+);
 
 $modversion['config'][26]['name']        = 'adslight_lsort_order';
 $modversion['config'][26]['title']       = '_MI_ADSLIGHT_LSORT_ORDER';

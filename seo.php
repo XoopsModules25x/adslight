@@ -25,9 +25,11 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-$seoOp    = $_GET['seoOp'];
-$seoArg   = $_GET['seoArg'];
-$seoOther = $_GET['seoOther'];
+xoops_load('XoopsRequest');
+
+$seoOp    = XoopsRequest::getString('seoOp', '', 'GET');
+$seoArg   = XoopsRequest::getString('seoArg', '', 'GET');
+$seoOther = XoopsRequest::getString('seoOther', '', 'GET');
 
 if (!empty($seoOther)) {
     $seoOther = explode('/', $seoOther);
@@ -35,7 +37,8 @@ if (!empty($seoOther)) {
 
 $seoMap = array(
     'c' => 'viewcats.php',
-    'p' => 'viewads.php'//  'addlisting' => 'addlisting.php'
+    'p' => 'viewads.php'
+    //  'addlisting' => 'addlisting.php'
 
 );
 
@@ -44,9 +47,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
     // per their requirements.
     $newUrl = '/modules/adslight/' . $seoMap[$seoOp];
 
-    /// if your site is in a folder.  ex: www.welcome.com/xoops_site/
-    /// Replace the line above, for it ///
-    /// $newUrl = '/yourfile/modules/adslight/' . $seoMap[$seoOp];
+    // if your site is in a folder.  ex: www.welcome.com/xoops_site/
+    // Replace the line above, for it
+    // $newUrl = '/yourfile/modules/adslight/' . $seoMap[$seoOp];
 
     $_ENV['PHP_SELF']       = $newUrl;
     $_SERVER['SCRIPT_NAME'] = $newUrl;
@@ -63,7 +66,7 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
 
     }
 
-    include($seoMap[$seoOp]);
+    include $seoMap[$seoOp];
 }
 
 exit;

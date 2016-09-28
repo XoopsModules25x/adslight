@@ -8,7 +8,16 @@
 - XOOPS 2.5.8, PHP7 (mamba)
 - unnecessary Double Quotes (mamba)
 - unnecessary Parentheses (mamba)
-
+- remove @version (mamba)
+- filter user input using XoopsRequest (zyspec)
+- replaced < b /> with < b > (mamba)
+- addNavigation(basename(__FILE__))  (mamba)
+- dirname(__FILE__) to __DIR__ (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- changed _handler to Handler (mamba)
+- replace $xoopsOption['template_main'] with $GLOBALS['xoopsOption']['template_main'] (mamba)
 
 2.2 Beta 2          2013-05-10
 =================================

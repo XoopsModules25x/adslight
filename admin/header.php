@@ -23,10 +23,10 @@
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-    include_once(XOOPS_ROOT_PATH . '/class/template.php');
+    include_once XOOPS_ROOT_PATH . '/class/template.php';
     $xoopsTpl = new XoopsTpl();
 }
-
+$adminObject = new ModuleAdmin();
 if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
 
     /**
@@ -80,21 +80,21 @@ if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
      <ul>
     ';
         foreach (array_keys($adminmenu) as $key) {
-            $adminmenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>') .
-                               '<a href="' .
-                               $module_link .
-                               $adminmenu[$key]['link'] .
-                               '"><span>' .
-                               $adminmenu[$key]['title'] .
-                               '</span></a></li>';
+            $adminmenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>')
+                               . '<a href="'
+                               . $module_link
+                               . $adminmenu[$key]['link']
+                               . '"><span>'
+                               . $adminmenu[$key]['title']
+                               . '</span></a></li>';
         }
-        $adminmenu_text .= '<li><a href="' .
-                           XOOPS_URL .
-                           '/modules/system/admin.php?fct=preferences&op=showmod&mod=' .
-                           $GLOBALS['xoopsModule']->getVar('mid') .
-                           '"><span>' .
-                           _PREFERENCES .
-                           '</span></a></li>';
+        $adminmenu_text .= '<li><a href="'
+                           . XOOPS_URL
+                           . '/modules/system/admin.php?fct=preferences&op=showmod&mod='
+                           . $GLOBALS['xoopsModule']->getVar('mid')
+                           . '"><span>'
+                           . _PREFERENCES
+                           . '</span></a></li>';
         $adminmenu_text .= '
      </ul>
     </div>

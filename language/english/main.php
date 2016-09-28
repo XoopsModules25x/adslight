@@ -355,8 +355,8 @@ define('_ADSLIGHT_ALERTEABUS', 'Report Abuse');
 define('_ADSLIGHT_CONTACT_SUBMITTER', 'Contact');
 define('_ADSLIGHT_SENDFRIENDS', 'Email this listing');
 //report-abuse.php
-define('_ADSLIGHT_REPORTSENDTO', '<b>Report this ad:</b><br/><br/>ad No. ');
-define('_ADSLIGHT_REPORTANNSEND', 'Thank you for your help!<br/>The ad just be reported to Admin.');
+define('_ADSLIGHT_REPORTSENDTO', '<b>Report this ad:</b><br><br>ad No. ');
+define('_ADSLIGHT_REPORTANNSEND', 'Thank you for your help!<br>The ad just be reported to Admin.');
 define('_ADSLIGHT_REPORTSUBJET', '[Alert] An ad undesirable ');
 define('_ADSLIGHT_REPORTMESSAGE', 'Believes that this announcement is illegal and you wanted to know.');
 //index.php >> Infos Bulle //
@@ -408,7 +408,7 @@ define('_ADSLIGHT_NOCLAS', 'There are currently no advertisements<br>in this cat
 define('_ADSLIGHT_ADD_LISTING_NOTADDSINTHISCAT', 'There are no ads in this category.<br>');
 define('_ADSLIGHT_ADD_LISTING_NOTADDSSUBMIT', 'Add Ad');
 //version 1.064
-define('_ADSLIGHT_CATPLUS', '<br/>&#187;&nbsp;More ...');
+define('_ADSLIGHT_CATPLUS', '<br>&#187;&nbsp;More ...');
 /* AdsLight 2 */
 define('_ADSLIGHT_RESERVED', "This ad is: <br> <font color='red'> <strong> [Reserved] </strong> </font>");
 define('_ADSLIGHT_RESERVEDMEMBER', "<strong> Status: </strong> <font color='red'> <strong> [Reserved] </strong> </font>");

@@ -16,7 +16,7 @@
     <strong><{$lang_user_rating}></strong>
     <{$rating}> (<{$user_votes}>)<{/if}><{else}>
     <{if $rate !='0'}><strong><{$lang_user_rating}></strong> <{$rating}> (<{$user_votes}>)
-        <br/>
+        <br>
         >
         <ahref
         ="rate-user.php?usid=<{$usid}>" rel="nofollow"><{$lang_ratethisuser}></a><{/if}>

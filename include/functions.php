@@ -22,7 +22,7 @@
 
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . strtoupper($moduleDirName);
-require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
+require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 $myts = MyTextSanitizer::getInstance();
 
@@ -32,8 +32,9 @@ function ExpireAd()
 
     $datenow = time();
 
-    $result5 =
-        $xoopsDB->query('select lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes'");
+    $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM '
+                               . $xoopsDB->prefix('adslight_listing')
+                               . " WHERE valid='Yes'");
 
     while (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5)) {
         $title     = $myts->htmlSpecialChars($title);
@@ -48,7 +49,7 @@ function ExpireAd()
         // give warning that add is about to expire
 
         if ($almost > 0 && ($supprdate - $almost * 86400) < $datenow && $valid === 'Yes' && $remind == 0) {
-            $xoopsDB->queryF('update ' . $xoopsDB->prefix('adslight_listing') . " set remind='1' where lid=$lids");
+            $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET remind='1' WHERE lid=$lids");
 
             if ($email) {
                 $tags               = array();
@@ -89,7 +90,7 @@ function ExpireAd()
 
         if ($supprdate < $datenow) {
             if ($photo != 0) {
-                $result2 = $xoopsDB->query('select url from ' . $xoopsDB->prefix('adslight_pictures') . ' where lid=' . $xoopsDB->escape($lids) . '');
+                $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lids) . '');
 
                 while (list($url) = $xoopsDB->fetchRow($result2)) {
                     $destination  = XOOPS_ROOT_PATH . '/uploads/AdsLight';
@@ -107,7 +108,7 @@ function ExpireAd()
                 }
             }
 
-            $xoopsDB->queryF('delete from ' . $xoopsDB->prefix('adslight_listing') . ' where lid=' . $xoopsDB->escape($lids) . '');
+            $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lids) . '');
 
             //  Specification for Japan:
             //  $message = ""._ADS_HELLO." $submitter,\n\n"._ADS_STOP2."\n $type : $title\n $desctext\n"._ADS_STOP3."\n\n"._ADS_VU." $lu "._ADS_VU2."\n\n"._ADS_OTHER." ".XOOPS_URL."/modules/myAds\n\n"._ADS_THANK."\n\n"._ADS_TEAM." ".$meta['title']."\n".XOOPS_URL."";
@@ -162,7 +163,7 @@ function updateUrating($sel_id)
     } else {
         $usid = 0;
     }
-    $query = 'select rating FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($sel_id) . '';
+    $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($sel_id) . '';
     //echo $query;
     $voteresult  = $xoopsDB->query($query);
     $votesDB     = $xoopsDB->getRowsNum($voteresult);
@@ -190,7 +191,7 @@ function updateIrating($sel_id)
     } else {
         $lid = 0;
     }
-    $query = 'select rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . '';
+    $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . '';
     //echo $query;
     $voteresult  = $xoopsDB->query($query);
     $votesDB     = $xoopsDB->getRowsNum($voteresult);
@@ -218,7 +219,7 @@ function adslight_getTotalItems($sel_id, $status = '')
     $count      = 0;
     $arr        = array();
     if (in_array($sel_id, $categories)) {
-        $query = 'select SQL_CACHE count(*) from ' . $xoopsDB->prefix('adslight_listing') . ' where cid=' . (int)$sel_id . " and valid='Yes' and status!='1'";
+        $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " and valid='Yes' AND status!='1'";
 
         $result = $xoopsDB->query($query);
         list($thing) = $xoopsDB->fetchRow($result);
@@ -227,7 +228,7 @@ function adslight_getTotalItems($sel_id, $status = '')
         $size  = count($arr);
         for ($i = 0; $i < $size; ++$i) {
             if (in_array($arr[$i], $categories)) {
-                $query2 = 'select SQL_CACHE count(*) from ' . $xoopsDB->prefix('adslight_listing') . ' where cid=' . (int)$arr[$i] . " and valid='Yes' and status!='1'";
+                $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$arr[$i] . " and valid='Yes' AND status!='1'";
 
                 $result2 = $xoopsDB->query($query2);
                 list($thing) = $xoopsDB->fetchRow($result2);
@@ -252,8 +253,9 @@ function adslight_MygetItemIds($permtype)
         return $permissions[$permtype];
     }
 
-    $module_handler         = xoops_getHandler('module');
-    $myModule               = $module_handler->getByDirname('adslight');
+    /** @var XoopsModuleHandler $moduleHandler */
+    $moduleHandler          = xoops_getHandler('module');
+    $myModule               = $moduleHandler->getByDirname('adslight');
     $groups                 = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $gperm_handler          = xoops_getHandler('groupperm');
     $categories             = $gperm_handler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
@@ -277,13 +279,17 @@ function adslight_getmoduleoption($option, $repmodule = 'adslight')
     }
 
     $retval = false;
-    if (isset($xoopsModuleConfig) && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule && $xoopsModule->getVar('isactive'))) {
+    if (isset($xoopsModuleConfig)
+        && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
+            && $xoopsModule->getVar('isactive'))
+    ) {
         if (isset($xoopsModuleConfig[$option])) {
             $retval = $xoopsModuleConfig[$option];
         }
     } else {
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->getByDirname($repmodule);
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler  = xoops_getHandler('module');
+        $module         = $moduleHandler->getByDirname($repmodule);
         $config_handler = xoops_getHandler('config');
         if ($module) {
             $moduleConfig =& $config_handler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
@@ -455,7 +461,7 @@ function adslight_getEditor($caption, $name, $value = '', $width = '100%', $heig
         case 'tinymce' :
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php';
                     $editor = new XoopsFormTinymce(array(
                                                        'caption' => $caption,
                                                        'name'    => $name,
@@ -478,7 +484,7 @@ function adslight_getEditor($caption, $name, $value = '', $width = '100%', $heig
         case 'fckeditor' :
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php';
                     $editor = new XoopsFormFckeditor($editor_configs, true);
                 } else {
                     if ($dhtml) {
@@ -495,8 +501,8 @@ function adslight_getEditor($caption, $name, $value = '', $width = '100%', $heig
         case 'koivi' :
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formkoivi.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formkoivi.php');
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/language/english.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formkoivi.php';
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/language/english.php';
                     $editor = new XoopsFormKoivi($editor_configs, true);
                 } else {
                     if ($dhtml) {
@@ -513,7 +519,7 @@ function adslight_getEditor($caption, $name, $value = '', $width = '100%', $heig
         case 'textarea':
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/textarea/textarea.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/textarea/textarea.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/textarea/textarea.php';
                     $editor = new FormTextArea($caption, $name, $value);
                 } else {
                     if ($dhtml) {
@@ -529,7 +535,7 @@ function adslight_getEditor($caption, $name, $value = '', $width = '100%', $heig
 
         default :
             //        if ($dhtml) {
-            include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php');
+            include_once XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php';
             $editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 20, 40, $supplemental);
             //       } else {
             //           $editor = new XoopsFormEditor($caption, 'dhtmltextarea', $editor_configs);
@@ -573,7 +579,7 @@ function adslight_adminEditor($caption, $name, $value = '', $width = '100%', $he
         case 'tinymce' :
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/tinymce/formtinymce.php';
                     $editor = new XoopsFormTinymce(array(
                                                        'caption' => $caption,
                                                        'name'    => $name,
@@ -596,7 +602,7 @@ function adslight_adminEditor($caption, $name, $value = '', $width = '100%', $he
         case 'fckeditor' :
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/fckeditor/formfckeditor.php';
                     $editor = new XoopsFormFckeditor($editor_configs, true);
                 } else {
                     if ($dhtml) {
@@ -613,8 +619,8 @@ function adslight_adminEditor($caption, $name, $value = '', $width = '100%', $he
         case 'koivi' :
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formkoivi.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formkoivi.php');
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/language/english.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/formkoivi.php';
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/koivi/language/english.php';
                     $editor = new XoopsFormKoivi($editor_configs, true);
                 } else {
                     if ($dhtml) {
@@ -631,7 +637,7 @@ function adslight_adminEditor($caption, $name, $value = '', $width = '100%', $he
         case 'textarea':
             if (!$x22) {
                 if (is_readable(XOOPS_ROOT_PATH . '/class/xoopseditor/textarea/textarea.php')) {
-                    include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/textarea/textarea.php');
+                    include_once XOOPS_ROOT_PATH . '/class/xoopseditor/textarea/textarea.php';
                     $editor = new FormTextArea($caption, $name, $value);
                 } else {
                     if ($dhtml) {
@@ -647,7 +653,7 @@ function adslight_adminEditor($caption, $name, $value = '', $width = '100%', $he
 
         default :
 
-            include_once(XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php');
+            include_once XOOPS_ROOT_PATH . '/class/xoopseditor/dhtmltextarea/dhtmltextarea.php';
             $editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 20, 40, $supplemental);
 
             break;
@@ -789,7 +795,7 @@ function returnAllAdsFluxRss()
 function adslight_NameType($type)
 {
     global $xoopsDB;
-    $sql = $xoopsDB->query('select nom_type from ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
+    $sql = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
     list($nom_type) = $xoopsDB->fetchRow($sql);
 
     return $nom_type;

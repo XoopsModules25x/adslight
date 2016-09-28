@@ -103,13 +103,14 @@ if (is_object($xoopsUser) && $xoopsUser->isAdmin($xoopsModule->mid())) {
         echo '<H1>' . constant($admin_lang . '_UPGRADEFAILED') . '</H1>';
         echo '<br>' . constant($admin_lang . '_UPGRADEFAILED0');
     } else {
-        echo '' .
-             constant($admin_lang . '_UPDATECOMPLETE') .
-             " - <a href='" .
-             XOOPS_URL .
-             "/modules/system/admin.php?fct=modulesadmin&op=update&module=$moduleDirName'>" .
-             constant($admin_lang . '_UPDATEMODULE') .
-             '</a>';
+        echo ''
+             . constant($admin_lang . '_UPDATECOMPLETE')
+             . " - <a href='"
+             . XOOPS_URL
+             . "/modules/system/admin.php?fct=modulesadmin&op=update&module=$moduleDirName'>"
+             . constant($admin_lang
+                        . '_UPDATEMODULE')
+             . '</a>';
     }
 } else {
     printf("<h2>%s</h2>\n", constant($admin_lang . '_UPGR_ACCESS_ERROR'));

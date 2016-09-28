@@ -41,8 +41,9 @@ if (empty($modules)) {
     $criteria->add(new Criteria('hassearch', 1));
     $criteria->add(new Criteria('isactive', 1));
 
-    $module_handler = xoops_getHandler('module');
-    $mods_checkbox->addOptionArray($module_handler->getList($criteria));
+    /** @var XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $mods_checkbox->addOptionArray($moduleHandler->getList($criteria));
 } else {
     foreach ($modules as $mids => $module) {
         $module_array[$mids] = $GLOBALS['xoopsModule']->getVar('name');

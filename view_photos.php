@@ -20,31 +20,29 @@
 -------------------------------------------------------------------------
 */
 
+xoops_load('XoopsRequest');
+
 /**
  * Xoops header
  */
 include dirname(dirname(__DIR__)) . '/mainfile.php';
-$xoopsOption['template_main'] = 'adslight_view_photos.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_view_photos.tpl';
 include_once XOOPS_ROOT_PATH . '/header.php';
 
 /**
  * Module classes
  */
 include_once __DIR__ . '/class/pictures.php';
-if (isset($_GET['lid'])) {
-    $lid = $_GET['lid'];
-} else {
+$lid = XoopsRequest::getInt('lid', 0, 'GET');
+if (empty($lid)) {
     header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
 }
-/**
- * Is a member looking ?
- */
-if (!empty($xoopsUser)) {
-    /**
-     * If no $_GET['uid'] then redirect to own
-     */
+
+// Is a member looking ?
+if ($xoopsUser instanceof XoopsUser) {
+    // If no $_GET['uid'] then redirect to own
     if (isset($_GET['uid'])) {
-        $uid = $_GET['uid'];
+        $uid = XoopsRequest::getInt('uid', 0, 'GET');
     } else {
         header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
     }
@@ -53,15 +51,11 @@ if (!empty($xoopsUser)) {
      * Is the user the owner of the album ?
      */
 
-    $isOwner = ($xoopsUser->getVar('uid') == $_GET['uid']) ? true : false;
+    $isOwner = ($xoopsUser->getVar('uid') == $uid) ? true : false;
 
     $module_id = $xoopsModule->getVar('mid');
 
-    if (is_object($xoopsUser)) {
-        $groups = $xoopsUser->getGroups();
-    } else {
-        $groups = XOOPS_GROUP_ANONYMOUS;
-    }
+    $groups = $xoopsUser->getGroups();
 
     $gperm_handler = xoops_getHandler('groupperm');
 
@@ -82,8 +76,9 @@ if (!empty($xoopsUser)) {
      * If it is an anonym
      */
 } else {
+    // user is anon
     if (isset($_GET['uid'])) {
-        $uid = $_GET['uid'];
+        $uid = XoopsRequest::getInt('uid', 0, 'GET');
     } else {
         header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
         $isOwner = false;
@@ -95,29 +90,24 @@ if (!empty($xoopsUser)) {
  */
 $criteria_lid = new criteria('lid', $lid);
 $criteria_uid = new criteria('uid', $uid);
-/**
- * Creating a factory of pictures
- */
-$album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
+
+// Creating a factory of pictures
+
+$album_factory = new AdslightPicturesHandler($xoopsDB);
 
 /**
  * Fetch pictures from the factory
  */
 $pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
 
-/**
- * How many pictures are on the user album
- */
+// How many pictures are on the user album
 $pictures_number = $album_factory->getCount($criteria_lid, $criteria_uid);
 
-/**
- * If there is no pictures in the album
- */
-if ($pictures_number == 0) {
-    $nopicturesyet = _ADSLIGHT_NOTHINGYET;
-    $xoopsTpl->assign('lang_nopicyet', $nopicturesyet);
+// Are there pictures in the album?
+if (0 == $pictures_number) {
+    $xoopsTpl->assign('lang_nopicyet', _ADSLIGHT_NOTHINGYET);
 } else {
-
+    // no pictures in the album
     /**
      * Lets populate an array with the data from the pictures
      */
@@ -153,7 +143,7 @@ $identifier = $owner->getUnameFromId($uid);
  * Adding to the module js and css of the lightbox and new ones
  */
 
-if ($xoopsModuleConfig['adslight_lightbox'] == 1) {
+if (1 == $xoopsModuleConfig['adslight_lightbox']) {
     $header_lightbox = '<script type="text/javascript" src="lightbox/js/prototype.js"></script>
 <script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
 <script type="text/javascript" src="lightbox/js/lightbox.js"></script>
@@ -167,7 +157,7 @@ if ($xoopsModuleConfig['adslight_lightbox'] == 1) {
  * Assigning smarty variables
  */
 
-$sql    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' where lid=' . $lid . " and valid='Yes'";
+$sql    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $lid . " and valid='Yes'";
 $result = $xoopsDB->query($sql);
 while (list($title) = $xoopsDB->fetchRow($result)) {
     $xoopsTpl->assign('lang_gtitle', "<a href='viewads.php?lid=" . $lid . "'>" . $title . '</a>');
@@ -201,7 +191,6 @@ $xoopsTpl->assign('xoops_module_header', $header_lightbox);
 /**
  * Check if using Xoops or XoopsCube (by jlm69)
  */
-
 $xCube = false;
 if (preg_match('/^XOOPS Cube/', XOOPS_VERSION)) { // XOOPS Cube 2.1x
     $xCube = true;

@@ -21,7 +21,7 @@
 */
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once __DIR__ . '/header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 //if ( !is_readable(XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php")) {
@@ -31,17 +31,23 @@ xoops_cp_header();
 //    loadModuleAdminMenu (6, "");
 //}
 
+$action = XoopsRequest::getCmd('action', '', 'POST');
+if (!empty($action)) {
+    $file = XoopsRequest::getString('file', '', 'POST');
+}
+/*
 $action = '';
 if (isset($_POST['action'])) {
     $action = $_POST['action'];
     $file   = $_POST['file'];
 }
-
+*/
 $sql = 'SELECT conf_id FROM ' . $xoopsDB->prefix('config') . ' WHERE conf_name = "theme_set"';
 $res = $xoopsDB->query($sql);
 list($conf_id) = $xoopsDB->fetchRow($res);
-
-$module         = $module_handler->getByDirname('system');
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler  = xoops_getHandler('module');
+$module         = $moduleHandler->getByDirname('system');
 $config_handler = xoops_getHandler('config');
 $config_theme   = $config_handler->getConfig($conf_id, true);
 

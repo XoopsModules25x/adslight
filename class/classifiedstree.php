@@ -233,7 +233,7 @@ class classifiedstree
         while (list($catid, $name) = $this->db->fetchRow($result)) {
             $sel = '';
             if ($catid == $preset_id) {
-                $sel = ' selected="selected"';
+                $sel = ' selected';
             }
             echo '<option value=' . $catid . '' . $sel . '>' . $name . '</option>';
             $sel = '';
@@ -242,7 +242,7 @@ class classifiedstree
                 $option['prefix'] = str_replace('.', '--', $option['prefix']);
                 $catpath          = $option['prefix'] . '&nbsp;' . $myts->displayTarea($option[$title]);
                 if ($option['cid'] == $preset_id) {
-                    $sel = ' selected="selected"';
+                    $sel = ' selected';
                 }
                 echo '<option value="' . $option['cid'] . '"' . $sel . '>' . $catpath . '</option>';
                 $sel = '';
@@ -272,23 +272,23 @@ class classifiedstree
 
         $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" />';
 
-        $path = '&nbsp;&nbsp;' .
-                $arrow .
-                '&nbsp;&nbsp;<a title="' .
-                _ADSLIGHT_ANNONCES .
-                ' ' .
-                $name .
-                '" href="' .
-                $funcURL .
-                '' .
-                $this->id .
-                '=' .
-                $this->db->escape($sel_id) .
-                '">' .
-                $name .
-                '</a>' .
-                $path .
-                '';
+        $path = '&nbsp;&nbsp;'
+                . $arrow
+                . '&nbsp;&nbsp;<a title="'
+                . _ADSLIGHT_ANNONCES
+                . ' '
+                . $name
+                . '" href="'
+                . $funcURL
+                . ''
+                . $this->id
+                . '='
+                . $this->db->escape($sel_id)
+                . '">'
+                . $name
+                . '</a>'
+                . $path
+                . '';
 
         if ($parentid == 0) {
             return $path;
@@ -406,7 +406,7 @@ class classifiedstree
             $sel_name = $this->id;
         }
 
-        $sql = 'select ' . $this->id . ', ' . $title . ', ordre FROM ' . $this->table . ' WHERE ' . $this->pid . '=0';
+        $sql = 'SELECT ' . $this->id . ', ' . $title . ', ordre FROM ' . $this->table . ' WHERE ' . $this->pid . '=0';
         if ($order != '') {
             $sql .= " ORDER BY {$order}";
         }
@@ -417,39 +417,39 @@ class classifiedstree
             if ($xoopsModuleConfig['adslight_csortorder'] === 'ordre') {
                 echo '(' . $ordre . ')';
             }
-            echo '&nbsp;&nbsp;' .
-                 $name .
-                 '&nbsp;&nbsp;</th>
-                <th align="center" width="10%"><a href="category.php?op=AdsNewCat&amp;cid=' .
-                 addslashes($catid) .
-                 '"><img src="' .
-                 $pathIcon16 .
-                 '/add.png' .
-                 '" border=0 width=18 height=18 alt="' .
-                 _AM_ADSLIGHT_ADDSUBCAT .
-                 '" title="' .
-                 _AM_ADSLIGHT_ADDSUBCAT .
-                 '"></a></th>
-                <th align="center" width="10%"><a href="category.php?op=AdsModCat&amp;cid=' .
-                 addslashes($catid) .
-                 '"><img src="' .
-                 $pathIcon16 .
-                 '/edit.png' .
-                 '" border=0 width=18 height=18 alt="' .
-                 _AM_ADSLIGHT_MODIFSUBCAT .
-                 '" title ="' .
-                 _AM_ADSLIGHT_MODIFSUBCAT .
-                 '"></a></th>
-                <th align="center" width="10%"><a href="category.php?op=AdsDelCat&amp;cid=' .
-                 addslashes($catid) .
-                 '"><img src="' .
-                 $pathIcon16 .
-                 '/delete.png' .
-                 '" border=0 width=18 height=18 alt="' .
-                 _AM_ADSLIGHT_DELSUBCAT .
-                 '" title="' .
-                 _AM_ADSLIGHT_DELSUBCAT .
-                 '"></a></th>
+            echo '&nbsp;&nbsp;'
+                 . $name
+                 . '&nbsp;&nbsp;</th>
+                <th align="center" width="10%"><a href="category.php?op=AdsNewCat&amp;cid='
+                 . addslashes($catid)
+                 . '"><img src="'
+                 . $pathIcon16
+                 . '/add.png'
+                 . '" border=0 width=18 height=18 alt="'
+                 . _AM_ADSLIGHT_ADDSUBCAT
+                 . '" title="'
+                 . _AM_ADSLIGHT_ADDSUBCAT
+                 . '"></a></th>
+                <th align="center" width="10%"><a href="category.php?op=AdsModCat&amp;cid='
+                 . addslashes($catid)
+                 . '"><img src="'
+                 . $pathIcon16
+                 . '/edit.png'
+                 . '" border=0 width=18 height=18 alt="'
+                 . _AM_ADSLIGHT_MODIFSUBCAT
+                 . '" title ="'
+                 . _AM_ADSLIGHT_MODIFSUBCAT
+                 . '"></a></th>
+                <th align="center" width="10%"><a href="category.php?op=AdsDelCat&amp;cid='
+                 . addslashes($catid)
+                 . '"><img src="'
+                 . $pathIcon16
+                 . '/delete.png'
+                 . '" border=0 width=18 height=18 alt="'
+                 . _AM_ADSLIGHT_DELSUBCAT
+                 . '" title="'
+                 . _AM_ADSLIGHT_DELSUBCAT
+                 . '"></a></th>
                 </tr>';
 
             $arr   = $this->getChildTreeMapArray($catid, $order);
@@ -463,39 +463,39 @@ class classifiedstree
                 if ($xoopsModuleConfig['adslight_csortorder'] === 'ordre') {
                     echo '(' . $ordreS . ')';
                 }
-                echo '' .
-                     $catpath .
-                     '</a></td>
-                    <td align="center"><a href="category.php?op=AdsNewCat&amp;cid=' .
-                     $option[$this->id] .
-                     '"><img src="' .
-                     $pathIcon16 .
-                     '/add.png' .
-                     '" border=0 width=18 height=18 alt="' .
-                     _AM_ADSLIGHT_ADDSUBCAT .
-                     '"title="' .
-                     _AM_ADSLIGHT_ADDSUBCAT .
-                     '"></a></td>
-                    <td align="center"><a href="category.php?op=AdsModCat&amp;cid=' .
-                     $option[$this->id] .
-                     '"><img src="' .
-                     $pathIcon16 .
-                     '/edit.png' .
-                     '" border=0 width=18 height=18 alt="' .
-                     _AM_ADSLIGHT_MODIFSUBCAT .
-                     '" title ="' .
-                     _AM_ADSLIGHT_MODIFSUBCAT .
-                     '"></a></td>
-                    <td align="center"><a href="category.php?op=AdsDelCat&amp;cid=' .
-                     $option[$this->id] .
-                     '"><img src="' .
-                     $pathIcon16 .
-                     '/delete.png' .
-                     '" border=0 width=18 height=18 alt="' .
-                     _AM_ADSLIGHT_DELSUBCAT .
-                     '" title="' .
-                     _AM_ADSLIGHT_DELSUBCAT .
-                     '"></a></td>';
+                echo ''
+                     . $catpath
+                     . '</a></td>
+                    <td align="center"><a href="category.php?op=AdsNewCat&amp;cid='
+                     . $option[$this->id]
+                     . '"><img src="'
+                     . $pathIcon16
+                     . '/add.png'
+                     . '" border=0 width=18 height=18 alt="'
+                     . _AM_ADSLIGHT_ADDSUBCAT
+                     . '"title="'
+                     . _AM_ADSLIGHT_ADDSUBCAT
+                     . '"></a></td>
+                    <td align="center"><a href="category.php?op=AdsModCat&amp;cid='
+                     . $option[$this->id]
+                     . '"><img src="'
+                     . $pathIcon16
+                     . '/edit.png'
+                     . '" border=0 width=18 height=18 alt="'
+                     . _AM_ADSLIGHT_MODIFSUBCAT
+                     . '" title ="'
+                     . _AM_ADSLIGHT_MODIFSUBCAT
+                     . '"></a></td>
+                    <td align="center"><a href="category.php?op=AdsDelCat&amp;cid='
+                     . $option[$this->id]
+                     . '"><img src="'
+                     . $pathIcon16
+                     . '/delete.png'
+                     . '" border=0 width=18 height=18 alt="'
+                     . _AM_ADSLIGHT_DELSUBCAT
+                     . '" title="'
+                     . _AM_ADSLIGHT_DELSUBCAT
+                     . '"></a></td>';
 
                 $class = ($class === 'even') ? 'odd' : 'even';
             }
@@ -514,7 +514,7 @@ class classifiedstree
     public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = array(), $r_prefix = '')
     {
         global $xoopsDB;
-        $sql = 'select SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $xoopsDB->escape($sel_id) . '';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $xoopsDB->escape($sel_id) . '';
 
         $categories = adslight_MygetItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {

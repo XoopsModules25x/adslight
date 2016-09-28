@@ -30,8 +30,9 @@ xoops_cp_header();
 //    include_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
 //   loadModuleAdminMenu (6, "");
 //}
-
-$versioninfo = $module_handler->get($xoopsModule->getVar('mid'));
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
+$versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
 echo "
     <style type=\"text/css\">
     label,text {

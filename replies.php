@@ -21,40 +21,35 @@
 */
 
 include_once __DIR__ . '/header.php';
-include(XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php');
-$myts      = MyTextSanitizer::getInstance(); // MyTextSanitizer object
-$module_id = $xoopsModule->getVar('mid');
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
-}
+include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+
+$myts          = MyTextSanitizer::getInstance(); // MyTextSanitizer object
+$module_id     = $xoopsModule->getVar('mid');
+$groups        = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $gperm_handler = xoops_getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)$_POST['item_id'];
-} else {
-    $perm_itemid = 0;
-}
+$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+
 //If no access
 if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
 }
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-$mytree                       = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
-$lid                          = isset($_GET['lid']) ? (int)$_GET['lid'] : 0;
-$xoopsOption['template_main'] = 'adslight_replies.tpl';
+$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+
+$lid                                     = XoopsRequest::getInt('lid', 0, 'GET');
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_replies.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign('nav_main', "<a href=\"index.php\">" . _ADSLIGHT_MAIN . '</a>');
 $show = 1;
-$min  = isset($_GET['min']) ? (int)$_GET['min'] : 0;
+$min  = XoopsRequest::getInt('min', 0, 'GET');
 if (!isset($max)) {
     $max = $min + $show;
 }
 $orderby = 'date Desc';
 
 $xoopsTpl->assign('lid', $lid);
-$countresult = $xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' where lid=' . $xoopsDB->escape($lid) . '');
+$countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
 list($trow) = $xoopsDB->fetchRow($countresult);
 $trows   = $trow;
 $pagenav = '';
@@ -75,7 +70,7 @@ if ($trows > '0') {
     $xoopsTpl->assign('last_head_photo', _ADSLIGHT_PHOTO);
     $xoopsTpl->assign('min', $min);
 
-    $sql    = 'select r_lid, lid, title, date, submitter, message, tele, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid) . " order by $orderby";
+    $sql    = 'SELECT r_lid, lid, title, date, submitter, message, tele, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid) . " ORDER BY $orderby";
     $result = $xoopsDB->query($sql, $show, $min);
 
     if ($trows > '1') {
@@ -125,7 +120,7 @@ if ($trows > '0') {
             'tele'    => $myts->htmlSpecialChars($tele)
         ));
     }
-    $lid = (int)$_GET['lid'];
+    $lid = XoopsRequest::getInt('lid', 0, 'GET');
     //Calculates how many pages exist.  Which page one should be on, etc...
     $linkpages = ceil($trows / $show);
     //Page Numbering

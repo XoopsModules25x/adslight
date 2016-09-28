@@ -30,8 +30,9 @@ xoops_cp_header();
 //    include_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
 //    loadModuleAdminMenu (7, "");
 //}
-
-$versioninfo = $module_handler->get($xoopsModule->getVar('mid'));
+/** @var XoopsModuleHandler $moduleHandler */
+$moduleHandler = xoops_getHandler('module');
+$versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
 echo "
     <style type=\"text/css\">
     label,text {
@@ -114,14 +115,14 @@ echo '</tr></table><br>';
 
 //// Russie ///
 echo "<table width='100%' border='0' class='outer'><tr><td>";
-echo '<label>' .
-     _AM_ADSLIGHT_SUPPORTFORUM_CONTRYLANG .
-     ":</label><img src=\"../assets/images/flags/unavailable.png\" width=\"16\" height=\"11\" border=\"0\"><b>  &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</b><br>";
+echo '<label>'
+     . _AM_ADSLIGHT_SUPPORTFORUM_CONTRYLANG
+     . ":</label><img src=\"../assets/images/flags/unavailable.png\" width=\"16\" height=\"11\" border=\"0\"><b>  &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</b><br>";
 echo '<label>' . _AM_ADSLIGHT_SUPPORTFORUM_WEBLINKS . ':</label> -<br>';
 echo '<label>' . _AM_ADSLIGHT_SUPPORTFORUM_DESC . ':</label> -<br>';
-echo '<label>' .
-     _AM_ADSLIGHT_SUPPORTFORUM_TRANSLATE .
-     ":</label><a href=\"mailto:adslight.translate@gmail.com?subject=Traduction AdsLight\"> &#1054;&#1090;&#1087;&#1088;&#1072;&#1074;&#1080;&#1090;&#1100; &#1087;&#1077;&#1088;&#1077;&#1074;&#1086;&#1076;</a><br>";
+echo '<label>'
+     . _AM_ADSLIGHT_SUPPORTFORUM_TRANSLATE
+     . ":</label><a href=\"mailto:adslight.translate@gmail.com?subject=Traduction AdsLight\"> &#1054;&#1090;&#1087;&#1088;&#1072;&#1074;&#1080;&#1090;&#1100; &#1087;&#1077;&#1088;&#1077;&#1074;&#1086;&#1076;</a><br>";
 echo '</tr></table><br>';
 
 //// Polonais ///

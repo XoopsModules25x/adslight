@@ -21,18 +21,19 @@
 */
 
 include_once __DIR__ . '/header.php';
-include(XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php');
+include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
 $pathIcon16 = $xoopsModule->getInfo('icons16');
 
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-$mytree                       = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
-$xoopsOption['template_main'] = 'adslight_members.tpl';
+$mytree                                  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_members.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 include XOOPS_ROOT_PATH . '/include/comment_view.php';
-$lid       = isset($_GET['lid']) ? (int)$_GET['lid'] : 0;
-$usid      = isset($_GET['usid']) ? (int)$_GET['usid'] : 0;
+
+$lid       = XoopsRequest::getInt('lid', 0, 'GET');
+$usid      = XoopsRequest::getInt('usid', 0, 'GET');
 $module_id = $xoopsModule->getVar('mid');
 if (is_object($xoopsUser)) {
     $groups = $xoopsUser->getGroups();
@@ -40,24 +41,14 @@ if (is_object($xoopsUser)) {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
 $gperm_handler = xoops_getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)$_POST['item_id'];
-} else {
-    $perm_itemid = 0;
-}
+$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+
 //If no access
-if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-    $permit = '0';
-} else {
-    $permit = '1';
-}
+$permit = (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
 $xoopsTpl->assign('permit', $permit);
-if ($xoopsUser && $xoopsUser->isAdmin($xoopsModule->mid())) {
-    $isadmin = true;
-} else {
-    $isadmin = false;
-}
+$isadmin = (($xoopsUser instanceof XoopsUser) && $xoopsUser->isAdmin($xoopsModule->mid())) ? true : false;
+
 $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
 $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM);
 $xoopsTpl->assign('add_from_sitename', $xoopsConfig['sitename']);
@@ -73,7 +64,7 @@ $xoopsTpl->assign('expires_head', _ADSLIGHT_EXPIRES_ON);
 $xoopsTpl->assign('all_user_listings', _ADSLIGHT_ALL_USER_LISTINGS);
 $xoopsTpl->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
 $xoopsTpl->assign('mydirname', $moduleDirName);
-
+//@todo move from ./style/*.css to /assets/css/*.css (don't forget to modify upgrade to delete old ./style/*.* files and folder
 $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />');
 
 $xoopsTpl->assign('adslight_active_menu', $xoopsModuleConfig['adslight_active_menu']);
@@ -81,24 +72,17 @@ $xoopsTpl->assign('adslight_active_rss', $xoopsModuleConfig['adslight_active_rss
 $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
 
 $show = 4;
-$min  = isset($_GET['min']) ? (int)$_GET['min'] : 0;
+$min  = XoopsRequest::getInt('min', 0, 'GET');
 if (!isset($max)) {
     $max = $min + $show;
 }
 $orderby = 'date ASC';
-if ($xoopsModuleConfig['adslight_rate_user'] == '1') {
-    $rate = '1';
-} else {
-    $rate = '0';
-}
+$rate    = ('1' == $xoopsModuleConfig['adslight_rate_user']) ? '1' : '0';
 $xoopsTpl->assign('rate', $rate);
+
 if ($xoopsUser) {
     $member_usid = $xoopsUser->getVar('uid', 'E');
-    if ($usid == $member_usid) {
-        $istheirs = 1;
-    } else {
-        $istheirs = '';
-    }
+    $istheirs    = ($usid == $member_usid) ? 1 : '';
 }
 
 $cat_perms  = '';
@@ -107,27 +91,25 @@ if (is_array($categories) && count($categories) > 0) {
     $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
 }
 
-if ($istheirs = 1) {
-    $countresult = $xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' where usid=' . $xoopsDB->escape($usid) . " AND valid='Yes' $cat_perms");
+if (1 == $istheirs) {
+    $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid) . " AND valid='Yes' $cat_perms");
     list($trow) = $xoopsDB->fetchRow($countresult);
 
-    $sql    =
-        'select lid, cid, title, status, expire, type, desctext, tel, price, typeprice, date, email, submitter, usid, town, country, contactby, premium, valid, photo, hits, item_rating, item_votes, user_rating, user_votes, comments FROM ' .
-        $xoopsDB->prefix('adslight_listing') .
-        ' WHERE usid = ' .
-        $xoopsDB->escape($usid) .
-        " AND valid='Yes' $cat_perms ORDER BY $orderby";
+    $sql    = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, date, email, submitter, usid, town, country, contactby, premium, valid, photo, hits, item_rating, item_votes, user_rating, user_votes, comments FROM '
+              . $xoopsDB->prefix('adslight_listing')
+              . ' WHERE usid = '
+              . $xoopsDB->escape($usid)
+              . " AND valid='Yes' $cat_perms ORDER BY $orderby";
     $result = $xoopsDB->query($sql, $show, $min);
 } else {
-    $countresult = $xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' where usid=' . $xoopsDB->escape($usid) . " AND valid='Yes' AND status!='1' $cat_perms");
+    $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid) . " AND valid='Yes' AND status!='1' $cat_perms");
     list($trow) = $xoopsDB->fetchRow($countresult);
 
-    $sql    =
-        'select lid, cid, title, status, expire, type, desctext, tel, price, typeprice, date, email, submitter, usid, town, country, contactby, premium, valid, photo, hits, item_rating, item_votes, user_rating, user_votes, comments FROM ' .
-        $xoopsDB->prefix('adslight_listing') .
-        ' WHERE usid = ' .
-        $xoopsDB->escape($usid) .
-        " AND valid='Yes' AND status!='1' $cat_perms ORDER BY $orderby";
+    $sql    = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, date, email, submitter, usid, town, country, contactby, premium, valid, photo, hits, item_rating, item_votes, user_rating, user_votes, comments FROM '
+              . $xoopsDB->prefix('adslight_listing')
+              . ' WHERE usid = '
+              . $xoopsDB->escape($usid)
+              . " AND valid='Yes' AND status!='1' $cat_perms ORDER BY $orderby";
     $result = $xoopsDB->query($sql, $show, $min);
 }
 
@@ -150,48 +132,48 @@ if ($trows > '0') {
         $xoopsTpl->assign('lang_popularityleast', _ADSLIGHT_POPULARITYLTOM);
         $xoopsTpl->assign('lang_popularitymost', _ADSLIGHT_POPULARITYMTOL);
     }
-    while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits,
-        $item_rating, $item_votes, $user_rating, $user_votes, $comments) = $xoopsDB->fetchRow($result)) {
+    while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits, $item_rating, $item_votes, $user_rating, $user_votes, $comments) = $xoopsDB->fetchRow($result)) {
         $newitem   = '';
         $newcount  = $xoopsModuleConfig['adslight_countday'];
         $startdate = (time() - (86400 * $newcount));
         if ($startdate < $date) {
+            //@todo move "New" alt text to language file
             $newitem = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" alt="New" />';
         }
 
-        if ($status == 0) {
+        if (0 == $status) {
             $status_is = _ADSLIGHT_ACTIVE;
         }
-        if ($status == 1) {
+        if (1 == $status) {
             $status_is = _ADSLIGHT_INACTIVE;
         }
-        if ($status == 2) {
+        if (2 == $status) {
             $status_is = _ADSLIGHT_SOLD;
         }
-        $countresult = $xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' where lid=' . $xoopsDB->escape($lid) . '');
+        $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
         list($rrow) = $xoopsDB->fetchRow($countresult);
         $rrows = $rrow;
         $xoopsTpl->assign('reply_count', $rrows);
 
-        $result2 = $xoopsDB->query('select r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' where lid =' . $xoopsDB->escape($lid) . '');
+        $result2 = $xoopsDB->query('SELECT r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid =' . $xoopsDB->escape($lid) . '');
         list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
 
         if ($isadmin) {
-            $adminlink = "<a href='" .
-                         XOOPS_URL .
-                         '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid=' .
-                         $lid .
-                         "'><img src='" .
-                         $pathIcon16 .
-                         "/edit.png' border=0 alt=\"" .
-                         _ADSLIGHT_MODADMIN .
-                         "\" /></a>";
+            $adminlink = "<a href='"
+                         . XOOPS_URL
+                         . '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid='
+                         . $lid
+                         . "'><img src='"
+                         . $pathIcon16
+                         . "/edit.png' border=0 alt=\""
+                         . _ADSLIGHT_MODADMIN
+                         . "\" /></a>";
             $xoopsTpl->assign('isadmin', $isadmin);
         } else {
             $adminlink = '';
         }
         $modify_link = '';
-        if ($xoopsUser) {
+        if ($xoopsUser instanceof XoopsUser) {
             $member_usid = $xoopsUser->getVar('uid', 'E');
             if ($usid == $member_usid) {
                 $istheirs = true;
@@ -221,12 +203,9 @@ if ($trows > '0') {
         $xoopsTpl->assign('local_head', _ADSLIGHT_LOCAL2);
         $xoopsTpl->assign('edit_ad', _ADSLIGHT_EDIT);
 
-        $usid = addslashes($usid);
-        if ($user_votes == 1) {
-            $votestring = _ADSLIGHT_ONEVOTE;
-        } else {
-            $votestring = sprintf(_ADSLIGHT_NUMVOTES, $user_votes);
-        }
+        $usid       = addslashes($usid);
+        $votestring = (1 == $user_votes) ? _ADSLIGHT_ONEVOTE : sprintf(_ADSLIGHT_NUMVOTES, $user_votes);
+
         $xoopsTpl->assign('user_votes', $votestring);
         $date2 = $date + ($expire * 86400);
         $date  = formatTimestamp($date, 's');
@@ -240,19 +219,19 @@ if ($trows > '0') {
             $view_now = '';
         }
         $sold = '';
-        if ($status == 2) {
+        if (2 == $status) {
             $sold = _ADSLIGHT_RESERVEDMEMBER;
         }
 
         $xoopsTpl->assign('xoops_pagetitle', '' . _ADSLIGHT_ALL_USER_LISTINGS . ' ' . $submitter . '');
         $updir   = $xoopsModuleConfig['adslight_link_upload'];
-        $sql     = 'select cod_img, lid, uid_owner, url from ' .
-                   $xoopsDB->prefix('adslight_pictures') .
-                   ' where  uid_owner=' .
-                   $xoopsDB->escape($usid) .
-                   ' and lid=' .
-                   $xoopsDB->escape($lid) .
-                   ' order by date_added ASC limit 1';
+        $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
+                   . $xoopsDB->prefix('adslight_pictures')
+                   . ' WHERE  uid_owner='
+                   . $xoopsDB->escape($usid)
+                   . ' AND lid='
+                   . $xoopsDB->escape($lid)
+                   . ' ORDER BY date_added ASC limit 1';
         $resultp = $xoopsDB->query($sql);
         while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
             if ($photo) {
@@ -298,12 +277,12 @@ if ($trows > '0') {
             'sold'        => $sold
         ));
     }
-    $usid = (int)$_GET['usid'];
+    $usid = XoopsRequest::getInt('usid', 0, 'GET');
 
     //Calculates how many pages exist.  Which page one should be on, etc...
     $linkpages = ceil($trows / $show);
     //Page Numbering
-    if ($linkpages != 1 && $linkpages != 0) {
+    if (1 != $linkpages && 0 != $linkpages) {
         $prev = $min - $show;
         if ($prev >= 0) {
             $pagenav .= "<a href='members.php?usid=$usid&min=$prev&show=$show'><strong><u>&laquo;</u></strong></a> ";

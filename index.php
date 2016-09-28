@@ -81,14 +81,14 @@ function index()
         if ($usid = $member_usid) {
             $xoopsTpl->assign('istheirs', true);
 
-            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('select SQL_CACHE COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $member_usid . ''));
+            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT SQL_CACHE COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $member_usid . ''));
 
             $xoopsTpl->assign('show_user', $show_user);
             $xoopsTpl->assign('show_user_link', 'members.php?usid=' . $member_usid . '');
         }
     }
 
-    $result = $xoopsDB->query('select SQL_CACHE COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE valid="No"');
+    $result = $xoopsDB->query('SELECT SQL_CACHE COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE valid="No"');
     list($propo) = $xoopsDB->fetchRow($result);
 
     if ($propo > 0) {
@@ -138,8 +138,15 @@ function index()
 
         if ($myrow['img'] && $myrow['img'] !== 'http://') {
             $cat_img = $myts->htmlSpecialChars($myrow['img']);
-            $img     =
-                '<a href="viewcats.php?cid=' . $myrow['cid'] . '"><img src="' . XOOPS_URL . '/modules/adslight/assets/images/img_cat/' . $cat_img . '" align="middle" alt="' . $title . '" /></a>';
+            $img     = '<a href="viewcats.php?cid='
+                       . $myrow['cid']
+                       . '"><img src="'
+                       . XOOPS_URL
+                       . '/modules/adslight/assets/images/img_cat/'
+                       . $cat_img
+                       . '" align="middle" alt="'
+                       . $title
+                       . '" /></a>';
         } else {
             $img = '';
         }
@@ -188,9 +195,9 @@ function index()
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
 
-    list($ads) = $xoopsDB->fetchRow($xoopsDB->query('select SQL_CACHE COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes' AND status!='1' $cat_perms"));
+    list($ads) = $xoopsDB->fetchRow($xoopsDB->query('SELECT SQL_CACHE COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes' AND status!='1' $cat_perms"));
 
-    list($catt) = $xoopsDB->fetchRow($xoopsDB->query('select COUNT(*)  FROM ' . $xoopsDB->prefix('' . $moduleDirName . '_categories') . ''));
+    list($catt) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*)  FROM ' . $xoopsDB->prefix('' . $moduleDirName . '_categories') . ''));
 
     $submit_perms = adslight_MygetItemIds('adslight_submit');
 
@@ -209,11 +216,11 @@ function index()
             $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
 
-        $result = $xoopsDB->query('select SQL_CACHE lid, title, status, type, price, typeprice, date, town, country, usid, premium, valid, photo, hits from ' .
-                                  $xoopsDB->prefix('adslight_listing') .
-                                  " WHERE valid='Yes' and status!='1' $cat_perms ORDER BY date DESC LIMIT " .
-                                  $xoopsModuleConfig['adslight_newcount'] .
-                                  '');
+        $result = $xoopsDB->query('SELECT SQL_CACHE lid, title, status, type, price, typeprice, date, town, country, usid, premium, valid, photo, hits FROM '
+                                  . $xoopsDB->prefix('adslight_listing')
+                                  . " WHERE valid='Yes' AND status!='1' $cat_perms ORDER BY date DESC LIMIT "
+                                  . $xoopsModuleConfig['adslight_newcount']
+                                  . '');
         if ($result) {
             $xoopsTpl->assign('last_head', _ADSLIGHT_THE . ' ' . $xoopsModuleConfig['adslight_newcount'] . ' ' . _ADSLIGHT_LASTADD);
             $xoopsTpl->assign('last_head_title', _ADSLIGHT_TITLE);
@@ -254,26 +261,26 @@ function index()
                 $date = formatTimestamp($date, 's');
                 if ($xoopsUser) {
                     if ($xoopsUser->isAdmin()) {
-                        $a_item['admin'] = '<a href="' .
-                                           XOOPS_URL .
-                                           '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid=' .
-                                           $lid .
-                                           '"><img src="' .
-                                           $pathIcon16 .
-                                           '/edit.png' .
-                                           '" border=0 alt="' .
-                                           _ADSLIGHT_MODADMIN .
-                                           '" /></a>';
+                        $a_item['admin'] = '<a href="'
+                                           . XOOPS_URL
+                                           . '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid='
+                                           . $lid
+                                           . '"><img src="'
+                                           . $pathIcon16
+                                           . '/edit.png'
+                                           . '" border=0 alt="'
+                                           . _ADSLIGHT_MODADMIN
+                                           . '" /></a>';
                     }
                 }
 
-                $result7 = $xoopsDB->query('select nom_type from ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
+                $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
                 list($nom_type) = $xoopsDB->fetchRow($result7);
 
                 $a_item['type']  = $myts->htmlSpecialChars($nom_type);
                 $a_item['title'] = '<a href="' . XOOPS_URL . '/modules/adslight/viewads.php?lid=' . $lid . '"><strong>' . $title . '</strong></a>';
 
-                $result8 = $xoopsDB->query('select nom_price from ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . $xoopsDB->escape($typeprice) . '');
+                $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . $xoopsDB->escape($typeprice) . '');
                 list($nom_price) = $xoopsDB->fetchRow($result8);
 
                 if ($price > 0) {
@@ -299,51 +306,51 @@ function index()
                 }
 
                 if ($xoopsModuleConfig['active_thumbsindex'] > 0) {
-                    $a_item['no_photo'] = '<a href="' .
-                                          XOOPS_URL .
-                                          '/modules/adslight/viewads.php?lid=' .
-                                          $lid .
-                                          '"><img class="thumb" src="' .
-                                          XOOPS_URL .
-                                          '/modules/adslight/assets/images/nophoto.jpg" align="left" width="100px" alt="' .
-                                          $title .
-                                          '" /></a>';
+                    $a_item['no_photo'] = '<a href="'
+                                          . XOOPS_URL
+                                          . '/modules/adslight/viewads.php?lid='
+                                          . $lid
+                                          . '"><img class="thumb" src="'
+                                          . XOOPS_URL
+                                          . '/modules/adslight/assets/images/nophoto.jpg" align="left" width="100px" alt="'
+                                          . $title
+                                          . '" /></a>';
 
                     $updir   = $xoopsModuleConfig['adslight_link_upload'];
-                    $sql     = 'select cod_img, lid, uid_owner, url from ' .
-                               $xoopsDB->prefix('adslight_pictures') .
-                               ' where  uid_owner=' .
-                               $xoopsDB->escape($usid) .
-                               ' and lid=' .
-                               $xoopsDB->escape($lid) .
-                               ' order by date_added ASC limit 1';
+                    $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
+                               . $xoopsDB->prefix('adslight_pictures')
+                               . ' WHERE  uid_owner='
+                               . $xoopsDB->escape($usid)
+                               . ' AND lid='
+                               . $xoopsDB->escape($lid)
+                               . ' ORDER BY date_added ASC limit 1';
                     $resultp = $xoopsDB->query($sql);
 
                     while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
                         if ($photo) {
-                            $a_item['photo'] = '<a href="' .
-                                               XOOPS_URL .
-                                               '/modules/adslight/viewads.php?lid=' .
-                                               $lid .
-                                               '"><img class="thumb" src="' .
-                                               $updir .
-                                               '/thumbs/thumb_' .
-                                               $url .
-                                               '" align="left" width="100px" alt="' .
-                                               $title .
-                                               '" /></a>';
+                            $a_item['photo'] = '<a href="'
+                                               . XOOPS_URL
+                                               . '/modules/adslight/viewads.php?lid='
+                                               . $lid
+                                               . '"><img class="thumb" src="'
+                                               . $updir
+                                               . '/thumbs/thumb_'
+                                               . $url
+                                               . '" align="left" width="100px" alt="'
+                                               . $title
+                                               . '" /></a>';
                         }
                     }
                 } else {
                     $a_item['no_photo'] = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/camera_nophoto.png" align="left" width="24" alt="' . $title . '" />';
                     $updir              = $xoopsModuleConfig['adslight_link_upload'];
-                    $sql                = 'select cod_img, lid, uid_owner, url from ' .
-                                          $xoopsDB->prefix('adslight_pictures') .
-                                          ' where  uid_owner=' .
-                                          $xoopsDB->escape($usid) .
-                                          ' and lid=' .
-                                          $xoopsDB->escape($lid) .
-                                          ' order by date_added ASC limit 1';
+                    $sql                = 'SELECT cod_img, lid, uid_owner, url FROM '
+                                          . $xoopsDB->prefix('adslight_pictures')
+                                          . ' WHERE  uid_owner='
+                                          . $xoopsDB->escape($usid)
+                                          . ' AND lid='
+                                          . $xoopsDB->escape($lid)
+                                          . ' ORDER BY date_added ASC limit 1';
                     $resultp            = $xoopsDB->query($sql);
 
                     while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
@@ -382,15 +389,15 @@ $orderby = !isset($_GET['orderby']) ? null : $_GET['orderby'];
 
 switch ($pa) {
     case 'Adsview':
-        $xoopsOption['template_main'] = 'adslight_category.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
         Adsview($cid, $min, $orderby, $show);
         break;
     case 'viewads':
-        $xoopsOption['template_main'] = 'adslight_item.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
         viewads($lid);
         break;
     default:
-        $xoopsOption['template_main'] = 'adslight_index.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
         index();
         break;
 }

@@ -21,21 +21,17 @@
 */
 include_once __DIR__ . '/admin_header.php';
 
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-} else {
-    $op = 'liste';
-}
+$op = XoopsRequest::getCmd('op', 'liste');
 
 #  function Index
 #####################################################
 function Index()
 {
-    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName, $admin_lang;
     include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
-
+    echo $adminObject->addNavigation(basename(__FILE__));
     // Ajouter un type
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td valign='top'>\n";
     echo "<form method=\"post\" action=\"options.php\">
@@ -47,11 +43,11 @@ function Index()
     echo '<br>';
 
     // Modifier un type
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . ''));
+    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . ''));
     if ($numrows > 0) {
         echo "<form method=\"post\" action=\"options.php\">
              <b>" . _AM_ADSLIGHT_MODTYPE . '</b></font><br><br>';
-        $result2 = $xoopsDB->query('select id_type, nom_type from ' . $xoopsDB->prefix('adslight_type') . ' order by nom_type');
+        $result2 = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
         echo '' . _AM_ADSLIGHT_TYPE . " <select name=\"id_type\">";
 
         while (list($id_type, $nom_type) = $xoopsDB->fetchRow($result2)) {
@@ -77,11 +73,11 @@ function Index()
     echo '<br>';
 
     // Modifier un type de prix
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_price') . ''));
+    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_price') . ''));
     if ($numrows > 0) {
         echo "<form method=\"post\" action=\"options.php\">
             <b>" . _AM_ADSLIGHT_MODPRICE . '</b></font><br><br>';
-        $result3 = $xoopsDB->query('select id_price, nom_price from ' . $xoopsDB->prefix('adslight_price') . ' order by nom_price');
+        $result3 = $xoopsDB->query('SELECT id_price, nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY nom_price');
         echo '' . _AM_ADSLIGHT_TYPE . " <select name=\"id_price\">";
 
         while (list($id_price, $nom_price) = $xoopsDB->fetchRow($result3)) {
@@ -107,11 +103,11 @@ function Index()
     echo '<br>';
 
     // Modifier un type d'usure
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . ''));
+    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . ''));
     if ($numrows > 0) {
         echo "<form method=\"post\" action=\"options.php\">
             <b>" . _AM_ADSLIGHT_MODUSURE . '</b></font><br><br>';
-        $result8 = $xoopsDB->query('select id_usure, nom_usure from ' . $xoopsDB->prefix('adslight_usure') . ' order by nom_usure');
+        $result8 = $xoopsDB->query('SELECT id_usure, nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
         echo '' . _AM_ADSLIGHT_TYPE . " <select name=\"id_usure\">";
 
         while (list($id_usure, $nom_usure) = $xoopsDB->fetchRow($result8)) {
@@ -138,7 +134,7 @@ function ListingAddType($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('select  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_type') . " where nom_type='$type'"));
+    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='$type'"));
     if ($numrows > 0) {
         include_once __DIR__ . '/header.php';
         xoops_cp_header();
@@ -176,29 +172,30 @@ function ListingModType($id_type)
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
     include_once __DIR__ . '/header.php';
     xoops_cp_header();
+    $id_type = (int)$id_type;
     //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODTYPE . '</legend>';
-    $result = $xoopsDB->query('select id_type, nom_type from ' . $xoopsDB->prefix('adslight_type') . " where id_type=$id_type");
+    $result = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type=$id_type");
     list($id_type, $nom_type) = $xoopsDB->fetchRow($result);
 
     $nom_type = $myts->htmlSpecialChars($nom_type);
 
-    echo "<form action=\"options.php\" method=\"post\">" .
-         '' .
-         _AM_ADSLIGHT_TYPE .
-         " <input type=\"text\" name=\"nom_type\" value=\"$nom_type\" size=\"51\" maxlength=\"50\" /><br>" .
-         "<input type=\"hidden\" name=\"id_type\" value=\"$id_type\" />" .
-         "<input type=\"hidden\" name=\"op\" value=\"ListingModTypeS\" />" .
-         "<table border=\"0\"><tr><td>" .
-         "<input type=\"submit\" value=\"" .
-         _AM_ADSLIGHT_SAVMOD .
-         "\" /></form>" .
-         "<form action=\"options.php\" method=\"post\">" .
-         "<input type=\"hidden\" name=\"id_type\" value=\"$id_type\" />" .
-         "<input type=\"hidden\" name=\"op\" value=\"ListingDelType\" />" .
-         "<input type=\"submit\" value=\"" .
-         _AM_ADSLIGHT_DEL .
-         "\" /></form></td></tr></table>";
+    echo "<form action=\"options.php\" method=\"post\">"
+         . ''
+         . _AM_ADSLIGHT_TYPE
+         . " <input type=\"text\" name=\"nom_type\" value=\"$nom_type\" size=\"51\" maxlength=\"50\" /><br>"
+         . "<input type=\"hidden\" name=\"id_type\" value=\"$id_type\" />"
+         . "<input type=\"hidden\" name=\"op\" value=\"ListingModTypeS\" />"
+         . "<table border=\"0\"><tr><td>"
+         . "<input type=\"submit\" value=\""
+         . _AM_ADSLIGHT_SAVMOD
+         . "\" /></form>"
+         . "<form action=\"options.php\" method=\"post\">"
+         . "<input type=\"hidden\" name=\"id_type\" value=\"$id_type\" />"
+         . "<input type=\"hidden\" name=\"op\" value=\"ListingDelType\" />"
+         . "<input type=\"submit\" value=\""
+         . _AM_ADSLIGHT_DEL
+         . "\" /></form></td></tr></table>";
 
     echo '</td></tr></table>';
     xoops_cp_footer();
@@ -214,9 +211,10 @@ function ListingModTypeS($id_type, $nom_type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
+    $id_type  = (int)$id_type;
     $nom_type = $myts->htmlSpecialChars($nom_type);
 
-    $xoopsDB->query('update ' . $xoopsDB->prefix('adslight_type') . " set nom_type='$nom_type' where id_type='$id_type'");
+    $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_type') . " SET nom_type='$nom_type' WHERE id_type='$id_type'");
 
     redirect_header('options.php', 1, _AM_ADSLIGHT_TYPEMOD);
 }
@@ -230,7 +228,9 @@ function ListingDelType($id_type)
 {
     global $xoopsDB, $moduleDirName, $admin_lang;
 
-    $xoopsDB->query('delete from ' . $xoopsDB->prefix('adslight_type') . " where id_type='$id_type'");
+    $id_type = (int)$id_type;
+
+    $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='$id_type'");
 
     redirect_header('options.php', 1, _AM_ADSLIGHT_TYPEDEL);
 }
@@ -244,7 +244,7 @@ function ListingAddPrice($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('select  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " where nom_price='$type'"));
+    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='$type'"));
     if ($numrows > 0) {
         include_once __DIR__ . '/header.php';
         xoops_cp_header();
@@ -285,27 +285,28 @@ function ListingModPrice($id_price)
     //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODPRICE . '</legend>';
     echo '<b>' . _AM_ADSLIGHT_MODPRICE . '</b><br><br>';
-    $result = $xoopsDB->query('select nom_price from ' . $xoopsDB->prefix('adslight_price') . " where id_price=$id_price");
+    $id_price = (int)$id_price;
+    $result   = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price=$id_price");
     list($nom_price) = $xoopsDB->fetchRow($result);
 
     $nom_price = $myts->htmlSpecialChars($nom_price);
 
-    echo "<form action=\"options.php\" method=\"post\">" .
-         '' .
-         _AM_ADSLIGHT_TYPE .
-         " <input type=\"text\" name=\"nom_price\" value=\"$nom_price\" size=\"51\" maxlength=\"50\"><br>" .
-         "<input type=\"hidden\" name=\"id_price\" value=\"$id_price\">" .
-         "<input type=\"hidden\" name=\"op\" value=\"ListingModPriceS\">" .
-         "<table border=\"0\"><tr><td>" .
-         "<input type=\"submit\" value=\"" .
-         _AM_ADSLIGHT_SAVMOD .
-         "\"></form>" .
-         "<form action=\"options.php\" method=\"post\">" .
-         "<input type=\"hidden\" name=\"id_price\" value=\"$id_price\">" .
-         "<input type=\"hidden\" name=\"op\" value=\"ListingDelPrice\">" .
-         "<input type=\"submit\" value=\"" .
-         _AM_ADSLIGHT_DEL .
-         "\"></form></td></tr></table>";
+    echo "<form action=\"options.php\" method=\"post\">"
+         . ''
+         . _AM_ADSLIGHT_TYPE
+         . " <input type=\"text\" name=\"nom_price\" value=\"$nom_price\" size=\"51\" maxlength=\"50\"><br>"
+         . "<input type=\"hidden\" name=\"id_price\" value=\"$id_price\">"
+         . "<input type=\"hidden\" name=\"op\" value=\"ListingModPriceS\">"
+         . "<table border=\"0\"><tr><td>"
+         . "<input type=\"submit\" value=\""
+         . _AM_ADSLIGHT_SAVMOD
+         . "\"></form>"
+         . "<form action=\"options.php\" method=\"post\">"
+         . "<input type=\"hidden\" name=\"id_price\" value=\"$id_price\">"
+         . "<input type=\"hidden\" name=\"op\" value=\"ListingDelPrice\">"
+         . "<input type=\"submit\" value=\""
+         . _AM_ADSLIGHT_DEL
+         . "\"></form></td></tr></table>";
 
     echo '</td></tr></table>';
     xoops_cp_footer();
@@ -321,10 +322,9 @@ function ListingModPriceS($id_price, $nom_price)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
+    $id_price  = (int)$id_price;
     $nom_price = $myts->htmlSpecialChars($nom_price);
-
-    $xoopsDB->query('update ' . $xoopsDB->prefix('adslight_price') . " set nom_price='$nom_price' where id_price='$id_price'");
-
+    $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_price') . " SET nom_price='{$nom_price}' WHERE id_price='{$id_price}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEMOD);
 }
 
@@ -337,8 +337,7 @@ function ListingDelPrice($id_price)
 {
     global $xoopsDB, $moduleDirName, $admin_lang;
 
-    $xoopsDB->query('delete from ' . $xoopsDB->prefix('adslight_price') . " where id_price='$id_price'");
-
+    $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='{$id_price}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEDEL);
 }
 
@@ -351,7 +350,7 @@ function ListingAddUsure($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('select  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_usure') . " where nom_usure='$type'"));
+    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE nom_usure='$type'"));
     if ($numrows > 0) {
         include_once __DIR__ . '/header.php';
         xoops_cp_header();
@@ -369,11 +368,10 @@ function ListingAddUsure($type)
         xoops_cp_footer();
     } else {
         $type = $myts->htmlSpecialChars($type);
-        if ($type == '') {
+        if ('' == $type) {
             $type = '! ! ? ! !';
         }
-        $xoopsDB->query('insert into ' . $xoopsDB->prefix('adslight_usure') . " values (NULL, '$type')");
-
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_usure') . " VALUES (NULL, '$type')");
         redirect_header('options.php', 1, _AM_ADSLIGHT_ADDUSURE2);
     }
 }
@@ -392,27 +390,27 @@ function ListingModUsure($id_usure)
     //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODUSURE . '</legend>';
     echo '<b>' . _AM_ADSLIGHT_MODUSURE . '</b><br><br>';
-    $result9 = $xoopsDB->query('select nom_usure from ' . $xoopsDB->prefix('adslight_usure') . " where id_usure=$id_usure");
+    $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure=$id_usure");
     list($nom_usure) = $xoopsDB->fetchRow($result9);
 
     $nom_usure = $myts->htmlSpecialChars($nom_usure);
 
-    echo "<form action=\"options.php\" method=\"post\">" .
-         '' .
-         _AM_ADSLIGHT_USURE .
-         " <input type=\"text\" name=\"nom_usure\" value=\"$nom_usure\" size=\"51\" maxlength=\"50\"><br>" .
-         "<input type=\"hidden\" name=\"id_usure\" value=\"$id_usure\">" .
-         "<input type=\"hidden\" name=\"op\" value=\"ListingModUsureS\">" .
-         "<table border=\"0\"><tr><td>" .
-         "<input type=\"submit\" value=\"" .
-         _AM_ADSLIGHT_SAVMOD .
-         "\"></form>" .
-         "<form action=\"options.php\" method=\"post\">" .
-         "<input type=\"hidden\" name=\"id_usure\" value=\"$id_usure\">" .
-         "<input type=\"hidden\" name=\"op\" value=\"ListingDelUsure\">" .
-         "<input type=\"submit\" value=\"" .
-         _AM_ADSLIGHT_DEL .
-         "\"></form></td></tr></table>";
+    echo "<form action=\"options.php\" method=\"post\">"
+         . ''
+         . _AM_ADSLIGHT_USURE
+         . " <input type=\"text\" name=\"nom_usure\" value=\"$nom_usure\" size=\"51\" maxlength=\"50\"><br>"
+         . "<input type=\"hidden\" name=\"id_usure\" value=\"$id_usure\">"
+         . "<input type=\"hidden\" name=\"op\" value=\"ListingModUsureS\">"
+         . "<table border=\"0\"><tr><td>"
+         . "<input type=\"submit\" value=\""
+         . _AM_ADSLIGHT_SAVMOD
+         . "\"></form>"
+         . "<form action=\"options.php\" method=\"post\">"
+         . "<input type=\"hidden\" name=\"id_usure\" value=\"$id_usure\">"
+         . "<input type=\"hidden\" name=\"op\" value=\"ListingDelUsure\">"
+         . "<input type=\"submit\" value=\""
+         . _AM_ADSLIGHT_DEL
+         . "\"></form></td></tr></table>";
 
     echo '</td></tr></table>';
     xoops_cp_footer();
@@ -430,7 +428,7 @@ function ListingModUsureS($id_usure, $nom_usure)
 
     $nom_usure = $myts->htmlSpecialChars($nom_usure);
 
-    $xoopsDB->query('update ' . $xoopsDB->prefix('adslight_usure') . " set nom_usure='$nom_usure' where id_usure='$id_usure'");
+    $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_usure') . " SET nom_usure='$nom_usure' WHERE id_usure='$id_usure'");
 
     redirect_header('options.php', 1, _AM_ADSLIGHT_USUREMOD);
 }
@@ -444,82 +442,61 @@ function ListingDelUsure($id_usure)
 {
     global $xoopsDB, $moduleDirName, $admin_lang;
 
-    $xoopsDB->query('delete from ' . $xoopsDB->prefix('adslight_usure') . " where id_usure='$id_usure'");
+    $id_usure = (int)$id_usure;
+    $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure='{$id_usure}'");
 
     redirect_header('options.php', 1, _AM_ADSLIGHT_USUREDEL);
 }
 
 #####################################################
 #####################################################
-
+//@todo REMOVE THIS ASAP. This code is extremely unsafe
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
 
-$pa = isset($_GET['pa']) ? $_GET['pa'] : '';
-
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = $_GET['lid'];
-}
-if (!isset($_POST['op']) && isset($_GET['op'])) {
-    $op = $_GET['op'];
-}
-if (!isset($op)) {
-    $op = '';
-}
+$pa  = XoopsRequest::getString('pa', '', 'GET');
+$lid = XoopsRequest::getInt('lid', 0);
+$op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
-
     case 'ListingDelPrice':
         ListingDelPrice($id_price);
         break;
-
     case 'ListingModPrice':
         ListingModPrice($id_price);
         break;
-
     case 'ListingModPriceS':
         ListingModPriceS($id_price, $nom_price);
         break;
-
     case 'ListingAddPrice':
         ListingAddPrice($type);
         break;
-
     case 'ListingDelUsure':
         ListingDelUsure($id_usure);
         break;
-
     case 'ListingModUsure':
         ListingModUsure($id_usure);
         break;
-
     case 'ListingModUsureS':
         ListingModUsureS($id_usure, $nom_usure);
         break;
-
     case 'ListingAddUsure':
         ListingAddUsure($type);
         break;
-
     case 'ListingDelType':
         ListingDelType($id_type);
         break;
-
     case 'ListingModType':
         ListingModType($id_type);
         break;
-
     case 'ListingModTypeS':
         ListingModTypeS($id_type, $nom_type);
         break;
-
     case 'ListingAddType':
         ListingAddType($type);
         break;
-
     default:
         Index();
         break;
-
 }

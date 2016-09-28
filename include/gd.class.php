@@ -104,7 +104,9 @@ class GD
         }
 
         foreach (array('r', 'g', 'b') as $value) {
-            if (!array_key_exists($value, $rgb) || $rgb[$value] < 0 || $rgb[$value] > 255 || !is_numeric($rgb[$value])) {
+            if (!array_key_exists($value, $rgb) || $rgb[$value] < 0 || $rgb[$value] > 255
+                || !is_numeric($rgb[$value])
+            ) {
                 exit('Wrong color');
             }
         }

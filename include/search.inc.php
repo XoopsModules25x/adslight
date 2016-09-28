@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include_once(XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php');
+include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
 
 /**
  * @param $queryarray
@@ -41,11 +41,11 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
 
     global $xoopsDB, $xoopsModuleConfig, $moduleDirName;
 
-    $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM ' .
-           $xoopsDB->prefix('adslight_listing') .
-           " WHERE valid='Yes' AND status!='1' AND date<=" .
-           time() .
-           '';
+    $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM '
+           . $xoopsDB->prefix('adslight_listing')
+           . " WHERE valid='Yes' AND status!='1' AND date<="
+           . time()
+           . '';
 
     if ($userid != 0) {
         $sql .= ' AND usid=' . $userid . ' ';

@@ -21,31 +21,19 @@
 */
 
 include_once __DIR__ . '/header.php';
-require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
+require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
-}
+$groups        = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $gperm_handler = xoops_getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)$_POST['item_id'];
-} else {
-    $perm_itemid = 0;
-}
+$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
 //If no access
 if (!$gperm_handler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-    $prem_perm = '0';
-} else {
-    $prem_perm = '1';
-}
+$prem_perm = $gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? '1' : '0';
 
 #  function tips_writing
 #####################################################
@@ -80,7 +68,7 @@ function tips_writing()
         if ($usid = $member_usid) {
             $xoopsTpl->assign('istheirs', true);
 
-            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
+            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
             $xoopsTpl->assign('show_user', $show_user);
             $xoopsTpl->assign('show_user_link', "members.php?usid=$member_usid");
@@ -94,8 +82,8 @@ $pa = !isset($_GET['pa']) ? null : $_GET['pa'];
 
 switch ($pa) {
     default:
-        $xoopsOption['template_main'] = 'adslight_tips_writing_ad.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'adslight_tips_writing_ad.tpl';
         tips_writing();
         break;
 }
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';

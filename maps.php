@@ -21,7 +21,7 @@
 */
 
 include_once __DIR__ . '/header.php';
-require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
+require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
@@ -97,7 +97,7 @@ function AdslightMaps()
         if ($usid = $member_usid) {
             $xoopsTpl->assign('istheirs', true);
 
-            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('select COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
+            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
             $xoopsTpl->assign('show_user', $show_user);
             $xoopsTpl->assign('show_user_link', "members.php?usid=$member_usid");
@@ -111,8 +111,8 @@ $pa = !isset($_GET['pa']) ? null : $_GET['pa'];
 
 switch ($pa) {
     default:
-        $xoopsOption['template_main'] = 'adslight_maps.tpl';
+        $GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
         AdslightMaps();
         break;
 }
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';

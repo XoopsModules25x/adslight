@@ -10,7 +10,7 @@
 
 Adslight module for [XOOPS CMS](http://xoops.org) is a classifieds module that allow users of XOOPS website to advertise items for sale, exchange or barter.
 
-[![Tutorial Available](http://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/adslight-tutorial/) Tutorial: see [here](https://www.gitbook.com/book/xoops/adslight-tutorial/).
+[![Tutorial Available](http://xoops.org/images/tutorial-available-blue.svg)](https://www.gitbook.com/book/xoops/adslight-tutorial/) Tutorial: see [GitBook](https://www.gitbook.com/book/xoops/adslight-tutorial/).
 To contribute to the Tutorial, [fork it on GitHub](https://github.com/XoopsDocs/adslight-tutorial)
 
 [![Translations on Transifex](http://xoops.org/images/translations-transifex-blue.svg)](https://www.transifex.com/xoops) 

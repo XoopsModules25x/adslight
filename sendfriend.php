@@ -34,7 +34,7 @@ function SendFriend($lid)
     include XOOPS_ROOT_PATH . '/header.php';
     $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
 
-    $result = $xoopsDB->query('select lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . ' where lid=' . $xoopsDB->escape($lid) . '');
+    $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
     list($lid, $title, $type) = $xoopsDB->fetchRow($result);
 
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>
@@ -42,7 +42,7 @@ function SendFriend($lid)
         <form action=\"sendfriend.php\" method=post>
         <input type=\"hidden\" name=\"lid\" value=\"$lid\" />";
 
-    if ($xoopsUser) {
+    if ($xoopsUser instanceof XoopsUser) {
         $idd  = $xoopsUser->getVar('uname', 'E');
         $idde = $xoopsUser->getVar('email', 'E');
     }
@@ -69,7 +69,7 @@ function SendFriend($lid)
     if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
-        $jlm_captcha = (new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false));
+        $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
         echo '</td></tr>';
     }
@@ -91,7 +91,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
 {
     global $xoopsConfig, $xoopsUser, $xoopsTpl, $xoopsDB, $xoopsModule, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
-    if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
+    if ('1' == $xoopsModuleConfig['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -99,11 +99,11 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
         }
     }
 
-    $result = $xoopsDB->query('select lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM ' .
-                              $xoopsDB->prefix('adslight_listing') .
-                              ' where lid=' .
-                              $xoopsDB->escape($lid) .
-                              '');
+    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM '
+                              . $xoopsDB->prefix('adslight_listing')
+                              . ' WHERE lid='
+                              . $xoopsDB->escape($lid)
+                              . '');
     list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
@@ -134,19 +134,18 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['TOWN']               = $town;
     $tags['COUNTRY']            = $country;
     $tags['OTHER']              = '' . _ADSLIGHT_INTERESS . '' . $xoopsConfig['sitename'] . '';
-    $tags['LISTINGS']           = '' . XOOPS_URL . '/modules/adslight/';
-    $tags['LINK_URL']           = '' . XOOPS_URL . '/modules/adslight/viewads.php?lid=' . $lid . '';
-    $tags['THINKS_INTERESTING'] = '' . _ADSLIGHT_MESSAGE . '';
-    $tags['NO_MAIL']            = '' . _ADSLIGHT_NOMAIL . '';
-    $tags['YOU_CAN_VIEW_BELOW'] = '' . _ADSLIGHT_YOU_CAN_VIEW_BELOW . '';
+    $tags['LISTINGS']           = XOOPS_URL . '/modules/adslight/';
+    $tags['LINK_URL']           = XOOPS_URL . '/modules/adslight/viewads.php?lid=' . $lid;
+    $tags['THINKS_INTERESTING'] = _ADSLIGHT_MESSAGE;
+    $tags['NO_MAIL']            = _ADSLIGHT_NOMAIL;
+    $tags['YOU_CAN_VIEW_BELOW'] = _ADSLIGHT_YOU_CAN_VIEW_BELOW;
     $tags['WEBMASTER']          = _ADSLIGHT_WEBMASTER;
     $tags['NO_REPLY']           = _ADSLIGHT_NOREPLY;
     $subject                    = '' . _ADSLIGHT_SUBJET . ' ' . $xoopsConfig['sitename'] . '';
-    $xoopsMailer                = xoops_getMailer();
+    $xoopsMailer                =& xoops_getMailer();
     $xoopsMailer->multimailer->isHTML(true);
     $xoopsMailer->useMail();
     $xoopsMailer->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
-
     $xoopsMailer->setTemplate('listing_send_friend.tpl');
     $xoopsMailer->setFromEmail($ymail);
     $xoopsMailer->setToEmails($fmail);
@@ -164,25 +163,15 @@ $ymail = !empty($_POST['ymail']) ? $myts->addSlashes($_POST['ymail']) : '';
 $fname = !empty($_POST['fname']) ? $myts->addSlashes($_POST['fname']) : '';
 $fmail = !empty($_POST['fmail']) ? $myts->addSlashes($_POST['fmail']) : '';
 
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = (int)$_GET['lid'];
-} else {
-    $lid = (int)$_POST['lid'];
-}
-
-$op = '';
-if (!empty($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (!empty($_POST['op'])) {
-    $op = $_POST['op'];
-}
+$lid = XoopsRequest::getInt('lid', 0);
+$op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
 
     case 'SendFriend':
-        include(XOOPS_ROOT_PATH . '/header.php');
+        include XOOPS_ROOT_PATH . '/header.php';
         SendFriend($lid);
-        include(XOOPS_ROOT_PATH . '/footer.php');
+        include XOOPS_ROOT_PATH . '/footer.php';
         break;
 
     case 'MailAd':

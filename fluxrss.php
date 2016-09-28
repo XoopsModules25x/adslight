@@ -41,16 +41,16 @@ $adslink = 'http://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['REQUEST_URI'],
 
 for ($i = 0, $iMax = count($allads); $i < $iMax; ++$i) {
     echo '<item>
-<title>' .
-         $allads[$i]['title'] .
-         '</title>
-<description><![CDATA[' .
-         stripslashes($allads[$i]['desctext']) .
-         '<br><strong>Ville:</strong> ' .
-         htmlspecialchars($allads[$i]['town']) .
-         ' - <strong>Prix:</strong> ' .
-         htmlspecialchars($allads[$i]['price']) .
-         '&#8364; <br>';
+<title>'
+         . $allads[$i]['title']
+         . '</title>
+<description><![CDATA['
+         . stripslashes($allads[$i]['desctext'])
+         . '<br><strong>Ville:</strong> '
+         . htmlspecialchars($allads[$i]['town'])
+         . ' - <strong>Prix:</strong> '
+         . htmlspecialchars($allads[$i]['price'])
+         . '&#8364; <br>';
     echo ']]></description>
 <link><![CDATA[' . $adslink . '/viewads.php?lid=' . $allads[$i]['lid'] . ']]></link>
 <guid><![CDATA[' . $adslink . '/viewads.php?lid=' . $allads[$i]['lid'] . ']]></guid>

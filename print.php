@@ -21,8 +21,8 @@
 */
 
 include_once __DIR__ . '/header.php';
-require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
-include(XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php');
+require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
 
 /**
  * @param $lid
@@ -32,15 +32,15 @@ function PrintAd($lid)
     global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
     $currenttheme = $xoopsConfig['theme_set'];
+    $lid          = (int)$lid;
 
-    $result =
-        $xoopsDB->query('select l.lid, l.title, l.expire, l.type, l.desctext, l.tel, l.price, l.typeprice, l.date, l.email, l.submitter, l.town, l.country, l.photo, p.cod_img, p.lid, p.uid_owner, p.url FROM ' .
-                        $xoopsDB->prefix('adslight_listing') .
-                        ' l LEFT JOIN ' .
-                        $xoopsDB->prefix('adslight_pictures') .
-                        ' p ON l.lid=p.lid where l.lid=' .
-                        $xoopsDB->escape($lid) .
-                        '');
+    $result = $xoopsDB->query('SELECT l.lid, l.title, l.expire, l.type, l.desctext, l.tel, l.price, l.typeprice, l.date, l.email, l.submitter, l.town, l.country, l.photo, p.cod_img, p.lid, p.uid_owner, p.url FROM '
+                              . $xoopsDB->prefix('adslight_listing')
+                              . ' l LEFT JOIN '
+                              . $xoopsDB->prefix('adslight_pictures')
+                              . ' p ON l.lid=p.lid WHERE l.lid='
+                              . $xoopsDB->escape($lid)
+                              . '');
     list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($result);
 
     $title     = $myts->htmlSpecialChars($title);
@@ -66,14 +66,10 @@ function PrintAd($lid)
     <table border=0 width=100% cellpadding=0 cellspacing=1 bgcolor=\"#000000\"><tr><td>
     <table border=0 width=100% cellpadding=15 cellspacing=1 bgcolor=\"#FFFFFF\"><tr><td>";
 
-    $useroffset = '';
-    if ($xoopsUser) {
-        $timezone = $xoopsUser->timezone();
-        if (isset($timezone)) {
-            $useroffset = $xoopsUser->timezone();
-        } else {
-            $useroffset = $xoopsConfig['default_TZ'];
-        }
+    $useroffset = 0;
+    if ($xoopsUser instanceof XoopsUser) {
+        $timezone   = $xoopsUser->timezone();
+        $useroffset = (!empty($timezone)) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
     }
     $date  = ($useroffset * 3600) + $date;
     $date2 = $date + ($expire * 86400);
@@ -121,18 +117,8 @@ function PrintAd($lid)
 
 ##############################################################
 
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = (int)$_GET['lid'];
-} else {
-    $lid = (int)$_POST['lid'];
-}
-
-$op = '';
-if (!empty($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (!empty($_POST['op'])) {
-    $op = $_POST['op'];
-}
+$lid = XoopsRequest::getInt('lid', 0);
+$op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
 

@@ -26,6 +26,8 @@ include_once $roothpath . '/include/cp_functions.php';
 require_once $roothpath . '/include/cp_header.php';
 include_once $roothpath . '/class/xoopsformloader.php';
 
+xoops_load('XoopsRequest');
+
 global $xoopsModule;
 $moduleDirName = $xoopsModule->getVar('dirname');
 //$moduleDirName2 = basename(dirname(__DIR__));
@@ -61,3 +63,4 @@ if ($xoopsUser) {
 }
 
 $myts = MyTextSanitizer::getInstance();
+$adminObject = new ModuleAdmin();

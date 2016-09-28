@@ -1,4 +1,4 @@
-<br/>
+<br>
 <div id="head"><{$lang_albumtitle}></div>
 <hr/>
 <div id="Titulo">
@@ -7,13 +7,13 @@
 
 <{if $isOwner}>
     <{if $permit}>
-        <p><{$lang_nb_pict}><br/>
+        <p><{$lang_nb_pict}><br>
             <{$lang_max_nb_pict}></p>
     <{else}>
         <{$lang_no_prem_nb}>
-        <br/>
+        <br>
         <{$lang_not_premium}>
-        <br/>
+        <br>
         <{$lang_upgrade_now}>
     <{/if}>
     <h2><{$lang_nopicyet}></h2>
@@ -62,8 +62,8 @@
             </div>
         <{/section}>
     </ul>
-    <br/>
-    <br/>
+    <br>
+    <br>
     <table border="0" cellspacing="1" cellpadding="0">
         <tr>
             <td>

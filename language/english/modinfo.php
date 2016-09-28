@@ -201,17 +201,17 @@ define('_MI_ADSLIGHT_ADDMENU_DESC', 'Menu');
 // version Adslight 1.0.2
 // Active RewriteUrl
 define('_MI_ADSLIGHT_ACTIVE_REWRITEURL', 'Enable URL Rewrite');
-define('_MI_ADSLIGHT_ACTIVE_REWRITEURL_DESC', 'Enable URL rewriting for a better ranking.<br/>To install the rewrite, thank you to read the file README.txt');
+define('_MI_ADSLIGHT_ACTIVE_REWRITEURL_DESC', 'Enable URL rewriting for a better ranking.<br>To install the rewrite, thank you to read the file README.txt');
 // Activer thumbs_index
 define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX', 'Enable Snapshot page index');
-define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC', "Enable the display of thumbnail images to homepage<br/>If it is off an icon <img src='" .
-                                               XOOPS_URL .
-                                               "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br/> indicates whether or not there is a picture in the ad.");
+define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC', "Enable the display of thumbnail images to homepage<br>If it is off an icon <img src='"
+                                               . XOOPS_URL
+                                               . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
 // Activer thumbs_cats
 define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS', 'Enable Snapshot in categories');
-define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC', "Enable the display of thumbnail pictures in the categories<br/>If it is off an icon <img src='" .
-                                              XOOPS_URL .
-                                              "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br/> indicates whether or not there is a picture in the ad.");
+define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC', "Enable the display of thumbnail pictures in the categories<br>If it is off an icon <img src='"
+                                              . XOOPS_URL
+                                              . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
 // Code Adscence index
 define('_MI_ADSLIGHT_ADSLIGHT_INDEX_CODE', 'Code additional home page');
 define('_MI_ADSLIGHT_ADSLIGHT_INDEX_CODE_DESC', 'Put your adsense code or other here');
@@ -224,13 +224,13 @@ define('_MI_ADSLIGHT_ADSLIGHT_USE_BANNER_DESC', 'allows you to insert banners Xo
 // Version 1.0.5
 // Code Adscence Catégories
 define('_MI_ADSLIGHT_ADSLIGHT_CATS_CODE', 'Pub code on pages categories');
-define('_MI_ADSLIGHT_ADSLIGHT_CATS_CODE_DESC', 'Google adsence code or code of a banner:<br/>Format: width = 300 height = 250');
+define('_MI_ADSLIGHT_ADSLIGHT_CATS_CODE_DESC', 'Google adsence code or code of a banner:<br>Format: width = 300 height = 250');
 // adslight_theme_set
 define('_MI_ADSLIGHT_THEMESET', 'Choice of template set');
 // Méta Description / keywords Categories
 define('_MI_ADSLIGHT_CAT_META', 'Allow the seizure Meta description, Meta keywords categories?');
-define('_MI_ADSLIGHT_CAT_META_DESCRIPTION', "If you set this option to 'Yes',<br/>
-You can write data meta keywords and description for each category<br/>( Recommend to a better ranking. )");
+define('_MI_ADSLIGHT_CAT_META_DESCRIPTION', "If you set this option to 'Yes',<br>
+You can write data meta keywords and description for each category<br>( Recommend to a better ranking. )");
 // Version 1.0.51
 // tips_writing_ad.php
 define('_MI_ADSLIGHT_USE_TIPS_WRITE', 'Customize page info / advice?');
@@ -267,3 +267,8 @@ define('_MI_ADSLIGHT_PURCHASELISTING_DESC', 'These are the categories that the c
 
 define('_MI_ADSLIGHT_ADVISE_TITLE', 'Our Advise');
 define('_MI_ADSLIGHT_ADVISE_TEXT', 'Here goes your text');
+//Help
+define('_MI_ADSLIGHT_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_ADSLIGHT_HELP_HEADER', __DIR__.'/help/helpheader.html');
+define('_MI_ADSLIGHT_BACK_2_ADMIN', 'Back to Administration of ');
+define('_MI_ADSLIGHT_HELP_OVERVIEW', 'Overview');

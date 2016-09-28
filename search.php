@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-
+//@todo replace the following code - use Filters
 foreach ($_REQUEST as $key => $val) {
     $val            = preg_replace("/[^_A-Za-z0-9-\.&=]/i", '', $val);
     $_REQUEST[$key] = $val;
@@ -37,40 +37,15 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     //    header("Location: '.XOOPS_URL.'modules/adslight/index.php");
     redirect_header('index.php', 1);
 }
-$action = 'search';
-if (!empty($_GET['action'])) {
-    $action = $_GET['action'];
-} elseif (!empty($_POST['action'])) {
-    $action = $_POST['action'];
-}
-$query = '';
-if (!empty($_GET['query'])) {
-    $query = $_GET['query'];
-} elseif (!empty($_POST['query'])) {
-    $query = $_POST['query'];
-}
-$andor = 'AND';
-if (!empty($_GET['andor'])) {
-    $andor = $_GET['andor'];
-} elseif (!empty($_POST['andor'])) {
-    $andor = $_POST['andor'];
-}
-$mid = $uid = $start = 0;
-if (!empty($_GET['mid'])) {
-    $mid = (int)$_GET['mid'];
-} elseif (!empty($_POST['mid'])) {
-    $mid = (int)$_POST['mid'];
-}
-if (!empty($_GET['uid'])) {
-    $uid = (int)$_GET['uid'];
-} elseif (!empty($_POST['uid'])) {
-    $uid = (int)$_POST['uid'];
-}
-if (!empty($_GET['start'])) {
-    $start = (int)$_GET['start'];
-} elseif (!empty($_POST['start'])) {
-    $start = (int)$_POST['start'];
-}
+xoops_load('XoopsRequest');
+
+$action = XoopsRequest::getCmd('action', 'search');
+$query  = XoopsRequest::getString('query', '');
+$andor  = XoopsRequest::getString('andor', 'AND');
+$mid    = XoopsRequest::getInt('mid', 0);
+$uid    = XoopsRequest::getInt('uid', 0);
+$start  = XoopsRequest::getInt('start', 0);
+
 $queries = array();
 
 if ($action === 'results') {
@@ -91,7 +66,7 @@ $groups            = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GRO
 $gperm_handler     = xoops_getHandler('groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
-if ('search' === $action) {
+if ($action === 'search') {
     include XOOPS_ROOT_PATH . '/header.php';
     include_once __DIR__ . '/include/searchform.php';
     $search_form->display();
@@ -129,11 +104,12 @@ if ($action !== 'showallbyuser') {
 }
 switch ($action) {
     case 'results':
-        $module_handler = xoops_getHandler('module');
-        $criteria       = new CriteriaCompo(new Criteria('hassearch', 1));
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $criteria      = new CriteriaCompo(new Criteria('hassearch', 1));
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
-        $modules = $module_handler->getObjects($criteria, true);
+        $modules = $moduleHandler->getObjects($criteria, true);
         $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
@@ -197,13 +173,13 @@ switch ($action) {
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
                         echo "</td><td width=\"20%\">";
-                        echo '' .
-                             $xoopsModuleConfig['adslight_money'] .
-                             '' .
-                             $myts->htmlSpecialChars($results[$i]['price']) .
-                             '</a>&nbsp;' .
-                             $myts->htmlSpecialChars($results[$i]['typeprice']) .
-                             '</a>';
+                        echo ''
+                             . $xoopsModuleConfig['adslight_money']
+                             . ''
+                             . $myts->htmlSpecialChars($results[$i]['price'])
+                             . '</a>&nbsp;'
+                             . $myts->htmlSpecialChars($results[$i]['typeprice'])
+                             . '</a>';
 
                         echo '</td></tr><tr><td>';
                         echo '<small>';
@@ -243,10 +219,11 @@ switch ($action) {
         }
         // end
         $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/style/adslight.css');
-        $module_handler = xoops_getHandler('module');
-        $module         = $module_handler->get($mid);
-        $results        =& $module->search($queries, $andor, 20, $start, $uid);
-        $count          = count($results);
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->get($mid);
+        $results       =& $module->search($queries, $andor, 20, $start, $uid);
+        $count         = count($results);
         if (is_array($results) && $count > 0) {
             $next_results =& $module->search($queries, $andor, 1, $start + 20, $uid);
             $next_count   = count($next_results);

@@ -22,17 +22,13 @@
 
 include_once __DIR__ . '/admin_header.php';
 
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-} else {
-    $op = 'liste';
-}
+$op = XoopsRequest::getCmd('op', 'liste');
 
 #  function Index
 #####################################################
 function Index()
 {
-    global $hlpfile, $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName;
     //    include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -42,9 +38,7 @@ function Index()
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
-    echo "<table width=\"50%\" border=\"0\" cellspacing=\"8\" cellpadding=\"0\">
-      <tr>
-        <td valign=\"top\">";
+    echo "<table width=\"50%\" border=\"0\" cellspacing=\"8\" cellpadding=\"0\">\n" . "  <tr>\n" . "    <td class=\"top\">";
 
     /*
     /// Test Release ///
@@ -66,7 +60,7 @@ function Index()
       */
 
     ///////// Il y a [..] Annonces en attente d'être approuvées //////
-    $result  = $xoopsDB->query('select lid from ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no'");
+    $result  = $xoopsDB->query('SELECT lid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='No'");
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
         echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
@@ -169,10 +163,10 @@ function Index()
     ////// Right Menu Admin
 
     /// Statistiques
-    $Num1 = mysqli_num_rows($xoopsDB->query('select * from ' . $xoopsDB->prefix('adslight_listing') . "  where (valid='Yes' AND status!='1')"));
-    $Num2 = mysqli_num_rows($xoopsDB->query('select * from ' . $xoopsDB->prefix('adslight_categories') . ''));
-    $Num3 = mysqli_num_rows($xoopsDB->query('select * from ' . $xoopsDB->prefix('users') . "  where (level = '1')"));
-    $Num4 = mysqli_num_rows($xoopsDB->query('select * from ' . $xoopsDB->prefix('xoopscomments') . "  where (com_status = '2')"));
+    $Num1 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_listing') . "  WHERE (valid='Yes' AND status!='1')"));
+    $Num2 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ''));
+    $Num3 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('users') . "  WHERE (level = '1')"));
+    $Num4 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('xoopscomments') . "  WHERE (com_status = '2')"));
 
     echo '<table width=100 border="0" class="outer"><tr>
                 <th align="left">' . _AM_ADSLIGHT_STAT_TITLE . '</th></tr>
@@ -308,31 +302,20 @@ function CopyXml()
 
 #####################################################
 #####################################################
-
+//@todo REMOVE THIS ASAP. This code is extremely unsafe
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
 
-$pa = isset($_GET['pa']) ? $_GET['pa'] : '';
-
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = $_GET['lid'];
-}
-if (!isset($_POST['op']) && isset($_GET['op'])) {
-    $op = $_GET['op'];
-}
-if (!isset($op)) {
-    $op = '';
-}
+$pa  = XoopsRequest::getString('pa', '', 'GET');
+$lid = XoopsRequest::getInt('lid', 0);
+$op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
-
     case 'CopyXml':
         CopyXml();
         break;
-
     default:
         Index();
         break;
-
 }

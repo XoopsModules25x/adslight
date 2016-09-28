@@ -23,21 +23,14 @@
 include_once __DIR__ . '/header.php';
 $moduleDirName = basename(__DIR__);
 $main_lang     = '_' . strtoupper($moduleDirName);
-require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
+require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
-}
+$groups        = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $gperm_handler = xoops_getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)$_POST['item_id'];
-} else {
-    $perm_itemid = 0;
-}
+$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+
 //If no access
 if (!$gperm_handler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
@@ -51,10 +44,10 @@ function ListingDel($lid, $ok)
 {
     global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
-    $result = $xoopsDB->query('select usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' where lid=' . $xoopsDB->escape($lid) . '');
+    $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
     list($usid) = $xoopsDB->fetchRow($result);
 
-    $result1 = $xoopsDB->query('select url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' where lid=' . $xoopsDB->escape($lid) . '');
+    $result1 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
 
     if ($xoopsUser) {
         $currentid = $xoopsUser->getVar('uid', 'E');
@@ -75,10 +68,10 @@ function ListingDel($lid, $ok)
                             unlink("$destination3/resized_$purl");
                         }
 
-                        $xoopsDB->queryF('delete from ' . $xoopsDB->prefix('adslight_pictures') . ' where lid=' . $xoopsDB->escape($lid) . '');
+                        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
                     }
                 }
-                $xoopsDB->queryF('delete from ' . $xoopsDB->prefix('adslight_listing') . ' where lid=' . $xoopsDB->escape($lid) . '');
+                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
                 redirect_header('index.php', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
@@ -99,35 +92,35 @@ function DelReply($r_lid, $ok)
 {
     global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
-    $result = $xoopsDB->query('select l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ' .
-                              $xoopsDB->prefix('adslight_listing') .
-                              ' l LEFT JOIN ' .
-                              $xoopsDB->prefix('adslight_replies') .
-                              ' r ON l.lid=r.lid  where r.r_lid=' .
-                              $xoopsDB->escape($r_lid) .
-                              '');
+    $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM '
+                              . $xoopsDB->prefix('adslight_listing')
+                              . ' l LEFT JOIN '
+                              . $xoopsDB->prefix('adslight_replies')
+                              . ' r ON l.lid=r.lid  WHERE r.r_lid='
+                              . $xoopsDB->escape($r_lid)
+                              . '');
     list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
 
     if ($xoopsUser) {
         $currentid = $xoopsUser->getVar('uid', 'E');
         if ($usid == $currentid) {
             if ($ok == 1) {
-                $xoopsDB->queryF('delete from ' . $xoopsDB->prefix('adslight_replies') . ' where r_lid=' . $xoopsDB->escape($r_lid) . '');
+                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE r_lid=' . $xoopsDB->escape($r_lid) . '');
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
                 echo '<br><center>';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong><br><br>';
             }
-            echo "[ <a href=\"modify.php?op=DelReply&amp;r_lid=" .
-                 addslashes($r_lid) .
-                 "&amp;ok=1\">" .
-                 _ADSLIGHT_OUI .
-                 "</a> | <a href=\"members.php?usid=" .
-                 addslashes($usid) .
-                 "\">" .
-                 _ADSLIGHT_NON .
-                 '</a> ]<br><br>';
+            echo "[ <a href=\"modify.php?op=DelReply&amp;r_lid="
+                 . addslashes($r_lid)
+                 . "&amp;ok=1\">"
+                 . _ADSLIGHT_OUI
+                 . "</a> | <a href=\"members.php?usid="
+                 . addslashes($usid)
+                 . "\">"
+                 . _ADSLIGHT_NON
+                 . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }
@@ -144,16 +137,15 @@ function ModAd($lid)
     include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
 
-    include_once(XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php');
+    include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    $result = $xoopsDB->query('select lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid from ' .
-                              $xoopsDB->prefix('adslight_listing') .
-                              ' where lid=' .
-                              $xoopsDB->escape($lid) .
-                              '');
-    list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) =
-        $xoopsDB->fetchRow($result);
+    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM '
+                              . $xoopsDB->prefix('adslight_listing')
+                              . ' WHERE lid='
+                              . $xoopsDB->escape($lid)
+                              . '');
+    list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
 
     $categories = adslight_MygetItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {
@@ -184,12 +176,8 @@ function ModAd($lid)
             $premium    = $myts->htmlSpecialChars($premium);
             $useroffset = '';
             if ($xoopsUser) {
-                $timezone = $xoopsUser->timezone();
-                if (isset($timezone)) {
-                    $useroffset = $xoopsUser->timezone();
-                } else {
-                    $useroffset = $xoopsConfig['default_TZ'];
-                }
+                $timezone   = $xoopsUser->timezone();
+                $useroffset = (!empty($timezone)) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
             }
             $dates = ($useroffset * 3600) + $date;
             $dates = formatTimestamp($date, 's');
@@ -206,16 +194,16 @@ function ModAd($lid)
             }
             echo '</tr><tr>';
 
-            if ($contactby == 1) {
+            if (1 == $contactby) {
                 $contactselect = _ADSLIGHT_CONTACT_BY_EMAIL;
             }
-            if ($contactby == 2) {
+            if (2 == $contactby) {
                 $contactselect = _ADSLIGHT_CONTACT_BY_PM;
             }
-            if ($contactby == 3) {
+            if (3 == $contactby) {
                 $contactselect = _ADSLIGHT_CONTACT_BY_BOTH;
             }
-            if ($contactby == 4) {
+            if (4 == $contactby) {
                 $contactselect = _ADSLIGHT_CONTACT_BY_PHONE;
             }
 
@@ -246,15 +234,15 @@ function ModAd($lid)
             }
 
             echo "<tr><td class='head'>" . _ADSLIGHT_STATUS . "</td><td class='head'><input type=\"radio\" name=\"status\" value=\"0\"";
-            if ($status == '0') {
+            if ('0' == $status) {
                 echo 'checked';
             }
             echo '>' . _ADSLIGHT_ACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"1\"";
-            if ($status == '1') {
+            if ('1' == $status) {
                 echo 'checked';
             }
             echo '>' . _ADSLIGHT_INACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"2\"";
-            if ($status == '2') {
+            if ('2' == $status) {
                 echo 'checked';
             }
             echo '>' . _ADSLIGHT_SOLD . '</td></tr>';
@@ -263,7 +251,7 @@ function ModAd($lid)
     </tr>";
             echo "<tr><td class=\"head\">" . _ADSLIGHT_PRICE2 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" /> " . $xoopsModuleConfig['adslight_money'];
 
-            $result3 = $xoopsDB->query('select nom_price, id_price from ' . $xoopsDB->prefix('adslight_price') . ' order by id_price');
+            $result3 = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
             echo " <select name=\"typeprice\">";
             while (list($nom_price, $id_price) = $xoopsDB->fetchRow($result3)) {
                 $sel = '';
@@ -274,17 +262,11 @@ function ModAd($lid)
             }
             echo '</select></td></tr>';
             $module_id = $xoopsModule->getVar('mid');
-            if (is_object($xoopsUser)) {
-                $groups = $xoopsUser->getGroups();
-            } else {
-                $groups = XOOPS_GROUP_ANONYMOUS;
-            }
+            $groups    = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+
             $gperm_handler = xoops_getHandler('groupperm');
-            if (isset($_POST['item_id'])) {
-                $perm_itemid = (int)$_POST['item_id'];
-            } else {
-                $perm_itemid = 0;
-            }
+            $perm_itemid   = XoopsRequest::getInt('item_id', 0, 'GET');
+
             //If no access
             if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 echo "<tr>
@@ -301,7 +283,7 @@ function ModAd($lid)
             echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_TYPE . " </td><td class=\"head\"><select name=\"type\">";
 
-            $result5 = $xoopsDB->query('select nom_type, id_type from ' . $xoopsDB->prefix('adslight_type') . ' order by nom_type');
+            $result5 = $xoopsDB->query('SELECT nom_type, id_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
             while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5)) {
                 $sel = '';
                 if ($id_type == $type) {
@@ -315,7 +297,7 @@ function ModAd($lid)
             echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_TYPE_USURE . " </td><td class=\"head\"><select name=\"typeusure\">";
 
-            $result6 = $xoopsDB->query('select nom_usure, id_usure from ' . $xoopsDB->prefix('adslight_usure') . ' order by nom_usure');
+            $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
             while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6)) {
                 $sel = '';
                 if ($id_usure == $typeusure) {
@@ -391,8 +373,27 @@ function ModAd($lid)
  * @param $premium
  * @param $valid
  */
-function ModAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid)
-{
+function ModAdS(
+    $lid,
+    $cat,
+    $title,
+    $status,
+    $expire,
+    $type,
+    $desctext,
+    $tel,
+    $price,
+    $typeprice,
+    $typeusure,
+    $date,
+    $email,
+    $submitter,
+    $town,
+    $country,
+    $contactby,
+    $premium,
+    $valid
+) {
     global $xoopsDB, $xoopsConfig, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang, $xoopsGTicket;
 
     if (!$xoopsGTicket->check(true, 'token')) {
@@ -413,9 +414,9 @@ function ModAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $p
     $contactby = $myts->addSlashes($contactby);
     $premium   = $myts->addSlashes($premium);
 
-    $xoopsDB->query('update ' .
-                    $xoopsDB->prefix('adslight_listing') .
-                    " set cid='$cat', title='$title', status='$status',  expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typeusure='$typeusure', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid' where lid=$lid");
+    $xoopsDB->query('UPDATE '
+                    . $xoopsDB->prefix('adslight_listing')
+                    . " SET cid='$cat', title='$title', status='$status',  expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typeusure='$typeusure', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid' WHERE lid=$lid");
 
     redirect_header('index.php', 1, _ADSLIGHT_ANNMOD2);
 }
@@ -438,9 +439,9 @@ if (!isset($_POST['op']) && isset($_GET['op'])) {
 switch ($op) {
 
     case 'ModAd':
-        include(XOOPS_ROOT_PATH . '/header.php');
+        include XOOPS_ROOT_PATH . '/header.php';
         ModAd($lid);
-        include(XOOPS_ROOT_PATH . '/footer.php');
+        include XOOPS_ROOT_PATH . '/footer.php';
         break;
 
     case 'ModAdS':
@@ -448,15 +449,15 @@ switch ($op) {
         break;
 
     case 'ListingDel':
-        include(XOOPS_ROOT_PATH . '/header.php');
+        include XOOPS_ROOT_PATH . '/header.php';
         ListingDel($lid, $ok);
-        include(XOOPS_ROOT_PATH . '/footer.php');
+        include XOOPS_ROOT_PATH . '/footer.php';
         break;
 
     case 'DelReply':
-        include(XOOPS_ROOT_PATH . '/header.php');
+        include XOOPS_ROOT_PATH . '/header.php';
         DelReply($r_lid, $ok);
-        include(XOOPS_ROOT_PATH . '/footer.php');
+        include XOOPS_ROOT_PATH . '/footer.php';
         break;
 
     default:

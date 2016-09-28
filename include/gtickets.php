@@ -42,7 +42,9 @@ if (!class_exists('XoopsGTicket')) {
             global $xoopsConfig;
 
             // language file
-            if (defined('XOOPS_ROOT_PATH') && !empty($xoopsConfig['language']) && false === strpos($xoopsConfig['language'], '/')) {
+            if (defined('XOOPS_ROOT_PATH') && !empty($xoopsConfig['language'])
+                && false === strpos($xoopsConfig['language'], '/')
+            ) {
                 if (file_exists(dirname(__DIR__) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml')) {
                     include dirname(__DIR__) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml';
                 }
@@ -242,7 +244,9 @@ if (!class_exists('XoopsGTicket')) {
                 if (@$found_stub['area'] == $area) {
                     $area_check = true;
                 }
-                if (!empty($found_stub['referer']) && true === strpos(@$_SERVER['HTTP_REFERER'], $found_stub['referer'])) {
+                if (!empty($found_stub['referer'])
+                    && true === strpos(@$_SERVER['HTTP_REFERER'], $found_stub['referer'])
+                ) {
                     $referer_check = true;
                 }
 
@@ -312,13 +316,13 @@ if (!class_exists('XoopsGTicket')) {
             $table .= '</table>';
             $form .= $this->getTicketHtml(__LINE__, 300, $area) . '<input type="submit" value="' . $this->messages['btn_repost'] . '" /></form>';
 
-            echo '<html><head><title>' .
-                 $this->messages['err_general'] .
-                 '</title><style>table,td,th {border:solid black 1px; border-collapse:collapse;}</style></head><body>' .
-                 sprintf($this->messages['fmt_prompt4repost'], $this->getErrors()) .
-                 $table .
-                 $form .
-                 '</body></html>';
+            echo '<html><head><title>'
+                 . $this->messages['err_general']
+                 . '</title><style>table,td,th {border:solid black 1px; border-collapse:collapse;}</style></head><body>'
+                 . sprintf($this->messages['fmt_prompt4repost'], $this->getErrors())
+                 . $table
+                 . $form
+                 . '</body></html>';
         }
 
         /**

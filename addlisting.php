@@ -100,10 +100,9 @@ if (!empty($_POST['submit'])) {
     $date      = time();
     $newid     = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
-    $sql =
-        sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country,
-                $contactby, $premium, $valid);
+    $sql = sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                   $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town,
+                   $country, $contactby, $premium, $valid);
     $xoopsDB->query($sql) || $erh->show('0013');
 
     $lid = $xoopsDB->getInsertId();
@@ -177,7 +176,7 @@ if (!empty($_POST['submit'])) {
         redirect_header('index.php', 3, _ADSLIGHT_ADSADDED);
     }
 } else {
-    $xoopsOption['template_main'] = 'adslight_addlisting.tpl';
+    $GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -198,9 +197,9 @@ if (!empty($_POST['submit'])) {
     $member_email = $xoopsUser->getVar('email', 'E');
     $member_uname = $xoopsUser->getVar('uname', 'E');
 
-    $result  = $xoopsDB->query('select id_type, nom_type from ' . $xoopsDB->prefix('adslight_type') . ' order by nom_type');
-    $result1 = $xoopsDB->query('select id_price, nom_price from ' . $xoopsDB->prefix('adslight_price') . ' order by id_price');
-    $result3 = $xoopsDB->query('select id_usure, nom_usure from ' . $xoopsDB->prefix('adslight_usure') . ' order by id_usure');
+    $result  = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
+    $result1 = $xoopsDB->query('SELECT id_price, nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
+    $result3 = $xoopsDB->query('SELECT id_usure, nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY id_usure');
 
     ob_start();
     $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'addlisting.php');
@@ -250,7 +249,7 @@ if (!empty($_POST['submit'])) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
 
-        $category = $xoopsDB->query('select title, cat_moderate from ' . $xoopsDB->prefix('adslight_categories') . ' where cid=' . $xoopsDB->escape($cid) . '');
+        $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid) . '');
 
         list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
         $form->addElement(new XoopsFormLabel(_ADSLIGHT_CAT3, "<b>$cat_title</b>"));

@@ -27,7 +27,7 @@ if (file_exists('mainfile.php')) {
 } else {
     include dirname(dirname(__DIR__)) . '/mainfile.php';
 }
-include(XOOPS_ROOT_PATH . '/header.php');
+include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign('xoops_showrblock', 1); // 1 = Avec blocs de droite - 0 = Sans blocs de droite
 $xoopsTpl->assign('xoops_showlblock', 1); // 1 = Avec blocs de gauche - 0 = Sans blocs de gauche
@@ -36,4 +36,4 @@ $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
 
 echo _MN_ADSLIGHT_ERROR404_TEXT;
 
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';

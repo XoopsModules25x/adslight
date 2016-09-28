@@ -22,11 +22,11 @@
 
 include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
 /**
- * @param $xoopsModule
+ * @param XoopsObject $xoopsModule
  *
  * @return bool
  */
-function xoops_module_update_adslight(&$xoopsModule)
+function xoops_module_update_adslight(XoopsObject $xoopsModule)
 {
     global $xoopsDB;
 

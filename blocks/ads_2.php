@@ -37,7 +37,7 @@ function adslight_b2_show($options)
     $blockdirname = basename(dirname(__DIR__));
     $block_lang   = '_MB_' . strtoupper($blockdirname);
 
-    include_once(XOOPS_ROOT_PATH . "/modules/$blockdirname/include/functions.php");
+    include_once XOOPS_ROOT_PATH . "/modules/$blockdirname/include/functions.php";
 
     $block['title'] = '' . constant($block_lang . '_TITLE') . '';
 
@@ -48,11 +48,13 @@ function adslight_b2_show($options)
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM ' .
-                              $xoopsDB->prefix('' . $blockdirname . '_listing') .
-                              " WHERE valid='Yes' and status!='1' $cat_perms ORDER BY " .
-                              $options[0] .
-                              ' DESC', $options[1], 0);
+    $result = $xoopsDB->query('SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM '
+                              . $xoopsDB->prefix(''
+                                                 . $blockdirname
+                                                 . '_listing')
+                              . " WHERE valid='Yes' AND status!='1' $cat_perms ORDER BY "
+                              . $options[0]
+                              . ' DESC', $options[1], 0);
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $a_item    = array();
@@ -87,32 +89,32 @@ function adslight_b2_show($options)
             $a_item['sold'] = "<img src=\"assets/images/sold.gif\" align=\"left\" alt=\"\">";
         }
 
-        $a_item['no_photo'] = "<a href=\"" .
-                              XOOPS_URL .
-                              "/modules/$blockdirname/viewads.php?lid=" .
-                              addslashes($myrow['lid']) .
-                              "\"><img class=\"thumb\" src=\"" .
-                              XOOPS_URL .
-                              "/modules/$blockdirname/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$ad_title\"></a>";
+        $a_item['no_photo'] = "<a href=\""
+                              . XOOPS_URL
+                              . "/modules/$blockdirname/viewads.php?lid="
+                              . addslashes($myrow['lid'])
+                              . "\"><img class=\"thumb\" src=\""
+                              . XOOPS_URL
+                              . "/modules/$blockdirname/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$ad_title\"></a>";
 
         if ($myrow['photo'] != '') {
             //  $updir = $xoopsModuleConfig["".$blockdirname."_link_upload"];
-            $sql     = 'select cod_img, lid, uid_owner, url from ' .
-                       $xoopsDB->prefix('' . $blockdirname . '_pictures') .
-                       ' where  uid_owner=' .
-                       $xoopsDB->escape($usid) .
-                       ' and lid=' .
-                       $xoopsDB->escape($myrow['lid']) .
-                       ' order by date_added ASC limit 1';
+            $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
+                       . $xoopsDB->prefix('' . $blockdirname . '_pictures')
+                       . ' WHERE  uid_owner='
+                       . $xoopsDB->escape($usid)
+                       . ' AND lid='
+                       . $xoopsDB->escape($myrow['lid'])
+                       . ' ORDER BY date_added ASC limit 1';
             $resultp = $xoopsDB->query($sql);
             while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
-                $a_item['photo'] = "<a href=\"" .
-                                   XOOPS_URL .
-                                   "/modules/$blockdirname/viewads.php?lid=" .
-                                   addslashes($myrow['lid']) .
-                                   "\"><img class=\"thumb\" src=\"" .
-                                   XOOPS_URL .
-                                   "/uploads/AdsLight/thumbs/thumb_$url\" align=\"left\" width=\"100px\" alt=\"$title\"></a>";
+                $a_item['photo'] = "<a href=\""
+                                   . XOOPS_URL
+                                   . "/modules/$blockdirname/viewads.php?lid="
+                                   . addslashes($myrow['lid'])
+                                   . "\"><img class=\"thumb\" src=\""
+                                   . XOOPS_URL
+                                   . "/uploads/AdsLight/thumbs/thumb_$url\" align=\"left\" width=\"100px\" alt=\"$title\"></a>";
             }
         } else {
             $a_item['photo'] = '';
@@ -149,12 +151,12 @@ function adslight_b2_edit($options)
     $form = constant($block_lang . '_ORDER') . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";
     if ($options[0] === 'date') {
-        $form .= " selected='selected'";
+        $form .= ' selected';
     }
     $form .= '>' . constant($block_lang . '_DATE') . "</option>\n";
     $form .= "<option value='hits'";
     if ($options[0] === 'hits') {
-        $form .= " selected='selected'";
+        $form .= ' selected';
     }
     $form .= '>' . constant($block_lang . '_HITS') . '</option>';
     $form .= "</select>\n";

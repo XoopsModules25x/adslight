@@ -24,7 +24,7 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require __DIR__ . '/../../mainfile.php';
 global $xoopsModuleConfig;
 
 if ($xoopsModuleConfig['active_rewriteurl'] > 0) {
@@ -32,3 +32,4 @@ if ($xoopsModuleConfig['active_rewriteurl'] > 0) {
 }
 
 $myts = MyTextSanitizer::getInstance();
+xoops_load('XoopsRequest');

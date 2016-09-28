@@ -54,7 +54,7 @@ if ($_POST['submit']) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
     global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $myts, $meta;
-    require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
+    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
     if (!$xoopsGTicket->check(true, 'token')) {
         redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $xoopsGTicket->getErrors());
@@ -67,7 +67,7 @@ if ($_POST['submit']) {
         }
     }
     $lid    = $_POST['id'];
-    $result = $xoopsDB->query('select email, submitter, title, type, desctext, price, typeprice FROM  ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $xoopsDB->escape($id) . '');
+    $result = $xoopsDB->query('SELECT email, submitter, title, type, desctext, price, typeprice FROM  ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $xoopsDB->escape($id) . '');
 
     while (list($email, $submitter, $title, $type, $desctext, $price, $typeprice) = $xoopsDB->fetchRow($result)) {
         if ($_POST['tele']) {
@@ -114,19 +114,19 @@ if ($_POST['submit']) {
         $tags['WEBMASTER']   = _ADSLIGHT_WEBMASTER;
         $tags['SITE_URL']    = "<a href=\"" . XOOPS_URL . "\">" . XOOPS_URL . '</a>';
         $tags['AT']          = _ADSLIGHT_AT;
-        $tags['LINK_URL']    = "<a href=\"" .
-                               XOOPS_URL .
-                               '/modules/' .
-                               $xoopsModule->getVar('dirname') .
-                               '/viewads.php?lid=' .
-                               addslashes($id) .
-                               "\">" .
-                               XOOPS_URL .
-                               '/modules/' .
-                               $xoopsModule->getVar('dirname') .
-                               '/viewads.php?lid=' .
-                               addslashes($id) .
-                               '</a>';
+        $tags['LINK_URL']    = "<a href=\""
+                               . XOOPS_URL
+                               . '/modules/'
+                               . $xoopsModule->getVar('dirname')
+                               . '/viewads.php?lid='
+                               . addslashes($id)
+                               . "\">"
+                               . XOOPS_URL
+                               . '/modules/'
+                               . $xoopsModule->getVar('dirname')
+                               . '/viewads.php?lid='
+                               . addslashes($id)
+                               . '</a>';
         $tags['VIEW_AD']     = _ADSLIGHT_VIEW_AD;
 
         $subject = '' . _ADSLIGHT_CONTACTAFTERANN . '';
@@ -175,10 +175,10 @@ if ($_POST['submit']) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
-    require_once(XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php');
+    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    include(XOOPS_ROOT_PATH . '/header.php');
+    include XOOPS_ROOT_PATH . '/header.php';
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     $time     = time();
     $ipnumber = "$_SERVER[REMOTE_ADDR]";
@@ -240,7 +240,7 @@ if ($_POST['submit']) {
     if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
-        $jlm_captcha = (new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false));
+        $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
     }
 
@@ -258,4 +258,4 @@ if ($_POST['submit']) {
     </form>';
 }
 echo '</td></tr></table>';
-include(XOOPS_ROOT_PATH . '/footer.php');
+include XOOPS_ROOT_PATH . '/footer.php';

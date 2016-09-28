@@ -40,8 +40,8 @@ function adslight_show($options)
 
     $block['title'] = '' . constant($block_lang . '_TITLE') . '';
 
-    $result =
-        $xoopsDB->query('SELECT lid, cid, title, type, date, hits FROM ' . $xoopsDB->prefix('' . $blockdirname . '_listing') . " WHERE valid='Yes' ORDER BY " . $options[0] . ' DESC', $options[1], 0);
+    $result = $xoopsDB->query('SELECT lid, cid, title, type, date, hits FROM ' . $xoopsDB->prefix('' . $blockdirname . '_listing') . " WHERE valid='Yes' ORDER BY " . $options[0] . ' DESC',
+                              $options[1], 0);
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $a_item = array();
@@ -89,13 +89,13 @@ function adslight_edit($options)
     $form = constant($block_lang . '_ORDER') . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";
     if ($options[0] === 'date') {
-        $form .= " selected='selected'";
+        $form .= ' selected';
     }
     $form .= '>' . constant($block_lang . '_DATE') . "</option>\n";
 
     $form .= "<option value='hits'";
     if ($options[0] === 'hits') {
-        $form .= " selected='selected'";
+        $form .= ' selected';
     }
     $form .= '>' . constant($block_lang . '_HITS') . '</option>';
     $form .= "</select>\n";

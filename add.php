@@ -28,35 +28,26 @@ include XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
 include_once __DIR__ . '/include/functions.php';
 // include_once XOOPS_ROOT_PATH."/class/captcha/xoopscaptcha.php";
 
+//@todo replace XOOPS ErrorHander (deprecated)
 $erh = new ErrorHandler; //ErrorHandler object
 
-$module_id = $xoopsModule->getVar('mid');
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
-}
+$module_id     = $xoopsModule->getVar('mid');
+$groups        = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $gperm_handler = xoops_getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)$_POST['item_id'];
-} else {
-    $perm_itemid = 0;
-}
+$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+
 if (!$gperm_handler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-    $premium = 0;
-} else {
-    $premium = 1;
-}
+
+$premium = $gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? 1 : 0;
 
 include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-if (empty($xoopsUser)) {
+if (!$xoopsUser instanceof XoopsUser) {
     redirect_header(XOOPS_URL . '/user.php', 2, _ADS_MUSTREGFIRST);
 }
 
@@ -72,23 +63,20 @@ if (!empty($_POST['submit'])) {
     //    if ( !$xoopsCaptcha->verify() ) {
     //        redirect_header( XOOPS_URL . "/modules/adslight/index.php", 2, $xoopsCaptcha->getMessage() );
     //    }
-
-    if ($_POST['title'] == '') {
+    if ('' == XoopsRequest::getString('title', '', 'POST')) {
+        //@todo - replace this with new error handler
         $erh->show('1001');
     }
 
-    if (!empty($_POST['cid'])) {
-        $cid = (int)$_POST['cid'];
-    } else {
-        $cid = 0;
-    }
+    $cid       = XoopsRequest::getInt('cid', 0, 'POST');
     $cat_perms = adslight_MygetItemIds('adslight_submit');
     if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
 
-    $title     = $myts->addSlashes($_POST['title']);
-    $status    = $myts->addSlashes($_POST['status']);
+    $title = $myts->addSlashes($_POST['title']);
+    //    $status    = $myts->addSlashes($_POST["status"]);
+    $status    = (int)$status;
     $expire    = $myts->addSlashes($_POST['expire']);
     $type      = $myts->addSlashes($_POST['type']);
     $desctext  = $myts->displayTarea($_POST['desctext'], 1, 1, 1);
@@ -108,15 +96,15 @@ if (!empty($_POST['submit'])) {
     $date      = time();
     $newid     = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
-    $sql =
-        sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country,
-                $contactby, $premium, $valid);
+    $sql = sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                   $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town,
+                   $country, $contactby, $premium, $valid);
+    //@todo - replace error handler code below...
     $xoopsDB->query($sql) || $erh->show('0013');
 
     $lid = $xoopsDB->getInsertId();
 
-    if ($valid === 'Yes') {
+    if ('Yes' === $valid) {
         $notification_handler = xoops_getHandler('notification');
         //$lid = $xoopsDB->getInsertId();
         $tags                    = array();
@@ -158,7 +146,8 @@ if (!empty($_POST['submit'])) {
         $tags['CATEGORY_TITLE'] = $row['title'];
         $tags['NEWAD']          = _ADSLIGHT_NEWAD;
 
-        $mail = xoops_getMailer();
+        $mail =& xoops_getMailer();
+        //@todo - add check to see if directory (and file) exists, otherwise use english
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/adslight/language/' . $xoopsConfig['language'] . '/mail_template/');
         $mail->setTemplate('listing_notify_admin.tpl');
         $mail->useMail();
@@ -172,12 +161,7 @@ if (!empty($_POST['submit'])) {
         echo $mail->getErrors();
     }
 
-    if (!empty($_POST['addphotonow'])) {
-        $addphotonow = (int)$_POST['addphotonow'];
-    } else {
-        $addphotonow = '0';
-    }
-
+    $addphotonow = XoopsRequest::getInt('addphotonow', 0, 'POST');
     if ($addphotonow) {
         //$lid = $xoopsDB->getInsertId();
         redirect_header("view_photos.php?lid=$lid&uid=$usid", 3, _ADSLIGHT_ADSADDED);
@@ -185,30 +169,20 @@ if (!empty($_POST['submit'])) {
         redirect_header('index.php', 3, _ADSLIGHT_ADSADDED);
     }
 } else {
-    $xoopsOption['template_main'] = 'adslight_addlisting.tpl';
+    $GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    if (!empty($_POST['cid'])) {
-        $cid = (int)$_POST['cid'];
-    } else {
-        $cid = 0;
-    }
-
-    if (!empty($_POST['cat_moderate'])) {
-        $cat_moderate = (int)$_POST['cat_moderate'];
-    } else {
-        $cat_moderate = 0;
-    }
-
+    $cid          = XoopsRequest::getInt('cide', 0, 'GET');
+    $cat_moderate = XoopsRequest::getInt('cat_moderate', 0, 'POST');
     $howlong      = $xoopsModuleConfig['adslight_howlong'];
     $member_usid  = $xoopsUser->getVar('uid', 'E');
     $member_email = $xoopsUser->getVar('email', 'E');
     $member_uname = $xoopsUser->getVar('uname', 'E');
 
-    $result  = $xoopsDB->query('select id_type, nom_type from ' . $xoopsDB->prefix('adslight_type') . ' order by nom_type');
-    $result1 = $xoopsDB->query('select id_price, nom_price from ' . $xoopsDB->prefix('adslight_price') . ' order by id_price');
-    $result3 = $xoopsDB->query('select id_usure, nom_usure from ' . $xoopsDB->prefix('adslight_usure') . ' order by id_usure');
+    $result  = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
+    $result1 = $xoopsDB->query('SELECT id_price, nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
+    $result3 = $xoopsDB->query('SELECT id_usure, nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY id_usure');
 
     ob_start();
     $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'add.php');
@@ -216,6 +190,7 @@ if (!empty($_POST['submit'])) {
 
     $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
 
+    //@todo - this "if" code doesn't do anything, what should happen for premium accounts?
     if ($cat_moderate) {
         if ($premium != '0') {
             echo '';
@@ -230,20 +205,20 @@ if (!empty($_POST['submit'])) {
         }
     }
 
-    if ($xoopsModuleConfig['adslight_diff_name'] == '1') {
+    if ('1' == $xoopsModuleConfig['adslight_diff_name']) {
         $form->addElement(new XoopsFormText(_ADSLIGHT_SUBMITTER, 'submitter', 50, 50, $member_uname), true);
     } else {
         $form->addElement(new XoopsFormLabel(_ADSLIGHT_SUBMITTER, $member_uname));
         $form->addElement(new XoopsFormHidden('submitter', $member_uname), true);
     }
-    if ($xoopsModuleConfig['adslight_diff_email'] == '1') {
+    if ('1' == $xoopsModuleConfig['adslight_diff_email']) {
         $form->addElement(new XoopsFormText(_ADSLIGHT_EMAIL, 'email', 50, 50, $member_email), true);
     } else {
         $form->addElement(new XoopsFormLabel(_ADSLIGHT_EMAIL, $member_email));
         $form->addElement(new XoopsFormHidden('email', $member_email), true);
     }
     $form->addElement(new XoopsFormText(_ADSLIGHT_TOWN, 'town', 50, 50, ''), false);
-    if ($xoopsModuleConfig['adslight_use_country'] == '1') {
+    if ('1' == $xoopsModuleConfig['adslight_use_country']) {
         $form->addElement(new XoopsFormText(_ADSLIGHT_COUNTRY, 'country', 50, 50, ''), false);
     } else {
         $form->addElement(new XoopsFormHidden('country', ''), false);
@@ -257,18 +232,18 @@ if (!empty($_POST['submit'])) {
         if (!in_array($cid, $cat_perms)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
-        ////  Début Menu déroulant /////
+
+        // Category select box
         ob_start();
         $mytree->makeMySelBox('title', 'title', $cid, 'cid');
         $form->addElement(new XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_contents()), true);
         ob_end_clean();
-        //// Fin Menu déroulant /////
 
-        $category = $xoopsDB->query('select title, cat_moderate from ' . $xoopsDB->prefix('adslight_categories') . ' where cid=' . $xoopsDB->escape($cid) . '');
+        $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid) . '');
 
         list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
 
-        if ($premium == '1') {
+        if ('1' == $premium) {
             $radio        = new XoopsFormRadio(_ADSLIGHT_STATUS, 'status', '');
             $options['0'] = _ADSLIGHT_ACTIVE;
             $options['1'] = _ADSLIGHT_INACTIVE;
@@ -285,12 +260,13 @@ if (!empty($_POST['submit'])) {
             $form->addElement(new XoopsFormHidden('expire', $xoopsModuleConfig['adslight_howlong']), false);
         }
 
-        /// Type d'annonce
+        // Type
         $type_form = new XoopsFormSelect(_ADSLIGHT_TYPE, 'type', '', '1');
         while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result)) {
             $type_form->addOption($nom_type, $id_type);
         }
-        /// Etat de l'objet
+
+        // State of Object
         $usure_form = new XoopsFormSelect(_ADSLIGHT_TYPE_USURE, 'typeusure', '', '1');
         while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result3)) {
             $usure_form->addOption($nom_usure, $id_usure);
@@ -303,7 +279,7 @@ if (!empty($_POST['submit'])) {
         $form->addElement(adslight_getEditor(_ADSLIGHT_DESC, 'desctext', '', 5, 40), true);
         $form->addElement(new XoopsFormText(_ADSLIGHT_PRICE2, 'price', 40, 50, ''), true);
 
-        /// Type de prix
+        // Price Type
         $sel_form = new XoopsFormSelect(_ADSLIGHT_PRICETYPE, 'typeprice', '', '1');
         while (list($nom_price, $id_price) = $xoopsDB->fetchRow($result1)) {
             $sel_form->addOption($nom_price, $id_price);
@@ -318,18 +294,18 @@ if (!empty($_POST['submit'])) {
         $contactby_form->addOption(4, _ADSLIGHT_CONTACT_BY_PHONE);
         $form->addElement($contactby_form, true);
         $form->addElement(new XoopsFormRadioYN(_ADSLIGHT_ADD_PHOTO_NOW, 'addphotonow', 1));
-
-        //if ($xoopsModuleConfig["adslight_use_captcha"] == '1') {
-        //  $form->addElement(new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, "xoopscaptcha", false), true);
-        //}
-
-        if ($premium != '0') {
+        /*
+                if ('1' == $xoopsModuleConfig["adslight_use_captcha"]) {
+                    $form->addElement(new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, "xoopscaptcha", false), true);
+                }
+        */
+        if ('0' != $premium) {
             $form->addElement(new XoopsFormHidden('premium', 'yes'), false);
         } else {
             $form->addElement(new XoopsFormHidden('premium', 'no'), false);
         }
 
-        if ($cat_moderate == '1') {
+        if ('1' == $cat_moderate) {
             $form->addElement(new XoopsFormHidden('valid', 'No'), false);
             $form->addElement(new XoopsFormHidden('cat_moderate', '1'), false);
         } else {
