@@ -59,7 +59,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'p
  * @param     $orderby
  * @param int $show
  */
-function Adsview($cid = 0, $min = 0, $orderby, $show = 0)
+function adsView($cid = 0, $min = 0, $orderby, $show = 0)
 {
     global $xoopsDB, $xoopsTpl, $xoopsConfig, $xoopsUser, $xoopsModuleConfig, $myts, $mytree, $imagecat, $meta, $moduleDirName, $main_lang, $xoopsUser, $mid, $prem_perm, $xoopsModule;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
@@ -487,7 +487,7 @@ $orderby = !isset($_GET['orderby']) ? null : $_GET['orderby'];
 switch ($pa) {
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
-        Adsview($cid, $min, $orderby, $show);
+        adsView($cid, $min, $orderby, $show);
         break;
 }
 include XOOPS_ROOT_PATH . '/footer.php';

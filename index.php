@@ -390,11 +390,11 @@ $orderby = !isset($_GET['orderby']) ? null : $_GET['orderby'];
 switch ($pa) {
     case 'Adsview':
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
-        Adsview($cid, $min, $orderby, $show);
+        adsView($cid, $min, $orderby, $show);
         break;
     case 'viewads':
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
-        viewads($lid);
+        viewAds($lid);
         break;
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';

@@ -47,9 +47,9 @@ if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $modu
     $prem_perm = '1';
 }
 
-#  function AdslightMaps
+#  function adslightMaps
 #####################################################
-function AdslightMaps()
+function adslightMaps()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsUser, $xoopsTpl, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm;
 

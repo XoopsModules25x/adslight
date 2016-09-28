@@ -56,7 +56,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'p
 /**
  * @param int $lid
  */
-function viewads($lid = 0)
+function viewAds($lid = 0)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
@@ -563,7 +563,7 @@ switch ($pa) {
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
 
-        viewads($lid);
+        viewAds($lid);
         break;
 }
 include XOOPS_ROOT_PATH . '/footer.php';

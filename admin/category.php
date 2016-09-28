@@ -25,12 +25,12 @@ xoops_cp_header();
 
 $op = XoopsRequest::getCmd('op', 'liste');
 
-#  function AdsNewCat
+#  function adsNewCat
 #####################################################
 /**
  * @param $cat
  */
-function AdsNewCat($cat)
+function adsNewCat($cat)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName;
 
@@ -143,12 +143,12 @@ function AdsNewCat($cat)
     xoops_cp_footer();
 }
 
-#  function AdsModCat
+#  function adsModCat
 #####################################################
 /**
  * @param $cid
  */
-function AdsModCat($cid)
+function adsModCat($cid)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName;
 
@@ -271,7 +271,7 @@ function AdsModCat($cid)
     xoops_cp_footer();
 }
 
-#  function AdsModCatS
+#  function adsModCatS
 #####################################################
 /**
  * @param $cidd
@@ -285,7 +285,7 @@ function AdsModCat($cid)
  * @param $cat_moderate
  * @param $moderate_subcat
  */
-function AdsModCatS(
+function adsModCatS(
     $cidd,
     $cid,
     $img,
@@ -315,7 +315,7 @@ function AdsModCatS(
     redirect_header('map.php', 10, _AM_ADSLIGHT_CATSMOD);
 }
 
-#  function AdsAddCat
+#  function adsAddCat
 #####################################################
 /**
  * @param $title
@@ -328,7 +328,7 @@ function AdsModCatS(
  * @param $cat_moderate
  * @param $moderate_subcat
  */
-function AdsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affprice, $cat_moderate, $moderate_subcat)
+function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affprice, $cat_moderate, $moderate_subcat)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
 
@@ -351,13 +351,13 @@ function AdsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affpri
     redirect_header('map.php', 3, _AM_ADSLIGHT_CATADD);
 }
 
-#  function AdsDelCat
+#  function adsDelCat
 #####################################################
 /**
  * @param     $cid
  * @param int $ok
  */
-function AdsDelCat($cid, $ok = 0)
+function adsDelCat($cid, $ok = 0)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $moduleDirName;
 
@@ -392,27 +392,27 @@ $op  = XoopsRequest::getCmd('op', '');
 switch ($op) {
 
     case 'AdsNewCat':
-        AdsNewCat($cid);
+        adsNewCat($cid);
         break;
 
     case 'AdsAddCat':
-        AdsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affprice, $cat_moderate, $moderate_subcat);
+        adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affprice, $cat_moderate, $moderate_subcat);
         break;
 
     case 'AdsDelCat':
-        AdsDelCat($cid, $ok);
+        adsDelCat($cid, $ok);
         break;
 
     case 'AdsModCat':
-        AdsModCat($cid);
+        adsModCat($cid);
         break;
 
     case 'AdsModCatS':
-        AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $ordre, $affprice, $cat_moderate, $moderate_subcat);
+        adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $ordre, $affprice, $cat_moderate, $moderate_subcat);
         break;
 
     default:
-        Index();
+        index();
         break;
 
 }

@@ -40,7 +40,7 @@ if (!$gperm_handler->checkRight('adslight_submit', $perm_itemid, $groups, $modul
  * @param $lid
  * @param $ok
  */
-function ListingDel($lid, $ok)
+function listingDel($lid, $ok)
 {
     global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
@@ -88,7 +88,7 @@ function ListingDel($lid, $ok)
  * @param $r_lid
  * @param $ok
  */
-function DelReply($r_lid, $ok)
+function delReply($r_lid, $ok)
 {
     global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
@@ -129,7 +129,7 @@ function DelReply($r_lid, $ok)
 /**
  * @param $lid
  */
-function ModAd($lid)
+function modAd($lid)
 {
     global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $xoopsUser, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
@@ -373,7 +373,7 @@ function ModAd($lid)
  * @param $premium
  * @param $valid
  */
-function ModAdS(
+function modAdS(
     $lid,
     $cat,
     $title,
@@ -440,23 +440,23 @@ switch ($op) {
 
     case 'ModAd':
         include XOOPS_ROOT_PATH . '/header.php';
-        ModAd($lid);
+        modAd($lid);
         include XOOPS_ROOT_PATH . '/footer.php';
         break;
 
     case 'ModAdS':
-        ModAdS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid);
+        modAdS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid);
         break;
 
     case 'ListingDel':
         include XOOPS_ROOT_PATH . '/header.php';
-        ListingDel($lid, $ok);
+        listingDel($lid, $ok);
         include XOOPS_ROOT_PATH . '/footer.php';
         break;
 
     case 'DelReply':
         include XOOPS_ROOT_PATH . '/header.php';
-        DelReply($r_lid, $ok);
+        delReply($r_lid, $ok);
         include XOOPS_ROOT_PATH . '/footer.php';
         break;
 

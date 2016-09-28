@@ -372,7 +372,7 @@ function ModifyAdsS(
  * @param  string $photo
  * @return void
  */
-function ListingDel($lid, $photo)
+function listingDel($lid, $photo)
 {
     global $xoopsDB, $moduleDirName, $admin_lang;
 
@@ -425,7 +425,7 @@ switch ($op) {
         break;
 
     case 'ListingDel':
-        ListingDel($lid, $photo);
+        listingDel($lid, $photo);
         break;
 
     case 'ModifyAds':
