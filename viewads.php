@@ -23,6 +23,7 @@
 include_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
+$tempXoopsLocal = new XoopsLocal;
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
@@ -268,7 +269,7 @@ function viewAds($lid = 0)
         }
         $xoopsTpl->assign('lid', $lid);
         $xoopsTpl->assign('read', "$hits " . _ADSLIGHT_VIEW2);
-        $xoopsTpl->assign('rating', XoopsLocal::number_format($item_rating, 2));
+        $xoopsTpl->assign('rating', $tempXoopsLocal->number_format($item_rating, 2));
         $xoopsTpl->assign('votes', $votestring);
         $xoopsTpl->assign('lang_rating', _ADSLIGHT_RATINGC);
         $xoopsTpl->assign('lang_ratethisitem', _ADSLIGHT_RATETHISITEM);
@@ -346,7 +347,7 @@ function viewAds($lid = 0)
             $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE2);
             //      $xoopsTpl->assign('price_price', $price.' '.$xoopsModuleConfig['adslight_money'].' ');
 
-            $xoopsTpl->assign('price_price', XoopsLocal::money_format('%.2n', $price));
+            $xoopsTpl->assign('price_price', $tempXoopsLocal->money_format('%.2n', $price));
 
             $xoopsTpl->assign('price_typeprice', $myts->htmlSpecialChars($nom_price));
             $xoopsTpl->assign('price_currency', $xoopsModuleConfig['adslight_currency']);
@@ -396,7 +397,7 @@ function viewAds($lid = 0)
                 if ($xoopsUser) {
                     $xoopsTpl->assign('bullinfotext', _ADSLIGHT_CONTACT_SUBMITTER . ' ' . $submitter . ' ' . _ADSLIGHT_CONTACTBY2 . ' ' . $contact);
                 } else {
-                    $xoopsTpl->assign('bullinfotext', '<font color="#de090e"><b>' . _ADSLIGHT_MUSTLOGIN . '</b></font>');
+                    $xoopsTpl->assign('bullinfotext', '<span style="color: #de090e"><b>' . _ADSLIGHT_MUSTLOGIN . '</b></span>');
                 }
             }
         }
@@ -420,7 +421,7 @@ function viewAds($lid = 0)
             $criteria_lid          = new criteria('lid', $lid);
             $criteria_uid          = new criteria('uid', $usid);
             $album_factory         = new Xoopsjlm_picturesHandler($xoopsDB);
-            $pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
+            $pictures_object_array =& $album_factory->getObjects($criteria_lid, $criteria_uid);
             $pictures_number       = $album_factory->getCount($criteria_lid, $criteria_uid);
             if ($pictures_number == 0) {
                 $nopicturesyet = _ADSLIGHT_NOTHINGYET;

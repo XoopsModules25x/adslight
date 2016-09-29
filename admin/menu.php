@@ -28,8 +28,8 @@ $dirname = basename(dirname(__DIR__));
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler   = xoops_getHandler('module');
 $module          = $moduleHandler->getByDirname($dirname);
-$pathIcon32      = $module->getInfo('icons32');
-$pathModuleAdmin = $module->getInfo('dirmoduleadmin');
+$pathIcon32      =& $module->getInfo('icons32');
+$pathModuleAdmin =& $module->getInfo('dirmoduleadmin');
 $pathLanguage    = $path . $pathModuleAdmin;
 
 if (!file_exists($fileinc = $pathLanguage . '/language/' . $GLOBALS['xoopsConfig']['language'] . '/' . 'main.php')) {

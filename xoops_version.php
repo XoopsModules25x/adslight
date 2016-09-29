@@ -482,8 +482,8 @@ $modversion['config'][32]['formtype']    = 'select';
 $modversion['config'][32]['valuetype']   = 'text';
 $modversion['config'][32]['default']     = 'textarea';
 xoops_load('xoopseditorhandler');
-$editor_handler                      = XoopsEditorHandler::getInstance();
-$modversion['config'][32]['options'] = array_flip($editor_handler->getList());
+$editorHandler                      = XoopsEditorHandler::getInstance();
+$modversion['config'][32]['options'] = array_flip($editorHandler->getList());
 
 $modversion['config'][33]['name']        = 'adslight_admin_editor';
 $modversion['config'][33]['title']       = '_MI_ADSLIGHT_ADMIN_EDITOR';
@@ -492,8 +492,8 @@ $modversion['config'][33]['formtype']    = 'select';
 $modversion['config'][33]['valuetype']   = 'text';
 $modversion['config'][33]['default']     = 'dhtmltextarea';
 xoops_load('xoopseditorhandler');
-$editor_handler                      = XoopsEditorHandler::getInstance();
-$modversion['config'][33]['options'] = array_flip($editor_handler->getList());
+$editorHandler                      = XoopsEditorHandler::getInstance();
+$modversion['config'][33]['options'] = array_flip($editorHandler->getList());
 
 $modversion['config'][34]['name']        = 'adslight_lightbox';
 $modversion['config'][34]['title']       = '_MI_ADSLIGHT_LIGHTBOX';

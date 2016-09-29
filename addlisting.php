@@ -149,7 +149,7 @@ if (!empty($_POST['submit'])) {
         $tags['CATEGORY_TITLE'] = $row['title'];
         $tags['NEWAD']          = _ADSLIGHT_NEWAD;
 
-        $mail = xoops_getMailer();
+        $mail =& xoops_getMailer();
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/adslight/language/' . $xoopsConfig['language'] . '/mail_template/');
         $mail->setTemplate('listing_notify_admin.tpl');
         $mail->useMail();

@@ -410,8 +410,8 @@ define('_ADSLIGHT_ADD_LISTING_NOTADDSSUBMIT', 'Add Ad');
 //version 1.064
 define('_ADSLIGHT_CATPLUS', '<br>&#187;&nbsp;More ...');
 /* AdsLight 2 */
-define('_ADSLIGHT_RESERVED', "This ad is: <br> <font color='red'> <strong> [Reserved] </strong> </font>");
-define('_ADSLIGHT_RESERVEDMEMBER', "<strong> Status: </strong> <font color='red'> <strong> [Reserved] </strong> </font>");
+define('_ADSLIGHT_RESERVED', "This ad is: <br> <span style='color: red'> <strong> [Reserved] </strong> </span>");
+define('_ADSLIGHT_RESERVEDMEMBER', "<strong> Status: </strong> <span style='color: red'> <strong> [Reserved] </strong> </span>");
 // Xpayment //
 define('_MN_ADSLIGHT_PURCHASE', 'Buy It Now');
 define('_MN_ADSLIGHT_YOURNAME', 'Establish invoice:');
@@ -422,9 +422,9 @@ define('_MN_ADSLIGHT_ERROR404', 'Error 404');
 define('_MN_ADSLIGHT_ERROR404_TEXT', '<table class="errorMsg" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td>
-<center>
+<div style="text-align:center">
     <h1>Error 404</h1><br><br>
-</center>
+</div>
 </td>
 </tr>
 <tr>

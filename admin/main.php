@@ -46,14 +46,14 @@ function Index()
     $page1 = implode("", file("$resultat_site"));
     if (preg_match("1.07",$page1)) { echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
       echo "<img src='../assets/images/admin/info_button_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
-      echo "<font color='#00B4C4'><b>"._AM_ADSLIGHT_RELEASEOK."- AdsLigh 1.07</b></font>";
+      echo "<span style='color: #00B4C4'><b>"._AM_ADSLIGHT_RELEASEOK."- AdsLigh 1.07</b></span>";
       echo "</td></tr></table><br>";
 
     } else {
 
       echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
       echo "<img src='../assets/images/admin/error_button_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEDOWNLOAD.\" /></td><td>";
-      echo "<font color='#FE0101'><b>"._AM_ADSLIGHT_RELEASEISNOTOK."</b></font><br>";
+      echo "<span style='color: #FE0101'><b>"._AM_ADSLIGHT_RELEASEISNOTOK."</b></span><br>";
       echo "<a href='http://www.i-luc.fr/adslight/modules/TDMDownloads/visit.php?cid=1&lid=3'>"._AM_ADSLIGHT_RELEASEDOWNLOAD." > AdsLight 1.08</a></td></tr></table><br>";
 
       }
@@ -70,7 +70,7 @@ function Index()
     } else {
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
         echo "<img src='../assets/images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
-        echo "<font color='#00B4C4'><b>" . _AM_ADSLIGHT_NOANNVAL . '</b></font>';
+        echo "<span style='color: #00B4C4'><b>" . _AM_ADSLIGHT_NOANNVAL . '</b></span>';
         echo '</td></tr></table><br>';
     }
 

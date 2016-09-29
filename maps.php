@@ -112,7 +112,7 @@ $pa = !isset($_GET['pa']) ? null : $_GET['pa'];
 switch ($pa) {
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
-        AdslightMaps();
+        adslightMaps();
         break;
 }
 include XOOPS_ROOT_PATH . '/footer.php';

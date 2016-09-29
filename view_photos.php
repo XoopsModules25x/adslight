@@ -55,7 +55,7 @@ if ($xoopsUser instanceof XoopsUser) {
 
     $module_id = $xoopsModule->getVar('mid');
 
-    $groups = $xoopsUser->getGroups();
+    $groups =& $xoopsUser->getGroups();
 
     $gperm_handler = xoops_getHandler('groupperm');
 

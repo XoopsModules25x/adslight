@@ -141,7 +141,7 @@ function ListingAddType($type)
         //    loadModuleAdminMenu(2, "");
 
         echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td valign='top'>\n";
-        echo '<br><center><b>' . _AM_ADSLIGHT_ERRORTYPE . " $nom_type " . _AM_ADSLIGHT_EXIST . '</b><br><br>';
+        echo '<br><div style="text-align:center"><b>' . _AM_ADSLIGHT_ERRORTYPE . " $nom_type " . _AM_ADSLIGHT_EXIST . '</b></div><br><br>';
         echo "<form method=\"post\" action=\"options.php\">
             <b>" . _AM_ADSLIGHT_ADDTYPE . '</b><br><br>
             ' . _AM_ADSLIGHT_TYPE . "<input type=\"text\" name=\"type\" size=\"30\" maxlength=\"100\" />
@@ -251,7 +251,7 @@ function ListingAddPrice($type)
         //    loadModuleAdminMenu(2, "");
 
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
-        echo '<br><center><b>' . _AM_ADSLIGHT_ERRORPRICE . " $nom_price " . _AM_ADSLIGHT_EXIST . '</b><br><br>';
+        echo '<br><div style="text-align:center"><b>' . _AM_ADSLIGHT_ERRORPRICE . " $nom_price " . _AM_ADSLIGHT_EXIST . '</b></div><br><br>';
         echo "<form method=\"post\" action=\"options.php\">
             <b>" . _AM_ADSLIGHT_ADDPRICE . '</b><br><br>
             ' . _AM_ADSLIGHT_TYPE . "   <input type=\"text\" name=\"type\" size=\"30\" maxlength=\"100\">
@@ -357,7 +357,7 @@ function ListingAddUsure($type)
         //    loadModuleAdminMenu(2, "");
 
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
-        echo '<br><center><b>' . _AM_ADSLIGHT_ERRORUSURE . " $nom_usure " . _AM_ADSLIGHT_EXIST . '</b><br><br>';
+        echo '<br><div style="text-align:center"><b>' . _AM_ADSLIGHT_ERRORUSURE . " $nom_usure " . _AM_ADSLIGHT_EXIST . '</b></div><br><br>';
         echo "<form method=\"post\" action=\"options.php\">
             <b>" . _AM_ADSLIGHT_ADDUSURE . '</b><br><br>
             ' . _AM_ADSLIGHT_TYPE . "   <input type=\"text\" name=\"type\" size=\"30\" maxlength=\"100\">

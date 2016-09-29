@@ -60,7 +60,7 @@ if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
     #buttonbar a:hover span { color:#333; }
     #buttonbar .current a { background-position:0 -150px; border-width:0; }
     #buttonbar .current a span { background-position:100% -150px; padding-bottom:5px; color:#333; }
-    #buttonbar a:hover { background-position:0% -150px; }
+    #buttonbar a:hover { background-position:0 -150px; }
     #buttonbar a:hover span { background-position:100% -150px; }
     //-->
     </style>

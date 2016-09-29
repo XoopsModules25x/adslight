@@ -71,8 +71,8 @@
                 <div align="center">
                     <strong><{$lang_sortby}></strong>
                     <{$lang_title}>
-                    <font color="#1d1d1d">: </font><a rel="nofollow"
-                                                      href="viewcats.php?cid=<{$cat}>&orderby=titleA"><img
+                    <span style="color: #1d1d1d; ">: </span><a rel="nofollow"
+                                                               href="viewcats.php?cid=<{$cat}>&orderby=titleA"><img
                                 src="assets/images/up.gif" align="top" alt="<{$lang_titleatoz}>" border="0"/></a><a
                             rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=titleD"><img
                                 src="assets/images/down.gif" border="0" align="top" alt="<{$lang_titleztoa}>"/></a>&nbsp;
@@ -83,20 +83,20 @@
                             rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=priceD"><img
                                 src="assets/images/down.gif" border="0" align="top" alt="<{$lang_pricehigh}>"/></a>&nbsp;
                     <{$lang_date}>
-                    <font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateA"><img
+                    <span style="color: #1d1d1d; ">: </span><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateA"><img
                                 src="assets/images/up.gif" border="0" align="top" alt="<{$lang_dateold}>"/></a><a
                             rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateD"><img
                                 src="assets/images/down.gif" border="0" align="top" alt="<{$lang_datenew}>"/></a>&nbsp;
                     <{$lang_popularity}>
-                    <font color="#1d1d1d">: </font><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=hitsA"><img
+                    <span style="color: #1d1d1d; ">: </span><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=hitsA"><img
                                 src="assets/images/up.gif" border="0" align="top"
                                 alt="<{$lang_popularityleast}>"/></a><a rel="nofollow"
                                                                         href="viewcats.php?cid=<{$cat}>&orderby=hitsD"><img
                                 src="assets/images/down.gif" border="0" align="top" alt="<{$lang_popularitymost}>"/></a><br>
                     <br>
-                    <font color="#ff6203">
+                    <span style="color: #ff6203; ">
                         <{$lang_cursortedby}>
-                    </font></div>
+                    </span></div>
             <{/if}>
             <div align="center"><{$nav_page}><br></div>
             <{if $use_extra_code == 1}>
@@ -179,7 +179,7 @@
                 </table>
             <{/if}><{if !$lang_subcat}><{if !$item}>
                 <br>
-                <center><{$not_adds_in_this_cat}></center>
+                <div style="text-align: center;"><{$not_adds_in_this_cat}></div>
                 <br>
                 <br>
             <{/if}><{/if}>

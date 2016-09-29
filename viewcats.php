@@ -23,6 +23,7 @@
 include_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
+$tempXoopsLocal = new XoopsLocal;
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
@@ -343,7 +344,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             if ($price > 0) {
 
                 //          $a_item['price'] = $price. ' '. $xoopsModuleConfig['adslight_money'].'';
-                $a_item['price']           = XoopsLocal::money_format('%.2n', $price);
+                $a_item['price']           = $tempXoopsLocal->money_format('%.2n', $price);
                 $a_item['price_typeprice'] = $myts->htmlSpecialChars($nom_price);
             }
             $a_item['date']  = $date;

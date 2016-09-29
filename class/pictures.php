@@ -515,7 +515,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
             //now let s upload the file
             if (!$uploader->upload()) {
                 // if there are errors lets return them
-                echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center\"><p>"
+                echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;\"><p>"
                      . $uploader->getErrors()
                      . '</p></div>';
 
@@ -535,7 +535,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
                 $this->resizeImage($saved_destination, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload);
             }
         } else {
-            echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center\"><p>" . $uploader->getErrors() . '</p></div>';
+            echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;\"><p>" . $uploader->getErrors() . '</p></div>';
 
             return false;
         }
@@ -546,12 +546,12 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     /**
      * Resize a picture and save it to $path_upload
      *
-     * @param  text $img         the path to the file
-     * @param  text $path_upload The path to where the files should be saved after resizing
-     * @param  int  $thumbwidth  the width in pixels that the thumbnail will have
-     * @param  int  $thumbheight the height in pixels that the thumbnail will have
-     * @param  int  $pictwidth   the width in pixels that the pic will have
-     * @param  int  $pictheight  the height in pixels that the pic will have
+     * @param  string $img         the path to the file
+     * @param  string $path_upload The path to where the files should be saved after resizing
+     * @param  int    $thumbwidth  the width in pixels that the thumbnail will have
+     * @param  int    $thumbheight the height in pixels that the thumbnail will have
+     * @param  int    $pictwidth   the width in pixels that the pic will have
+     * @param  int    $pictheight  the height in pixels that the pic will have
      * @return nothing
      */
     public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload)

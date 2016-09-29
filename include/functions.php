@@ -40,7 +40,7 @@ function ExpireAd()
         $title     = $myts->htmlSpecialChars($title);
         $expire    = $myts->htmlSpecialChars($expire);
         $type      = $myts->htmlSpecialChars($type);
-        $desctext  = $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
+        $desctext  =& $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
         $submitter = $myts->htmlSpecialChars($submitter);
         $remind    = $myts->htmlSpecialChars($remind);
         $supprdate = $dateann + ($expire * 86400);

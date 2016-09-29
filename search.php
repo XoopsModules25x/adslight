@@ -200,8 +200,7 @@ switch ($action) {
                     echo '<table>';
                 }
             }
-            unset($results);
-            unset($module);
+            unset($results, $module);
         }
         include_once __DIR__ . '/include/searchform.php';
         $search_form->display();

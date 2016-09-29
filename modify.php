@@ -75,8 +75,8 @@ function listingDel($lid, $ok)
                 redirect_header('index.php', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
-                echo '<br><center>';
-                echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong><br><br>';
+                echo '<br><div style="text-align:center">';
+                echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
             echo "[ <a href=\"modify.php?op=ListingDel&amp;lid=" . $lid . "&amp;ok=1\">" . _ADSLIGHT_OUI . "</a> | <a href=\"index.php\">" . _ADSLIGHT_NON . '</a> ]<br><br>';
             echo '</td></tr></table>';
@@ -109,8 +109,8 @@ function delReply($r_lid, $ok)
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
-                echo '<br><center>';
-                echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong><br><br>';
+                echo '<br><div style="text-align:center">';
+                echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
             echo "[ <a href=\"modify.php?op=DelReply&amp;r_lid="
                  . addslashes($r_lid)
@@ -322,7 +322,7 @@ function modAd($lid)
 
             $module_id = $xoopsModule->getVar('mid');
             if (is_object($xoopsUser)) {
-                $groups = $xoopsUser->getGroups();
+                $groups =& $xoopsUser->getGroups();
             } else {
                 $groups = XOOPS_GROUP_ANONYMOUS;
             }

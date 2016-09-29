@@ -41,7 +41,7 @@ if ($cat_rows == '0') {
     $permtoset                = XoopsRequest::getInt('permtoset', 1, 'POST');
     $selected                 = array('', '', '');
     $selected[$permtoset - 1] = ' selected';
-    echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='javascript: document.jselperm.submit()'><option value='1'"
+    echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='document.jselperm.submit()'><option value='1'"
          . $selected[0]
          . '>'
          . _MI_ADSLIGHT_VIEWFORM

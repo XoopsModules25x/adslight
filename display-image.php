@@ -37,9 +37,9 @@ $recordexist = $xoopsDB->getRowsNum($result);
 
 if ($recordexist) {
     list($url) = $xoopsDB->fetchRow($result);
-    echo "<br><br><center><img class=\"thumb\" src=\"photo/$url\" border=0></center>";
+    echo "<br><br><div style='text-align:center'><img class=\"thumb\" src=\"photo/$url\" border=0></div>";
 }
 
-echo "<table><tr><td><center><a href=#  onClick='window.close()'>" . _ADSLIGHT_CLOSEF . '</a></center></td></tr></table>';
+echo "<table><tr><td><div style='text-align:center'><a href=#  onClick='window.close()'>" . _ADSLIGHT_CLOSEF . '</a></div></td></tr></table>';
 
 xoops_footer();

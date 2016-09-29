@@ -85,7 +85,7 @@ function PrintAd($lid)
         echo '<strong>' . _ADSLIGHT_PRICE2 . "</strong> $price " . $xoopsModuleConfig['adslight_money'] . "  - $typeprice<br>";
     }
     if ($photo) {
-        echo "<tr><td><left><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/$url\" width=\"130px\" border=0 /></center>";
+        echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/$url\" width=\"130px\" border=0 /></div>";
     }
     echo '</td>
           </tr>
@@ -107,8 +107,8 @@ function PrintAd($lid)
     </tr>
     </table>';
     echo '<br><br></td></tr></table></td></tr></table>
-    <br><br><center>
-    ' . _ADSLIGHT_EXTRANN . ' <strong>' . $xoopsConfig['sitename'] . "</strong><br>
+    <br><br><div style="text-align:center">
+    ' . _ADSLIGHT_EXTRANN . ' <strong>' . $xoopsConfig['sitename'] . "</strong></div><br>
     <a href=\"" . XOOPS_URL . "/modules/adslight/\">" . XOOPS_URL . '/modules/adslight/</a>
     </td></tr></table>
     </body>

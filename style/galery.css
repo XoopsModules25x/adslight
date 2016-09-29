@@ -59,7 +59,7 @@ ul#album_photos li div.photo_in_album:hover {
 
 ul#album_photos li div.photo_in_album img {
     padding: 2px;
-    border: solid 3px #333
+    border: solid 3px #333;
 }
 
 ul#album_photos li div.photo_in_album a:hover img {
@@ -72,11 +72,11 @@ ul#album_photos li div.photo_in_album a:hover {
 
 img#thumb {
     padding: 3px;
-    border: solid 1px #d3d3d3
+    border: solid 1px #d3d3d3;
 }
 
 img#thumb:hover {
     padding: 3px;
-    border: solid 1px #ff6203
+    border: solid 1px #ff6203;
 }
 

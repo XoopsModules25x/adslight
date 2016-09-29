@@ -130,7 +130,7 @@ if ($_POST['submit']) {
         $tags['VIEW_AD']     = _ADSLIGHT_VIEW_AD;
 
         $subject = '' . _ADSLIGHT_CONTACTAFTERANN . '';
-        $mail    = xoops_getMailer();
+        $mail    =& xoops_getMailer();
 
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
         $mail->setTemplate('listing_contact.tpl');
