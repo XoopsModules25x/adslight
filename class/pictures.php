@@ -32,7 +32,7 @@ include_once XOOPS_ROOT_PATH . '/class/uploader.php';
 include_once XOOPS_ROOT_PATH . '/kernel/object.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/kernel/object.php';
-include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
 /**
  * light_pictures class.

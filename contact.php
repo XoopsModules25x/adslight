@@ -87,7 +87,7 @@ if ($_POST['submit']) {
 
         $tags                = array();
         $tags['TITLE']       = $title;
-        $tags['TYPE']        = adslight_NameType($type);
+        $tags['TYPE']        = AdslightUtilities::getNameType($type);
         $tags['PRICE']       = $price;
         $tags['DESCTEXT']    = stripslashes($desctext);
         $tags['MY_SITENAME'] = $xoopsConfig['sitename'];

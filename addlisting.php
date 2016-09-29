@@ -23,10 +23,10 @@ include_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();// MyTextSanitizer object
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-include_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
-include_once __DIR__ . '/include/functions.php';
+//include_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
+//include_once __DIR__ . '/include/functions.php';
 
-$erh = new ErrorHandler; //ErrorHandler object
+//$erh = new ErrorHandler; //ErrorHandler object
 
 $module_id = $xoopsModule->getVar('mid');
 if (is_object($xoopsUser)) {
@@ -49,7 +49,7 @@ if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $modu
     $premium = 1;
 }
 
-include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+//include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
@@ -66,7 +66,10 @@ if (!empty($_POST['submit'])) {
     }
 
     if ($_POST['title'] == '') {
-        $erh->show('1001');
+        //        $erh->show('1001'); //'0001' => 'Could not connect to the forums database.',
+        $modHandler = xoops_getModuleHandler('module');
+        $myModule   = $modHandler->getByDirname('adslight');
+        $myModule->setErrors('Could not connect to the database.');
     }
 
     if (!empty($_POST['cid'])) {
@@ -74,7 +77,7 @@ if (!empty($_POST['submit'])) {
     } else {
         $cid = 0;
     }
-    $cat_perms = adslight_MygetItemIds('adslight_submit');
+    $cat_perms = AdslightUtilities::getMyItemIds('adslight_submit');
     if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
@@ -103,7 +106,13 @@ if (!empty($_POST['submit'])) {
     $sql = sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                    $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town,
                    $country, $contactby, $premium, $valid);
-    $xoopsDB->query($sql) || $erh->show('0013');
+    // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . mysql_error() . '',
+    $success = $xoopsDB->query($sql);
+    if (!$success) {
+        $modHandler = xoops_getModuleHandler('module');
+        $myModule   = $modHandler->getByDirname('adslight');
+        $myModule->setErrors('Could not query the database.');
+    }
 
     $lid = $xoopsDB->getInsertId();
 
@@ -118,7 +127,7 @@ if (!empty($_POST['submit'])) {
         $tags['WEBMASTER']       = _ADSLIGHT_WEBMASTER;
         $tags['HELLO']           = _ADSLIGHT_HELLO;
         $tags['FOLLOW_LINK']     = _ADSLIGHT_FOLLOW_LINK;
-        $tags['TYPE']            = adslight_NameType($type);
+        $tags['TYPE']            = AdslightUtilities::getNameType($type);
         $tags['LINK_URL']        = XOOPS_URL . '/modules/adslight/viewads.php?' . '&lid=' . $lid;
         $sql                     = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
         $result2                 = $xoopsDB->query($sql);
@@ -140,7 +149,7 @@ if (!empty($_POST['submit'])) {
         $tags['WEBMASTER']      = _ADSLIGHT_WEBMASTER;
         $tags['HELLO']          = _ADSLIGHT_HELLO;
         $tags['FOLLOW_LINK']    = _ADSLIGHT_FOLLOW_LINK;
-        $tags['TYPE']           = adslight_NameType($type);
+        $tags['TYPE']           = AdslightUtilities::getNameType($type);
         $tags['NEED_TO_LOGIN']  = _ADSLIGHT_NEED_TO_LOGIN;
         $tags['ADMIN_LINK']     = XOOPS_URL . '/modules/adslight/admin/validate_ads.php';
         $sql                    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
@@ -243,7 +252,7 @@ if (!empty($_POST['submit'])) {
 
     $cat_id    = $_GET['cid'];
     $cid       = addslashes($cat_id);
-    $cat_perms = adslight_MygetItemIds('adslight_submit');
+    $cat_perms = AdslightUtilities::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {
         if (!in_array($cid, $cat_perms)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
@@ -287,7 +296,7 @@ if (!empty($_POST['submit'])) {
         $form->addElement($usure_form, true);
 
         $form->addElement(new XoopsFormText(_ADSLIGHT_TITLE2, 'title', 40, 50, ''), true);
-        $form->addElement(adslight_getEditor(_ADSLIGHT_DESC, 'desctext', '', '100%', '300px', ''), true);
+        $form->addElement(AdslightUtilities::getEditor(_ADSLIGHT_DESC, 'desctext', '', '100%', '300px', ''), true);
         $form->addElement(new XoopsFormText(_ADSLIGHT_PRICE2, 'price', 40, 50, ''), true);
         /// Type de prix
         $sel_form = new XoopsFormSelect(_ADSLIGHT_PRICETYPE, 'typeprice', '', '1');
@@ -330,4 +339,5 @@ if (!empty($_POST['submit'])) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
     include XOOPS_ROOT_PATH . '/footer.php';
+
 }

@@ -25,6 +25,7 @@ include_once $roothpath . '/mainfile.php';
 include_once $roothpath . '/include/cp_functions.php';
 require_once $roothpath . '/include/cp_header.php';
 include_once $roothpath . '/class/xoopsformloader.php';
+require __DIR__ . '/../class/utilities.php';
 
 xoops_load('XoopsRequest');
 
@@ -33,7 +34,7 @@ $moduleDirName = $xoopsModule->getVar('dirname');
 //$moduleDirName2 = basename(dirname(__DIR__));
 
 include_once $roothpath . '/modules/' . $moduleDirName . '/include/gtickets.php';
-include_once $roothpath . '/modules/' . $moduleDirName . '/include/functions.php';
+include_once $roothpath . '/modules/' . $moduleDirName . '/class/utilities.php';
 include_once $roothpath . '/modules/' . $moduleDirName . '/class/classifiedstree.php';
 //include_once $GLOBALS['xoops']->path( "/modules/adslight/class/grouppermform.php");
 include_once $roothpath . '/class/xoopsform/grouppermform.php';

@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
 /**
  * @param $queryarray
@@ -75,7 +75,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
         $ret[$i]['image']     = 'assets/images/deco/icon.png';
         $ret[$i]['link']      = 'viewads.php?lid=' . $myrow['lid'] . '';
         $ret[$i]['title']     = $myrow['title'];
-        $ret[$i]['type']      = adslight_NameType($myrow['type']);
+        $ret[$i]['type']      = AdslightUtilities::getNameType($myrow['type']);
         $ret[$i]['price']     = number_format($myrow['price'], 2, '.', ',');
         $ret[$i]['typeprice'] = $myrow['typeprice'];
         $ret[$i]['town']      = $myrow['town'];

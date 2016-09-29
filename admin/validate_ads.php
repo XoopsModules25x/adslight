@@ -358,7 +358,7 @@ function IndexView($lid)
             <td>" . _AM_ADSLIGHT_PHOTO1 . " </td><td><input type=\"text\" name=\"photo\" size=\"40\" value=\"$photo\"></td>
             </tr>";
         echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_DESC . '</td><td>';
-        $wysiwyg_text_area = adslight_adminEditor(_AM_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px', 'small');
+        $wysiwyg_text_area = AdslightUtilities::getEditor(_AM_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px', 'small');
         echo $wysiwyg_text_area->render();
         echo '</td></tr>';
         echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_CAT . ' </td><td>';
@@ -538,7 +538,7 @@ function ModifyAds($lid)
             </tr><tr class='head' border='1'>
             <td>" . _AM_ADSLIGHT_DESC . ' </td><td>';
 
-        $wysiwyg_text_area = adslight_adminEditor('', 'desctext', $desctext, '100%', '200px', 'small');
+        $wysiwyg_text_area = AdslightUtilities::getEditor('', 'desctext', $desctext, '100%', '200px', 'small');
         echo $wysiwyg_text_area->render();
 
         echo '</td></tr>';
@@ -746,7 +746,7 @@ function ListingValid(
     } else {
         $tags               = array();
         $tags['TITLE']      = $title;
-        $tags['TYPE']       = adslight_NameType($type);
+        $tags['TYPE']       = AdslightUtilities::getNameType($type);
         $tags['SUBMITTER']  = $submitter;
         $tags['DESCTEXT']   = stripslashes($desctext);
         $tags['EMAIL']      = _AM_ADSLIGHT_EMAIL;
@@ -787,7 +787,7 @@ function ListingValid(
     $tags['WEBMASTER']       = _AM_ADSLIGHT_WEBMASTER;
     $tags['HELLO']           = _AM_ADSLIGHT_HELLO;
     $tags['FOLLOW_LINK']     = _AM_ADSLIGHT_FOLLOW_LINK;
-    $tags['TYPE']            = adslight_NameType($type);
+    $tags['TYPE']            = AdslightUtilities::getNameType($type);
     $tags['LINK_URL']        = XOOPS_URL . '/modules/adslight/viewads.php?' . '&lid=' . $lid;
     $sql                     = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cat);
     $result                  = $xoopsDB->query($sql);

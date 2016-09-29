@@ -39,7 +39,7 @@ if (!$gperm_handler->checkRight('adslight_view', $perm_itemid, $groups, $module_
 (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? $prem_perm = '0' : $prem_perm = '1';
 
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function index
@@ -74,7 +74,8 @@ function index()
     $xoopsTpl->assign('adslight_active_menu', $xoopsModuleConfig['adslight_active_menu']);
     $xoopsTpl->assign('adslight_active_rss', $xoopsModuleConfig['adslight_active_rss']);
 
-    ExpireAd();
+//    ExpireAd();
+    AdslightUtilities::expireAd();
 
     if ($xoopsUser) {
         $member_usid = $xoopsUser->getVar('uid');
@@ -105,7 +106,7 @@ function index()
             }
         }
 
-        $categories = adslight_MygetItemIds('adslight_submit');
+        $categories = AdslightUtilities::getMyItemIds('adslight_submit');
         if (is_array($categories) && count($categories) > 0) {
             $intro = _ADSLIGHT_INTRO;
         } else {
@@ -116,7 +117,7 @@ function index()
 
     $sql = 'SELECT SQL_CACHE cid, title, img FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE pid = 0 ';
 
-    $categories = adslight_MygetItemIds('adslight_view');
+    $categories = AdslightUtilities::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
     } else {
@@ -151,7 +152,7 @@ function index()
             $img = '';
         }
 
-        $totallisting = adslight_getTotalItems($myrow['cid'], 1);
+        $totallisting = AdslightUtilities::getTotalItems($myrow['cid'], 1);
         $content .= $title . ' ';
 
         $arr = array();
@@ -199,7 +200,7 @@ function index()
 
     list($catt) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*)  FROM ' . $xoopsDB->prefix('' . $moduleDirName . '_categories') . ''));
 
-    $submit_perms = adslight_MygetItemIds('adslight_submit');
+    $submit_perms = AdslightUtilities::getMyItemIds('adslight_submit');
 
     if ($xoopsUser) {
         $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLOK . '<a href="add.php">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>';

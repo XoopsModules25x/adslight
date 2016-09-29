@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 /**
  * @param XoopsObject $xoopsModule
  *

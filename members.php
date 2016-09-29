@@ -21,7 +21,7 @@
 */
 
 include_once __DIR__ . '/header.php';
-include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
 $pathIcon16 = $xoopsModule->getInfo('icons16');
@@ -86,7 +86,7 @@ if ($xoopsUser) {
 }
 
 $cat_perms  = '';
-$categories = adslight_MygetItemIds('adslight_view');
+$categories = AdslightUtilities::getMyItemIds('adslight_view');
 if (is_array($categories) && count($categories) > 0) {
     $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
 }

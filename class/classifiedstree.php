@@ -56,7 +56,7 @@ class classifiedstree
         $arr = array();
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -87,7 +87,7 @@ class classifiedstree
         $idarray = array();
         $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '');
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $result .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -114,7 +114,7 @@ class classifiedstree
     {
         $sql = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '';
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -146,7 +146,7 @@ class classifiedstree
     {
         $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '';
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -176,7 +176,7 @@ class classifiedstree
     {
         $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '');
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
@@ -217,7 +217,7 @@ class classifiedstree
         echo '>';
 
         $sql        = 'SELECT SQL_CACHE cid, title FROM ' . $this->table . ' WHERE pid=0';
-        $categories = adslight_MygetItemIds('adslight_submit');
+        $categories = AdslightUtilities::getMyItemIds('adslight_submit');
 
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
@@ -331,7 +331,7 @@ class classifiedstree
     {
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '';
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -367,7 +367,7 @@ class classifiedstree
 
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '';
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
@@ -516,7 +516,7 @@ class classifiedstree
         global $xoopsDB;
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $xoopsDB->escape($sel_id) . '';
 
-        $categories = adslight_MygetItemIds('adslight_view');
+        $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }

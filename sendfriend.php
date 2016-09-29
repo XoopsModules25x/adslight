@@ -21,7 +21,7 @@
 */
 include_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
 /**
  * @param $lid
@@ -126,7 +126,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['LID']                = $lid;
     $tags['LISTING_NUMBER']     = _ADSLIGHT_LISTING_NUMBER;
     $tags['TITLE']              = $title;
-    $tags['TYPE']               = adslight_NameType($type);
+    $tags['TYPE']               = AdslightUtilities::getNameType($type);
     $tags['DESCTEXT']           = $desctext;
     $tags['PRICE']              = $price;
     $tags['TYPEPRICE']          = $typeprice;

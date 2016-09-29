@@ -49,7 +49,7 @@ if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $modu
 }
 
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function viewads
@@ -112,7 +112,7 @@ function viewAds($lid = 0)
     }
 
     $cat_perms  = '';
-    $categories = adslight_MygetItemIds('adslight_view');
+    $categories = AdslightUtilities::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
@@ -528,7 +528,7 @@ function categorynewgraphic($cid)
     global $xoopsDB, $xoopsModuleConfig;
 
     $cat_perms  = '';
-    $categories = adslight_MygetItemIds('adslight_view');
+    $categories = AdslightUtilities::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }

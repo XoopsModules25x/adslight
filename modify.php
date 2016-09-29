@@ -134,7 +134,7 @@ function modAd($lid)
     global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $xoopsUser, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+    include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
 
     include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
@@ -147,7 +147,7 @@ function modAd($lid)
                               . '');
     list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
 
-    $categories = adslight_MygetItemIds('adslight_submit');
+    $categories = AdslightUtilities::getMyItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {
         if (!in_array($cide, $categories)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
@@ -313,7 +313,7 @@ function modAd($lid)
             echo "</td>
     </tr><tr>
     <td class=\"head\">" . _ADSLIGHT_DESC . " </td><td class=\"head\">";
-            $wysiwyg_text_area = adslight_getEditor(_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px');
+            $wysiwyg_text_area = AdslightUtilities::getEditor(_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px');
             echo $wysiwyg_text_area->render();
             echo "</td></tr>
     <td colspan=2><br><input type=\"submit\" value=\"" . _ADSLIGHT_MODIFANN . "\" /></td>

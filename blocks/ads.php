@@ -29,7 +29,7 @@
  */
 function adslight_show($options)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+    include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
     global $xoopsDB, $xoopsModuleConfig, $blockdirname, $block_lang;
 
     $block = array();
@@ -54,7 +54,7 @@ function adslight_show($options)
             }
         }
 
-        $a_item['type'] = adslight_NameType($type);
+        $a_item['type'] = AdslightUtilities::getNameType($type);
         $a_item['id']   = $myrow['lid'];
         $a_item['cid']  = $myrow['cid'];
 

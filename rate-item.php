@@ -21,11 +21,11 @@
 */
 
 include_once __DIR__ . '/header.php';
-include_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
+//include_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
-include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+//include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 if (!empty($HTTP_POST_VARS['submit'])) {
-    $eh         = new ErrorHandler; //ErrorHandler object
+//    $erh         = new ErrorHandler; //ErrorHandler object
     $ratinguser = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getVar('uid') : 0;
 
     $anonwaitdays = 1; // Make sure only 1 anonymous rating from an IP in a single day.
@@ -75,10 +75,17 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $datetime = time();
     $sql      = sprintf("INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp) VALUES (%u, %u, %u, %u, '%s', %u)", $xoopsDB->prefix('adslight_item_votedata'), $newid,
                         $lid, $ratinguser, $rating, $ip, $datetime);
-    $xoopsDB->query($sql) || $eh->show('0013');
+    // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . mysql_error() . '',
+    $success = $xoopsDB->query($sql);
+    if (!$success) {
+        $modHandler      = xoops_getModuleHandler('module');
+        $myModule = $modHandler->getByDirname('adslight');
+        $myModule->setErrors('Could not query the database.');
+    }
 
     //All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
-    updateIrating($lid);
+//    updateIrating($lid);
+    AdslightUtilities::updateItemRating($lid);
     $ratemessage = constant('_ADSLIGHT_VOTEAPPRE') . '<br>' . sprintf(constant('_ADSLIGHT_THANKURATEITEM'), $xoopsConfig['sitename']);
     redirect_header('viewads.php?lid=' . $lid . '', 3, $ratemessage);
 } else {

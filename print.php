@@ -22,7 +22,7 @@
 
 include_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-include XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
 /**
  * @param $lid
@@ -45,7 +45,7 @@ function PrintAd($lid)
 
     $title     = $myts->htmlSpecialChars($title);
     $expire    = $myts->htmlSpecialChars($expire);
-    $type      = adslight_NameType($myts->htmlSpecialChars($type));
+    $type      = AdslightUtilities::getNameType($myts->htmlSpecialChars($type));
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
     $tel       = $myts->htmlSpecialChars($tel);
     $price     = $myts->htmlSpecialChars($price);

@@ -40,7 +40,9 @@ function adsNewCat($cat)
 
     //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_ADDSUBCAT . '</legend>';
-    ShowImg();
+//    ShowImg();
+    AdslightUtilities::showImage();
+
 
     echo "<form method=\"post\" action=\"category.php\" name=\"imcat\"><input type=\"hidden\" name=\"op\" value=\"AdsAddCat\"></font><br><br>
         <table class=\"outer\" border=0>
@@ -158,7 +160,8 @@ function adsModCat($cid)
 
     //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODIFCAT . '</legend>';
-    ShowImg();
+//    ShowImg();
+    AdslightUtilities::showImage();
 
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, ordre, affprice, cat_moderate, moderate_subcat FROM '
                               . $xoopsDB->prefix('adslight_categories')

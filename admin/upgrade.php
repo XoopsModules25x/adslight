@@ -25,12 +25,12 @@ $admin_lang    = '_AM_' . strtoupper($moduleDirName);
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 xoops_cp_header();
-include_once XOOPS_ROOT_PATH . '/modules/adslight/include/functions.php';
+include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
 if (is_object($xoopsUser) && $xoopsUser->isAdmin($xoopsModule->mid())) {
     $errors = 0;
 
-    if (!jlm_ads_TableExists($xoopsDB->prefix('adslight_pictures'))) {
+    if (!AdslightUtilities::checkTableExists($xoopsDB->prefix('adslight_pictures'))) {
         $sql = 'CREATE TABLE ' . $xoopsDB->prefix('adslight_pictures') . " (
               cod_img int(11) NOT NULL auto_increment,
               title varchar(255) NOT NULL default '',
@@ -49,7 +49,7 @@ if (is_object($xoopsUser) && $xoopsUser->isAdmin($xoopsModule->mid())) {
     }
 
     // 3) Create the adslight_replies table if it does NOT exist
-    if (!jlm_ads_TableExists($xoopsDB->prefix('adslight_replies'))) {
+    if (!AdslightUtilities::checkTableExists($xoopsDB->prefix('adslight_replies'))) {
         $sql3 = 'CREATE TABLE ' . $xoopsDB->prefix('adslight_replies') . " (
       r_lid int(11) NOT NULL auto_increment,
       lid int(5) unsigned NOT NULL default '0',
@@ -70,32 +70,32 @@ if (is_object($xoopsUser) && $xoopsUser->isAdmin($xoopsModule->mid())) {
     }
 
     //  Add the new fields to the categories table
-    if (!jlm_ads_FieldExists('cat_desc', $xoopsDB->prefix('adslight_categories'))) {
-        jlm_ads_AddField("cat_desc text DEFAULT '' AFTER title", $xoopsDB->prefix('adslight_categories'));
+    if (!AdslightUtilities::checkFieldExists('cat_desc', $xoopsDB->prefix('adslight_categories'))) {
+        AdslightUtilities::addField("cat_desc text DEFAULT '' AFTER title", $xoopsDB->prefix('adslight_categories'));
     }
 
     //  Add the new fields to the categories table
-    if (!jlm_ads_FieldExists('cat_keywords', $xoopsDB->prefix('adslight_categories'))) {
-        jlm_ads_AddField("cat_keywords text DEFAULT '' AFTER title", $xoopsDB->prefix('adslight_categories'));
+    if (!AdslightUtilities::checkFieldExists('cat_keywords', $xoopsDB->prefix('adslight_categories'))) {
+        AdslightUtilities::addField("cat_keywords text DEFAULT '' AFTER title", $xoopsDB->prefix('adslight_categories'));
     }
 
     //  Add the new fields to the categories table
-    if (!jlm_ads_FieldExists('cat_moderate', $xoopsDB->prefix('adslight_categories'))) {
-        jlm_ads_AddField("cat_moderate int(5) DEFAULT '0' AFTER affprice", $xoopsDB->prefix('adslight_categories'));
+    if (!AdslightUtilities::checkFieldExists('cat_moderate', $xoopsDB->prefix('adslight_categories'))) {
+        AdslightUtilities::addField("cat_moderate int(5) DEFAULT '0' AFTER affprice", $xoopsDB->prefix('adslight_categories'));
     }
 
     //  Add the new fields to the categories table
-    if (!jlm_ads_FieldExists('moderate_subcat', $xoopsDB->prefix('adslight_categories'))) {
-        jlm_ads_AddField("moderate_subcat int(5) DEFAULT '0' AFTER cat_moderate", $xoopsDB->prefix('adslight_categories'));
+    if (!AdslightUtilities::checkFieldExists('moderate_subcat', $xoopsDB->prefix('adslight_categories'))) {
+        AdslightUtilities::addField("moderate_subcat int(5) DEFAULT '0' AFTER cat_moderate", $xoopsDB->prefix('adslight_categories'));
     }
 
     //  Add the new fields to the listing table
-    if (!jlm_ads_FieldExists('status', $xoopsDB->prefix('adslight_listing'))) {
-        jlm_ads_AddField("status INT(3) DEFAULT '0' NOT NULL AFTER title", $xoopsDB->prefix('adslight_listing'));
+    if (!AdslightUtilities::checkFieldExists('status', $xoopsDB->prefix('adslight_listing'))) {
+        AdslightUtilities::addField("status INT(3) DEFAULT '0' NOT NULL AFTER title", $xoopsDB->prefix('adslight_listing'));
     }
     //  Add the new fields to the listing table
-    if (!jlm_ads_FieldExists('remind', $xoopsDB->prefix('adslight_listing'))) {
-        jlm_ads_AddField("remind INT(11) DEFAULT '0' NOT NULL AFTER comments", $xoopsDB->prefix('adslight_listing'));
+    if (!AdslightUtilities::checkFieldExists('remind', $xoopsDB->prefix('adslight_listing'))) {
+        AdslightUtilities::addField("remind INT(11) DEFAULT '0' NOT NULL AFTER comments", $xoopsDB->prefix('adslight_listing'));
     }
 
     // At the end, if there was errors, show them or redirect user to the module's upgrade page

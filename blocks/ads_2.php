@@ -43,7 +43,7 @@ function adslight_b2_show($options)
 
     $updir      = $xoopsModuleConfig['' . $blockdirname . '_link_upload'];
     $cat_perms  = '';
-    $categories = adslight_MygetItemIds('adslight_view');
+    $categories = AdslightUtilities::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
@@ -76,7 +76,7 @@ function adslight_b2_show($options)
 
         $ad_title               = $myrow['title'];
         $a_item['status']       = $status;
-        $a_item['type']         = adslight_NameType($type);
+        $a_item['type']         = AdslightUtilities::getNameType($type);
         $a_item['price']        = $price;
         $a_item['typeprice']    = $typeprice;
         $a_item['town']         = $town;

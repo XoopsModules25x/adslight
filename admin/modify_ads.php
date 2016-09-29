@@ -266,7 +266,7 @@ function ModifyAds($lid)
             </tr><tr class='head' border='1'>
             <td>" . _AM_ADSLIGHT_DESC . ' </td><td>';
 
-        $wysiwyg_text_area = adslight_adminEditor('', 'desctext', $desctext, '100%', '200px', 'small');
+        $wysiwyg_text_area = AdslightUtilities::getEditor('', 'desctext', $desctext, '100%', '200px', 'small');
         echo $wysiwyg_text_area->render();
 
         echo '</td></tr>';

@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-
+include_once __DIR__ . '/header.php';
 xoops_load('XoopsRequest');
 
 /**
@@ -93,7 +93,7 @@ $criteria_uid = new criteria('uid', $uid);
 
 // Creating a factory of pictures
 
-$album_factory = new AdslightPicturesHandler($xoopsDB);
+$album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
 
 /**
  * Fetch pictures from the factory

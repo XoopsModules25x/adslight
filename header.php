@@ -25,6 +25,7 @@
 /////////////////////////////////////
 
 require __DIR__ . '/../../mainfile.php';
+require __DIR__ . '/class/utilities.php';
 global $xoopsModuleConfig;
 
 if ($xoopsModuleConfig['active_rewriteurl'] > 0) {
