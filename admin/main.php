@@ -26,7 +26,7 @@ $op = XoopsRequest::getCmd('op', 'liste');
 
 #  function Index
 #####################################################
-function Index()
+function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName;
     //    include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
@@ -288,7 +288,7 @@ function Index()
 
 #  function CopyXml
 #####################################################
-function CopyXml()
+function copyXml()
 {
     global $xoopsModuleConfig;
 
@@ -313,9 +313,9 @@ $op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
     case 'CopyXml':
-        CopyXml();
+        copyXml();
         break;
     default:
-        Index();
+        index();
         break;
 }

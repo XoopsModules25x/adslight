@@ -64,8 +64,7 @@ $xoopsTpl->assign('expires_head', _ADSLIGHT_EXPIRES_ON);
 $xoopsTpl->assign('all_user_listings', _ADSLIGHT_ALL_USER_LISTINGS);
 $xoopsTpl->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
 $xoopsTpl->assign('mydirname', $moduleDirName);
-//@todo move from ./style/*.css to /assets/css/*.css (don't forget to modify upgrade to delete old ./style/*.* files and folder
-$xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />');
+$xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
 
 $xoopsTpl->assign('adslight_active_menu', $xoopsModuleConfig['adslight_active_menu']);
 $xoopsTpl->assign('adslight_active_rss', $xoopsModuleConfig['adslight_active_rss']);

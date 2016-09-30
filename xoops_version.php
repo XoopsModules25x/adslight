@@ -22,6 +22,8 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
+$moduleDirName = basename(__DIR__);
+
 // Select Maps
 $path = XOOPS_ROOT_PATH . '/modules/adslight/maps';
 if ($handle = opendir($path)) {
@@ -42,7 +44,7 @@ if (file_exists(XOOPS_ROOT_PATH . '/modules/adslight/sql/' . $xoopsConfig['langu
     $adslight_sql = 'sql/english/mysql.sql';
 }
 
-$modversion['name']         = 'AdsLight';
+$modversion['name']         = _MI_ADSLIGHT_NAME;
 $modversion['version']      = '2.2';
 $modversion['description']  = _MI_ADSLIGHT_DESC;
 $modversion['credits']      = 'AdsLight';
@@ -52,7 +54,7 @@ $modversion['license']      = 'GPL';
 $modversion['license_file'] = 'http://www.gnu.org/licenses/gpl.html';
 $modversion['official']     = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
 $modversion['image']        = 'assets/images/logoModule.png';
-$modversion['dirname']      = basename(__DIR__);
+$modversion['dirname']      = $moduleDirName;
 
 $modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
 $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
@@ -68,8 +70,9 @@ $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.7');
 
 $modversion['sqlfile']['mysql'] = $adslight_sql;
-$modversion['onInstall']        = 'include/install.php';
-$modversion['onUpdate']         = 'include/update_function.php';
+$modversion['onInstall']        = 'include/oninstall.php';
+//$modversion['onUpdate']         = 'include/update_function.php';
+$modversion['onUpdate']         = 'include/onupdate.php';
 
 $modversion['release']           = '27-09-2016';
 $modversion['support_site_url']  = 'http://#';

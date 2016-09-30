@@ -61,7 +61,7 @@ function index()
     $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
     $xoopsTpl->assign('permit', $prem_perm);
 
-    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />');
+    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
 
     $banner = xoops_getbanner();
     $xoopsTpl->assign('banner', $banner);

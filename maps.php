@@ -68,12 +68,12 @@ function adslightMaps()
     $xoopsTpl->assign('only_pix', _ADSLIGHT_ONLYPIX);
     $xoopsTpl->assign('search', _ADSLIGHT_SEARCH);
     $xoopsTpl->assign('permit', $prem_perm);
-    $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/style/adslight.css');
+    $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
     $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
 
     $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
 
-    $header_cssadslight = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />';
+    $header_cssadslight = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />';
 
     $xoopsTpl->assign('xoops_module_header', $header_cssadslight);
 

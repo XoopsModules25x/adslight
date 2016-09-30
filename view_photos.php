@@ -98,7 +98,7 @@ $album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
 /**
  * Fetch pictures from the factory
  */
-$pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
+$pictures_object_array =& $album_factory->getObjects($criteria_lid, $criteria_uid);
 
 // How many pictures are on the user album
 $pictures_number = $album_factory->getCount($criteria_lid, $criteria_uid);
@@ -150,7 +150,7 @@ if (1 == $xoopsModuleConfig['adslight_lightbox']) {
 <link rel="stylesheet" href="include/adslight.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="lightbox/css/lightbox.css" type="text/css" media="screen" />';
 } else {
-    $header_lightbox = '<link rel="stylesheet" href="style/galery.css" type="text/css" media="screen" />';
+    $header_lightbox = '<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" />';
 }
 
 /**

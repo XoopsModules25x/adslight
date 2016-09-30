@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 // The name of this module
-define('_MI_ADSLIGHT_NAME', 'adslight');
+define('_MI_ADSLIGHT_NAME', 'AdsLight');
 define('_MI_ADSLIGHT_MENUADD', 'Add an Advertisement');
 // A brief description of this module
 define('_MI_ADSLIGHT_DESC', 'Classified Ad Module');

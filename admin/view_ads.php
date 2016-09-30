@@ -24,9 +24,9 @@ include_once __DIR__ . '/admin_header.php';
 
 $op = XoopsRequest::getInt('op', 'liste');
 
-#  function Index
+#  function index
 #####################################################
-function Index()
+function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
@@ -218,7 +218,7 @@ function Index()
 /**
  * @param $lid
  */
-function IndexView($lid)
+function indexView($lid = null)
 {
     global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
@@ -796,7 +796,7 @@ if (!isset($op)) {
 switch ($op) {
 
     case 'IndexView':
-        IndexView($lid);
+        indexView($lid);
         break;
 
     case 'ListingDel':
@@ -804,19 +804,19 @@ switch ($op) {
         break;
 
     case 'ListingValid':
-        ListingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
+        listingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
 
     case 'ModifyAds':
-        ModifyAds($lid);
+        modifyAds($lid);
         break;
 
     case 'ModifyAdsS':
-        ModifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
+        modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
 
     default:
-        Index();
+        index();
         break;
 
 }

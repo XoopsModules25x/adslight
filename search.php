@@ -19,6 +19,8 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
+$moduleDirName = basename(__DIR__);
 //@todo replace the following code - use Filters
 foreach ($_REQUEST as $key => $val) {
     $val            = preg_replace("/[^_A-Za-z0-9-\.&=]/i", '', $val);
@@ -141,14 +143,14 @@ switch ($action) {
         foreach ($mids as $mid) {
             $mid = (int)$mid;
             if (in_array($mid, $available_modules)) {
-                $module  =& $modules[$mid];
-                $results =& $module->search($queries, $andor, 5, 0);
+                $module  = $modules[$mid];
+                $results = $module->search($queries, $andor, 5, 0);
                 $count   = count($results);
                 if (!is_array($results) || $count == 0) {
                     echo '<p>' . _SR_NOMATCH . '</p>';
                 } else {
                     for ($i = 0; $i < $count; ++$i) {
-                        echo "<style type=\"text/css\" media=\"all\">@import url(" . XOOPS_URL . '/modules/adslight/style/adslight.css);</style>';
+                        echo "<style type=\"text/css\" media=\"all\">@import url(" . XOOPS_URL . '/modules/adslight/assets/css/adslight.css);</style>';
                         echo "<table width=\"100%\" class=\"outer\"><tr>";
                         echo "<td width=\"30%\">";
                         echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
@@ -217,7 +219,7 @@ switch ($action) {
             include_once __DIR__ . '/language/english/main.php';
         }
         // end
-        $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/style/adslight.css');
+        $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->get($mid);

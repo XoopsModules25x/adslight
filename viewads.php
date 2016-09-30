@@ -23,7 +23,7 @@
 include_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
-$tempXoopsLocal = new XoopsLocal;
+
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
@@ -62,6 +62,7 @@ function viewAds($lid = 0)
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
+    $tempXoopsLocal = new XoopsLocal;
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
     include XOOPS_ROOT_PATH . '/include/comment_view.php';
@@ -347,7 +348,7 @@ function viewAds($lid = 0)
             $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE2);
             //      $xoopsTpl->assign('price_price', $price.' '.$xoopsModuleConfig['adslight_money'].' ');
 
-            $xoopsTpl->assign('price_price', $tempXoopsLocal->money_format('%.2n', $price));
+            $xoopsTpl->assign('price_price', AdslightUtilities::getMoneyFormat('%.2n', $price));
 
             $xoopsTpl->assign('price_typeprice', $myts->htmlSpecialChars($nom_price));
             $xoopsTpl->assign('price_currency', $xoopsModuleConfig['adslight_currency']);
@@ -445,16 +446,16 @@ function viewAds($lid = 0)
             $owner      = new XoopsUser();
             $identifier = $owner->getUnameFromId($usid);
             if ($xoopsModuleConfig['adslight_lightbox'] == 1) {
-                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />
+                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />
 <script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="assets/lightbox/js/jquery-ui-1.8.18.custom.min"></script>
 <script type="text/javascript" src="assets/lightbox/js/jquery.smooth-scroll.min.js"></script>
 <script type="text/javascript" src="assets/lightbox/js/lightbox.js"></script>
-<link rel="stylesheet" href="style/galery.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" />
 <link rel="stylesheet" type="text/css" media="screen" href="assets/lightbox/css/lightbox.css"></link>';
             } else {
-                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />
-<link rel="stylesheet" href="style/galery.css" type="text/css" media="screen" />';
+                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />
+<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" />';
             }
 
             $xoopsTpl->assign('path_uploads', $xoopsModuleConfig['adslight_link_upload']);

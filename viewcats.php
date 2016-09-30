@@ -76,7 +76,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
     $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
     $xoopsTpl->assign('permit', $prem_perm);
 
-    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />');
+    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
 
     // $adslight_use_catscode = $xoopsModuleConfig['adslight_use_catscode'];
     // $adslight_cats_code = $xoopsModuleConfig['adslight_cats_code'];

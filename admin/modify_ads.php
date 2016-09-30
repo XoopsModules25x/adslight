@@ -421,7 +421,7 @@ $op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
     case 'IndexView':
-        IndexView($lid);
+        indexView($lid);
         break;
 
     case 'ListingDel':
@@ -429,11 +429,11 @@ switch ($op) {
         break;
 
     case 'ModifyAds':
-        ModifyAds($lid);
+        modifyAds($lid);
         break;
 
     case 'ModifyAdsS':
-        ModifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
+        modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
 
     default:

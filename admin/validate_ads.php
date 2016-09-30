@@ -26,7 +26,7 @@ $op = XoopsRequest::getCmd('op', 'liste');
 
 #  function Index
 #####################################################
-function Index()
+function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
@@ -824,7 +824,7 @@ if (!isset($op)) {
 switch ($op) {
 
     case 'IndexView':
-        IndexView($lid);
+        indexView($lid);
         break;
 
     case 'ListingDel':
@@ -832,19 +832,19 @@ switch ($op) {
         break;
 
     case 'ListingValid':
-        ListingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
+        listingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
 
     case 'ModifyAds':
-        ModifyAds($lid);
+        modifyAds($lid);
         break;
 
     case 'ModifyAdsS':
-        ModifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
+        modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
 
     default:
-        Index();
+        index();
         break;
 
 }

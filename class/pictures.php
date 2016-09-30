@@ -144,7 +144,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      * create a new light_pictures
      *
      * @param  bool $isNew flag the new objects as "new"?
-     * @return object light_pictures
+     * @return XoopsObject light_pictures
      */
     public function create($isNew = true)
     {
@@ -273,11 +273,11 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     /**
      * retrieve jlm_pictures from the database
      *
-     * @param  object $criteria  {@link CriteriaElement} conditions to be met
+     * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param  bool   $id_as_key use the UID as key for the array?
      * @return array  array of {@link jlm_pictures} objects
      */
-    public function &getObjects($criteria = null, $id_as_key = false)
+    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
         global $moduleDirName;
 
@@ -313,10 +313,10 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     /**
      * count jlm_pictures matching a condition
      *
-     * @param  object $criteria {@link CriteriaElement} to match
+     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
      * @return int    count of jlm_pictures
      */
-    public function getCount($criteria = null)
+    public function getCount(CriteriaElement $criteria = null)
     {
         global $moduleDirName;
 
@@ -336,10 +336,10 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     /**
      * delete jlm_pictures matching a set of conditions
      *
-     * @param  object $criteria {@link CriteriaElement}
+     * @param  CriteriaElement $criteria {@link CriteriaElement}
      * @return bool   FALSE if deletion failed
      */
-    public function deleteAll($criteria = null)
+    public function deleteAll(CriteriaElement $criteria = null)
     {
         global $moduleDirName;
         $sql = 'DELETE FROM ' . $this->db->prefix('adslight_pictures');

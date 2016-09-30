@@ -174,12 +174,17 @@ class classifiedstree
      */
     public function getPathFromId($sel_id, $title, $path = '')
     {
-        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '');
+
+        $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '';
+//        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '');
 
         $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
-            $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
+//            $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
+            $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
+
+        $result = $this->db->query($sql);
 
         if ($this->db->getRowsNum($result) == 0) {
             return $path;

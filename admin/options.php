@@ -25,7 +25,7 @@ $op = XoopsRequest::getCmd('op', 'liste');
 
 #  function Index
 #####################################################
-function Index()
+function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName, $admin_lang;
     include_once __DIR__ . '/header.php';
@@ -461,42 +461,42 @@ $op  = XoopsRequest::getCmd('op', '');
 
 switch ($op) {
     case 'ListingDelPrice':
-        ListingDelPrice($id_price);
+        listingDelPrice($id_price);
         break;
     case 'ListingModPrice':
-        ListingModPrice($id_price);
+        listingModPrice($id_price);
         break;
     case 'ListingModPriceS':
-        ListingModPriceS($id_price, $nom_price);
+        listingModPriceS($id_price, $nom_price);
         break;
     case 'ListingAddPrice':
-        ListingAddPrice($type);
+        listingAddPrice($type);
         break;
     case 'ListingDelUsure':
-        ListingDelUsure($id_usure);
+        listingDelUsure($id_usure);
         break;
     case 'ListingModUsure':
-        ListingModUsure($id_usure);
+        listingModUsure($id_usure);
         break;
     case 'ListingModUsureS':
-        ListingModUsureS($id_usure, $nom_usure);
+        listingModUsureS($id_usure, $nom_usure);
         break;
     case 'ListingAddUsure':
-        ListingAddUsure($type);
+        listingAddUsure($type);
         break;
     case 'ListingDelType':
-        ListingDelType($id_type);
+        listingDelType($id_type);
         break;
     case 'ListingModType':
-        ListingModType($id_type);
+        listingModType($id_type);
         break;
     case 'ListingModTypeS':
-        ListingModTypeS($id_type, $nom_type);
+        listingModTypeS($id_type, $nom_type);
         break;
     case 'ListingAddType':
-        ListingAddType($type);
+        listingAddType($type);
         break;
     default:
-        Index();
+        index();
         break;
 }

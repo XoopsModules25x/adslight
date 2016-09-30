@@ -24,12 +24,8 @@ include_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();// MyTextSanitizer object
 require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//include XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
 //include_once __DIR__ . '/include/functions.php';
 // include_once XOOPS_ROOT_PATH."/class/captcha/xoopscaptcha.php";
-
-//@todo replace XOOPS ErrorHander (deprecated)
-//$erh = new ErrorHandler; //ErrorHandler object
 
 $module_id     = $xoopsModule->getVar('mid');
 $groups        = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -64,8 +60,6 @@ if (!empty($_POST['submit'])) {
     //        redirect_header( XOOPS_URL . "/modules/adslight/index.php", 2, $xoopsCaptcha->getMessage() );
     //    }
     if ('' == XoopsRequest::getString('title', '', 'POST')) {
-        //@todo - replace this with new error handler
-//        $erh->show('1001'); //'0001' => 'Could not connect to the forums database.',
         $modHandler      = xoops_getModuleHandler('module');
         $myModule = $modHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
@@ -102,8 +96,6 @@ if (!empty($_POST['submit'])) {
     $sql = sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                    $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town,
                    $country, $contactby, $premium, $valid);
-    //@todo - replace error handler code below...
-    // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . mysql_error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
         $modHandler      = xoops_getModuleHandler('module');

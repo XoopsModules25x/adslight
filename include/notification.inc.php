@@ -49,12 +49,18 @@ function adslight_notify_iteminfo($category, $item_id)
         // Assume we have a valid topid id
         $sql = 'SELECT SQL_CACHE title  FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid = ' . $item_id . ' limit 1';
 
-        $result       = $xoopsDB->query($sql); // TODO: error check
-        $result_array = $xoopsDB->fetchArray($result);
-        $item['name'] = $result_array['title'];
-        $item['url']  = XOOPS_URL . '/modules/adslight/index.php?pa=adsview&amp;cid=' . $item_id;
+        $result = $xoopsDB->query($sql);
+        if (!$result) {
+            $modHandler = xoops_getModuleHandler('module');
+            $myModule   = $modHandler->getByDirname('adslight');
+            $myModule->setErrors('Could not query the database.');
+        } else {
+            $result_array = $xoopsDB->fetchArray($result);
+            $item['name'] = $result_array['title'];
+            $item['url']  = XOOPS_URL . '/modules/adslight/index.php?pa=adsview&amp;cid=' . $item_id;
 
-        return $item;
+            return $item;
+        }
     }
 
     if ($category === 'listing') {

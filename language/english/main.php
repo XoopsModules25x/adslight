@@ -69,7 +69,7 @@ define('_ADSLIGHT_WAIT3', 'Ad(s) waiting to be approved');
 define('_ADSLIGHT_CREATBY', 'was written by');
 define('_ADSLIGHT_FOR', 'for');
 define('_ADSLIGHT_OF', 'of');
-define('_ADSLIGHT_VIEW2', 'views');
+define('_ADSLIGHT_VIEW2', 'Views');
 define('_ADSLIGHT_VIEWANN2', 'See your Ad');
 define('_ADSLIGHT_ACCESADMIN', 'MyAds Administration');
 define('_ADSLIGHT_NOANNINCAT', 'There are no advertisements in this category');

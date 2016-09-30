@@ -56,7 +56,7 @@ function tips_writing()
     $xoopsTpl->assign('adslight_writetitle', $xoopsModuleConfig['adslight_tips_writetitle']);
     $xoopsTpl->assign('ads_use_tipswrite', $xoopsModuleConfig['adslight_use_tipswrite']);
 
-    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/style/adslight.css" type="text/css" media="all" />');
+    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
     $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
 
     // adslight 2
