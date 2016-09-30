@@ -397,7 +397,7 @@ function viewAds($lid = 0)
                 if ($xoopsUser) {
                     $xoopsTpl->assign('bullinfotext', _ADSLIGHT_CONTACT_SUBMITTER . ' ' . $submitter . ' ' . _ADSLIGHT_CONTACTBY2 . ' ' . $contact);
                 } else {
-                    $xoopsTpl->assign('bullinfotext', '<span style="color: #de090e"><b>' . _ADSLIGHT_MUSTLOGIN . '</b></span>');
+                    $xoopsTpl->assign('bullinfotext', '<span style="color: #de090e;"><b>' . _ADSLIGHT_MUSTLOGIN . '</b></span>');
                 }
             }
         }

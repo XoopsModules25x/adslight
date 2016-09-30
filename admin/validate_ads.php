@@ -51,19 +51,19 @@ function Index()
     }
     if (!is_writable($photo_dir) || !is_readable($photo_dir)) {
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_CHECKER . '</legend><br>';
-        echo "<span style='color: #FF0000'><b>" . _AM_ADSLIGHT_DIRPERMS . '' . $photo_dir . '</b></span><br><br>';
+        echo "<span style='color: #FF0000;'><b>" . _AM_ADSLIGHT_DIRPERMS . '' . $photo_dir . '</b></span><br><br>';
         echo '</fieldset><br>';
     }
 
     if (!is_writable($photo_thumb_dir) || !is_readable($photo_thumb_dir)) {
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_CHECKER . '</legend><br>';
-        echo "<span style='color: #FF0000'><b>" . _AM_ADSLIGHT_DIRPERMS . '' . $photo_thumb_dir . '</b></span><br><br>';
+        echo "<span style='color: #FF0000;'><b>" . _AM_ADSLIGHT_DIRPERMS . '' . $photo_thumb_dir . '</b></span><br><br>';
         echo '</fieldset><br>';
     }
 
     if (!is_writable($photo_resized_dir) || !is_readable($photo_resized_dir)) {
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_CHECKER . '</legend><br>';
-        echo "<span style='color: #FF0000'><b>" . _AM_ADSLIGHT_DIRPERMS . '' . $photo_resized_dir . '</b></span><br><br>';
+        echo "<span style='color: #FF0000;'><b>" . _AM_ADSLIGHT_DIRPERMS . '' . $photo_resized_dir . '</b></span><br><br>';
         echo '</fieldset><br>';
     }
 
@@ -209,7 +209,7 @@ function Index()
     } else {
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
         echo "<img src='../assets/images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
-        echo "<span style='color: #00B4C4'><b>" . _AM_ADSLIGHT_NOANNVAL . '</b></span>';
+        echo "<span style='color: #00B4C4;'><b>" . _AM_ADSLIGHT_NOANNVAL . '</b></span>';
         echo '</td></tr></table><br>';
     }
 

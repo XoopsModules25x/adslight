@@ -70,7 +70,7 @@ function Index()
     } else {
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
         echo "<img src='../assets/images/admin/search_button_green_32.png' border=0 alt=\"._AM_ADSLIGHT_RELEASEOK.\" /></td><td>";
-        echo "<span style='color: #00B4C4'><b>" . _AM_ADSLIGHT_NOANNVAL . '</b></span>';
+        echo "<span style='color: #00B4C4;'><b>" . _AM_ADSLIGHT_NOANNVAL . '</b></span>';
         echo '</td></tr></table><br>';
     }
 

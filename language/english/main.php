@@ -410,8 +410,8 @@ define('_ADSLIGHT_ADD_LISTING_NOTADDSSUBMIT', 'Add Ad');
 //version 1.064
 define('_ADSLIGHT_CATPLUS', '<br>&#187;&nbsp;More ...');
 /* AdsLight 2 */
-define('_ADSLIGHT_RESERVED', "This ad is: <br> <span style='color: red'> <strong> [Reserved] </strong> </span>");
-define('_ADSLIGHT_RESERVEDMEMBER', "<strong> Status: </strong> <span style='color: red'> <strong> [Reserved] </strong> </span>");
+define('_ADSLIGHT_RESERVED', "This ad is: <br> <span style='color: red;'> <strong> [Reserved] </strong> </span>");
+define('_ADSLIGHT_RESERVEDMEMBER', "<strong> Status: </strong> <span style='color: red;'> <strong> [Reserved] </strong> </span>");
 // Xpayment //
 define('_MN_ADSLIGHT_PURCHASE', 'Buy It Now');
 define('_MN_ADSLIGHT_YOURNAME', 'Establish invoice:');
