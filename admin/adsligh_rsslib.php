@@ -175,7 +175,7 @@ function RSS_Display($url, $size = 15, $site = 0)
     foreach ($recents as $article) {
         $type = $article['type'];
         if ($type == 0) {
-            if ($opened == true) {
+            if ($opened === true) {
                 $page .= '</ul>';
                 $opened = false;
             }
@@ -201,7 +201,7 @@ function RSS_Display($url, $size = 15, $site = 0)
         }
     }
 
-    if ($opened == true) {
+    if ($opened === true) {
         $page .= '</ul>';
     }
 
@@ -232,7 +232,7 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
     foreach ($recents as $article) {
         $type = $article['type'];
         if ($type == 0) {
-            if ($opened == true) {
+            if ($opened === true) {
                 $page .= '</ul>';
                 $opened = false;
             }
@@ -254,7 +254,7 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
         }
     }
 
-    if ($opened == true) {
+    if ($opened === true) {
         $page .= '</ul>';
     }
 
