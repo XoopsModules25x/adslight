@@ -76,7 +76,7 @@ function Index()
         // Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
-        echo "<font color=\"#00B4C4\"><b>" . _AM_ADSLIGHT_THEREIS . "</b></font> <b>$numrows</b> <b><font color=\"#00B4C4\">" . _AM_ADSLIGHT_ADSVALIDE . '</b></font>';
+        echo "<span style='color:#00B4C4'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <b><span style='color:#00B4C4'>" . _AM_ADSLIGHT_ADSVALIDE . '</b></span>';
         echo '</td></tr></table><br>';
 
         // Liste des ID  ///// Soumis par /////  Titre   /////  Description  /////  Date d'ajout

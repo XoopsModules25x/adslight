@@ -430,7 +430,7 @@ define('_MN_ADSLIGHT_ERROR404_TEXT', '<table class="errorMsg" border="0" cellpad
 <tr>
 <td>
 <br>
-<b><font size="3">The page does not exist or has been moved</font></b><br>
+<b><span style="font-size: small; ">The page does not exist or has been moved</span></b><br>
 <br><b>Did you enter this address directly into your browser? ?</b><br>
 - Check your entry and try again.<br><br>
 <b>Did you click on a link? ?</b><br>
