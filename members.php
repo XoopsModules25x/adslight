@@ -35,19 +35,19 @@ include XOOPS_ROOT_PATH . '/include/comment_view.php';
 $lid       = XoopsRequest::getInt('lid', 0, 'GET');
 $usid      = XoopsRequest::getInt('usid', 0, 'GET');
 $module_id = $xoopsModule->getVar('mid');
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
+if (is_object($GLOBALS['xoopsUser'])) {
+    $groups = $GLOBALS['xoopsUser']->getGroups();
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-$gperm_handler = xoops_getHandler('groupperm');
+$gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
 
 //If no access
-$permit = (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
+$permit = (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
 $xoopsTpl->assign('permit', $permit);
-$isadmin = (($xoopsUser instanceof XoopsUser) && $xoopsUser->isAdmin($xoopsModule->mid())) ? true : false;
+$isadmin = (($GLOBALS['xoopsUser'] instanceof XoopsUser) && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) ? true : false;
 
 $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
 $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM);
@@ -66,8 +66,8 @@ $xoopsTpl->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
 $xoopsTpl->assign('mydirname', $moduleDirName);
 $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
 
-$xoopsTpl->assign('adslight_active_menu', $xoopsModuleConfig['adslight_active_menu']);
-$xoopsTpl->assign('adslight_active_rss', $xoopsModuleConfig['adslight_active_rss']);
+$xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
+$xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
 
 $show = 4;
@@ -76,11 +76,11 @@ if (!isset($max)) {
     $max = $min + $show;
 }
 $orderby = 'date ASC';
-$rate    = ('1' == $xoopsModuleConfig['adslight_rate_user']) ? '1' : '0';
+$rate    = ('1' == $GLOBALS['xoopsModuleConfig']['adslight_rate_user']) ? '1' : '0';
 $xoopsTpl->assign('rate', $rate);
 
-if ($xoopsUser) {
-    $member_usid = $xoopsUser->getVar('uid', 'E');
+if ($GLOBALS['xoopsUser']) {
+    $member_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
     $istheirs    = ($usid == $member_usid) ? 1 : '';
 }
 
@@ -133,7 +133,7 @@ if ($trows > '0') {
     }
     while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits, $item_rating, $item_votes, $user_rating, $user_votes, $comments) = $xoopsDB->fetchRow($result)) {
         $newitem   = '';
-        $newcount  = $xoopsModuleConfig['adslight_countday'];
+        $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
         $startdate = (time() - (86400 * $newcount));
         if ($startdate < $date) {
             //@todo move "New" alt text to language file
@@ -172,8 +172,8 @@ if ($trows > '0') {
             $adminlink = '';
         }
         $modify_link = '';
-        if ($xoopsUser instanceof XoopsUser) {
-            $member_usid = $xoopsUser->getVar('uid', 'E');
+        if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+            $member_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
             if ($usid == $member_usid) {
                 $istheirs = true;
                 $xoopsTpl->assign('istheirs', $istheirs);
@@ -193,9 +193,9 @@ if ($trows > '0') {
         $price = number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
         //      $price = number_format($price);
-        $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $xoopsModuleConfig['adslight_money'] . " - $typeprice");
+        $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " - $typeprice");
         $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE);
-        $xoopsTpl->assign('money_sign', '' . $xoopsModuleConfig['adslight_money'] . '');
+        $xoopsTpl->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '');
         $xoopsTpl->assign('price_typeprice', $typeprice);
         $xoopsTpl->assign('local_town', "$town");
         $xoopsTpl->assign('local_country', "$country");
@@ -223,7 +223,7 @@ if ($trows > '0') {
         }
 
         $xoopsTpl->assign('xoops_pagetitle', '' . _ADSLIGHT_ALL_USER_LISTINGS . ' ' . $submitter . '');
-        $updir   = $xoopsModuleConfig['adslight_link_upload'];
+        $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
         $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
                    . $xoopsDB->prefix('adslight_pictures')
                    . ' WHERE  uid_owner='

@@ -84,7 +84,7 @@ if ($marker == 1) {
     /**
      * Verifying who's the owner to allow changes
      */
-    $uid = $xoopsUser->getVar('uid');
+    $uid = $GLOBALS['xoopsUser']->getVar('uid');
     $lid = $picture->getVar('lid');
     if ($uid == $picture->getVar('uid_owner')) {
         if ($picture_factory->insert($picture)) {
@@ -101,7 +101,7 @@ if ($marker == 1) {
  */
 $album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
 $criteria_img  = new Criteria('cod_img', $cod_img);
-$uid           = $xoopsUser->getVar('uid');
+$uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new Criteria('uid_owner', $uid);
 $criteria      = new CriteriaCompo($criteria_img);
 $criteria->add($criteria_uid);
@@ -114,7 +114,7 @@ if ($array_pict =& $album_factory->getObjects($criteria)) {
     $caption = $array_pict[0]->getVar('title');
     $url     = $array_pict[0]->getVar('url');
 }
-$url = $xoopsModuleConfig['adslight_link_upload'] . '/thumbs/thumb_' . $url;
+$url = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'] . '/thumbs/thumb_' . $url;
 $album_factory->renderFormEdit($caption, $cod_img, $url);
 
 /**

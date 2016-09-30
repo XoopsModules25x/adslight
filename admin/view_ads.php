@@ -28,7 +28,7 @@ $op = XoopsRequest::getInt('op', 'liste');
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName, $admin_lang;
 
     //  $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
@@ -37,9 +37,9 @@ function index()
     //    loadModuleAdminMenu(0, "");
 
     // photo dir setting checker
-    $photo_dir         = $xoopsModuleConfig['adslight_path_upload'];
-    $photo_thumb_dir   = $xoopsModuleConfig['adslight_path_upload'] . '/thumbs';
-    $photo_resized_dir = $xoopsModuleConfig['adslight_path_upload'] . '/midsize';
+    $photo_dir         = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
+    $photo_thumb_dir   = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/thumbs';
+    $photo_resized_dir = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/midsize';
     if (!is_dir($photo_dir)) {
         mkdir($photo_dir);
     }
@@ -113,7 +113,7 @@ function index()
             $contactby = $myts->htmlSpecialChars($contactby);
             $premium   = $myts->htmlSpecialChars($premium);
 
-            $updir   = $xoopsModuleConfig['adslight_link_upload'];
+            $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
             $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
                        . $xoopsDB->prefix('adslight_pictures')
                        . ' WHERE  uid_owner='
@@ -165,7 +165,7 @@ function index()
 
             echo "<tr><td class='even' width='3%'></td>";
             echo "<td class='odd' width='10%' >$photo3</td>";
-            echo "<td class='even' width='20%'><b>$title</b><br><br>$nom_type<br>$price " . $xoopsModuleConfig['adslight_money'] . " $nom_price<br>";
+            echo "<td class='even' width='20%'><b>$title</b><br><br>$nom_type<br>$price " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " $nom_price<br>";
             echo "$town - $country<br>";
             echo '<b>' . _AM_ADSLIGHT_SUBMITTER . ":</b> $submitter<br>";
             echo '<b>' . _AM_ADSLIGHT_DATE . ":</b> $date2</td>";
@@ -220,7 +220,7 @@ function index()
  */
 function indexView($lid = null)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -320,7 +320,7 @@ function indexView($lid = null)
         }
         echo '</select></td></tr>';
 
-        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $xoopsModuleConfig['adslight_money'] . '';
+        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '';
         $result3 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
         echo " <select name=\"typeprice\"><option value=\"$typeprice\">$typeprice</option>";
         while (list($nom_price) = $xoopsDB->fetchRow($result3)) {
@@ -357,14 +357,14 @@ function indexView($lid = null)
     xoops_cp_footer();
 }
 
-#  function ModifyAds
+#  function modifyAds
 #####################################################
 /**
  * @param $lid
  */
-function ModifyAds($lid)
+function modifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -484,7 +484,7 @@ function ModifyAds($lid)
         echo '</select></td></tr>';
 
         /////// Price
-        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $xoopsModuleConfig['adslight_money'] . '';
+        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '';
 
         //////// Price type
 
@@ -535,7 +535,7 @@ function ModifyAds($lid)
     }
 }
 
-#  function ModifyAdsS
+#  function modifyAdsS
 #####################################################
 
 /**
@@ -560,7 +560,7 @@ function ModifyAds($lid)
  * @param $valid
  * @param $photo
  */
-function ModifyAdsS(
+function modifyAdsS(
     $lid,
     $cat,
     $title,
@@ -606,7 +606,7 @@ function ModifyAdsS(
     redirect_header('view_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
 }
 
-#  function ListingDel
+#  function listingDel
 #####################################################
 /**
  * @param $lid
@@ -647,7 +647,7 @@ function listingDel($lid, $photo)
     redirect_header('view_ads.php', 1, _AM_ADSLIGHT_ANNDEL);
 }
 
-#  function ListingValid
+#  function listingValid
 #####################################################
 /**
  * @param $lid
@@ -671,7 +671,7 @@ function listingDel($lid, $photo)
  * @param $valid
  * @param $photo
  */
-function ListingValid(
+function listingValid(
     $lid,
     $cat,
     $title,

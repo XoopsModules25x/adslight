@@ -31,7 +31,7 @@
  */
 function adslight_maps_show($options)
 {
-    global $xoopsDB, $xoopsModuleConfig, $xoopsConfig, $blockdirname, $xoopsTpl, $block_lang;
+    global $xoopsDB, $xoopsConfig, $blockdirname, $xoopsTpl, $block_lang;
 
     $maps_name = $xoopsConfig['language'];
 

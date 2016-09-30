@@ -27,7 +27,7 @@ include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 xoops_cp_header();
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
-if (is_object($xoopsUser) && $xoopsUser->isAdmin($xoopsModule->mid())) {
+if (is_object($GLOBALS['xoopsUser']) && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
     $errors = 0;
 
     if (!AdslightUtilities::checkTableExists($xoopsDB->prefix('adslight_pictures'))) {

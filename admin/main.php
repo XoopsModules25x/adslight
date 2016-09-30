@@ -28,7 +28,7 @@ $op = XoopsRequest::getCmd('op', 'liste');
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName;
     //    include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -290,9 +290,8 @@ function index()
 #####################################################
 function copyXml()
 {
-    global $xoopsModuleConfig;
 
-    $adslight_maps = $xoopsModuleConfig['adslight_maps_set'];
+    $adslight_maps = $GLOBALS['xoopsModuleConfig']['adslight_maps_set'];
 
     $indexFile = XOOPS_ROOT_PATH . "/modules/adslight/maps/$adslight_maps/datas.xml";
     copy($indexFile, XOOPS_ROOT_PATH . '/modules/adslight/datas.xml');

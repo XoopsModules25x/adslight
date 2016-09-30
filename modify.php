@@ -27,12 +27,12 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-$groups        = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler = xoops_getHandler('groupperm');
+$groups        = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
 
 //If no access
-if (!$gperm_handler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
 }
 
@@ -42,15 +42,15 @@ if (!$gperm_handler->checkRight('adslight_submit', $perm_itemid, $groups, $modul
  */
 function listingDel($lid, $ok)
 {
-    global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
     $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
     list($usid) = $xoopsDB->fetchRow($result);
 
     $result1 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
 
-    if ($xoopsUser) {
-        $currentid = $xoopsUser->getVar('uid', 'E');
+    if ($GLOBALS['xoopsUser']) {
+        $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
         if ($usid == $currentid) {
             if ($ok == 1) {
                 while (list($purl) = $xoopsDB->fetchRow($result1)) {
@@ -90,7 +90,7 @@ function listingDel($lid, $ok)
  */
 function delReply($r_lid, $ok)
 {
-    global $xoopsDB, $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
     $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM '
                               . $xoopsDB->prefix('adslight_listing')
@@ -101,8 +101,8 @@ function delReply($r_lid, $ok)
                               . '');
     list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
 
-    if ($xoopsUser) {
-        $currentid = $xoopsUser->getVar('uid', 'E');
+    if ($GLOBALS['xoopsUser']) {
+        $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
         if ($usid == $currentid) {
             if ($ok == 1) {
                 $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE r_lid=' . $xoopsDB->escape($r_lid) . '');
@@ -131,7 +131,7 @@ function delReply($r_lid, $ok)
  */
 function modAd($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $xoopsUser, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
@@ -156,8 +156,8 @@ function modAd($lid)
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
-    if ($xoopsUser) {
-        $calusern = $xoopsUser->uid();
+    if ($GLOBALS['xoopsUser']) {
+        $calusern = $GLOBALS['xoopsUser']->uid();
         if ($usid == $calusern) {
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _ADSLIGHT_MODIFANN . '</legend><br><br>';
             $title      = $myts->htmlSpecialChars($title);
@@ -175,9 +175,9 @@ function modAd($lid)
             $contactby  = $myts->htmlSpecialChars($contactby);
             $premium    = $myts->htmlSpecialChars($premium);
             $useroffset = '';
-            if ($xoopsUser) {
-                $timezone   = $xoopsUser->timezone();
-                $useroffset = (!empty($timezone)) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
+            if ($GLOBALS['xoopsUser']) {
+                $timezone   = $GLOBALS['xoopsUser']->timezone();
+                $useroffset = (!empty($timezone)) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
             }
             $dates = ($useroffset * 3600) + $date;
             $dates = formatTimestamp($date, 's');
@@ -187,7 +187,7 @@ function modAd($lid)
     <td class=\"head\">" . _ADSLIGHT_NUMANNN . " </td><td class=\"head\" border=\"1\">$lid " . _ADSLIGHT_DU . " $dates</td>
     </tr><tr>";
 
-            if ($xoopsModuleConfig['adslight_diff_name'] == '1') {
+            if ($GLOBALS['xoopsModuleConfig']['adslight_diff_name'] == '1') {
                 echo "<td class=\"head\">" . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"text\" name=\"submitter\" size=\"50\" value=\"$submitter\" /></td>";
             } else {
                 echo "<td class=\"head\">" . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"hidden\" name=\"submitter\" value=\"$submitter\">$submitter</td>";
@@ -214,7 +214,7 @@ function modAd($lid)
     <option value=\"3\">" . _ADSLIGHT_CONTACT_BY_BOTH . "</option>
     <option value=\"4\">" . _ADSLIGHT_CONTACT_BY_PHONE . '</option></select></td></tr>';
 
-            if ($xoopsModuleConfig['adslight_diff_email'] == '1') {
+            if ($GLOBALS['xoopsModuleConfig']['adslight_diff_email'] == '1') {
                 echo "<tr><td class=\"head\">" . _ADSLIGHT_EMAIL . " </td><td class=\"head\"><input type=\"text\" name=\"email\" size=\"50\" value=\"$email\" /></td>";
             } else {
                 echo "<tr><td class=\"head\">" . _ADSLIGHT_EMAIL . " </td><td class=\"head\">$email<input type=\"hidden\" name=\"email\" value=\"$email\" /></td>";
@@ -225,7 +225,7 @@ function modAd($lid)
             echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_TOWN . " </td><td class=\"head\"><input type=\"text\" name=\"town\" size=\"50\" value=\"$town\" /></td>
     </tr>";
-            if ($xoopsModuleConfig['adslight_use_country'] == '1') {
+            if ($GLOBALS['xoopsModuleConfig']['adslight_use_country'] == '1') {
                 echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_COUNTRY . " </td><td class=\"head\"><input type=\"text\" name=\"country\" size=\"50\" value=\"$country\" /></td>
     </tr>";
@@ -249,7 +249,7 @@ function modAd($lid)
             echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_TITLE2 . " </td><td class=\"head\"><input type=\"text\" name=\"title\" size=\"50\" value=\"$title\" /></td>
     </tr>";
-            echo "<tr><td class=\"head\">" . _ADSLIGHT_PRICE2 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" /> " . $xoopsModuleConfig['adslight_money'];
+            echo "<tr><td class=\"head\">" . _ADSLIGHT_PRICE2 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" /> " . $GLOBALS['xoopsModuleConfig']['adslight_money'];
 
             $result3 = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
             echo " <select name=\"typeprice\">";
@@ -262,13 +262,13 @@ function modAd($lid)
             }
             echo '</select></td></tr>';
             $module_id = $xoopsModule->getVar('mid');
-            $groups    = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+            $groups    = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
-            $gperm_handler = xoops_getHandler('groupperm');
+            $gpermHandler = xoops_getHandler('groupperm');
             $perm_itemid   = XoopsRequest::getInt('item_id', 0, 'GET');
 
             //If no access
-            if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+            if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 echo "<tr>
     <td width='30%' class='head'>" . _ADSLIGHT_WILL_LAST . " </td><td class='head'>$expire  " . _ADSLIGHT_DAY . '</td>
     </tr>';
@@ -321,20 +321,20 @@ function modAd($lid)
             echo "<input type=\"hidden\" name=\"op\" value=\"ModAdS\" />";
 
             $module_id = $xoopsModule->getVar('mid');
-            if (is_object($xoopsUser)) {
-                $groups =& $xoopsUser->getGroups();
+            if (is_object($GLOBALS['xoopsUser'])) {
+                $groups =& $GLOBALS['xoopsUser']->getGroups();
             } else {
                 $groups = XOOPS_GROUP_ANONYMOUS;
             }
-            $gperm_handler = xoops_getHandler('groupperm');
+            $gpermHandler = xoops_getHandler('groupperm');
             if (isset($_POST['item_id'])) {
                 $perm_itemid = (int)$_POST['item_id'];
             } else {
                 $perm_itemid = 0;
             }
             //If no access
-            if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-                if ($xoopsModuleConfig['adslight_moderated'] == '1') {
+            if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+                if ($GLOBALS['xoopsModuleConfig']['adslight_moderated'] == '1') {
                     echo "<input type=\"hidden\" name=\"valid\" value=\"No\" />";
                     echo '<br>' . _ADSLIGHT_MODIFBEFORE . '<br>';
                 } else {
@@ -394,7 +394,7 @@ function modAdS(
     $premium,
     $valid
 ) {
-    global $xoopsDB, $xoopsConfig, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang, $xoopsGTicket;
+    global $xoopsDB, $xoopsConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang, $xoopsGTicket;
 
     if (!$xoopsGTicket->check(true, 'token')) {
         redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, $xoopsGTicket->getErrors());

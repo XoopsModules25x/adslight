@@ -28,7 +28,7 @@ require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
  */
 function SendFriend($lid)
 {
-    global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $xoopsUser, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
     include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     include XOOPS_ROOT_PATH . '/header.php';
@@ -42,9 +42,9 @@ function SendFriend($lid)
         <form action=\"sendfriend.php\" method=post>
         <input type=\"hidden\" name=\"lid\" value=\"$lid\" />";
 
-    if ($xoopsUser instanceof XoopsUser) {
-        $idd  = $xoopsUser->getVar('uname', 'E');
-        $idde = $xoopsUser->getVar('email', 'E');
+    if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+        $idd  = $GLOBALS['xoopsUser']->getVar('uname', 'E');
+        $idde = $GLOBALS['xoopsUser']->getVar('email', 'E');
     }
 
     echo "
@@ -66,7 +66,7 @@ function SendFriend($lid)
       <td class='even'><input class='textbox' type='text' name='fmail' /></td>
     </tr>";
 
-    if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
+    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
         $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
@@ -89,9 +89,9 @@ function SendFriend($lid)
  */
 function MailAd($lid, $yname, $ymail, $fname, $fmail)
 {
-    global $xoopsConfig, $xoopsUser, $xoopsTpl, $xoopsDB, $xoopsModule, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsTpl, $xoopsDB, $xoopsModule, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
-    if ('1' == $xoopsModuleConfig['adslight_use_captcha']) {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -179,7 +179,7 @@ switch ($op) {
         break;
 
     default:
-        redirect_header('index.php', 1, '' . _RETURNGLO . '');
+        redirect_header('index.php', 1, '' . _RETURNANN . '');
         break;
 
 }

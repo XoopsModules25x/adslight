@@ -31,7 +31,7 @@ $op = XoopsRequest::getCmd('op', 'liste');
  */
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -40,9 +40,9 @@ function index()
     //    loadModuleAdminMenu(0, "");
 
     // photo dir setting checker
-    $photo_dir         = $xoopsModuleConfig['adslight_path_upload'];
-    $photo_thumb_dir   = $xoopsModuleConfig['adslight_path_upload'] . '/thumbs';
-    $photo_resized_dir = $xoopsModuleConfig['adslight_path_upload'] . '/midsize';
+    $photo_dir         = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
+    $photo_thumb_dir   = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/thumbs';
+    $photo_resized_dir = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/midsize';
     if (!is_dir($photo_dir)) {
         mkdir($photo_dir);
     }
@@ -114,14 +114,14 @@ function index()
     xoops_cp_footer();
 }
 
-#  function ModifyAds
+#  function modifyAds
 #####################################################
 /**
  * @param $lid
  */
-function ModifyAds($lid)
+function modifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -241,7 +241,7 @@ function ModifyAds($lid)
         echo '</select></td></tr>';
 
         /////// Price
-        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $xoopsModuleConfig['adslight_money'] . '';
+        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '';
 
         //////// Price type
 
@@ -291,7 +291,7 @@ function ModifyAds($lid)
     }
 }
 
-#  function ModifyAdsS
+#  function modifyAdsS
 #####################################################
 
 /**
@@ -316,7 +316,7 @@ function ModifyAds($lid)
  * @param $valid
  * @param $photo
  */
-function ModifyAdsS(
+function modifyAdsS(
     $lid,
     $cat,
     $title,

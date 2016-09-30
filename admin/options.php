@@ -27,7 +27,7 @@ $op = XoopsRequest::getCmd('op', 'liste');
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
     include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
@@ -125,12 +125,12 @@ function index()
     xoops_cp_footer();
 }
 
-#  function ListingAddType
+#  function listingAddType
 #####################################################
 /**
  * @param $type
  */
-function ListingAddType($type)
+function listingAddType($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
@@ -162,12 +162,12 @@ function ListingAddType($type)
     }
 }
 
-#  function ListingModType
+#  function listingModType
 #####################################################
 /**
  * @param $id_type
  */
-function ListingModType($id_type)
+function listingModType($id_type)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
     include_once __DIR__ . '/header.php';
@@ -201,13 +201,13 @@ function ListingModType($id_type)
     xoops_cp_footer();
 }
 
-#  function ListingModTypeS
+#  function listingModTypeS
 #####################################################
 /**
  * @param $id_type
  * @param $nom_type
  */
-function ListingModTypeS($id_type, $nom_type)
+function listingModTypeS($id_type, $nom_type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
@@ -219,12 +219,12 @@ function ListingModTypeS($id_type, $nom_type)
     redirect_header('options.php', 1, _AM_ADSLIGHT_TYPEMOD);
 }
 
-#  function ListingDelType
+#  function listingDelType
 #####################################################
 /**
  * @param $id_type
  */
-function ListingDelType($id_type)
+function listingDelType($id_type)
 {
     global $xoopsDB, $moduleDirName, $admin_lang;
 
@@ -235,12 +235,12 @@ function ListingDelType($id_type)
     redirect_header('options.php', 1, _AM_ADSLIGHT_TYPEDEL);
 }
 
-#  function ListingAddPrice
+#  function listingAddPrice
 #####################################################
 /**
  * @param $type
  */
-function ListingAddPrice($type)
+function listingAddPrice($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
@@ -271,12 +271,12 @@ function ListingAddPrice($type)
     }
 }
 
-#  function ListingModPrice
+#  function listingModPrice
 #####################################################
 /**
  * @param $id_price
  */
-function ListingModPrice($id_price)
+function listingModPrice($id_price)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
 
@@ -312,13 +312,13 @@ function ListingModPrice($id_price)
     xoops_cp_footer();
 }
 
-#  function ListingModPriceS
+#  function listingModPriceS
 #####################################################
 /**
  * @param $id_price
  * @param $nom_price
  */
-function ListingModPriceS($id_price, $nom_price)
+function listingModPriceS($id_price, $nom_price)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
@@ -328,12 +328,12 @@ function ListingModPriceS($id_price, $nom_price)
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEMOD);
 }
 
-#  function ListingDelPrice
+#  function listingDelPrice
 #####################################################
 /**
  * @param $id_price
  */
-function ListingDelPrice($id_price)
+function listingDelPrice($id_price)
 {
     global $xoopsDB, $moduleDirName, $admin_lang;
 
@@ -341,12 +341,12 @@ function ListingDelPrice($id_price)
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEDEL);
 }
 
-#  function ListingAddUsure
+#  function listingAddUsure
 #####################################################
 /**
  * @param $type
  */
-function ListingAddUsure($type)
+function listingAddUsure($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
@@ -376,12 +376,12 @@ function ListingAddUsure($type)
     }
 }
 
-#  function ListingModUsure
+#  function listingModUsure
 #####################################################
 /**
  * @param $id_usure
  */
-function ListingModUsure($id_usure)
+function listingModUsure($id_usure)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
 
@@ -416,13 +416,13 @@ function ListingModUsure($id_usure)
     xoops_cp_footer();
 }
 
-#  function ListingModUsureS
+#  function listingModUsureS
 #####################################################
 /**
  * @param $id_usure
  * @param $nom_usure
  */
-function ListingModUsureS($id_usure, $nom_usure)
+function listingModUsureS($id_usure, $nom_usure)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
 
@@ -433,12 +433,12 @@ function ListingModUsureS($id_usure, $nom_usure)
     redirect_header('options.php', 1, _AM_ADSLIGHT_USUREMOD);
 }
 
-#  function ListingDelUsure
+#  function listingDelUsure
 #####################################################
 /**
  * @param $id_usure
  */
-function ListingDelUsure($id_usure)
+function listingDelUsure($id_usure)
 {
     global $xoopsDB, $moduleDirName, $admin_lang;
 

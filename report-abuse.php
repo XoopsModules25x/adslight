@@ -31,7 +31,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
  */
 function ReportAbuse($lid)
 {
-    global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $xoopsUser, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
     include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     include XOOPS_ROOT_PATH . '/header.php';
@@ -46,9 +46,9 @@ function ReportAbuse($lid)
     echo '<strong>' . _ADSLIGHT_REPORTSENDTO . " $lid </strong>: \" $type : $title \"<br><br>
         <form action=\"report-abuse.php\" method=post>
         <input type=\"hidden\" name=\"lid\" value=\"$lid\" />";
-    if ($xoopsUser) {
-        $idd   = $xoopsUser->getVar('uname', 'E');
-        $idde  = $xoopsUser->getVar('email', 'E');
+    if ($GLOBALS['xoopsUser']) {
+        $idd   = $GLOBALS['xoopsUser']->getVar('uname', 'E');
+        $idde  = $GLOBALS['xoopsUser']->getVar('email', 'E');
         $iddee = $xoopsConfig['adminmail'];
     } else {
         $iddee = $xoopsConfig['adminmail'];
@@ -69,7 +69,7 @@ function ReportAbuse($lid)
       <td class='even'><input class=\"textbox\" type=\"hidden\" name=\"fmail\" value=\"$iddee\"/></td>
     </tr>";
 
-    if ('1' == $xoopsModuleConfig['adslight_use_captcha']) {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
         $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
@@ -93,9 +93,9 @@ function ReportAbuse($lid)
  */
 function MailAd($lid, $yname, $ymail, $fname, $fmail)
 {
-    global $xoopsConfig, $xoopsUser, $xoopsTpl, $xoopsDB, $xoopsModule, $xoopsModuleConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsTpl, $xoopsDB, $xoopsModule, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
-    if ('1' == $xoopsModuleConfig['adslight_use_captcha']) {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -189,6 +189,6 @@ switch ($op) {
         break;
 
     default:
-        redirect_header('index.php', 1, _RETURNGLO);
+        redirect_header('index.php', 1, _RETURNANN);
         break;
 }

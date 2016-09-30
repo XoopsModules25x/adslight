@@ -404,7 +404,7 @@ class classifiedstree
      */
     public function makeAdSelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '')
     {
-        global $xoopsModuleConfig, $myts, $xoopsDB, $pathIcon16;
+        global $myts, $xoopsDB, $pathIcon16;
         require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
         if ($sel_name == '') {
@@ -419,7 +419,7 @@ class classifiedstree
         while (list($catid, $name, $ordre) = $xoopsDB->fetchRow($result)) {
             echo '<table width="100%" border="0" class="outer"><tr>
                 <th align="left">';
-            if ($xoopsModuleConfig['adslight_csortorder'] === 'ordre') {
+            if ($GLOBALS['xoopsModuleConfig']['adslight_csortorder'] === 'ordre') {
                 echo '(' . $ordre . ')';
             }
             echo '&nbsp;&nbsp;'
@@ -465,7 +465,7 @@ class classifiedstree
                 $option['prefix'] = str_replace('.', ' &nbsp;&nbsp;-&nbsp;', $option['prefix']);
                 $catpath          = $option['prefix'] . '&nbsp;&nbsp;' . $myts->htmlSpecialChars($option[$title]);
                 $ordreS           = $option['ordre'];
-                if ($xoopsModuleConfig['adslight_csortorder'] === 'ordre') {
+                if ($GLOBALS['xoopsModuleConfig']['adslight_csortorder'] === 'ordre') {
                     echo '(' . $ordreS . ')';
                 }
                 echo ''

@@ -36,13 +36,13 @@ if ($_POST['submit']) {
 
     $module_id = $xoopsModule->getVar('mid');
 
-    if (is_object($xoopsUser)) {
-        $groups = $xoopsUser->getGroups();
+    if (is_object($GLOBALS['xoopsUser'])) {
+        $groups = $GLOBALS['xoopsUser']->getGroups();
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;
     }
 
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
 
     if (isset($_POST['item_id'])) {
         $perm_itemid = (int)$_POST['item_id'];
@@ -50,16 +50,16 @@ if ($_POST['submit']) {
         $perm_itemid = 0;
     }
     //If no access
-    if (!$gperm_handler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+    if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
-    global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $myts, $meta;
+    global $xoopsConfig, $xoopsDB, $myts, $meta;
     require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
     if (!$xoopsGTicket->check(true, 'token')) {
         redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $xoopsGTicket->getErrors());
     }
-    if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
+    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -77,13 +77,13 @@ if ($_POST['submit']) {
         }
 
         if ($price) {
-            $price = '' . _ADSLIGHT_PRICE . ' ' . $xoopsModuleConfig['adslight_money'] . " $price";
+            $price = '' . _ADSLIGHT_PRICE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " $price";
         } else {
             $price = '';
         }
 
         $date   = time();
-        $r_usid = $xoopsUser->getVar('uid', 'E');
+        $r_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
 
         $tags                = array();
         $tags['TITLE']       = $title;
@@ -156,22 +156,22 @@ if ($_POST['submit']) {
 
     include_once __DIR__ . '/header.php';
 
-    global $xoopsConfig, $xoopsModuleConfig, $xoopsDB, $myts, $meta;
+    global $xoopsConfig, $xoopsDB, $myts, $meta;
 
     $module_id = $xoopsModule->getVar('mid');
-    if (is_object($xoopsUser)) {
-        $groups = $xoopsUser->getGroups();
+    if (is_object($GLOBALS['xoopsUser'])) {
+        $groups = $GLOBALS['xoopsUser']->getGroups();
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;
     }
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
     if (isset($_POST['item_id'])) {
         $perm_itemid = (int)$_POST['item_id'];
     } else {
         $perm_itemid = 0;
     }
     //If no access
-    if (!$gperm_handler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+    if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
@@ -216,9 +216,9 @@ if ($_POST['submit']) {
     echo "<table width='100%' class='outer' cellspacing='1'>
     <tr>
       <td class='head'>" . _ADSLIGHT_YOURNAME . '</td>';
-    if ($xoopsUser) {
-        $idd  = $xoopsUser->getVar('uname', 'E');
-        $idde = $xoopsUser->getVar('email', 'E');
+    if ($GLOBALS['xoopsUser']) {
+        $idd  = $GLOBALS['xoopsUser']->getVar('uname', 'E');
+        $idde = $GLOBALS['xoopsUser']->getVar('email', 'E');
 
         echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" value=\"$idd\" />";
     } else {
@@ -237,7 +237,7 @@ if ($_POST['submit']) {
       <td class='head'>" . _ADSLIGHT_YOURMESSAGE . "</td>
       <td class='even'><textarea rows=\"5\" name=\"messtext\" cols=\"40\" /></textarea></td>
     </tr>";
-    if ($xoopsModuleConfig['adslight_use_captcha'] == '1') {
+    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
         $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);

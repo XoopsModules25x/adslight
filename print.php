@@ -29,7 +29,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
  */
 function PrintAd($lid)
 {
-    global $xoopsConfig, $xoopsUser, $xoopsDB, $xoopsModuleConfig, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsDB, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
     $currenttheme = $xoopsConfig['theme_set'];
     $lid          = (int)$lid;
@@ -67,9 +67,9 @@ function PrintAd($lid)
     <table border=0 width=100% cellpadding=15 cellspacing=1 bgcolor=\"#FFFFFF\"><tr><td>";
 
     $useroffset = 0;
-    if ($xoopsUser instanceof XoopsUser) {
-        $timezone   = $xoopsUser->timezone();
-        $useroffset = (!empty($timezone)) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
+    if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+        $timezone   = $GLOBALS['xoopsUser']->timezone();
+        $useroffset = (!empty($timezone)) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
     }
     $date  = ($useroffset * 3600) + $date;
     $date2 = $date + ($expire * 86400);
@@ -82,7 +82,7 @@ function PrintAd($lid)
 
     echo " <strong>$type :</strong> <i>$title</i><br>";
     if ($price > 0) {
-        echo '<strong>' . _ADSLIGHT_PRICE2 . "</strong> $price " . $xoopsModuleConfig['adslight_money'] . "  - $typeprice<br>";
+        echo '<strong>' . _ADSLIGHT_PRICE2 . "</strong> $price " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . "  - $typeprice<br>";
     }
     if ($photo) {
         echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/$url\" width=\"130px\" border=0 /></div>";
@@ -127,7 +127,7 @@ switch ($op) {
         break;
 
     default:
-        redirect_header('index.php', 3, '' . _RETURNGLO . '');
+        redirect_header('index.php', 3, '' . _RETURNANN . '');
         break;
 
 }

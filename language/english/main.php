@@ -149,7 +149,7 @@ define('_ADSLIGHT_NOMAIL',
 define('_ADSLIGHT_OUI', 'Yes');
 define('_ADSLIGHT_NON', 'No');
 define('_ADSLIGHT_SURDELANN', 'ATTENTION: Are you sure you want to delete this advertisement');
-define('_RETURNANN', 'Return classified ads listing');
+define('_RETURNANN', 'Return to classified ads listing');
 define('_ADSLIGHT_ANNDEL', 'Classified Ad selected has been deleted');
 define('_ADSLIGHT_ANNMOD2', 'Classified Ad selected has been modified');
 define('_ADSLIGHT_NOMODIMG', 'Your Classified Ad includes a photo<br>(pictures may not be changed)');
@@ -443,3 +443,4 @@ define('_MN_ADSLIGHT_ERROR404_TEXT', '<table class="errorMsg" border="0" cellpad
 define('_ADSLIGHT_CONTACTBY2', ' by:');
 
 define('_MA_ADSLIGHT_MUSTREGFIRST', 'You Must Register First');
+define('_ADSLIGHT_VALIDATE_FAILED', 'Validation Failed');

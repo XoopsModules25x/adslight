@@ -39,7 +39,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
         $visible = false;
     }
 
-    global $xoopsDB, $xoopsModuleConfig, $moduleDirName;
+    global $xoopsDB, $moduleDirName;
 
     $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM '
            . $xoopsDB->prefix('adslight_listing')
@@ -83,7 +83,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
         $ret[$i]['nophoto']   = 'assets/images/nophoto.jpg';
         $ret[$i]['photo']     = $url;
         if ($visible) {
-            $ret[$i]['sphoto'] = $xoopsModuleConfig['adslight_link_upload'] . 'thumbs/thumb_' . $url . '';
+            $ret[$i]['sphoto'] = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'] . 'thumbs/thumb_' . $url . '';
         }
         $ret[$i]['time'] = $myrow['date'];
         $ret[$i]['uid']  = $myrow['usid'];

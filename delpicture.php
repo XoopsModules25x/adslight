@@ -75,7 +75,7 @@ $cod_img = $_POST['cod_img'];
  */
 $album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
 $criteria_img  = new Criteria('cod_img', $cod_img);
-$uid           = $xoopsUser->getVar('uid');
+$uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new Criteria('uid_owner', $uid);
 //$criteria_lid = new Criteria ('lid',$lid);
 $criteria = new CriteriaCompo($criteria_img);
@@ -87,7 +87,7 @@ $image_name    = $objects_array[0]->getVar('url');
  * Try to delete
  */
 if ($album_factory->deleteAll($criteria)) {
-    $path_upload = $xoopsModuleConfig['adslight_path_upload'];
+    $path_upload = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
 
     unlink("$path_upload/$image_name");
 

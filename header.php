@@ -26,9 +26,8 @@
 
 require __DIR__ . '/../../mainfile.php';
 require __DIR__ . '/class/utilities.php';
-global $xoopsModuleConfig;
 
-if ($xoopsModuleConfig['active_rewriteurl'] > 0) {
+if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
     include_once __DIR__ . '/seo_url.php';
 }
 

@@ -26,7 +26,7 @@
  * @copyright   XOOPS Project (http://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      XOOPS Development Team
- * @package     GBook
+ * @package     AdsLight
  * @since       1.03
  *
  */
@@ -46,7 +46,7 @@ class AdslightUtilities
 {
     public static function expireAd()
     {
-        global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $myts, $meta, $moduleDirName, $main_lang;
+        global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $main_lang;
 
         $datenow = time();
 
@@ -62,7 +62,7 @@ class AdslightUtilities
             $submitter = $myts->htmlSpecialChars($submitter);
             $remind    = $myts->htmlSpecialChars($remind);
             $supprdate = $dateann + ($expire * 86400);
-            $almost    = $xoopsModuleConfig['adslight_almost'];
+            $almost    = $GLOBALS['xoopsModuleConfig']['adslight_almost'];
 
             // give warning that add is about to expire
 
@@ -174,7 +174,7 @@ class AdslightUtilities
      */
     public static function updateUserRating($sel_id)
     {
-        global $xoopsDB, $xoopsUser, $moduleDirName, $main_lang;
+        global $xoopsDB, $moduleDirName, $main_lang;
 
         if (isset($_GET['usid'])) {
             $usid = (int)$_GET['usid'];
@@ -202,7 +202,7 @@ class AdslightUtilities
      */
     public static function updateItemRating($sel_id)
     {
-        global $xoopsDB, $xoopsUser, $moduleDirName, $main_lang;
+        global $xoopsDB, $moduleDirName, $main_lang;
 
         if (isset($_GET['lid'])) {
             $lid = (int)$_GET['lid'];
@@ -265,7 +265,7 @@ class AdslightUtilities
      */
     public static function getMyItemIds($permtype)
     {
-        global $xoopsUser, $moduleDirName;
+        global $moduleDirName;
         static $permissions = array();
         if (is_array($permissions) && array_key_exists($permtype, $permissions)) {
             return $permissions[$permtype];
@@ -274,7 +274,7 @@ class AdslightUtilities
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler          = xoops_getHandler('module');
         $myModule               = $moduleHandler->getByDirname('adslight');
-        $groups                 = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups                 = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $gpermHandler          = xoops_getHandler('groupperm');
         $categories             = $gpermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
         $permissions[$permtype] = $categories;
@@ -290,19 +290,19 @@ class AdslightUtilities
      */
     public static function getModuleOption($option, $repmodule = 'adslight')
     {
-        global $xoopsModuleConfig, $xoopsModule;
+        global $xoopsModule;
         static $tbloptions = array();
         if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
             return $tbloptions[$option];
         }
 
         $retval = false;
-        if (isset($xoopsModuleConfig)
+        if (isset($GLOBALS['xoopsModuleConfig'])
             && (is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $repmodule
                 && $xoopsModule->getVar('isactive'))
         ) {
-            if (isset($xoopsModuleConfig[$option])) {
-                $retval = $xoopsModuleConfig[$option];
+            if (isset($GLOBALS['xoopsModuleConfig'][$option])) {
+                $retval = $GLOBALS['xoopsModuleConfig'][$option];
             }
         } else {
             /** @var XoopsModuleHandler $moduleHandler */
@@ -460,9 +460,9 @@ class AdslightUtilities
     public static function getEditor($caption, $name, $value = '', $width = '100%', $height = '300px', $supplemental = '')
     {
 
-        global $xoopsUser, $xoopsModule, $xoopsModuleConfig;
+        global $xoopsModule;
         $options = array();
-        $isAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
+        $isAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
 
         if (class_exists('XoopsFormEditor')) {
             $options['name']   = $name;
@@ -472,9 +472,9 @@ class AdslightUtilities
             $options['width']  = $width;
             $options['height'] = $height;
             if ($isAdmin) {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $xoopsModuleConfig['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
             } else {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $xoopsModuleConfig['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
             }
         } else {
             $myEditor = new XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
@@ -533,7 +533,7 @@ class AdslightUtilities
      */
     public static function getCatNameFromId($cid)
     {
-        global $xoopsDB, $xoopsConfig, $myts, $xoopsUser, $moduleDirName;
+        global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
 
         $sql = 'SELECT SQL_CACHE title FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid = '$cid'";
 
@@ -575,7 +575,7 @@ class AdslightUtilities
      */
     public static function returnAllAdsRss()
     {
-        global $xoopsDB, $xoopsModuleConfig, $xoopsUser;
+        global $xoopsDB;
 
         $cid = !isset($_GET['cid']) ? null : $_GET['cid'];
 
@@ -597,7 +597,7 @@ class AdslightUtilities
      */
     public static function returnAllAdsFluxRss()
     {
-        global $xoopsDB, $xoopsModuleConfig, $xoopsUser;
+        global $xoopsDB;
 
         $result = array();
 
@@ -810,7 +810,7 @@ class AdslightUtilities
         }
 
         if (!$success) {
-            $module->setErrors(sprintf(_AM_GBOOK_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
+            $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
         }
 
         return $success;
@@ -833,7 +833,7 @@ class AdslightUtilities
         $reqVer  =& $module->getInfo('min_php');
         if (false !== $reqVer && '' !== $reqVer) {
             if (version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(sprintf(_AM_GBOOK_ERROR_BAD_PHP, $reqVer, $verNum));
+                $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_PHP, $reqVer, $verNum));
                 $success = false;
             }
         }

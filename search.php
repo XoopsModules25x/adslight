@@ -64,9 +64,9 @@ if ($action === 'results') {
     }
 }
 
-$groups            = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler     = xoops_getHandler('groupperm');
-$available_modules = $gperm_handler->getItemIds('module_read', $groups);
+$groups            = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$gpermHandler     = xoops_getHandler('groupperm');
+$available_modules = $gpermHandler->getItemIds('module_read', $groups);
 
 if ($action === 'search') {
     include XOOPS_ROOT_PATH . '/header.php';
@@ -176,7 +176,7 @@ switch ($action) {
 
                         echo "</td><td width=\"20%\">";
                         echo ''
-                             . $xoopsModuleConfig['adslight_money']
+                             . $GLOBALS['xoopsModuleConfig']['adslight_money']
                              . ''
                              . $myts->htmlSpecialChars($results[$i]['price'])
                              . '</a>&nbsp;'
@@ -272,7 +272,7 @@ switch ($action) {
                 echo '' . $myts->htmlSpecialChars($results[$i]['desctext']) . '';
 
                 echo "</td><td width=\"20%\">";
-                echo '' . $xoopsModuleConfig['adslight_money'] . '
+                echo '' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '
 ' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
 
                 echo '</td></tr><tr><td>';

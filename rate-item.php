@@ -26,7 +26,7 @@ $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 //include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 if (!empty($HTTP_POST_VARS['submit'])) {
 //    $erh         = new ErrorHandler; //ErrorHandler object
-    $ratinguser = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getVar('uid') : 0;
+    $ratinguser = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
     $anonwaitdays = 1; // Make sure only 1 anonymous rating from an IP in a single day.
     $ip           = getenv('REMOTE_ADDR');

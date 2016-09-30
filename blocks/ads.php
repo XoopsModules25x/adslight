@@ -30,7 +30,7 @@
 function adslight_show($options)
 {
     include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
-    global $xoopsDB, $xoopsModuleConfig, $blockdirname, $block_lang;
+    global $xoopsDB, $blockdirname, $block_lang;
 
     $block = array();
     $myts  = MyTextSanitizer::getInstance();

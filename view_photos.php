@@ -39,7 +39,7 @@ if (empty($lid)) {
 }
 
 // Is a member looking ?
-if ($xoopsUser instanceof XoopsUser) {
+if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
     // If no $_GET['uid'] then redirect to own
     if (isset($_GET['uid'])) {
         $uid = XoopsRequest::getInt('uid', 0, 'GET');
@@ -51,13 +51,13 @@ if ($xoopsUser instanceof XoopsUser) {
      * Is the user the owner of the album ?
      */
 
-    $isOwner = ($xoopsUser->getVar('uid') == $uid) ? true : false;
+    $isOwner = ($GLOBALS['xoopsUser']->getVar('uid') == $uid) ? true : false;
 
     $module_id = $xoopsModule->getVar('mid');
 
-    $groups =& $xoopsUser->getGroups();
+    $groups =& $GLOBALS['xoopsUser']->getGroups();
 
-    $gperm_handler = xoops_getHandler('groupperm');
+    $gpermHandler = xoops_getHandler('groupperm');
 
     if (isset($_POST['item_id'])) {
         $perm_itemid = (int)$_POST['item_id'];
@@ -66,7 +66,7 @@ if ($xoopsUser instanceof XoopsUser) {
     }
 
     //If no access
-    if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+    if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
         $permit = '0';
     } else {
         $permit = '1';
@@ -126,9 +126,9 @@ if (0 == $pictures_number) {
 /**
  * Show the form if it is the owner and he can still upload pictures
  */
-if (!empty($xoopsUser)) {
-    if ($isOwner && $xoopsModuleConfig['adslight_nb_pict'] > $pictures_number) {
-        $maxfilebytes = $xoopsModuleConfig['adslight_maxfilesize'];
+if (!empty($GLOBALS['xoopsUser'])) {
+    if ($isOwner && $GLOBALS['xoopsModuleConfig']['adslight_nb_pict'] > $pictures_number) {
+        $maxfilebytes = $GLOBALS['xoopsModuleConfig']['adslight_maxfilesize'];
         $album_factory->renderFormSubmit($uid, $lid, $maxfilebytes, $xoopsTpl);
     }
 }
@@ -143,7 +143,7 @@ $identifier = $owner->getUnameFromId($uid);
  * Adding to the module js and css of the lightbox and new ones
  */
 
-if (1 == $xoopsModuleConfig['adslight_lightbox']) {
+if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
     $header_lightbox = '<script type="text/javascript" src="lightbox/js/prototype.js"></script>
 <script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
 <script type="text/javascript" src="lightbox/js/lightbox.js"></script>
@@ -164,19 +164,19 @@ while (list($title) = $xoopsDB->fetchRow($result)) {
     $xoopsTpl->assign('lang_showcase', _ADSLIGHT_SHOWCASE);
 }
 
-$xoopsTpl->assign('lang_not_premium', sprintf(_ADSLIGHT_BMCANHAVE, $xoopsModuleConfig['adslight_not_premium']));
+$xoopsTpl->assign('lang_not_premium', sprintf(_ADSLIGHT_BMCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_not_premium']));
 
 $xoopsTpl->assign('lang_no_prem_nb', sprintf(_ADSLIGHT_PREMYOUHAVE, $pictures_number));
 
 $upgrade = "<a href=\"premium.php\"><strong> " . _ADSLIGHT_UPGRADE_NOW . '</strong></a>';
 $xoopsTpl->assign('lang_upgrade_now', $upgrade);
 
-$xoopsTpl->assign('lang_max_nb_pict', sprintf(_ADSLIGHT_YOUCANHAVE, $xoopsModuleConfig['adslight_nb_pict']));
+$xoopsTpl->assign('lang_max_nb_pict', sprintf(_ADSLIGHT_YOUCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_nb_pict']));
 $xoopsTpl->assign('lang_nb_pict', sprintf(_ADSLIGHT_YOUHAVE, $pictures_number));
 
 $xoopsTpl->assign('lang_albumtitle', sprintf(_ADSLIGHT_ALBUMTITLE, '<a href=' . XOOPS_URL . '/userinfo.php?uid=' . addslashes($uid) . '>' . $identifier . '</a>'));
 
-$xoopsTpl->assign('path_uploads', $xoopsModuleConfig['adslight_link_upload']);
+$xoopsTpl->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
 
 $xoopsTpl->assign('xoops_pagetitle', $xoopsModule->getVar('name') . ' - ' . $identifier . "'s album");
 

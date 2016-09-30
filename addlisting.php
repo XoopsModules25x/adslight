@@ -29,21 +29,21 @@ include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //$erh = new ErrorHandler; //ErrorHandler object
 
 $module_id = $xoopsModule->getVar('mid');
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
+if (is_object($GLOBALS['xoopsUser'])) {
+    $groups = $GLOBALS['xoopsUser']->getGroups();
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-$gperm_handler = xoops_getHandler('groupperm');
+$gpermHandler = xoops_getHandler('groupperm');
 if (isset($_POST['item_id'])) {
     $perm_itemid = (int)$_POST['item_id'];
 } else {
     $perm_itemid = 0;
 }
-if (!$gperm_handler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     $premium = 0;
 } else {
     $premium = 1;
@@ -54,12 +54,12 @@ include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-if (empty($xoopsUser)) {
+if (empty($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL . '/user.php', 2, _MA_ADSLIGHT_MUSTREGFIRST);
 }
 
 if (!empty($_POST['submit'])) {
-    $howlong = $xoopsModuleConfig['adslight_howlong'];
+    $howlong = $GLOBALS['xoopsModuleConfig']['adslight_howlong'];
 
     if (!$xoopsGTicket->check(true, 'token')) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
@@ -201,10 +201,10 @@ if (!empty($_POST['submit'])) {
         $cat_moderate = 0;
     }
 
-    $howlong      = $xoopsModuleConfig['adslight_howlong'];
-    $member_usid  = $xoopsUser->getVar('uid', 'E');
-    $member_email = $xoopsUser->getVar('email', 'E');
-    $member_uname = $xoopsUser->getVar('uname', 'E');
+    $howlong      = $GLOBALS['xoopsModuleConfig']['adslight_howlong'];
+    $member_usid  = $GLOBALS['xoopsUser']->getVar('uid', 'E');
+    $member_email = $GLOBALS['xoopsUser']->getVar('email', 'E');
+    $member_uname = $GLOBALS['xoopsUser']->getVar('uname', 'E');
 
     $result  = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
     $result1 = $xoopsDB->query('SELECT id_price, nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
@@ -230,20 +230,20 @@ if (!empty($_POST['submit'])) {
         }
     }
 
-    if ($xoopsModuleConfig['adslight_diff_name'] == '1') {
+    if ($GLOBALS['xoopsModuleConfig']['adslight_diff_name'] == '1') {
         $form->addElement(new XoopsFormText(_ADSLIGHT_SUBMITTER, 'submitter', 50, 50, $member_uname), true);
     } else {
         $form->addElement(new XoopsFormLabel(_ADSLIGHT_SUBMITTER, $member_uname));
         $form->addElement(new XoopsFormHidden('submitter', $member_uname), true);
     }
-    if ($xoopsModuleConfig['adslight_diff_email'] == '1') {
+    if ($GLOBALS['xoopsModuleConfig']['adslight_diff_email'] == '1') {
         $form->addElement(new XoopsFormText(_ADSLIGHT_EMAIL, 'email', 50, 50, $member_email), true);
     } else {
         $form->addElement(new XoopsFormLabel(_ADSLIGHT_EMAIL, $member_email));
         $form->addElement(new XoopsFormHidden('email', $member_email), true);
     }
     $form->addElement(new XoopsFormText(_ADSLIGHT_TOWN, 'town', 50, 50, ''), false);
-    if ($xoopsModuleConfig['adslight_use_country'] == '1') {
+    if ($GLOBALS['xoopsModuleConfig']['adslight_use_country'] == '1') {
         $form->addElement(new XoopsFormText(_ADSLIGHT_COUNTRY, 'country', 50, 50, ''), false);
     } else {
         $form->addElement(new XoopsFormHidden('country', ''), false);
@@ -275,10 +275,10 @@ if (!empty($_POST['submit'])) {
         }
 
         if ($premium == 1) {
-            $form->addElement(new XoopsFormText(_ADSLIGHT_HOW_LONG, 'expire', 3, 3, $xoopsModuleConfig['adslight_howlong']), true);
+            $form->addElement(new XoopsFormText(_ADSLIGHT_HOW_LONG, 'expire', 3, 3, $GLOBALS['xoopsModuleConfig']['adslight_howlong']), true);
         } else {
-            $form->addElement(new XoopsFormLabel(_ADSLIGHT_WILL_LAST, $xoopsModuleConfig['adslight_howlong']));
-            $form->addElement(new XoopsFormHidden('expire', $xoopsModuleConfig['adslight_howlong']), false);
+            $form->addElement(new XoopsFormLabel(_ADSLIGHT_WILL_LAST, $GLOBALS['xoopsModuleConfig']['adslight_howlong']));
+            $form->addElement(new XoopsFormHidden('expire', $GLOBALS['xoopsModuleConfig']['adslight_howlong']), false);
         }
 
         /// Type d'annonce
@@ -313,7 +313,7 @@ if (!empty($_POST['submit'])) {
         $form->addElement($contactby_form, true);
         $form->addElement(new XoopsFormRadioYN(_ADSLIGHT_ADD_PHOTO_NOW, 'addphotonow', 1));
 
-        //if ($xoopsModuleConfig["adslight_use_captcha"] == '1') {
+        //if ($GLOBALS['xoopsModuleConfig']["adslight_use_captcha"] == '1') {
         //  $form->addElement(new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, "xoopscaptcha", false), true);
         //}
 

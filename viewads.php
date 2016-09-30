@@ -27,22 +27,22 @@ xoops_load('XoopsLocal');
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
+if (is_object($GLOBALS['xoopsUser'])) {
+    $groups = $GLOBALS['xoopsUser']->getGroups();
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-$gperm_handler = xoops_getHandler('groupperm');
+$gpermHandler = xoops_getHandler('groupperm');
 if (isset($_POST['item_id'])) {
     $perm_itemid = (int)$_POST['item_id'];
 } else {
     $perm_itemid = 0;
 }
 //If no access
-if (!$gperm_handler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     $prem_perm = '0';
 } else {
     $prem_perm = '1';
@@ -59,7 +59,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'p
  */
 function viewAds($lid = 0)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsTpl, $xoopsUser, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
     $tempXoopsLocal = new XoopsLocal;
@@ -67,7 +67,7 @@ function viewAds($lid = 0)
     include XOOPS_ROOT_PATH . '/header.php';
     include XOOPS_ROOT_PATH . '/include/comment_view.php';
     $lid  = ((int)$lid > 0) ? (int)$lid : 0;
-    $rate = ($xoopsModuleConfig['adslight_rate_item'] == '1') ? '1' : '0';
+    $rate = ($GLOBALS['xoopsModuleConfig']['adslight_rate_item'] == '1') ? '1' : '0';
     $xoopsTpl->assign('rate', $rate);
     $xoopsTpl->assign('xmid', $xoopsModule->getVar('mid'));
     $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
@@ -80,26 +80,26 @@ function viewAds($lid = 0)
         redirect_header(XOOPS_URL . '/modules/adslight/404.php', 1);
     }
 
-    $xoopsTpl->assign('adslight_active_bookmark', $xoopsModuleConfig['adslight_active_bookmark']);
-    $xoopsTpl->assign('adslight_style_bookmark', $xoopsModuleConfig['adslight_style_bookmark']);
-    $xoopsTpl->assign('adslight_active_xpayement', $xoopsModuleConfig['adslight_active_xpayment']);
+    $xoopsTpl->assign('adslight_active_bookmark', $GLOBALS['xoopsModuleConfig']['adslight_active_bookmark']);
+    $xoopsTpl->assign('adslight_style_bookmark', $GLOBALS['xoopsModuleConfig']['adslight_style_bookmark']);
+    $xoopsTpl->assign('adslight_active_xpayement', $GLOBALS['xoopsModuleConfig']['adslight_active_xpayment']);
 
     // adslight 2
-    $xoopsTpl->assign('adslight_active_menu', $xoopsModuleConfig['adslight_active_menu']);
-    $xoopsTpl->assign('adslight_active_rss', $xoopsModuleConfig['adslight_active_rss']);
+    $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
+    $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 
-    if ($xoopsUser) {
-        $member_usid = $xoopsUser->getVar('uid');
+    if ($GLOBALS['xoopsUser']) {
+        $member_usid = $GLOBALS['xoopsUser']->getVar('uid');
         if ($usid = $member_usid) {
             $xoopsTpl->assign('istheirs', true);
 
-            if (strlen($xoopsUser->getVar('name'))) {
-                $xoopsTpl->assign('user_name', $xoopsUser->getVar('name') . ' (' . $xoopsUser->getVar('uname') . ')');
+            if (strlen($GLOBALS['xoopsUser']->getVar('name'))) {
+                $xoopsTpl->assign('user_name', $GLOBALS['xoopsUser']->getVar('name') . ' (' . $GLOBALS['xoopsUser']->getVar('uname') . ')');
             } else {
-                $xoopsTpl->assign('user_name', $xoopsUser->getVar('uname'));
+                $xoopsTpl->assign('user_name', $GLOBALS['xoopsUser']->getVar('uname'));
             }
 
-            $xoopsTpl->assign('user_email', $xoopsUser->getVar('email'));
+            $xoopsTpl->assign('user_email', $GLOBALS['xoopsUser']->getVar('email'));
 
             list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
@@ -108,8 +108,8 @@ function viewAds($lid = 0)
         }
     }
 
-    if ($xoopsUser) {
-        $currentid = $xoopsUser->getVar('uid', 'E');
+    if ($GLOBALS['xoopsUser']) {
+        $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
     }
 
     $cat_perms  = '';
@@ -138,14 +138,14 @@ function viewAds($lid = 0)
     if ($recordexist) {
         list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits, $item_rating, $item_votes, $user_rating, $user_votes, $comments, $cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($result);
 
-        $newcount  = $xoopsModuleConfig['adslight_countday'];
+        $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
         $startdate = (time() - (86400 * $newcount));
         if ($startdate < $date) {
             $newitem = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" alt="new" />';
             $xoopsTpl->assign('new', $newitem);
         }
 
-        $updir = $xoopsModuleConfig['adslight_link_upload'];
+        $updir = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
         $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
         $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM);
         $xoopsTpl->assign('add_from_sitename', $xoopsConfig['sitename']);
@@ -162,13 +162,13 @@ function viewAds($lid = 0)
         $xoopsTpl->assign('category_title', $ctitle);
 
         $module_id = $xoopsModule->getVar('mid');
-        if (is_object($xoopsUser)) {
-            $groups = $xoopsUser->getGroups();
+        if (is_object($GLOBALS['xoopsUser'])) {
+            $groups = $GLOBALS['xoopsUser']->getGroups();
         } else {
             $groups = XOOPS_GROUP_ANONYMOUS;
         }
-        $gperm_handler = xoops_getHandler('groupperm');
-        $xoopsTpl->assign('purchasable', $gperm_handler->checkRight('adslight_purchase', $cid, $groups, $module_id));
+        $gpermHandler = xoops_getHandler('groupperm');
+        $xoopsTpl->assign('purchasable', $gpermHandler->checkRight('adslight_purchase', $cid, $groups, $module_id));
 
         $ctitle     = $myts->htmlSpecialChars($ctitle);
         $varid[$x]  = $ccid;
@@ -200,20 +200,20 @@ function viewAds($lid = 0)
         $xoopsTpl->assign('nav_subcount', $nbe);
         $viewcount_judge = true;
         $useroffset      = '';
-        if ($xoopsUser) {
-            $timezone = $xoopsUser->timezone();
+        if ($GLOBALS['xoopsUser']) {
+            $timezone = $GLOBALS['xoopsUser']->timezone();
             if (isset($timezone)) {
-                $useroffset = $xoopsUser->timezone();
+                $useroffset = $GLOBALS['xoopsUser']->timezone();
             } else {
                 $useroffset = $xoopsConfig['default_TZ'];
             }
-            if ($xoopsUser->isAdmin()) {
+            if ($GLOBALS['xoopsUser']->isAdmin()) {
                 $adslight_admin = true;
             } else {
                 $adslight_admin = false;
             }
 
-            if (($adslight_admin = true) || ($xoopsUser->getVar('uid') == $usid)) {
+            if (($adslight_admin = true) || ($GLOBALS['xoopsUser']->getVar('uid') == $usid)) {
                 $viewcount_judge = false;
             }
 
@@ -276,9 +276,9 @@ function viewAds($lid = 0)
         $xoopsTpl->assign('lang_ratethisitem', _ADSLIGHT_RATETHISITEM);
         $xoopsTpl->assign('xoop_user', false);
         $isOwner = '';
-        if ($xoopsUser) {
+        if ($GLOBALS['xoopsUser']) {
             $xoopsTpl->assign('xoop_user', true);
-            $currentid = $xoopsUser->getVar('uid', 'E');
+            $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
             if ($usid == $currentid) {
                 $xoopsTpl->assign('modifyads', '<img src='
                                                . $pathIcon16
@@ -311,7 +311,7 @@ function viewAds($lid = 0)
                 $isOwner = true;
                 $xoopsTpl->assign('isOwner', $isOwner);
             }
-            if ($xoopsUser->isAdmin()) {
+            if ($GLOBALS['xoopsUser']->isAdmin()) {
                 $xoopsTpl->assign('admin', '<a href="'
                                            . XOOPS_URL
                                            . '/modules/adslight/admin/modify_ads.php?op=ModifyAds&amp;lid='
@@ -344,14 +344,14 @@ function viewAds($lid = 0)
         $xoTheme->addMeta('meta', 'description', "$title - " . substr($desctextclean, 0, 150));
 
         if ($price > 0) {
-            $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $xoopsModuleConfig['adslight_money'] . ' - ' . $typeprice);
+            $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . ' - ' . $typeprice);
             $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE2);
-            //      $xoopsTpl->assign('price_price', $price.' '.$xoopsModuleConfig['adslight_money'].' ');
+            //      $xoopsTpl->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_money'].' ');
 
             $xoopsTpl->assign('price_price', AdslightUtilities::getMoneyFormat('%.2n', $price));
 
             $xoopsTpl->assign('price_typeprice', $myts->htmlSpecialChars($nom_price));
-            $xoopsTpl->assign('price_currency', $xoopsModuleConfig['adslight_currency']);
+            $xoopsTpl->assign('price_currency', $GLOBALS['xoopsModuleConfig']['adslight_currency']);
             $xoopsTpl->assign('price_amount', $price);
         }
 
@@ -364,7 +364,7 @@ function viewAds($lid = 0)
         if ($town) {
             $xoopsTpl->assign('local_town', $town);
         }
-        if ($xoopsModuleConfig['adslight_use_country'] == 1) {
+        if ($GLOBALS['xoopsModuleConfig']['adslight_use_country'] == 1) {
             if ($country) {
                 $xoopsTpl->assign('local_country', $country);
                 $xoopsTpl->assign('country_head', '<img src="assets/images/world_go.png" border="0" alt="country" />&nbsp;&nbsp;' . _ADSLIGHT_COUNTRY);
@@ -395,7 +395,7 @@ function viewAds($lid = 0)
             if ($sold) {
                 $xoopsTpl->assign('bullinfotext', $sold);
             } else {
-                if ($xoopsUser) {
+                if ($GLOBALS['xoopsUser']) {
                     $xoopsTpl->assign('bullinfotext', _ADSLIGHT_CONTACT_SUBMITTER . ' ' . $submitter . ' ' . _ADSLIGHT_CONTACTBY2 . ' ' . $contact);
                 } else {
                     $xoopsTpl->assign('bullinfotext', '<span style="color: #de090e;"><b>' . _ADSLIGHT_MUSTLOGIN . '</b></span>');
@@ -445,7 +445,7 @@ function viewAds($lid = 0)
             }
             $owner      = new XoopsUser();
             $identifier = $owner->getUnameFromId($usid);
-            if ($xoopsModuleConfig['adslight_lightbox'] == 1) {
+            if ($GLOBALS['xoopsModuleConfig']['adslight_lightbox'] == 1) {
                 $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />
 <script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="assets/lightbox/js/jquery-ui-1.8.18.custom.min"></script>
@@ -458,11 +458,11 @@ function viewAds($lid = 0)
 <link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" />';
             }
 
-            $xoopsTpl->assign('path_uploads', $xoopsModuleConfig['adslight_link_upload']);
+            $xoopsTpl->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
 
             $xoopsTpl->assign('permit', $prem_perm);
 
-            if ($xoopsModuleConfig['active_rewriteurl'] > 0) {
+            if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
                 /*  ici le meta Canonicale pour le Rewrite */
                 $xoopsTpl->assign('xoops_module_header', $header_lightbox);
             } else {
@@ -526,7 +526,7 @@ function viewAds($lid = 0)
  */
 function categorynewgraphic($cid)
 {
-    global $xoopsDB, $xoopsModuleConfig;
+    global $xoopsDB;
 
     $cat_perms  = '';
     $categories = AdslightUtilities::getMyItemIds('adslight_view');
@@ -543,7 +543,7 @@ function categorynewgraphic($cid)
                                  . ' ORDER BY date desc limit 1');
     list($date) = $xoopsDB->fetchRow($newresult);
 
-    $newcount  = $xoopsModuleConfig['adslight_countday'];
+    $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
     $startdate = (time() - (86400 * $newcount));
     if ($startdate < $date) {
         return '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" alt="new" />';

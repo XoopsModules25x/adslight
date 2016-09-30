@@ -25,12 +25,12 @@ include_once __DIR__ . '/header.php';
 
 $myts          = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 $module_id     = $xoopsModule->getVar('mid');
-$groups        = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler = xoops_getHandler('groupperm');
+$groups        = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
 
 //If no access
-if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
 }
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
@@ -61,7 +61,7 @@ if ($trows < '1') {
 
 if ($trows > '0') {
     $xoopsTpl->assign('has_replies', true);
-    $xoopsTpl->assign('last_head', _ADSLIGHT_THE . ' ' . $xoopsModuleConfig['adslight_newcount'] . ' ' . _ADSLIGHT_LASTADD);
+    $xoopsTpl->assign('last_head', _ADSLIGHT_THE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_newcount'] . ' ' . _ADSLIGHT_LASTADD);
     $xoopsTpl->assign('last_head_title', _ADSLIGHT_TITLE);
     $xoopsTpl->assign('last_head_price', _ADSLIGHT_PRICE);
     $xoopsTpl->assign('last_head_date', _ADSLIGHT_DATE);
@@ -91,10 +91,10 @@ if ($trows > '0') {
 
     while (list($r_lid, $lid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result)) {
         $useroffset = '';
-        if ($xoopsUser) {
-            $timezone = $xoopsUser->timezone();
+        if ($GLOBALS['xoopsUser']) {
+            $timezone = $GLOBALS['xoopsUser']->timezone();
             if (isset($timezone)) {
-                $useroffset = $xoopsUser->timezone();
+                $useroffset = $GLOBALS['xoopsUser']->timezone();
             } else {
                 $useroffset = $xoopsConfig['default_TZ'];
             }

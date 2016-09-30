@@ -49,14 +49,14 @@ $lid   = $_POST['lid'];
  * Getting parameters defined in admin side
  */
 
-$path_upload   = $xoopsModuleConfig['adslight_path_upload'];
-$pictwidth     = $xoopsModuleConfig['adslight_resized_width'];
-$pictheight    = $xoopsModuleConfig['adslight_resized_height'];
-$thumbwidth    = $xoopsModuleConfig['adslight_thumb_width'];
-$thumbheight   = $xoopsModuleConfig['adslight_thumb_height'];
-$maxfilebytes  = $xoopsModuleConfig['adslight_maxfilesize'];
-$maxfileheight = $xoopsModuleConfig['adslight_max_orig_height'];
-$maxfilewidth  = $xoopsModuleConfig['adslight_max_orig_width'];
+$path_upload   = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
+$pictwidth     = $GLOBALS['xoopsModuleConfig']['adslight_resized_width'];
+$pictheight    = $GLOBALS['xoopsModuleConfig']['adslight_resized_height'];
+$thumbwidth    = $GLOBALS['xoopsModuleConfig']['adslight_thumb_width'];
+$thumbheight   = $GLOBALS['xoopsModuleConfig']['adslight_thumb_height'];
+$maxfilebytes  = $GLOBALS['xoopsModuleConfig']['adslight_maxfilesize'];
+$maxfileheight = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_height'];
+$maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_width'];
 
 /**
  * If we are receiving a file
@@ -87,11 +87,11 @@ if ($_POST['xoops_upload_file'][0] === 'sel_photo') {
      * Try to upload picture resize it insert in database and then redirect to index
      */
     if ($album_factory->receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)) {
-        header('Location: ' . XOOPS_URL . "/modules/adslight/view_photos.php?lid=$lid&uid=" . $xoopsUser->getVar('uid'));
+        header('Location: ' . XOOPS_URL . "/modules/adslight/view_photos.php?lid=$lid&uid=" . $GLOBALS['xoopsUser']->getVar('uid'));
 
         $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET photo=photo+1 WHERE lid = ' . $xoopsDB->escape($lid) . '');
     } else {
-        redirect_header(XOOPS_URL . '/modules/adslight/view_photos.php?uid=' . $xoopsUser->getVar('uid'), 15, constant('_ADSLIGHT_NOCACHACA'));
+        redirect_header(XOOPS_URL . '/modules/adslight/view_photos.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 15, constant('_ADSLIGHT_NOCACHACA'));
     }
 }
 

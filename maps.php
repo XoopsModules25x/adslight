@@ -26,22 +26,22 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-if (is_object($xoopsUser)) {
-    $groups = $xoopsUser->getGroups();
+if (is_object($GLOBALS['xoopsUser'])) {
+    $groups = $GLOBALS['xoopsUser']->getGroups();
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-$gperm_handler = xoops_getHandler('groupperm');
+$gpermHandler = xoops_getHandler('groupperm');
 if (isset($_POST['item_id'])) {
     $perm_itemid = (int)$_POST['item_id'];
 } else {
     $perm_itemid = 0;
 }
 //If no access
-if (!$gperm_handler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     $prem_perm = '0';
 } else {
     $prem_perm = '1';
@@ -51,7 +51,7 @@ if (!$gperm_handler->checkRight('adslight_premium', $perm_itemid, $groups, $modu
 #####################################################
 function adslightMaps()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsModuleConfig, $xoopsUser, $xoopsTpl, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm;
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
 
@@ -77,9 +77,9 @@ function adslightMaps()
 
     $xoopsTpl->assign('xoops_module_header', $header_cssadslight);
 
-    $maps_name   = $xoopsModuleConfig['adslight_maps_set'];
-    $maps_width  = $xoopsModuleConfig['adslight_maps_width'];
-    $maps_height = $xoopsModuleConfig['adslight_maps_height'];
+    $maps_name   = $GLOBALS['xoopsModuleConfig']['adslight_maps_set'];
+    $maps_width  = $GLOBALS['xoopsModuleConfig']['adslight_maps_width'];
+    $maps_height = $GLOBALS['xoopsModuleConfig']['adslight_maps_height'];
 
     $xoopsTpl->assign('maps_name', $maps_name);
     $xoopsTpl->assign('maps_width', $maps_width);
@@ -89,11 +89,11 @@ function adslightMaps()
     $xoopsTpl->assign('bullinfotext', _ADSLIGHT_MAPS_TEXT);
 
     // adslight 2
-    $xoopsTpl->assign('adslight_active_menu', $xoopsModuleConfig['adslight_active_menu']);
-    $xoopsTpl->assign('adslight_active_rss', $xoopsModuleConfig['adslight_active_rss']);
+    $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
+    $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 
-    if ($xoopsUser) {
-        $member_usid = $xoopsUser->getVar('uid');
+    if ($GLOBALS['xoopsUser']) {
+        $member_usid = $GLOBALS['xoopsUser']->getVar('uid');
         if ($usid = $member_usid) {
             $xoopsTpl->assign('istheirs', true);
 

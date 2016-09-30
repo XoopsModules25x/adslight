@@ -97,7 +97,6 @@ $modversion['adminindex']  = 'admin/index.php';
 $modversion['adminmenu']   = 'admin/menu.php';
 
 // Templates
-global $xoopsModuleConfig;
 
 $modversion['templates'][1]['file']        = 'adslight_index.tpl';
 $modversion['templates'][1]['description'] = '';
@@ -189,9 +188,8 @@ $modversion['blocks'][5]['template']    = 'adslight_block_maps.tpl';
 // Menu
 $modversion['hasMain'] = 1;
 
-global $xoopsUser;
-if ($xoopsUser) {
-    $member_usid                  = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+if ($GLOBALS['xoopsUser']) {
+    $member_usid                  = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
     $modversion['sub'][1]['name'] = _MI_ADSLIGHT_SMENU2;
     $modversion['sub'][1]['url']  = 'add.php';
     $modversion['sub'][3]['name'] = _MI_ADSLIGHT_SMENU3;

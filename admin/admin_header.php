@@ -54,9 +54,9 @@ $pathModuleAdmin =& $xoopsModule->getInfo('dirmoduleadmin');
 
 include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
 
-if ($xoopsUser) {
+if ($GLOBALS['xoopsUser']) {
     //  $xoopsModule = XoopsModule::getByDirname($moduleDirName);
-    if (!$xoopsUser->isAdmin($xoopsModule->mid())) {
+    if (!$GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
         redirect_header(XOOPS_URL . '/', 3, _NOPERM);
     }
 } else {
