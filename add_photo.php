@@ -43,8 +43,8 @@ $album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
 /**
  * Getting the title
  */
-$title = $_POST['caption'];
-$lid   = $_POST['lid'];
+$title = XoopsRequest::getString('caption', '', 'POST');
+$lid =  XoopsRequest::getInt('lid', 0, 'POST');
 /**
  * Getting parameters defined in admin side
  */
@@ -89,7 +89,7 @@ if ($_POST['xoops_upload_file'][0] === 'sel_photo') {
     if ($album_factory->receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)) {
         header('Location: ' . XOOPS_URL . "/modules/adslight/view_photos.php?lid=$lid&uid=" . $GLOBALS['xoopsUser']->getVar('uid'));
 
-        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET photo=photo+1 WHERE lid = ' . $xoopsDB->escape($lid) );
+        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET photo=photo+1 WHERE lid = ' . $xoopsDB->escape($lid));
     } else {
         redirect_header(XOOPS_URL . '/modules/adslight/view_photos.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 15, constant('_ADSLIGHT_NOCACHACA'));
     }

@@ -58,11 +58,7 @@ if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
 
     $gpermHandler = xoops_getHandler('groupperm');
 
-    if (isset($_POST['item_id'])) {
-        $perm_itemid = (int)$_POST['item_id'];
-    } else {
-        $perm_itemid = 0;
-    }
+    $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
 
     //If no access
     if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {

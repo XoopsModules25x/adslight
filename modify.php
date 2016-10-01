@@ -27,9 +27,9 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-$groups        = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
 
 //If no access
 if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
@@ -44,10 +44,10 @@ function listingDel($lid, $ok)
 {
     global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
-    $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) );
+    $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($usid) = $xoopsDB->fetchRow($result);
 
-    $result1 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) );
+    $result1 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid));
 
     if ($GLOBALS['xoopsUser']) {
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
@@ -68,10 +68,10 @@ function listingDel($lid, $ok)
                             unlink("$destination3/resized_$purl");
                         }
 
-                        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) );
+                        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid));
                     }
                 }
-                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) );
+                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
                 redirect_header('index.php', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
@@ -104,7 +104,7 @@ function delReply($r_lid, $ok)
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
         if ($usid == $currentid) {
             if ($ok == 1) {
-                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE r_lid=' . $xoopsDB->escape($r_lid) );
+                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE r_lid=' . $xoopsDB->escape($r_lid));
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
@@ -154,6 +154,7 @@ function modAd($lid)
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
+
     if ($GLOBALS['xoopsUser']) {
         $calusern = $GLOBALS['xoopsUser']->uid();
         if ($usid == $calusern) {
@@ -164,7 +165,17 @@ function modAd($lid)
             $type       = $myts->htmlSpecialChars($type);
             $desctext   = $myts->displayTarea($desctext, 1);
             $tel        = $myts->htmlSpecialChars($tel);
-            $price      = number_format($price, 2, ',', ' ');
+
+//            $price      = number_format($price, 2, ',', ' ');
+
+            xoops_load('XoopsLocal');
+            $tempXoopsLocal = new XoopsLocal;
+            //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
+            $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
+            //  For other countries uncomment the below line and comment out the above line
+            //      $price = $tempXoopsLocal->number_format($price);
+
+
             $typeprice  = $myts->htmlSpecialChars($typeprice);
             $typeusure  = $myts->htmlSpecialChars($typeusure);
             $submitter  = $myts->htmlSpecialChars($submitter);
@@ -247,7 +258,10 @@ function modAd($lid)
             echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_TITLE2 . " </td><td class=\"head\"><input type=\"text\" name=\"title\" size=\"50\" value=\"$title\" /></td>
     </tr>";
-            echo "<tr><td class=\"head\">" . _ADSLIGHT_PRICE2 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" /> " . $GLOBALS['xoopsModuleConfig']['adslight_money'];
+            echo "<tr><td class=\"head\">"
+                 . _ADSLIGHT_PRICE2
+                 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" /> "
+                 . $GLOBALS['xoopsModuleConfig']['adslight_money'];
 
             $result3 = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
             echo " <select name=\"typeprice\">";
@@ -263,7 +277,7 @@ function modAd($lid)
             $groups    = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
             $gpermHandler = xoops_getHandler('groupperm');
-            $perm_itemid   = XoopsRequest::getInt('item_id', 0, 'GET');
+            $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'GET');
 
             //If no access
             if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
@@ -325,11 +339,7 @@ function modAd($lid)
                 $groups = XOOPS_GROUP_ANONYMOUS;
             }
             $gpermHandler = xoops_getHandler('groupperm');
-            if (isset($_POST['item_id'])) {
-                $perm_itemid = (int)$_POST['item_id'];
-            } else {
-                $perm_itemid = 0;
-            }
+            $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
             //If no access
             if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 if ($GLOBALS['xoopsModuleConfig']['adslight_moderated'] == '1') {
@@ -423,7 +433,7 @@ function modAdS(
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
-$ok = isset($_GET['ok']) ? $_GET['ok'] : '';
+$ok = XoopsRequest::getString('ok', '', 'GET');
 
 if (!isset($_POST['lid']) && isset($_GET['lid'])) {
     $lid = $_GET['lid'];

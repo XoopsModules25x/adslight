@@ -33,9 +33,9 @@ function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName, $admin_lang;
 
-//    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    //    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-//    include_once __DIR__ . '/admin_header.php';
+    //    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -123,9 +123,9 @@ function modifyAds($lid)
 {
     global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
-    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree        = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $contactselect = '';
-//    include_once __DIR__ . '/admin_header.php';
+    //    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
     $id_price  = '';
@@ -145,7 +145,16 @@ function modifyAds($lid)
         $type      = $myts->htmlSpecialChars($type);
         $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
         $tel       = $myts->htmlSpecialChars($tel);
-        $price     = number_format($price, 2, ',', ' ');
+//        $price     = number_format($price, 2, ',', ' ');
+
+        xoops_load('XoopsLocal');
+        $tempXoopsLocal = new XoopsLocal;
+        //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
+        $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
+        //  For other countries uncomment the below line and comment out the above line
+        //      $price = $tempXoopsLocal->number_format($price);
+
+
         $typeprice = $myts->htmlSpecialChars($typeprice);
         $typeusure = $myts->htmlSpecialChars($typeusure);
         $submitter = $myts->htmlSpecialChars($submitter);
@@ -241,7 +250,11 @@ function modifyAds($lid)
         echo '</select></td></tr>';
 
         /////// Price
-        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '';
+        echo "<tr class='head' border='1'><td>"
+             . _AM_ADSLIGHT_PRICE2
+             . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> "
+             . $GLOBALS['xoopsModuleConfig']['adslight_money']
+             . '';
 
         //////// Price type
 

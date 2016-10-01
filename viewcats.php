@@ -24,8 +24,8 @@ include_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
 $tempXoopsLocal = new XoopsLocal;
-$myts      = MyTextSanitizer::getInstance();
-$module_id = $xoopsModule->getVar('mid');
+$myts           = MyTextSanitizer::getInstance();
+$module_id      = $xoopsModule->getVar('mid');
 
 if (is_object($GLOBALS['xoopsUser'])) {
     $groups = $GLOBALS['xoopsUser']->getGroups();
@@ -33,11 +33,8 @@ if (is_object($GLOBALS['xoopsUser'])) {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
 $gpermHandler = xoops_getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)$_POST['item_id'];
-} else {
-    $perm_itemid = 0;
-}
+
+$perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
 
 if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -281,7 +278,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             $xoopsTpl->assign('lang_dateold', _ADSLIGHT_DATEOLD);
             $xoopsTpl->assign('lang_datenew', _ADSLIGHT_DATENEW);
             $xoopsTpl->assign('lang_price', _ADSLIGHT_PRICE);
-            $xoopsTpl->assign('lang_priceltoh',  _ADSLIGHT_PRICELTOH);
+            $xoopsTpl->assign('lang_priceltoh', _ADSLIGHT_PRICELTOH);
             $xoopsTpl->assign('lang_pricehtol', _ADSLIGHT_PRICEHTOL);
             $xoopsTpl->assign('lang_popularity', _ADSLIGHT_POPULARITY);
             $xoopsTpl->assign('lang_popularityleast', _ADSLIGHT_POPULARITYLTOM);
@@ -477,13 +474,13 @@ function categorynewgraphic($cid)
 
 ######################################################
 
-$pa      = !isset($_GET['pa']) ? null : $_GET['pa'];
-$lid     = !isset($_GET['lid']) ? null : $_GET['lid'];
-$cid     = !isset($_GET['cid']) ? null : $_GET['cid'];
-$usid    = isset($_GET['usid']) ? $_GET['usid'] : '';
-$min     = !isset($_GET['min']) ? null : $_GET['min'];
-$show    = !isset($_GET['show']) ? null : $_GET['show'];
-$orderby = !isset($_GET['orderby']) ? null : $_GET['orderby'];
+$pa      = XoopsRequest::getInt('pa', null, 'GET');
+$lid     = XoopsRequest::getInt('lid', null, 'GET');
+$cid     = XoopsRequest::getInt('cid', null, 'GET');
+$usid    = XoopsRequest::getString('usid', '', 'GET');
+$min     = XoopsRequest::getInt('min', null, 'GET');
+$show    = XoopsRequest::getInt('show', null, 'GET');
+$orderby = XoopsRequest::getInt('orderby', null, 'GET');
 
 switch ($pa) {
     default:

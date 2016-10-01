@@ -26,9 +26,9 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-$groups        = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
 //If no access
 if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -78,7 +78,7 @@ function tips_writing()
 
 ######################################################
 
-$pa = !isset($_GET['pa']) ? null : $_GET['pa'];
+$pa      = XoopsRequest::getInt('pa', null, 'GET');
 
 switch ($pa) {
     default:

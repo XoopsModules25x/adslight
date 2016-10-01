@@ -32,7 +32,7 @@ function index()
 
     //  $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-//    include_once __DIR__ . '/header.php';
+    //    include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -224,7 +224,7 @@ function indexView($lid = null)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-//    include_once __DIR__ . '/header.php';
+    //    include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -320,7 +320,11 @@ function indexView($lid = null)
         }
         echo '</select></td></tr>';
 
-        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '';
+        echo "<tr class='head' border='1'><td>"
+             . _AM_ADSLIGHT_PRICE2
+             . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> "
+             . $GLOBALS['xoopsModuleConfig']['adslight_money']
+             . '';
         $result3 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
         echo " <select name=\"typeprice\"><option value=\"$typeprice\">$typeprice</option>";
         while (list($nom_price) = $xoopsDB->fetchRow($result3)) {
@@ -368,7 +372,7 @@ function modifyAds($lid)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-//    include_once __DIR__ . '/header.php';
+    //    include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
     $id_price  = '';
@@ -484,7 +488,11 @@ function modifyAds($lid)
         echo '</select></td></tr>';
 
         /////// Price
-        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '';
+        echo "<tr class='head' border='1'><td>"
+             . _AM_ADSLIGHT_PRICE2
+             . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> "
+             . $GLOBALS['xoopsModuleConfig']['adslight_money']
+             . '';
 
         //////// Price type
 
@@ -780,7 +788,7 @@ foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
 
-$pa = isset($_GET['pa']) ? $_GET['pa'] : '';
+$pa      = XoopsRequest::getInt('pa', '', 'GET');
 
 if (!isset($_POST['lid']) && isset($_GET['lid'])) {
     $lid = $_GET['lid'];

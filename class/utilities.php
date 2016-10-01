@@ -33,12 +33,12 @@
 
 //namespace Xoopsmodules/Adslight;
 
-
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . strtoupper($moduleDirName);
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 $myts = MyTextSanitizer::getInstance();
+
 /**
  * Class AdslightUtilities
  */
@@ -176,11 +176,8 @@ class AdslightUtilities
     {
         global $xoopsDB, $moduleDirName, $main_lang;
 
-        if (isset($_GET['usid'])) {
-            $usid = (int)$_GET['usid'];
-        } else {
-            $usid = 0;
-        }
+        $usid      = XoopsRequest::getInt('usid', 0, 'GET');
+
         $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($sel_id) . '';
         //echo $query;
         $voteresult  = $xoopsDB->query($query);
@@ -204,11 +201,8 @@ class AdslightUtilities
     {
         global $xoopsDB, $moduleDirName, $main_lang;
 
-        if (isset($_GET['lid'])) {
-            $lid = (int)$_GET['lid'];
-        } else {
-            $lid = 0;
-        }
+        $lid      = XoopsRequest::getInt('lid', 0, 'GET');
+
         $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . '';
         //echo $query;
         $voteresult  = $xoopsDB->query($query);
@@ -275,7 +269,7 @@ class AdslightUtilities
         $moduleHandler          = xoops_getHandler('module');
         $myModule               = $moduleHandler->getByDirname('adslight');
         $groups                 = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        $gpermHandler          = xoops_getHandler('groupperm');
+        $gpermHandler           = xoops_getHandler('groupperm');
         $categories             = $gpermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
         $permissions[$permtype] = $categories;
 
@@ -553,8 +547,7 @@ class AdslightUtilities
     /**
      * @return mixed
      */
-    public static function goCategory
-()
+    public static function goCategory()
     {
         global $xoopsDB;
 
@@ -577,7 +570,7 @@ class AdslightUtilities
     {
         global $xoopsDB;
 
-        $cid = !isset($_GET['cid']) ? null : $_GET['cid'];
+        $cid      = XoopsRequest::getInt('cid', null, 'GET');
 
         $result = array();
 
@@ -774,7 +767,8 @@ class AdslightUtilities
         }
         closedir($dir);
     }
-        /**
+
+    /**
      *
      * Verifies XOOPS version meets minimum requirements for this module
      * @static

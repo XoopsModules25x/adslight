@@ -30,7 +30,7 @@ is_object($GLOBALS['xoopsUser']) ? $groups = $GLOBALS['xoopsUser']->getGroups() 
 
 $gpermHandler = xoops_getHandler('groupperm');
 
-isset($_POST['item_id']) ? $perm_itemid = (int)$_POST['item_id'] : $perm_itemid = 0;
+$perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
 
 if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -74,7 +74,7 @@ function index()
     $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
     $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 
-//    ExpireAd();
+    //    ExpireAd();
     AdslightUtilities::expireAd();
 
     if ($GLOBALS['xoopsUser']) {
@@ -379,13 +379,13 @@ function categorynewgraphic($cid)
 
 ######################################################
 
-$pa      = !isset($_GET['pa']) ? null : $_GET['pa'];
-$lid     = !isset($_GET['lid']) ? null : $_GET['lid'];
-$cid     = !isset($_GET['cid']) ? null : $_GET['cid'];
-$usid    = isset($_GET['usid']) ? $_GET['usid'] : '';
-$min     = !isset($_GET['min']) ? null : $_GET['min'];
-$show    = !isset($_GET['show']) ? null : $_GET['show'];
-$orderby = !isset($_GET['orderby']) ? null : $_GET['orderby'];
+$pa      = XoopsRequest::getInt('pa', null, 'GET');
+$lid     = XoopsRequest::getInt('lid', null, 'GET');
+$cid     = XoopsRequest::getInt('cid', null, 'GET');
+$usid    = XoopsRequest::getString('usid', '', 'GET');
+$min     = XoopsRequest::getInt('min', null, 'GET');
+$show    = XoopsRequest::getInt('show', null, 'GET');
+$orderby = XoopsRequest::getInt('orderby', null, 'GET');
 
 switch ($pa) {
     case 'Adsview':

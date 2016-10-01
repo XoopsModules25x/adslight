@@ -25,6 +25,7 @@ include_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
 $pathIcon16 = $xoopsModule->getInfo('icons16');
+xoops_load('XoopsLocal');
 
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree                                  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
@@ -41,7 +42,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
 
 //If no access
 $permit = (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
@@ -154,7 +155,7 @@ if ($trows > '0') {
         $rrows = $rrow;
         $xoopsTpl->assign('reply_count', $rrows);
 
-        $result2 = $xoopsDB->query('SELECT r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid =' . $xoopsDB->escape($lid) );
+        $result2 = $xoopsDB->query('SELECT r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid =' . $xoopsDB->escape($lid));
         list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
 
         if ($isadmin) {
@@ -189,10 +190,11 @@ if ($trows > '0') {
         $xoopsTpl->assign('read', "$hits " . _ADSLIGHT_VIEW2);
         $xoopsTpl->assign('rating', number_format($user_rating, 2));
         $xoopsTpl->assign('status_head', _ADSLIGHT_STATUS);
+        $tempXoopsLocal = new XoopsLocal;
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
-        $price = number_format($price, 2, ',', ' ');
+        $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
-        //      $price = number_format($price);
+        //      $price = $tempXoopsLocal->number_format($price);
         $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " - $typeprice");
         $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE);
         $xoopsTpl->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_money']);
@@ -222,7 +224,7 @@ if ($trows > '0') {
             $sold = _ADSLIGHT_RESERVEDMEMBER;
         }
 
-        $xoopsTpl->assign('xoops_pagetitle', '' . _ADSLIGHT_ALL_USER_LISTINGS . ' ' . $submitter );
+        $xoopsTpl->assign('xoops_pagetitle', '' . _ADSLIGHT_ALL_USER_LISTINGS . ' ' . $submitter);
         $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
         $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
                    . $xoopsDB->prefix('adslight_pictures')

@@ -157,10 +157,10 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
 }
 
 ##############################################################
-$yname = !empty($_POST['yname']) ? $myts->addSlashes($_POST['yname']) : '';
-$ymail = !empty($_POST['ymail']) ? $myts->addSlashes($_POST['ymail']) : '';
-$fname = !empty($_POST['fname']) ? $myts->addSlashes($_POST['fname']) : '';
-$fmail = !empty($_POST['fmail']) ? $myts->addSlashes($_POST['fmail']) : '';
+$yname = XoopsRequest::getString('yname', '', 'POST');
+$ymail = XoopsRequest::getString('ymail', '', 'POST');
+$fname = XoopsRequest::getString('fname', '', 'POST');
+$fmail = XoopsRequest::getString('fmail', '', 'POST');
 
 $lid = XoopsRequest::getInt('lid', 0);
 $op  = XoopsRequest::getString('op', '');

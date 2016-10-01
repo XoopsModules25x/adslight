@@ -44,7 +44,7 @@ function tableExists($tablename)
 function xoops_module_pre_update_adslight(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $className = ucfirst($moduleDirName) . 'Utilities';
+    $className     = ucfirst($moduleDirName) . 'Utilities';
     if (!class_exists($className)) {
         xoops_load('utilities', $moduleDirName);
     }
@@ -57,6 +57,7 @@ function xoops_module_pre_update_adslight(XoopsModule $module)
     if (!$className::checkPHPVer($module)) {
         return false;
     }
+
     return true;
 }
 
@@ -74,12 +75,11 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
     if ($previousVersion < 230) {
-        $configurator = include __DIR__ . '/config.php';
+        $configurator   = include __DIR__ . '/config.php';
         $classUtilities = ucfirst($moduleDirName) . 'Utilities';
         if (!class_exists($classUtilities)) {
             xoops_load('utilities', $moduleDirName);
         }
-
 
         //delete old HTML templates
         if (count($configurator['templateFolders']) > 0) {
@@ -99,7 +99,6 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
             }
         }
 
-
         //  ---  DELETE OLD FILES ---------------
         if (count($configurator['oldFiles']) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
@@ -118,7 +117,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
             foreach (array_keys($configurator['oldFolders']) as $i) {
                 $tempFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator['oldFolders'][$i]);
                 /** @var XoopsObjectHandler $folderHandler */
-                $folderHandler   = XoopsFile::getHandler('folder', $tempFolder);
+                $folderHandler = XoopsFile::getHandler('folder', $tempFolder);
                 $folderHandler->delete($tempFolder);
             }
         }
@@ -141,9 +140,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
         }
 
         //delete .html entries from the tpl table
-        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname',
-                                                                                                          'n')
-               . "' AND `tpl_file` LIKE '%.html%'";
+        $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
         $xoopsDB->queryF($sql);
     }
 

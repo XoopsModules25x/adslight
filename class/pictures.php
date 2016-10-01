@@ -44,7 +44,7 @@ class jlm_pictures extends XoopsObject
     public $db;
     // constructor
     /**
-     * @param null $id
+     * @param null       $id
      * @param null|array $lid
      */
     public function __construct($id = null, $lid = null)
@@ -274,7 +274,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      * retrieve jlm_pictures from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
-     * @param  bool   $id_as_key use the UID as key for the array?
+     * @param  bool            $id_as_key use the UID as key for the array?
      * @return array  array of {@link jlm_pictures} objects
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
@@ -367,8 +367,8 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
     {
         global $moduleDirName, $main_lang;
-        $form       = new XoopsThemeForm(constant('_ADSLIGHT_SUBMIT_PIC_TITLE'), 'form_picture', '' . XOOPS_URL . "/modules/adslight/add_photo.php?lid=$lid&uid=" . $GLOBALS['xoopsUser']->getVar('uid') . '',
-                                         'post', true);
+        $form       = new XoopsThemeForm(constant('_ADSLIGHT_SUBMIT_PIC_TITLE'), 'form_picture',
+                                         '' . XOOPS_URL . "/modules/adslight/add_photo.php?lid=$lid&uid=" . $GLOBALS['xoopsUser']->getVar('uid') . '', 'post', true);
         $field_url  = new XoopsFormFile(constant('_ADSLIGHT_SELECT_PHOTO'), 'sel_photo', 2000000);
         $field_desc = new XoopsFormText(constant('_ADSLIGHT_CAPTION'), 'caption', 35, 55);
         $form->setExtra('enctype="multipart/form-data"');
@@ -499,7 +499,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
         global $xoopsDB, $_POST, $_FILES, $lid;
         //busca id do user logado
         $uid = $GLOBALS['xoopsUser']->getVar('uid');
-        $lid = $_POST['lid'];
+        $lid = XoopsRequest::getInt('lid', 0, 'POST');
         //create a hash so it does not erase another file
         $hash1 = time();
         $hash  = substr($hash1, 0, 4);

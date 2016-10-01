@@ -12,9 +12,8 @@
 /**
  * @copyright    XOOPS Project http://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @author     XOOPS Development Team
+ * @author       XOOPS Development Team
  */
-
 
 /**
  *
@@ -26,7 +25,7 @@
 function xoops_module_pre_install_adslight(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
-    $className = ucfirst($moduleDirName) . 'Utilities';
+    $className     = ucfirst($moduleDirName) . 'Utilities';
     if (!class_exists($className)) {
         xoops_load('utilities', $moduleDirName);
     }
@@ -64,7 +63,7 @@ function xoops_module_install_adslight(XoopsModule $module)
     xoops_loadLanguage('admin', $moduleDirName);
     xoops_loadLanguage('modinfo', $moduleDirName);
 
-    $configurator = include __DIR__ . '/config.php';
+    $configurator   = include __DIR__ . '/config.php';
     $classUtilities = ucfirst($moduleDirName) . 'Utilities';
     if (!class_exists($classUtilities)) {
         xoops_load('utilities', $moduleDirName);
@@ -86,5 +85,6 @@ function xoops_module_install_adslight(XoopsModule $module)
             $classUtilities::copyFile($file, $dest);
         }
     }
+
     return true;
 }

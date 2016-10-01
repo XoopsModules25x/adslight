@@ -67,7 +67,7 @@ if ($xCube) {
 /**
  * Receiving info from get parameters
  */
-$cod_img = $_POST['cod_img'];
+$cod_img = XoopsRequest::getString('cod_img', '', 'POST');
 
 /**
  * Creating the factory  and the criteria to delete the picture
@@ -95,7 +95,8 @@ if ($album_factory->deleteAll($criteria)) {
 
     unlink("$path_upload/midsize/resized_$image_name");
 
-    $lid = $_POST['lid'];
+    $lid =  XoopsRequest::getInt('lid', 0, 'POST');
+
     $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo-1 WHERE lid='$lid'");
 
     redirect_header('view_photos.php?lid=' . $lid . '&uid=' . $uid . '', 13, constant('_ADSLIGHT_DELETED'));

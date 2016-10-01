@@ -14,14 +14,14 @@
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
- * @author     XOOPS Development Team
+ * @author       XOOPS Development Team
  */
 
 require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-$modir   = strtoupper($moduleDirName);
+$modir = strtoupper($moduleDirName);
 
 if (!defined($modir . '_DIRNAME')) {
     define($modir . '_DIRNAME', $moduleDirName);
@@ -62,13 +62,12 @@ return array(
     'oldFiles'        => array(
         '/admin/admin.css',
     ),
-    'oldFolders'        => array(
+    'oldFolders'      => array(
         '/images',
         '/style',
     ),
 );
 
-
 // module information
-$mod_copyright  = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
+$mod_copyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($modir . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project' /></a>";

@@ -22,8 +22,8 @@
 
 include_once __DIR__ . '/header.php';
 
-if (isset($_GET['cod_img'])) {
-    $cod_img = (int)$_GET['cod_img'];
+if (null !==  XoopsRequest::getInt('cod_img', null, 'GET')) {
+    $cod_img = XoopsRequest::getInt('cod_img', null, 'GET');
 } else {
     redirect_header('index.php', 1, _ADSLIGHT_VALIDATE_FAILED);
 }

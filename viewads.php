@@ -33,11 +33,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
 $gpermHandler = xoops_getHandler('groupperm');
-if (isset($_POST['item_id'])) {
-    $perm_itemid = (int)$_POST['item_id'];
-} else {
-    $perm_itemid = 0;
-}
+$perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
 //If no access
 if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -63,7 +59,7 @@ function viewAds($lid = 0)
     global $xoopsModuleConfig, $xoopsUser;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
-    $tempXoopsLocal = new XoopsLocal;
+    $tempXoopsLocal                          = new XoopsLocal;
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
     include XOOPS_ROOT_PATH . '/include/comment_view.php';
@@ -221,7 +217,7 @@ function viewAds($lid = 0)
             $contact_pm = '<a href="' . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . addslashes($usid) . '">&nbsp;' . _ADSLIGHT_CONTACT_BY_PM . '</a>';
         }
         if (true === $viewcount_judge) {
-            $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid) );
+            $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid));
         }
         if ($item_votes == 1) {
             $votestring = _ADSLIGHT_ONEVOTE;
@@ -552,13 +548,13 @@ function categorynewgraphic($cid)
 
 ######################################################
 
-$pa      = !isset($_GET['pa']) ? null : $_GET['pa'];
-$lid     = !isset($_GET['lid']) ? null : $_GET['lid'];
-$cid     = !isset($_GET['cid']) ? null : $_GET['cid'];
-$usid    = isset($_GET['usid']) ? $_GET['usid'] : '';
-$min     = !isset($_GET['min']) ? null : $_GET['min'];
-$show    = !isset($_GET['show']) ? null : $_GET['show'];
-$orderby = !isset($_GET['orderby']) ? null : $_GET['orderby'];
+$pa      = XoopsRequest::getInt('pa', null, 'GET');
+$lid     = XoopsRequest::getInt('lid', null, 'GET');
+$cid     = XoopsRequest::getInt('cid', null, 'GET');
+$usid    = XoopsRequest::getString('usid', '', 'GET');
+$min     = XoopsRequest::getInt('min', null, 'GET');
+$show    = XoopsRequest::getInt('show', null, 'GET');
+$orderby = XoopsRequest::getInt('orderby', null, 'GET');
 
 switch ($pa) {
 

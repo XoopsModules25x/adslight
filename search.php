@@ -65,7 +65,7 @@ if ($action === 'results') {
 }
 
 $groups            = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gpermHandler     = xoops_getHandler('groupperm');
+$gpermHandler      = xoops_getHandler('groupperm');
 $available_modules = $gpermHandler->getItemIds('module_read', $groups);
 
 if ($action === 'search') {
@@ -112,7 +112,7 @@ switch ($action) {
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $moduleHandler->getObjects($criteria, true);
-        $mids    = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
+        $mids    = XoopsRequest::getArray('mids', array());
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($xmid);
