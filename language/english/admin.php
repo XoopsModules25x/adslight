@@ -146,7 +146,6 @@ define('_AM_ADSLIGHT_STATUS', 'Status');
 define('_AM_ADSLIGHT_UPDATECOMPLETE', 'Update Complete');
 define('_AM_ADSLIGHT_UPDATEMODULE', '<b>Update Module</b>');
 define('_AM_ADSLIGHT_UPGRADEFAILED', 'Update Failed');
-define('_AM_ADSLIGHT_UPGRADEFAILED0', 'Update');
 define('_AM_ADSLIGHT_UPGR_ACCESS_ERROR', 'Access Error');
 define('_AM_ADSLIGHT_WEBMASTER', 'Webmaster');
 define('_AM_ADSLIGHT_YOUR_AD', 'Your ad');

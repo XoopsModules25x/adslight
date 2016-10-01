@@ -33,7 +33,7 @@ function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName, $admin_lang;
 
-    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+//    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     include_once __DIR__ . '/header.php';
     xoops_cp_header();
@@ -124,7 +124,7 @@ function modifyAds($lid)
     global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $moduleDirName, $admin_lang;
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
-
+    $contactselect = '';
     include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");

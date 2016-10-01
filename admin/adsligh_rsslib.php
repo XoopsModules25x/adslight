@@ -181,7 +181,7 @@ function RSS_Display($url, $size = 15, $site = 0)
             }
             $page .= '<b>';
         } else {
-            if ($opened == false) {
+            if ($opened === false) {
                 $page .= '<ul>';
                 $opened = true;
             }
@@ -191,7 +191,7 @@ function RSS_Display($url, $size = 15, $site = 0)
         $page .= "<tr class=\"even\"><td width=\"300\"><img src=\"../assets/images/admin/info_button.png\" border=0 /> <a href=\"$link\">$title</a><br>";
 
         $description = $article['description'];
-        if ($description != false) {
+        if ($description !== false) {
             $page .= "$description<br><br></td></tr>";
         }
         $page .= '';
@@ -238,7 +238,7 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
             }
             $page .= '<b>';
         } else {
-            if ($opened == false) {
+            if ($opened === false) {
                 $page .= '<ul>';
                 $opened = true;
             }

@@ -356,10 +356,10 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     /**
      * Render a form to send pictures
      *
-     * @param         $uid
-     * @param         $lid
-     * @param  int    $maxbytes the maximum size of a picture
-     * @param  object $xoopsTpl the one in which the form will be rendered
+     * @param int      $uid
+     * @param int      $lid
+     * @param int      $maxbytes the maximum size of a picture
+     * @param XoopsTpl $xoopsTpl the one in which the form will be rendered
      * @return bool   TRUE
      *
      * obs: Some functions wont work on php 4 so edit lines down under acording to your version

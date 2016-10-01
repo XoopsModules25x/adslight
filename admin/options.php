@@ -31,6 +31,7 @@ function index()
     include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
+    $adminObject = new ModuleAdmin();
     echo $adminObject->addNavigation(basename(__FILE__));
     // Ajouter un type
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td valign='top'>\n";
