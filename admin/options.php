@@ -21,14 +21,14 @@
 */
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getCmd('op', 'liste');
+$op = XoopsRequest::getString('op', 'liste');
 
 #  function Index
 #####################################################
 function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
     $adminObject = new ModuleAdmin();
@@ -137,7 +137,7 @@ function listingAddType($type)
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='$type'"));
     if ($numrows > 0) {
-        include_once __DIR__ . '/header.php';
+//        include_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
 
@@ -171,7 +171,7 @@ function listingAddType($type)
 function listingModType($id_type)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     $id_type = (int)$id_type;
     //    loadModuleAdminMenu(2, "");
@@ -247,7 +247,7 @@ function listingAddPrice($type)
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='$type'"));
     if ($numrows > 0) {
-        include_once __DIR__ . '/header.php';
+//        include_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
 
@@ -281,7 +281,7 @@ function listingModPrice($id_price)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODPRICE . '</legend>';
@@ -353,7 +353,7 @@ function listingAddUsure($type)
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE nom_usure='$type'"));
     if ($numrows > 0) {
-        include_once __DIR__ . '/header.php';
+//        include_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
 
@@ -386,7 +386,7 @@ function listingModUsure($id_usure)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODUSURE . '</legend>';
@@ -458,7 +458,7 @@ foreach ($_POST as $k => $v) {
 
 $pa  = XoopsRequest::getString('pa', '', 'GET');
 $lid = XoopsRequest::getInt('lid', 0);
-$op  = XoopsRequest::getCmd('op', '');
+$op  = XoopsRequest::getString('op', '');
 
 switch ($op) {
     case 'ListingDelPrice':

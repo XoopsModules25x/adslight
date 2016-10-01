@@ -41,7 +41,7 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
 }
 xoops_load('XoopsRequest');
 
-$action = XoopsRequest::getCmd('action', 'search');
+$action = XoopsRequest::getString('action', 'search');
 $query  = XoopsRequest::getString('query', '');
 $andor  = XoopsRequest::getString('andor', 'AND');
 $mid    = XoopsRequest::getInt('mid', 0);

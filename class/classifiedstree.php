@@ -85,7 +85,7 @@ class classifiedstree
     public function getFirstChildId($sel_id)
     {
         $idarray = array();
-        $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '');
+        $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id));
 
         $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
@@ -176,7 +176,7 @@ class classifiedstree
     {
 
         $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '';
-//        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '');
+//        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . "'");
 
         $categories = AdslightUtilities::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
@@ -311,7 +311,7 @@ class classifiedstree
      */
     public function getIdPathFromId($sel_id, $path = '')
     {
-        $result = $this->db->query('SELECT SQL_CACHE ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '');
+        $result = $this->db->query('SELECT SQL_CACHE ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id));
         if ($this->db->getRowsNum($result) == 0) {
             return $path;
         }

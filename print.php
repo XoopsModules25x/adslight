@@ -39,8 +39,7 @@ function PrintAd($lid)
                               . ' l LEFT JOIN '
                               . $xoopsDB->prefix('adslight_pictures')
                               . ' p ON l.lid=p.lid WHERE l.lid='
-                              . $xoopsDB->escape($lid)
-                              . '');
+                              . $xoopsDB->escape($lid));
     list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($result);
 
     $title     = $myts->htmlSpecialChars($title);
@@ -118,7 +117,7 @@ function PrintAd($lid)
 ##############################################################
 
 $lid = XoopsRequest::getInt('lid', 0);
-$op  = XoopsRequest::getCmd('op', '');
+$op  = XoopsRequest::getString('op', '');
 
 switch ($op) {
 
@@ -127,7 +126,7 @@ switch ($op) {
         break;
 
     default:
-        redirect_header('index.php', 3, '' . _RETURNANN . '');
+        redirect_header('index.php', 3, ' ' . _RETURNANN . ' ');
         break;
 
 }

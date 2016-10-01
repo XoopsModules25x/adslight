@@ -240,7 +240,7 @@ if (!empty($_POST['submit'])) {
         $form->addElement(new XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_contents()), true);
         ob_end_clean();
 
-        $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid) . '');
+        $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid='" . $xoopsDB->escape($cid) . "'");
 
         list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
 

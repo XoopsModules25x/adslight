@@ -32,7 +32,7 @@ xoops_header();
 global $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
 $currenttheme = getTheme();
 
-$result      = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_picture') . ' WHERE cod_img = ' . $xoopsDB->escape($cod_img) . '');
+$result      = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_picture') . " WHERE cod_img = '" . $xoopsDB->escape($cod_img) . "'");
 $recordexist = $xoopsDB->getRowsNum($result);
 
 if ($recordexist) {

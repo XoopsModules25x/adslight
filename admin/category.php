@@ -23,7 +23,7 @@
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$op = XoopsRequest::getCmd('op', 'liste');
+$op = XoopsRequest::getString('op', 'liste');
 
 #  function adsNewCat
 #####################################################
@@ -36,13 +36,12 @@ function adsNewCat($cat)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+    //    include_once __DIR__ . '/header.php';
 
     //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_ADDSUBCAT . '</legend>';
-//    ShowImg();
+    //    ShowImg();
     AdslightUtilities::showImage();
-
 
     echo "<form method=\"post\" action=\"category.php\" name=\"imcat\"><input type=\"hidden\" name=\"op\" value=\"AdsAddCat\"></font><br><br>
         <table class=\"outer\" border=0>
@@ -156,11 +155,11 @@ function adsModCat($cid)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
 
     //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODIFCAT . '</legend>';
-//    ShowImg();
+    //    ShowImg();
     AdslightUtilities::showImage();
 
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, ordre, affprice, cat_moderate, moderate_subcat FROM '
@@ -310,9 +309,9 @@ function adsModCatS(
                     . " SET title='$title', cat_desc='$cat_desc', cat_keywords='$cat_keywords', pid='$cid', img='$img', ordre='$ordre', affprice='$affprice', cat_moderate='$cat_moderate', moderate_subcat='$moderate_subcat' WHERE cid=$cidd");
 
     if ($moderate_subcat != 1) {
-        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=0, moderate_subcat=0 WHERE pid = ' . $xoopsDB->escape($cidd) . '');
+        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=0, moderate_subcat=0 WHERE pid = ' . $xoopsDB->escape($cidd));
     } else {
-        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=1, moderate_subcat=1 WHERE pid = ' . $xoopsDB->escape($cidd) . '');
+        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=1, moderate_subcat=1 WHERE pid = ' . $xoopsDB->escape($cidd));
     }
 
     redirect_header('map.php', 10, _AM_ADSLIGHT_CATSMOD);
@@ -346,9 +345,9 @@ function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $ordre, $affpri
                     . " values (NULL, '$cid', '$title', '$cat_desc', '$cat_keywords', '$img', '$ordre', '$affprice', '$cat_moderate', '$moderate_subcat')");
 
     if ($moderate_subcat = 1) {
-        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=1 WHERE pid = ' . $xoopsDB->escape($cid) . '');
+        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=1 WHERE pid = ' . $xoopsDB->escape($cid));
     } else {
-        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=0 WHERE pid = ' . $xoopsDB->escape($cid) . '');
+        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . ' SET cat_moderate=0 WHERE pid = ' . $xoopsDB->escape($cid));
     }
 
     redirect_header('map.php', 3, _AM_ADSLIGHT_CATADD);
@@ -371,7 +370,7 @@ function adsDelCat($cid, $ok = 0)
 
         redirect_header('map.php', 1, _AM_ADSLIGHT_CATDEL);
     } else {
-        include_once __DIR__ . '/header.php';
+//        include_once __DIR__ . '/admin_header.php';
         //        loadModuleAdminMenu(1, "");
 
         OpenTable();
@@ -390,7 +389,7 @@ foreach ($_POST as $k => $v) {
 
 $ok  = XoopsRequest::getString('ok', '', 'GET');
 $cid = XoopsRequest::getInt('cid', 0);
-$op  = XoopsRequest::getCmd('op', '');
+$op  = XoopsRequest::getString('op', '');
 
 switch ($op) {
 
@@ -415,7 +414,7 @@ switch ($op) {
         break;
 
     default:
-//        index();
+        //        index();
         break;
 
 }

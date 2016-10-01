@@ -26,7 +26,8 @@ include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 function b_adslight_add()
 {
     global $xoopsDB;
-
+    $moduleDirName = basename(dirname(__DIR__));
+    xoops_loadLanguage('main', $moduleDirName);
     $xt   = new XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $jump = XOOPS_URL . '/modules/adslight/addlisting.php?cid=';
     ob_start();

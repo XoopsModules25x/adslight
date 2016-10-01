@@ -60,6 +60,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'p
 function viewAds($lid = 0)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
+    global $xoopsModuleConfig, $xoopsUser;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
 
     $tempXoopsLocal = new XoopsLocal;
@@ -104,7 +105,7 @@ function viewAds($lid = 0)
             list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
             $xoopsTpl->assign('show_user', $show_user);
-            $xoopsTpl->assign('show_user_link', 'members.php?usid=' . $member_usid . '');
+            $xoopsTpl->assign('show_user_link', 'members.php?usid=' . $member_usid);
         }
     }
 
@@ -156,7 +157,7 @@ function viewAds($lid = 0)
         $x     = 0;
         $i     = 0;
 
-        $result3 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE  cid=' . $xoopsDB->escape($cid) . '');
+        $result3 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE  cid=' . $xoopsDB->escape($cid));
         list($ccid, $pid, $ctitle) = $xoopsDB->fetchRow($result3);
 
         $xoopsTpl->assign('category_title', $ctitle);
@@ -179,7 +180,7 @@ function viewAds($lid = 0)
         if ($pid != 0) {
             $x = 1;
             while ($pid != 0) {
-                $result4 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($pid) . '');
+                $result4 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($pid));
                 list($ccid, $pid, $ctitle) = $xoopsDB->fetchRow($result4);
 
                 $ctitle     = $myts->htmlSpecialChars($ctitle);
@@ -220,7 +221,7 @@ function viewAds($lid = 0)
             $contact_pm = '<a href="' . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . addslashes($usid) . '">&nbsp;' . _ADSLIGHT_CONTACT_BY_PM . '</a>';
         }
         if (true === $viewcount_judge) {
-            $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid) . '');
+            $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid) );
         }
         if ($item_votes == 1) {
             $votestring = _ADSLIGHT_ONEVOTE;
@@ -324,13 +325,13 @@ function viewAds($lid = 0)
             }
         }
 
-        $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
+        $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
         list($nom_type) = $xoopsDB->fetchRow($result7);
 
-        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . $xoopsDB->escape($typeprice) . '');
+        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
         list($nom_price) = $xoopsDB->fetchRow($result8);
 
-        $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' WHERE id_usure=' . $xoopsDB->escape($typeusure) . '');
+        $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure='" . $xoopsDB->escape($typeusure) . "'");
         list($nom_usure) = $xoopsDB->fetchRow($result9);
 
         $xoopsTpl->assign('type', $myts->htmlSpecialChars($nom_type));
@@ -481,12 +482,11 @@ function viewAds($lid = 0)
                                   . '<br><img alt="date_error" border="0" src="assets/images/date_error.png" />&nbsp;&nbsp;<strong>'
                                   . _ADSLIGHT_DISPO
                                   . ':</strong> '
-                                  . $date2
-                                  . '');
+                                  . $date2);
     } else {
         $xoopsTpl->assign('no_ad', _ADSLIGHT_NOCLAS);
     }
-    $result8 = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid) . '');
+    $result8 = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid));
 
     list($ctitle) = $xoopsDB->fetchRow($result8);
     $xoopsTpl->assign('friend', '<img src="assets/images/friend.gif" border="0" alt="'

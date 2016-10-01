@@ -37,7 +37,7 @@ function ReportAbuse($lid)
     include XOOPS_ROOT_PATH . '/header.php';
 
     $lid    = (int)$lid;
-    $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
+    $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) );
     list($lid, $title, $type) = $xoopsDB->fetchRow($result);
 
     $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
@@ -107,8 +107,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM '
                               . $xoopsDB->prefix('adslight_listing')
                               . ' WHERE lid='
-                              . $xoopsDB->escape($lid)
-                              . '');
+                              . $xoopsDB->escape($lid));
     list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
@@ -175,7 +174,7 @@ $fname = !empty($_POST['fname']) ? $myts->addSlashes($_POST['fname']) : '';
 $fmail = !empty($_POST['fmail']) ? $myts->addSlashes($_POST['fmail']) : '';
 
 $lid = XoopsRequest::getInt('lid', 0);
-$op  = XoopsRequest::getCmd('op', '');
+$op  = XoopsRequest::getString('op', '');
 
 switch ($op) {
     case 'ReportAbuse':

@@ -494,7 +494,7 @@ $modversion['config'][33]['description'] = '_MI_ADSLIGHT_LIST_ADMIN_EDITORS';
 $modversion['config'][33]['formtype']    = 'select';
 $modversion['config'][33]['valuetype']   = 'text';
 $modversion['config'][33]['default']     = 'dhtmltextarea';
-$modversion['config'][33]['options']     = $editorList;;
+$modversion['config'][33]['options']     = $editorList;
 
 $modversion['config'][34]['name']        = 'adslight_lightbox';
 $modversion['config'][34]['title']       = '_MI_ADSLIGHT_LIGHTBOX';
@@ -635,7 +635,7 @@ $modversion['config'][51]['description'] = '_MI_ADSLIGHT_DESC_STBOOKMARK';
 $modversion['config'][51]['formtype']    = 'select';
 $modversion['config'][51]['valuetype']   = 'int';
 $modversion['config'][51]['default']     = '1';
-$modversion['config'][51]['options']     = array('1' => 1, '2' => 2, '3' => 3);
+$modversion['config'][51]['options']     = array('Twitter' => 1, 'Facebook' => 2, 'Google' => 3);
 
 $modversion['config'][52]['name']        = 'adslight_tips_writetitle';
 $modversion['config'][52]['title']       = '_MI_ADSLIGHT_TITLE_TIPS_WRITE';

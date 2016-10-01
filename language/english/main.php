@@ -375,7 +375,7 @@ define('_ADSLIGHT_ADD_TITLEMENU8', 'You must be logged in to read your messages.
 define('_ADSLIGHT_ADD_TITLEMENU9', 'You must be logged in to see your profile.');
 define('_ADSLIGHT_ADD_TITLEMENU10', 'View or edit your profile here.');
 //viewcats.php >> Infos Bulle //
-define('_ADSLIGHT_ADD_LISTING_BULLCATS', 'You can add <br>ads in this category<br>');
+define('_ADSLIGHT_ADD_LISTING_BULLCATS', 'You can add <br>ads in this category');
 define('_ADSLIGHT_ADD_LISTING_BULLCATSOK', 'To add one or more <br>ads in this category<br>Thank you for ');
 // Reserved
 //define("_ADSLIGHT_RESERVED","Reserved");

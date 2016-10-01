@@ -79,10 +79,10 @@ function xoops_module_install_adslight(XoopsModule $module)
     }
 
     //  ---  COPY blank.png FILES ---------------
-    if (count($configurator['copyBlankFiles']) > 0) {
+    if (count($configurator['copyFiles']) > 0) {
         $file = __DIR__ . '/../assets/images/blank.png';
-        foreach (array_keys($configurator['copyBlankFiles']) as $i) {
-            $dest = $configurator['copyBlankFiles'][$i] . '/blank.png';
+        foreach (array_keys($configurator['copyFiles']) as $i) {
+            $dest = $configurator['copyFiles'][$i] . '/blank.png';
             $classUtilities::copyFile($file, $dest);
         }
     }

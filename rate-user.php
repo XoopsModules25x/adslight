@@ -41,7 +41,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
 
     // Check if Link POSTER is voting (UNLESS Anonymous users allowed to post)
     if ($ratinguser != 0) {
-        $result = $xoopsDB->query('SELECT submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid) . '');
+        $result = $xoopsDB->query('SELECT submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid));
         while (list($ratinguserDB) = $xoopsDB->fetchRow($result)) {
             if ($ratinguserDB == $ratinguser) {
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 4, constant('_ADSLIGHT_CANTVOTEOWN'));
@@ -49,7 +49,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
         }
 
         // Check if REG user is trying to vote twice.
-        $result = $xoopsDB->query('SELECT ratinguser FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($usid) . '');
+        $result = $xoopsDB->query('SELECT ratinguser FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($usid));
         while (list($ratinguserDB) = $xoopsDB->fetchRow($result)) {
             if ($ratinguserDB == $ratinguser) {
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 4, constant('_ADSLIGHT_VOTEONCE2'));
@@ -93,7 +93,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_rate_user.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
     $usid   = XoopsRequest::getInt('usid', 0, 'GET');
-    $result = $xoopsDB->query('SELECT title, usid, submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid) . '');
+    $result = $xoopsDB->query('SELECT title, usid, submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid));
     list($title, $usid, $submitter) = $xoopsDB->fetchRow($result);
     $xoopsTpl->assign('link', array('usid' => $usid, 'title' => $myts->htmlSpecialChars($title), 'submitter' => $submitter));
     $xoopsTpl->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));

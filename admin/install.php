@@ -31,7 +31,7 @@ xoops_cp_header();
 //    loadModuleAdminMenu (6, "");
 //}
 
-$action = XoopsRequest::getCmd('action', '', 'POST');
+$action = XoopsRequest::getString('action', '', 'POST');
 if (!empty($action)) {
     $file = XoopsRequest::getString('file', '', 'POST');
 }

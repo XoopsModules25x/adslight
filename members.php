@@ -149,12 +149,12 @@ if ($trows > '0') {
         if (2 == $status) {
             $status_is = _ADSLIGHT_SOLD;
         }
-        $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
+        $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . " WHERE lid='" . $xoopsDB->escape($lid) . "'");
         list($rrow) = $xoopsDB->fetchRow($countresult);
         $rrows = $rrow;
         $xoopsTpl->assign('reply_count', $rrows);
 
-        $result2 = $xoopsDB->query('SELECT r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid =' . $xoopsDB->escape($lid) . '');
+        $result2 = $xoopsDB->query('SELECT r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid =' . $xoopsDB->escape($lid) );
         list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
 
         if ($isadmin) {
@@ -195,7 +195,7 @@ if ($trows > '0') {
         //      $price = number_format($price);
         $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " - $typeprice");
         $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE);
-        $xoopsTpl->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '');
+        $xoopsTpl->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_money']);
         $xoopsTpl->assign('price_typeprice', $typeprice);
         $xoopsTpl->assign('local_town', "$town");
         $xoopsTpl->assign('local_country', "$country");
@@ -222,7 +222,7 @@ if ($trows > '0') {
             $sold = _ADSLIGHT_RESERVEDMEMBER;
         }
 
-        $xoopsTpl->assign('xoops_pagetitle', '' . _ADSLIGHT_ALL_USER_LISTINGS . ' ' . $submitter . '');
+        $xoopsTpl->assign('xoops_pagetitle', '' . _ADSLIGHT_ALL_USER_LISTINGS . ' ' . $submitter );
         $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
         $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
                    . $xoopsDB->prefix('adslight_pictures')

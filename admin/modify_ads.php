@@ -22,7 +22,7 @@
 
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getCmd('op', 'liste');
+$op = XoopsRequest::getString('op', 'liste');
 
 /**
  * Main Ad Display
@@ -35,7 +35,7 @@ function index()
 
 //    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -79,7 +79,7 @@ function index()
         ///////// Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
-        echo "<span style='color:#00B4C4'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <span style='color:#00B4C4'>" . _AM_ADSLIGHT_WAIT . '</b></span>';
+        echo "<span style='color:#00B4C4;'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <span style='color:#00B4C4'>" . _AM_ADSLIGHT_WAIT . '</b></span>';
         echo '</td></tr></table><br>';
     } else {
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
@@ -125,7 +125,7 @@ function modifyAds($lid)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $contactselect = '';
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
     $id_price  = '';
@@ -383,8 +383,7 @@ function listingDel($lid, $photo)
                                . ' l LEFT JOIN '
                                . $xoopsDB->prefix('adslight_pictures')
                                . ' p  ON l.lid=p.lid WHERE l.lid='
-                               . $xoopsDB->escape($lid)
-                               . '');
+                               . $xoopsDB->escape($lid));
 
     while (list($purl) = $xoopsDB->fetchRow($result2)) {
         if ($purl) {
@@ -417,7 +416,7 @@ foreach ($_POST as $k => $v) {
 }
 $pa  = XoopsRequest::getString('pa', '', 'GET');
 $lid = XoopsRequest::getInt('lid', 0);
-$op  = XoopsRequest::getCmd('op', '');
+$op  = XoopsRequest::getString('op', '');
 
 switch ($op) {
     case 'IndexView':

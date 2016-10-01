@@ -121,7 +121,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $member_usid . ''));
 
             $xoopsTpl->assign('show_user', $show_user);
-            $xoopsTpl->assign('show_user_link', 'members.php?usid=' . $member_usid . '');
+            $xoopsTpl->assign('show_user_link', 'members.php?usid=' . $member_usid);
         }
     }
 
@@ -165,7 +165,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
 
-    $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid) . ' ' . $cat_perms . '');
+    $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid) . ' ' . $cat_perms);
     list($cid, $pid, $title, $cat_desc, $cat_keywords) = $xoopsDB->fetchRow($result);
 
     $xoopsTpl->assign('cat_desc', $cat_desc);
@@ -281,8 +281,8 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             $xoopsTpl->assign('lang_dateold', _ADSLIGHT_DATEOLD);
             $xoopsTpl->assign('lang_datenew', _ADSLIGHT_DATENEW);
             $xoopsTpl->assign('lang_price', _ADSLIGHT_PRICE);
-            $xoopsTpl->assign('lang_priceltoh', '' . _ADSLIGHT_PRICELTOH . '');
-            $xoopsTpl->assign('lang_pricehtol', '' . _ADSLIGHT_PRICEHTOL . '');
+            $xoopsTpl->assign('lang_priceltoh',  _ADSLIGHT_PRICELTOH);
+            $xoopsTpl->assign('lang_pricehtol', _ADSLIGHT_PRICEHTOL);
             $xoopsTpl->assign('lang_popularity', _ADSLIGHT_POPULARITY);
             $xoopsTpl->assign('lang_popularityleast', _ADSLIGHT_POPULARITYLTOM);
             $xoopsTpl->assign('lang_popularitymost', _ADSLIGHT_POPULARITYMTOL);
@@ -332,10 +332,10 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                 }
             }
 
-            $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
+            $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
             list($nom_type) = $xoopsDB->fetchRow($result7);
 
-            $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . $xoopsDB->escape($typeprice) . '');
+            $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
             list($nom_price) = $xoopsDB->fetchRow($result8);
 
             $a_item['type']   = $myts->htmlSpecialChars($nom_type);

@@ -23,15 +23,13 @@
 include_once __DIR__ . '/admin_header.php';
 //include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 
-$op = XoopsRequest::getCmd('op', 'liste');
-
-include_once __DIR__ . '/header.php';
+$op = XoopsRequest::getString('op', 'liste');
 xoops_cp_header();
 //loadModuleAdminMenu(3, "");
 echo $adminObject->addNavigation(basename(__FILE__));
 echo '<br><br>';
 global $xoopsDB;
-$countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories') . '');
+$countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories'));
 list($cat_row) = $xoopsDB->fetchRow($countresult);
 $cat_rows = $cat_row;
 if ($cat_rows == '0') {

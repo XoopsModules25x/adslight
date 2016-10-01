@@ -22,7 +22,7 @@
 
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getCmd('op', 'liste');
+$op = XoopsRequest::getString('op', 'liste');
 
 #  function Index
 #####################################################
@@ -32,7 +32,7 @@ function index()
     //    include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     //  require_once("adsligh_rsslib.php");
 
     xoops_cp_header();
@@ -65,7 +65,7 @@ function index()
     if ($numrows > 0) {
         echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
-        echo "<span style='color:#00B4C4'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <span style='color:#00B4C4'>" . _AM_ADSLIGHT_WAIT . '</b></span>';
+        echo "<span style='color:#00B4C4;'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <span style='color:#00B4C4'>" . _AM_ADSLIGHT_WAIT . '</b></span>';
         echo '</td></tr></table><br>';
     } else {
         echo "<table class='outer' width='50%' border='0'><tr><td width=40>";
@@ -308,7 +308,7 @@ foreach ($_POST as $k => $v) {
 
 $pa  = XoopsRequest::getString('pa', '', 'GET');
 $lid = XoopsRequest::getInt('lid', 0);
-$op  = XoopsRequest::getCmd('op', '');
+$op  = XoopsRequest::getString('op', '');
 
 switch ($op) {
     case 'CopyXml':

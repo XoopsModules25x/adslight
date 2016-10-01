@@ -74,7 +74,7 @@ define('_AM_ADSLIGHT_THEREIS', 'There are ');
 define('_AM_ADSLIGHT_WAIT', 'Ads waiting to be moderated');
 define('_AM_ADSLIGHT_ADDTYPE', 'Add Ad type');
 define('_AM_ADSLIGHT_ERRORTYPE', 'ERROR: type');
-define('_AM_ADSLIGHT_EXIST', 'alredy exists!');
+define('_AM_ADSLIGHT_EXIST', 'already exists!');
 define('_AM_ADSLIGHT_ERRORCAT', 'ERROR: Category');
 define('_AM_ADSLIGHT_ERRORSUBCAT', 'ERROR: Subcategory');
 define('_AM_ADSLIGHT_TYPEMOD', 'The ad type has been modified');
@@ -222,7 +222,7 @@ define('_AM_ADSLIGHT_RELEASEDOWNLOAD', 'Download.');
 // Méta Description / keywords Categories
 define('_AM_ADSLIGHT_CAT_META_DESCRIPTION', '<strong>Meta Description:</strong><br>For better optimization,</b>add here a precise description of your class. ');
 define('_AM_ADSLIGHT_CAT_META_KEYWORDS',
-       "<strong>Meta keywords:</strong><br>For better SEO,</b>add here a precise description of your category..<br><strong><span style='color:#ff3300'>separate words by commas</span></strong>. ( english, spanish, french,...)");
+       "<strong>Meta keywords:</strong><br>For better SEO,</b>add here a precise description of your category..<br><strong><span style='color:#ff3300;'>separate words by commas</span></strong>. ( english, spanish, french,...)");
 //Version 1.053
 // Test Maps Xml
 define('_AM_ADSLIGHT_XMLNOTOK', 'The xml file for the card is absent, or else does not match the card selected in the preferences.');

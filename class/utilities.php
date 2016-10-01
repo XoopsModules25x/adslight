@@ -108,7 +108,7 @@ class AdslightUtilities
 
             if ($supprdate < $datenow) {
                 if ($photo != 0) {
-                    $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lids) . '');
+                    $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lids));
 
                     while (list($url) = $xoopsDB->fetchRow($result2)) {
                         $destination  = XOOPS_ROOT_PATH . '/uploads/AdsLight';
@@ -126,7 +126,7 @@ class AdslightUtilities
                     }
                 }
 
-                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lids) . '');
+                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lids));
 
                 //  Specification for Japan:
                 //  $message = ""._ADS_HELLO." $submitter,\n\n"._ADS_STOP2."\n $type : $title\n $desctext\n"._ADS_STOP3."\n\n"._ADS_VU." $lu "._ADS_VU2."\n\n"._ADS_OTHER." ".XOOPS_URL."/modules/myAds\n\n"._ADS_THANK."\n\n"._ADS_TEAM." ".$meta['title']."\n".XOOPS_URL."";
@@ -619,7 +619,7 @@ class AdslightUtilities
     public static function getNameType($type)
     {
         global $xoopsDB;
-        $sql = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
+        $sql = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
         list($nom_type) = $xoopsDB->fetchRow($sql);
 
         return $nom_type;

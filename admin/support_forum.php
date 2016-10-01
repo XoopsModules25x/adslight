@@ -21,7 +21,7 @@
 */
 
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once __DIR__ . '/header.php';
+include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 //if ( !is_readable(XOOPS_ROOT_PATH. "/Frameworks/art/functions.admin.php")) {

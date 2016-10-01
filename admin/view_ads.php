@@ -32,7 +32,7 @@ function index()
 
     //  $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -76,7 +76,7 @@ function index()
         // Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
-        echo "<span style='color:#00B4C4'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <b><span style='color:#00B4C4'>" . _AM_ADSLIGHT_ADSVALIDE . '</b></span>';
+        echo "<span style='color:#00B4C4;'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <b><span style='color:#00B4C4'>" . _AM_ADSLIGHT_ADSVALIDE . '</b></span>';
         echo '</td></tr></table><br>';
 
         // Liste des ID  ///// Soumis par /////  Titre   /////  Description  /////  Date d'ajout
@@ -144,10 +144,10 @@ function index()
                 $photo4 = '0';
             }
 
-            $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
+            $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
             list($nom_type) = $xoopsDB->fetchRow($result7);
 
-            $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . $xoopsDB->escape($typeprice) . '');
+            $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
             list($nom_price) = $xoopsDB->fetchRow($result8);
 
             echo "<form action=\"view_ads.php\" method=\"post\">";
@@ -224,7 +224,7 @@ function indexView($lid = null)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -368,7 +368,7 @@ function modifyAds($lid)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
     $id_price  = '';
@@ -621,8 +621,7 @@ function listingDel($lid, $photo)
                                . ' l LEFT JOIN '
                                . $xoopsDB->prefix('adslight_pictures')
                                . ' p  ON l.lid=p.lid WHERE l.lid='
-                               . $xoopsDB->escape($lid)
-                               . '');
+                               . $xoopsDB->escape($lid));
 
     while (list($purl) = $xoopsDB->fetchRow($result2)) {
         if ($purl) {

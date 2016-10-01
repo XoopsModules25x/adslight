@@ -29,7 +29,7 @@
  */
 function adslight_b2_show($options)
 {
-    global $xoopsDB, $blockdirname, $block_lang;
+    global $xoopsDB, $xoopsModuleConfig, $blockdirname, $block_lang;
 
     $block = array();
     $myts  = MyTextSanitizer::getInstance();
@@ -41,7 +41,7 @@ function adslight_b2_show($options)
 
     $block['title'] = '' . constant($block_lang . '_TITLE') . '';
 
-    $updir      = $GLOBALS['xoopsModuleConfig']['' . $blockdirname . '_link_upload'];
+    $updir      = $GLOBALS['xoopsModuleConfig'][$blockdirname . '_link_upload'];
     $cat_perms  = '';
     $categories = AdslightUtilities::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
@@ -83,7 +83,7 @@ function adslight_b2_show($options)
         $a_item['country']      = $country;
         $a_item['id']           = $myrow['lid'];
         $a_item['cid']          = $myrow['cid'];
-        $a_item['price_symbol'] = $GLOBALS['xoopsModuleConfig']['' . $blockdirname . '_money'];
+        $a_item['price_symbol'] = $GLOBALS['xoopsModuleConfig'][$blockdirname . '_money'];
 
         if ($status == 2) {
             $a_item['sold'] = "<img src=\"assets/images/sold.gif\" align=\"left\" alt=\"\">";

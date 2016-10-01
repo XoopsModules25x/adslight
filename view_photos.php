@@ -20,7 +20,6 @@
 -------------------------------------------------------------------------
 */
 include_once __DIR__ . '/header.php';
-xoops_load('XoopsRequest');
 
 /**
  * Xoops header

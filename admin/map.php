@@ -21,19 +21,18 @@
 */
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getCmd('op', 'liste');
+$op = XoopsRequest::getString('op', 'liste');
 
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 global $mytree, $xoopsDB, $moduleDirName;
-include_once __DIR__ . '/header.php';
 xoops_cp_header();
 //loadModuleAdminMenu(1, "");
 echo $adminObject->addNavigation(basename(__FILE__));
 
 echo "<fieldset style='padding: 20px;'><legend style='font-weight: bold; color: #FF7300;'>" . _AM_ADSLIGHT_GESTCAT . ' </legend>';
 echo "<p align=\"left\"><button name=\"buttonName\" type=\"button\" onclick=\"document.location.href='category.php?op=AdsNewCat&amp;cid=0';\">" . _AM_ADSLIGHT_ADDCATPRINC . '</button></p>';
-$mytree->makeAdSelBox('title', '' . $GLOBALS['xoopsModuleConfig']['adslight_csortorder'] . '');
+$mytree->makeAdSelBox('title', $GLOBALS['xoopsModuleConfig']['adslight_csortorder']);
 echo '<br>';
 echo '<br></fieldset><br>';
 

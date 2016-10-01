@@ -22,7 +22,10 @@
 
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getCmd('op', 'liste');
+$op = XoopsRequest::getString('op', 'liste');
+
+global $moduleDirName;
+$moduleDirName = basename(dirname(__DIR__));
 
 #  function Index
 #####################################################
@@ -32,7 +35,7 @@ function index()
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -76,7 +79,7 @@ function index()
         ///////// Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer' border=0 cellspacing=5 cellpadding=0><tr><td width=40>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 /></td><td>";
-        echo "<span style='color:#00B4C4'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <span style='color:#00B4C4'>" . _AM_ADSLIGHT_WAIT . '</b></span>';
+        echo "<span style='color:#00B4C4;'><b>" . _AM_ADSLIGHT_THEREIS . "</b></span> <b>$numrows</b> <span style='color:#00B4C4'>" . _AM_ADSLIGHT_WAIT . '</b></span>';
         echo '</td></tr></table><br>';
 
         ///// Liste des ID  ///// Soumis par /////  Titre   /////  Description  /////  Date d'ajout
@@ -144,10 +147,10 @@ function index()
                 $photo4 = '0';
             }
 
-            $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . $xoopsDB->escape($type) . '');
+            $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
             list($nom_type) = $xoopsDB->fetchRow($result7);
 
-            $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . $xoopsDB->escape($typeprice) . '');
+            $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
             list($nom_price) = $xoopsDB->fetchRow($result8);
 
             /* $result9=$xoopsDB->query("select nom_usure from ".$xoopsDB->prefix("adslight_usure")." WHERE id_usure=".$xoopsDB->escape($typeusure)."");
@@ -250,7 +253,7 @@ function indexView($lid)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -397,7 +400,7 @@ function modifyAds($lid)
     $id_price  = '';
     $nom_price = '';
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
@@ -627,11 +630,14 @@ function modifyAdsS(
     $contactby = $myts->htmlSpecialChars($contactby);
     $premium   = $myts->htmlSpecialChars($premium);
 
-    $xoopsDB->query('UPDATE '
-                    . $xoopsDB->prefix('adslight_listing')
-                    . " SET cid='$cat', title='$title', status='$status', expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typeusure='$typeusure', date='$date', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid', photo='$photo' WHERE lid=$lid");
+    $sql = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET cid='$cat', title='$title', status='$status', expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typeusure='$typeusure', date='$date', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid', photo='$photo' WHERE lid=$lid";
 
-    redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
+    $result = $xoopsDB->query($sql);
+    if (!$result) {
+    redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
+    } else {
+     redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
+    }
 }
 
 #  function listingDel
@@ -649,8 +655,7 @@ function listingDel($lid, $photo)
                                . ' l LEFT JOIN '
                                . $xoopsDB->prefix('adslight_pictures')
                                . ' p  ON l.lid=p.lid WHERE l.lid='
-                               . $xoopsDB->escape($lid)
-                               . '');
+                               . $xoopsDB->escape($lid));
 
     while (list($purl) = $xoopsDB->fetchRow($result2)) {
         if ($purl) {
@@ -738,9 +743,16 @@ function listingValid(
     $contactby = $myts->htmlSpecialChars($contactby);
     $premium   = $myts->htmlSpecialChars($premium);
     $now       = time();
-    $xoopsDB->query('UPDATE '
-                    . $xoopsDB->prefix('adslight_listing')
-                    . " SET cid='$cat', title='$title', status='$status', expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typeusure='$typeusure', date='$now', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid', photo='$photo' WHERE lid=$lid");
+    $sql = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET cid='$cat', title='$title', status='$status', expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typeusure='$typeusure', date='$now', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid', photo='$photo' WHERE lid='$lid'";
+
+    $result = $xoopsDB->query($sql);
+    if (!$result) {
+        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
+    } else {
+        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
+    }
+
+
 
     if ($email == '') {
     } else {

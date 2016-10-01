@@ -44,10 +44,10 @@ function listingDel($lid, $ok)
 {
     global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
-    $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
+    $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) );
     list($usid) = $xoopsDB->fetchRow($result);
 
-    $result1 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
+    $result1 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) );
 
     if ($GLOBALS['xoopsUser']) {
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
@@ -68,10 +68,10 @@ function listingDel($lid, $ok)
                             unlink("$destination3/resized_$purl");
                         }
 
-                        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
+                        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid) );
                     }
                 }
-                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) . '');
+                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid) );
                 redirect_header('index.php', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
@@ -97,15 +97,14 @@ function delReply($r_lid, $ok)
                               . ' l LEFT JOIN '
                               . $xoopsDB->prefix('adslight_replies')
                               . ' r ON l.lid=r.lid  WHERE r.r_lid='
-                              . $xoopsDB->escape($r_lid)
-                              . '');
+                              . $xoopsDB->escape($r_lid));
     list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
 
     if ($GLOBALS['xoopsUser']) {
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
         if ($usid == $currentid) {
             if ($ok == 1) {
-                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE r_lid=' . $xoopsDB->escape($r_lid) . '');
+                $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE r_lid=' . $xoopsDB->escape($r_lid) );
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 1, _ADSLIGHT_ANNDEL);
             } else {
                 echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
@@ -143,8 +142,7 @@ function modAd($lid)
     $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM '
                               . $xoopsDB->prefix('adslight_listing')
                               . ' WHERE lid='
-                              . $xoopsDB->escape($lid)
-                              . '');
+                              . $xoopsDB->escape($lid));
     list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
 
     $categories = AdslightUtilities::getMyItemIds('adslight_submit');
@@ -461,6 +459,6 @@ switch ($op) {
         break;
 
     default:
-        redirect_header('index.php', 1, '' . _RETURNANN . '');
+        redirect_header('index.php', 1, '' . _RETURNANN);
         break;
 }
