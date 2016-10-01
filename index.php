@@ -28,6 +28,7 @@ $module_id = $xoopsModule->getVar('mid');
 
 is_object($GLOBALS['xoopsUser']) ? $groups = $GLOBALS['xoopsUser']->getGroups() : $groups = XOOPS_GROUP_ANONYMOUS;
 
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 
 $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');

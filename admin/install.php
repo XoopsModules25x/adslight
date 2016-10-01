@@ -48,8 +48,9 @@ list($conf_id) = $xoopsDB->fetchRow($res);
 /** @var XoopsModuleHandler $moduleHandler */
 $moduleHandler  = xoops_getHandler('module');
 $module         = $moduleHandler->getByDirname('system');
-$config_handler = xoops_getHandler('config');
-$config_theme   = $config_handler->getConfig($conf_id, true);
+/** @var XoopsConfigHandler $configHandler */
+$configHandler = xoops_getHandler('config');
+$config_theme   = $configHandler->getConfig($conf_id, true);
 
 switch ($action) {
     case 'new':

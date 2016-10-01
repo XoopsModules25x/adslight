@@ -196,6 +196,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     public function insert(XoopsObject $jlm_pictures, $force = false)
     {
         global $xoopsConfig, $lid, $moduleDirName;
+        $cod_img = '';
         if (get_class($jlm_pictures) !== 'jlm_pictures') {
             return false;
         }
@@ -367,6 +368,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
     {
         global $moduleDirName, $main_lang;
+        $field_token = '';
         $form       = new XoopsThemeForm(constant('_ADSLIGHT_SUBMIT_PIC_TITLE'), 'form_picture',
                                          '' . XOOPS_URL . "/modules/adslight/add_photo.php?lid=$lid&uid=" . $GLOBALS['xoopsUser']->getVar('uid') . '', 'post', true);
         $field_url  = new XoopsFormFile(constant('_ADSLIGHT_SELECT_PHOTO'), 'sel_photo', 2000000);
@@ -527,7 +529,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
                 $picture->setVar('url', $url);
                 $picture->setVar('title', $title);
                 $uid = $GLOBALS['xoopsUser']->getVar('uid');
-                $lid = $lid;
+                $lid = (int)$lid;
                 $picture->setVar('lid', $lid);
                 $picture->setVar('uid_owner', $uid);
                 $this->insert($picture);

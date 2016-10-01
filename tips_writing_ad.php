@@ -27,6 +27,7 @@ $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
 $groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
 //If no access
@@ -57,7 +58,7 @@ function tips_writing()
     $xoopsTpl->assign('ads_use_tipswrite', $GLOBALS['xoopsModuleConfig']['adslight_use_tipswrite']);
 
     $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
-    $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
+    $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     // adslight 2
     $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);

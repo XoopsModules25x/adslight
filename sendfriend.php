@@ -29,10 +29,10 @@ require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 function SendFriend($lid)
 {
     global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
-
+    $idd = $idde = $iddee = '';
     include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     include XOOPS_ROOT_PATH . '/header.php';
-    $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
+    $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
     list($lid, $title, $type) = $xoopsDB->fetchRow($result);

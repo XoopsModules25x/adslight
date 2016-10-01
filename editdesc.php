@@ -68,7 +68,7 @@ if ($xCube) {
  * Receiving info from get parameters
  */
 $cod_img = XoopsRequest::getString('cod_img', '', 'POST');
-//$lid = $_POST['lid'];
+//$lid = (int)$_POST['lid'];
 //$marker = $_POST['marker'];
 $marker = XoopsRequest::getInt('marker', '', 'POST');
 

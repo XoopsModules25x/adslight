@@ -34,6 +34,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
 if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
@@ -110,7 +111,8 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     $lid = $xoopsDB->getInsertId();
 
     if ($valid === 'Yes') {
-        $notification_handler = xoops_getHandler('notification');
+        /** @var XoopsNotificationHandler $notificationHandler*/
+        $notificationHandler = xoops_getHandler('notification');
         //$lid = $xoopsDB->getInsertId();
         $tags                    = array();
         $tags['TITLE']           = $title;
@@ -127,10 +129,11 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
         $row                     = $xoopsDB->fetchArray($result2);
         $tags['CATEGORY_TITLE']  = $row['title'];
         $tags['CATEGORY_URL']    = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cid);
-        $notification_handler    = xoops_getHandler('notification');
-        $notification_handler->triggerEvent('global', 0, 'new_listing', $tags);
-        $notification_handler->triggerEvent('category', $cid, 'new_listing', $tags);
-        $notification_handler->triggerEvent('listing', $lid, 'new_listing', $tags);
+        /** @var XoopsNotificationHandler $notificationHandler*/
+        $notificationHandler    = xoops_getHandler('notification');
+        $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
+        $notificationHandler->triggerEvent('category', $cid, 'new_listing', $tags);
+        $notificationHandler->triggerEvent('listing', $lid, 'new_listing', $tags);
     } else {
         $tags                   = array();
         $subject                = '' . _ADSLIGHT_NEW_WAITING_SUBJECT . '';

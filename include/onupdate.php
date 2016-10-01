@@ -144,6 +144,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
         $xoopsDB->queryF($sql);
     }
 
+    /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 
     return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');

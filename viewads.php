@@ -32,6 +32,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
 //If no access
@@ -58,6 +59,9 @@ function viewAds($lid = 0)
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     global $xoopsModuleConfig, $xoopsUser;
     $pathIcon16 = $xoopsModule->getInfo('icons16');
+    $contact_pm = $contact = '';
+    $pictures_array = array();
+    $cid = 0;
 
     $tempXoopsLocal                          = new XoopsLocal;
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
@@ -164,6 +168,7 @@ function viewAds($lid = 0)
         } else {
             $groups = XOOPS_GROUP_ANONYMOUS;
         }
+        /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
         $xoopsTpl->assign('purchasable', $gpermHandler->checkRight('adslight_purchase', $cid, $groups, $module_id));
 
@@ -338,7 +343,7 @@ function viewAds($lid = 0)
 
         // meta description tags for ads
         $desctextclean = strip_tags($desctext, '<font><img><strong><i><u>');
-        $xoTheme->addMeta('meta', 'description', "$title - " . substr($desctextclean, 0, 150));
+        $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . substr($desctextclean, 0, 150));
 
         if ($price > 0) {
             $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . ' - ' . $typeprice);

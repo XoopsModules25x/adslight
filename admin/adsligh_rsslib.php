@@ -129,7 +129,7 @@ function RSS_RetrieveLinks($url)
 function RSS_Links($url, $size = 15)
 {
     global $RSS_Content;
-
+    $recents = array();
     $page = '<ul>';
 
     RSS_RetrieveLinks($url);
@@ -162,7 +162,7 @@ function RSS_Links($url, $size = 15)
 function RSS_Display($url, $size = 15, $site = 0)
 {
     global $RSS_Content;
-
+    $recents = array();
     $opened = false;
     $page   = '';
     $site   = ((int)$site == 0) ? 1 : 0;
@@ -219,7 +219,7 @@ function RSS_Display($url, $size = 15, $site = 0)
 function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
 {
     global $RSS_Content;
-
+    $recents = array();
     $opened = false;
     $page   = '';
     $site   = ((int)$site == 0) ? 1 : 0;

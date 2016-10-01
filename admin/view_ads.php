@@ -31,7 +31,7 @@ function index()
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName, $admin_lang;
 
     //  $mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
-
+    $photo3 = '';
     //    include_once __DIR__ . '/header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
@@ -377,6 +377,7 @@ function modifyAds($lid)
     //    loadModuleAdminMenu(0, "");
     $id_price  = '';
     $nom_price = '';
+    $contactselect = '';
 
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
 
@@ -773,10 +774,11 @@ function listingValid(
     $row                     = $xoopsDB->fetchArray($result);
     $tags['CATEGORY_TITLE']  = $row['title'];
     $tags['CATEGORY_URL']    = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cat);
-    $notification_handler    = xoops_getHandler('notification');
-    $notification_handler->triggerEvent('global', 0, 'new_listing', $tags);
-    $notification_handler->triggerEvent('category', $cat, 'new_listing', $tags);
-    $notification_handler->triggerEvent('listing', $lid, 'new_listing', $tags);
+    /** @var XoopsNotificationHandler $notificationHandler*/
+    $notificationHandler    = xoops_getHandler('notification');
+    $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
+    $notificationHandler->triggerEvent('category', $cat, 'new_listing', $tags);
+    $notificationHandler->triggerEvent('listing', $lid, 'new_listing', $tags);
 
     redirect_header('view_ads.php', 3, _AM_ADSLIGHT_ANNVALID);
 }

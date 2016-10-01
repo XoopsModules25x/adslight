@@ -41,7 +41,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;
     }
-
+    /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 
     $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
@@ -146,7 +146,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     }
 } else {
     $lid = XoopsRequest::getInt('lid', 0, 'GET');
-
+    $idd = $idde = $iddee = '';
     include_once __DIR__ . '/header.php';
 
     global $xoopsConfig, $xoopsDB, $myts, $meta;
@@ -157,6 +157,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;
     }
+    /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
     $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
     //If no access

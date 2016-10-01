@@ -37,10 +37,11 @@ function ReportAbuse($lid)
     include XOOPS_ROOT_PATH . '/header.php';
 
     $lid    = (int)$lid;
+    $idd = $idde = $iddee = '';
     $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $title, $type) = $xoopsDB->fetchRow($result);
 
-    $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
+    $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     echo '<strong>' . _ADSLIGHT_REPORTSENDTO . " $lid </strong>: \" $type : $title \"<br><br>

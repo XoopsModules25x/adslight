@@ -32,6 +32,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 
 $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
@@ -175,8 +176,8 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         $cat_desc_clean     = strip_tags($cat_desc, '<font><img><strong><i><u>');
         $cat_keywords_clean = strip_tags($cat_keywords, '<font><img><strong><i><u><br><li>');
 
-        $xoTheme->addMeta('meta', 'description', '' . substr($cat_desc_clean, 0, 200));
-        $xoTheme->addMeta('meta', 'keywords', '' . substr($cat_keywords_clean, 0, 1000));
+        $GLOBALS['xoTheme']->addMeta('meta', 'description', '' . substr($cat_desc_clean, 0, 200));
+        $GLOBALS['xoTheme']->addMeta('meta', 'keywords', '' . substr($cat_keywords_clean, 0, 1000));
     }
 
     $submit_perms = AdslightUtilities::getMyItemIds('adslight_submit');

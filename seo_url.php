@@ -63,9 +63,11 @@ function seo_urls($s)
  */
 function replace_links($matches)
 {
+    $req_string = array();
+    $add_to_url = '';
     switch ($matches[5]) {
         case 'viewcats.php':
-            $add_to_url = '';
+//            $add_to_url = '';
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //              replacing cid=x
@@ -78,7 +80,7 @@ function replace_links($matches)
             }
             break;
         case 'viewads.php':
-            $add_to_url = '';
+//            $add_to_url = '';
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //              replacing lid=x

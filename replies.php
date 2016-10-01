@@ -23,11 +23,12 @@
 include_once __DIR__ . '/header.php';
 //include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
-$myts          = MyTextSanitizer::getInstance(); // MyTextSanitizer object
-$module_id     = $xoopsModule->getVar('mid');
-$groups        = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$myts         = MyTextSanitizer::getInstance(); // MyTextSanitizer object
+$module_id    = $xoopsModule->getVar('mid');
+$groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid   = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
 
 //If no access
 if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
@@ -49,7 +50,7 @@ if (!isset($max)) {
 $orderby = 'date Desc';
 
 $xoopsTpl->assign('lid', $lid);
-$countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid) );
+$countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid));
 list($trow) = $xoopsDB->fetchRow($countresult);
 $trows   = $trow;
 $pagenav = '';

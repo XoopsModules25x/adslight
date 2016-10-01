@@ -31,6 +31,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
 //If no access
@@ -67,7 +68,7 @@ function adslightMaps()
     $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
     $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
 
-    $xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
+    $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     $header_cssadslight = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />';
 

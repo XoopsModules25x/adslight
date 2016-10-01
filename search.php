@@ -32,8 +32,9 @@ $xoopsOption['pagetype'] = 'search';
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $xmid              = $xoopsModule->getVar('mid');
-$config_handler    = xoops_getHandler('config');
-$xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
+/** @var XoopsConfigHandler $configHandler */
+$configHandler    = xoops_getHandler('config');
+$xoopsConfigSearch =& $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
     //    header("Location: '.XOOPS_URL.'modules/adslight/index.php");
@@ -65,6 +66,7 @@ if ($action === 'results') {
 }
 
 $groups            = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler      = xoops_getHandler('groupperm');
 $available_modules = $gpermHandler->getItemIds('module_read', $groups);
 

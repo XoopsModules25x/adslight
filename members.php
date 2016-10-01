@@ -41,6 +41,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
 
@@ -69,7 +70,7 @@ $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS
 
 $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
 $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
-$xoTheme->addMeta('meta', 'robots', 'noindex, nofollow');
+$GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
 $show = 4;
 $min  = XoopsRequest::getInt('min', 0, 'GET');

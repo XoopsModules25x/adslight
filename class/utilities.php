@@ -49,6 +49,7 @@ class AdslightUtilities
         global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $main_lang;
 
         $datenow = time();
+        $message = '';
 
         $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM '
                                    . $xoopsDB->prefix('adslight_listing')
@@ -269,6 +270,7 @@ class AdslightUtilities
         $moduleHandler          = xoops_getHandler('module');
         $myModule               = $moduleHandler->getByDirname('adslight');
         $groups                 = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler           = xoops_getHandler('groupperm');
         $categories             = $gpermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
         $permissions[$permtype] = $categories;
@@ -302,9 +304,10 @@ class AdslightUtilities
             /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler  = xoops_getHandler('module');
             $module         = $moduleHandler->getByDirname($repmodule);
-            $config_handler = xoops_getHandler('config');
+            /** @var XoopsConfigHandler $configHandler */
+            $configHandler = xoops_getHandler('config');
             if ($module) {
-                $moduleConfig =& $config_handler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
+                $moduleConfig =& $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
                 if (isset($moduleConfig[$option])) {
                     $retval = $moduleConfig[$option];
                 }
@@ -377,7 +380,7 @@ class AdslightUtilities
     public static function convertOrderByTrans($orderby)
     {
         global $main_lang;
-
+        $orderbyTrans = '';
         if ($orderby === 'hits ASC') {
             $orderbyTrans = '' . _ADSLIGHT_POPULARITYLTOM . '';
         }

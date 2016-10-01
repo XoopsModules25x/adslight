@@ -28,6 +28,7 @@ $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
 $groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+/** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
 
@@ -131,7 +132,7 @@ function delReply($r_lid, $ok)
 function modAd($lid)
 {
     global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
-
+    $contactselect = '';
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
@@ -276,6 +277,7 @@ function modAd($lid)
             $module_id = $xoopsModule->getVar('mid');
             $groups    = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
+            /** @var XoopsGroupPermHandler $gpermHandler */
             $gpermHandler = xoops_getHandler('groupperm');
             $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'GET');
 
@@ -338,6 +340,7 @@ function modAd($lid)
             } else {
                 $groups = XOOPS_GROUP_ANONYMOUS;
             }
+            /** @var XoopsGroupPermHandler $gpermHandler */
             $gpermHandler = xoops_getHandler('groupperm');
             $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
             //If no access

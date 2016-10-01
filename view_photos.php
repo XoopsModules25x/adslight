@@ -56,6 +56,7 @@ if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
 
     $groups =& $GLOBALS['xoopsUser']->getGroups();
 
+    /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 
     $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
