@@ -61,7 +61,7 @@ $modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
 $modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
 //about
 $modversion['module_status']       = 'Beta 3 ';
-$modversion['release_date']        = '2016/09/27';
+$modversion['release_date']        = '2016/10/01';
 $modversion['module_website_url']  = 'www.xoops.org';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
@@ -72,7 +72,7 @@ $modversion['min_db']              = array('mysql' => '5.0.7', 'mysqli' => '5.0.
 $modversion['sqlfile']['mysql'] = $adslight_sql;
 $modversion['onInstall']        = 'include/oninstall.php';
 //$modversion['onUpdate']         = 'include/update_function.php';
-$modversion['onUpdate']         = 'include/onupdate.php';
+$modversion['onUpdate'] = 'include/onupdate.php';
 
 $modversion['release']           = '27-09-2016';
 $modversion['support_site_url']  = 'http://#';
