@@ -20,9 +20,9 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-    $moduleDirName = basename( dirname( __DIR__ ) ) ;
+$moduleDirName = basename(dirname(__DIR__));
 
 /**
  * @param $category
@@ -32,38 +32,45 @@
  */
 function adslight_notify_iteminfo($category, $item_id)
 {
-  global $xoopsDB, $moduleDirName;
-    $module_handler =& xoops_gethandler('module');
-    $module =& $module_handler->getByDirname("$moduleDirName");
+    global $xoopsDB, $moduleDirName;
+    /** @var XoopsModuleHandler $moduleHandler */
+    $moduleHandler = xoops_getHandler('module');
+    $module        = $moduleHandler->getByDirname("$moduleDirName");
 
-    if ($category=='global') {
+    if ($category === 'global') {
         $item['name'] = '';
-        $item['url'] = '';
+        $item['url']  = '';
 
         return $item;
     }
 
-    if ($category=='category') {
+    if ($category === 'category') {
 
         // Assume we have a valid topid id
-        $sql = 'SELECT SQL_CACHE title  FROM '. $xoopsDB->prefix("adslight_categories") .' WHERE cid = '. $item_id .' limit 1';
+        $sql = 'SELECT SQL_CACHE title  FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid = ' . $item_id . ' limit 1';
 
-        $result = $xoopsDB->query($sql); // TODO: error check
-        $result_array = $xoopsDB->fetchArray($result);
-        $item['name'] = $result_array['title'];
-        $item['url'] = XOOPS_URL . '/modules/adslight/index.php?pa=adsview&amp;cid=' .  $item_id;
+        $result = $xoopsDB->query($sql);
+        if (!$result) {
+            $modHandler = xoops_getModuleHandler('module');
+            $myModule   = $modHandler->getByDirname('adslight');
+            $myModule->setErrors('Could not query the database.');
+        } else {
+            $result_array = $xoopsDB->fetchArray($result);
+            $item['name'] = $result_array['title'];
+            $item['url']  = XOOPS_URL . '/modules/adslight/index.php?pa=adsview&amp;cid=' . $item_id;
 
-        return $item;
+            return $item;
+        }
     }
 
-    if ($category=='listing') {
+    if ($category === 'listing') {
         // Assume we have a valid post id
-        $sql = 'SELECT title FROM ' . $xoopsDB->prefix("adslight_listing").  ' WHERE lid = ' . $item_id . ' LIMIT 1';
-        $result = $xoopsDB->query($sql);
+        $sql          = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $item_id . ' LIMIT 1';
+        $result       = $xoopsDB->query($sql);
         $result_array = $xoopsDB->fetchArray($result);
         $item['name'] = $result_array['title'];
-//		$item['catname'] = $result_array['cat.title'];
-        $item['url'] = XOOPS_URL . '/modules/adslight/viewads.php?lid= ' .  $item_id;
+        //      $item['catname'] = $result_array['cat.title'];
+        $item['url'] = XOOPS_URL . '/modules/adslight/viewads.php?lid= ' . $item_id;
 
         return $item;
     }

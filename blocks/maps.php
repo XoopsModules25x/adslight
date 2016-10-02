@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
 // <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/assets/images/map.png
 
@@ -31,22 +31,28 @@
  */
 function adslight_maps_show($options)
 {
-    global $xoopsDB, $xoopsModuleConfig, $xoopsConfig, $blockdirname, $xoopsTpl, $block_lang;
+    global $xoopsDB, $xoopsConfig, $blockdirname, $xoopsTpl, $block_lang;
 
     $maps_name = $xoopsConfig['language'];
 
     $block = array();
-    $myts =& MyTextSanitizer::getInstance();
+    $myts  = MyTextSanitizer::getInstance();
 
-    $blockdirname = basename( dirname( __DIR__ ) ) ;
-    $block_lang = '_MB_' . strtoupper( $blockdirname ) ;
+    $blockdirname = basename(dirname(__DIR__));
+    $block_lang   = '_MB_' . strtoupper($blockdirname);
 
-    $block['title'] = "".constant($block_lang."_TITLE")."";
+    $block['title'] = '' . constant($block_lang . '_TITLE') . '';
 
-    $block['imgmapsurl'] = '<a title="Recherche dans votre r&eacute;gion" href="'.XOOPS_URL.'/modules/adslight/maps.php"><img src="'.XOOPS_URL.'/modules/adslight/maps/'.$xoopsConfig['language'].'/assets/images/map.png" alt="Recherche dans votre r&eacute;gion" border="0"></a><br />';
+    $block['imgmapsurl'] = '<a title="Recherche dans votre r&eacute;gion" href="'
+                           . XOOPS_URL
+                           . '/modules/adslight/maps.php"><img src="'
+                           . XOOPS_URL
+                           . '/modules/adslight/maps/'
+                           . $xoopsConfig['language']
+                           . '/assets/images/map.png" alt="Recherche dans votre r&eacute;gion" border="0"></a><br>';
 
-    $block['link'] = "<a href=\"".XOOPS_URL."/modules/$blockdirname/\"><b>".constant($block_lang."_ALL_LISTINGS")."</b></a><br />";
-    $block['add'] = "<a href=\"".XOOPS_URL."/modules/$blockdirname/\"><b>".constant($block_lang."_ADDNOW")."</b></a><br />";
+    $block['link'] = "<a href=\"" . XOOPS_URL . "/modules/$blockdirname/\"><b>" . constant($block_lang . '_ALL_LISTINGS') . '</b></a><br>';
+    $block['add']  = "<a href=\"" . XOOPS_URL . "/modules/$blockdirname/\"><b>" . constant($block_lang . '_ADDNOW') . '</b></a><br>';
 
     return $block;
 }
@@ -58,26 +64,26 @@ function adslight_maps_show($options)
  */
 function adslight_maps_edit($options)
 {
- global $xoopsDB;
-    $blockdirname = basename( dirname( __DIR__ ) ) ;
-    $block_lang = '_MB_' . strtoupper( $blockdirname ) ;
+    global $xoopsDB;
+    $blockdirname = basename(dirname(__DIR__));
+    $block_lang   = '_MB_' . strtoupper($blockdirname);
 
-    $form = constant($block_lang."_ORDER")."&nbsp;<select name='options[]'>";
+    $form = constant($block_lang . '_ORDER') . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";
-    if ($options[0] == 'date') {
-        $form .= " selected='selected'";
+    if ($options[0] === 'date') {
+        $form .= ' selected';
     }
-    $form .= '>'.constant($block_lang."_DATE")."</option>\n";
+    $form .= '>' . constant($block_lang . '_DATE') . "</option>\n";
 
     $form .= "<option value='hits'";
-    if ($options[0] == 'hits') {
-        $form .= " selected='selected'";
+    if ($options[0] === 'hits') {
+        $form .= ' selected';
     }
-    $form .= '>'.constant($block_lang."_HITS").'</option>';
+    $form .= '>' . constant($block_lang . '_HITS') . '</option>';
     $form .= "</select>\n";
 
-    $form .= '&nbsp;'.constant($block_lang."_DISP")."&nbsp;<input type='text' name='options[]' value='".$options[1]."'/>&nbsp;".constant($block_lang."_LISTINGS");
-    $form .= "&nbsp;<br /><br />".constant($block_lang."_CHARS")."&nbsp;<input type='text' name='options[]' value='".$options[2]."'/>&nbsp;".constant($block_lang."_LENGTH").'<br /><br />';
+    $form .= '&nbsp;' . constant($block_lang . '_DISP') . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . "'/>&nbsp;" . constant($block_lang . '_LISTINGS');
+    $form .= '&nbsp;<br><br>' . constant($block_lang . '_CHARS') . "&nbsp;<input type='text' name='options[]' value='" . $options[2] . "'/>&nbsp;" . constant($block_lang . '_LENGTH') . '<br><br>';
 
     return $form;
 }

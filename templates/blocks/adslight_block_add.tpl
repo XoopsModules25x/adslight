@@ -1,4 +1,5 @@
 <div style="text-align: center;">
-	Ajouter une annonce dans:<br />
-	<form name="newadsform" action="<{$xoops_url}>/modules/adslight/addlisting.php" method="get"><br /><{$block.selectbox}></form>
+    <{$smarty.const._ADSLIGHT_ADD_LISTING_BULLCATS}>
+    <form name="newadsform" action="<{$xoops_url}>/modules/adslight/addlisting.php" method="get">
+        <br><{$block.selectbox}></form>
 </div>

@@ -1,5 +1,5 @@
 <div style="text-align: center;">
 
-<!--<{$block.imgmapsurl}>-->
+    <!--<{$block.imgmapsurl}>-->
 
-	</div>
+</div>

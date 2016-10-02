@@ -20,26 +20,28 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 
-if ( isset($_GET['cod_img']) ) {
-    $cod_img = intval($_GET['cod_img']);
+if (null !==  Request::getInt('cod_img', null, 'GET')) {
+    $cod_img = Request::getInt('cod_img', null, 'GET');
 } else {
-    redirect_header("index.php",1, _ADSLIGHT_VALIDATE_FAILED);
+    redirect_header('index.php', 1, _ADSLIGHT_VALIDATE_FAILED);
 }
 xoops_header();
 
-global $xoopsUser, $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
+global $xoopsConfig, $xoopsTheme, $xoopsDB, $xoops_footer, $xoopsLogger;
 $currenttheme = getTheme();
 
-$result=$xoopsDB->query("select url FROM ".$xoopsDB->prefix("adslight_picture")." WHERE cod_img = ".mysql_real_escape_string($cod_img)."");
+$result      = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_picture') . " WHERE cod_img = '" . $xoopsDB->escape($cod_img) . "'");
 $recordexist = $xoopsDB->getRowsNum($result);
 
 if ($recordexist) {
-    list($url)=$xoopsDB->fetchRow($result);
-    echo "<br /><br /><center><img class=\"thumb\" src=\"photo/$url\" border=0></center>";
+    list($url) = $xoopsDB->fetchRow($result);
+    echo "<br><br><div style='text-align:center'><img class=\"thumb\" src=\"photo/$url\" border=0></div>";
 }
 
-echo "<table><tr><td><center><a href=#  onClick='window.close()'>"._ADSLIGHT_CLOSEF."</a></center></td></tr></table>";
+echo "<table><tr><td><div style='text-align:center'><a href=#  onClick='window.close()'>" . _ADSLIGHT_CLOSEF . '</a></div></td></tr></table>';
 
 xoops_footer();

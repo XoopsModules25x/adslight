@@ -1,10 +1,23 @@
-2.2 Beta 3        NOT RELEASED
+2.2 RC1        2016-10-02
 =================================
 - updated currency to use locale
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
 - added routine to delete .html templates (slider84)
-
+- intval to (int) (mamba)
+- XOOPS 2.5.8, PHP7 (mamba)
+- unnecessary Double Quotes (mamba)
+- unnecessary Parentheses (mamba)
+- remove @version (mamba)
+- filter user input using XoopsRequest (zyspec)
+- replaced < b /> with < b > (mamba)
+- addNavigation(basename(__FILE__))  (mamba)
+- dirname(__FILE__) to __DIR__ (mamba)
+- reference mismatch (mamba)
+- Hardening to type safe (mamba)
+- update Help (mamba)
+- changed _handler to Handler (mamba)
+- replace $xoopsOption['template_main'] with $GLOBALS['xoopsOption']['template_main'] (mamba)
 
 2.2 Beta 2          2013-05-10
 =================================
@@ -21,7 +34,7 @@ TODO:
 2.2 Beta 1          2013-03-13
 =================================
 - Converted to XOOPS 2.5.5 Admin GUI (mamba)
-- fixed minor bugs (cesag/mamba)
+- fixed minor bugs (cesagonchu/mamba)
 - add: dynamic configuration of Text Editors in Preferences (mamba)
 
 

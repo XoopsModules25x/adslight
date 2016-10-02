@@ -19,25 +19,24 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 
-if (isset($_REQUEST['op'])) {
-    $op = $_REQUEST['op'];
-} else {
-    $op = 'liste';
-}
+$op = Request::getString('op', 'liste');
 
-$mytree = new ClassifiedsTree($xoopsDB->prefix("adslight_categories"),"cid","pid");
+$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-global $mytree, $xoopsDB, $xoopsModuleConfig, $moduleDirName;
-include_once __DIR__ . '/header.php';
+global $mytree, $xoopsDB, $moduleDirName;
 xoops_cp_header();
 //loadModuleAdminMenu(1, "");
+echo $adminObject->addNavigation(basename(__FILE__));
 
-echo "<fieldset style='padding: 20px;'><legend style='font-weight: bold; color: #FF7300;'>"._AM_ADSLIGHT_GESTCAT." </legend>";
-echo "<p align=\"left\"><button name=\"buttonName\" type=\"button\" onclick=\"document.location.href='category.php?op=AdsNewCat&amp;cid=0';\">"._AM_ADSLIGHT_ADDCATPRINC."</button></p>";
-$mytree->makeAdSelBox("title", "".$xoopsModuleConfig["adslight_csortorder"]."");
-echo "<br />";
-echo "<br /></fieldset><br />";
+echo "<fieldset style='padding: 20px;'><legend style='font-weight: bold; color: #FF7300;'>" . _AM_ADSLIGHT_GESTCAT . ' </legend>';
+echo "<p align=\"left\"><button name=\"buttonName\" type=\"button\" onclick=\"document.location.href='category.php?op=AdsNewCat&amp;cid=0';\">" . _AM_ADSLIGHT_ADDCATPRINC . '</button></p>';
+$mytree->makeAdSelBox('title', $GLOBALS['xoopsModuleConfig']['adslight_csortorder']);
+echo '<br>';
+echo '<br></fieldset><br>';
 
 xoops_cp_footer();
