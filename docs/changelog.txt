@@ -1,4 +1,4 @@
-2.2 Beta 3        2016-10-01
+2.2 RC1        2016-10-02
 =================================
 - updated currency to use locale
 - moved all images, CSS, and JS files to /assets (mamba)

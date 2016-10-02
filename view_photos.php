@@ -92,7 +92,7 @@ $criteria_uid = new criteria('uid', $uid);
 
 // Creating a factory of pictures
 
-$album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
+$album_factory = new JlmPicturesHandler($xoopsDB);
 
 /**
  * Fetch pictures from the factory

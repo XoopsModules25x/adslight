@@ -75,7 +75,7 @@ $cod_img = Request::getString('cod_img', '', 'POST');
  * Creating the factory  and the criteria to delete the picture
  * The user must be the owner
  */
-$album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
+$album_factory = new JlmPicturesHandler($xoopsDB);
 $criteria_img  = new Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new Criteria('uid_owner', $uid);

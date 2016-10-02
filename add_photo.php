@@ -39,7 +39,7 @@ include_once __DIR__ . '/class/pictures.php';
 /**
  * Factory of pictures created
  */
-$album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
+$album_factory = new JlmPicturesHandler($xoopsDB);
 
 /**
  * Getting the title

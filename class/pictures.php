@@ -41,7 +41,7 @@ include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
  * $this class is responsible for providing data access mechanisms to the data source
  * of XOOPS user class objects.
  */
-class jlm_pictures extends XoopsObject
+class JlmPictures extends XoopsObject
 {
     public $db;
     // constructor
@@ -94,7 +94,7 @@ class jlm_pictures extends XoopsObject
      *
      * @return array
      */
-    public function getAll_pictures(
+    public function getAllPictures(
         $criteria = array(),
         $asobject = false,
         $sort = 'cod_img',
@@ -125,7 +125,7 @@ class jlm_pictures extends XoopsObject
             $sql    = 'SELECT * FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $order";
             $result = $db->query($sql, $limit, $start);
             while ($myrow = $db->fetchArray($result)) {
-                $ret[] = new jlm_pictures($myrow);
+                $ret[] = new JlmPictures($myrow);
             }
         }
 
@@ -140,7 +140,7 @@ class jlm_pictures extends XoopsObject
  * light_pictureshandler class.
  * This class provides simple mechanism for light_pictures object and generate forms for inclusion etc
  */
-class Xoopsjlm_picturesHandler extends XoopsObjectHandler
+class JlmPicturesHandler extends XoopsObjectHandler
 {
     /**
      * create a new light_pictures
@@ -150,7 +150,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
      */
     public function create($isNew = true)
     {
-        $jlm_pictures = new jlm_pictures();
+        $jlm_pictures = new JlmPictures();
         if ($isNew) {
             $jlm_pictures->setNew();
         } else {
@@ -178,7 +178,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
         }
         $numrows = $this->db->getRowsNum($result);
         if ($numrows == 1) {
-            $jlm_pictures = new jlm_pictures();
+            $jlm_pictures = new JlmPictures();
             $jlm_pictures->assignVars($this->db->fetchArray($result));
 
             return $jlm_pictures;
@@ -199,7 +199,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     {
         global $xoopsConfig, $lid, $moduleDirName;
         $cod_img = '';
-        if (get_class($jlm_pictures) !== 'jlm_pictures') {
+        if (get_class($jlm_pictures) !== 'JlmPictures') {
             return false;
         }
         if (!$jlm_pictures->isDirty()) {
@@ -213,8 +213,8 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
         }
         $now = time();
         if ($jlm_pictures->isNew()) {
-            // ajout/modification d'un jlm_pictures
-            $jlm_pictures = new jlm_pictures();
+            // ajout/modification d'un JlmPictures
+            $jlm_pictures = new JlmPictures();
 
             $format = 'INSERT INTO %s (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
@@ -228,7 +228,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
             $sql = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner),
                            $this->db->quoteString($url), $cod_img);
         }
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -247,9 +247,9 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * delete a jlm_pictures from the database
+     * delete a JlmPictures from the database
      *
-     * @param  XoopsObject $jlm_pictures reference to the jlm_pictures to delete
+     * @param  XoopsObject $jlm_pictures reference to the JlmPictures to delete
      * @param  bool        $force
      * @return bool        FALSE if failed.
      */
@@ -257,11 +257,11 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     {
         global $moduleDirName;
 
-        if (get_class($jlm_pictures) !== 'jlm_pictures') {
+        if (get_class($jlm_pictures) !== 'JlmPictures') {
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $jlm_pictures->getVar('cod_img'));
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -274,11 +274,11 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * retrieve jlm_pictures from the database
+     * retrieve JlmPictures from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param  bool            $id_as_key use the UID as key for the array?
-     * @return array  array of {@link jlm_pictures} objects
+     * @return array  array of {@link JlmPictures} objects
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -300,7 +300,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $jlm_pictures = new jlm_pictures();
+            $jlm_pictures = new JlmPictures();
             $jlm_pictures->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] =& $jlm_pictures;
@@ -314,10 +314,10 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * count jlm_pictures matching a condition
+     * count JlmPictures matching a condition
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match
-     * @return int    count of jlm_pictures
+     * @return int    count of JlmPictures
      */
     public function getCount(CriteriaElement $criteria = null)
     {
@@ -337,7 +337,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * delete jlm_pictures matching a set of conditions
+     * delete JlmPictures matching a set of conditions
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement}
      * @return bool   FALSE if deletion failed

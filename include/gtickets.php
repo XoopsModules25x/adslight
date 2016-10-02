@@ -258,7 +258,7 @@ if (!class_exists('XoopsGTicket')) {
             if (!empty($this->_errors)) {
                 if ($allow_repost) {
                     // repost form
-                    $this->draw_repost_form($area);
+                    $this->renderRepostForm($area);
                     exit;
                 } else {
                     // failed
@@ -276,7 +276,7 @@ if (!class_exists('XoopsGTicket')) {
         /**
          * @param string $area
          */
-        public function draw_repost_form($area = '')
+        public function renderRepostForm($area = '')
         {
             // Notify which file is broken
             if (headers_sent()) {
@@ -302,7 +302,7 @@ if (!class_exists('XoopsGTicket')) {
                     $key = stripslashes($key);
                 }
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive(htmlspecialchars($key, ENT_QUOTES), $val);
+                    list($tmp_table, $tmp_form) = $this->extractPostRecursive(htmlspecialchars($key, ENT_QUOTES), $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
@@ -331,7 +331,7 @@ if (!class_exists('XoopsGTicket')) {
          *
          * @return array
          */
-        public function extract_post_recursive($key_name, $tmp_array)
+        public function extractPostRecursive($key_name, $tmp_array)
         {
             $table = '';
             $form  = '';
@@ -340,7 +340,7 @@ if (!class_exists('XoopsGTicket')) {
                     $key = stripslashes($key);
                 }
                 if (is_array($val)) {
-                    list($tmp_table, $tmp_form) = $this->extract_post_recursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']', $val);
+                    list($tmp_table, $tmp_form) = $this->extractPostRecursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']', $val);
                     $table .= $tmp_table;
                     $form .= $tmp_form;
                 } else {
