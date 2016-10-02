@@ -19,6 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+use Xmf\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . strtoupper($moduleDirName);
@@ -43,8 +44,8 @@ $album_factory = new Xoopsjlm_picturesHandler($xoopsDB);
 /**
  * Getting the title
  */
-$title = XoopsRequest::getString('caption', '', 'POST');
-$lid =  XoopsRequest::getInt('lid', 0, 'POST');
+$title = Request::getString('caption', '', 'POST');
+$lid =  Request::getInt('lid', 0, 'POST');
 /**
  * Getting parameters defined in admin side
  */
@@ -61,7 +62,7 @@ $maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_width'];
 /**
  * If we are receiving a file
  */
-if ($_POST['xoops_upload_file'][0] === 'sel_photo') {
+if ('sel_photo' === Request::getArray('xoops_upload_file', '', 'POST')[0]) {
 
     /**
      * Check if using Xoops or XoopsCube (by jlm69)

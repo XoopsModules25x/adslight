@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 $moduleDirName = basename(__DIR__);
 //@todo replace the following code - use Filters
 foreach ($_REQUEST as $key => $val) {
@@ -40,14 +42,13 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     //    header("Location: '.XOOPS_URL.'modules/adslight/index.php");
     redirect_header('index.php', 1);
 }
-xoops_load('XoopsRequest');
 
-$action = XoopsRequest::getString('action', 'search');
-$query  = XoopsRequest::getString('query', '');
-$andor  = XoopsRequest::getString('andor', 'AND');
-$mid    = XoopsRequest::getInt('mid', 0);
-$uid    = XoopsRequest::getInt('uid', 0);
-$start  = XoopsRequest::getInt('start', 0);
+$action = Request::getString('action', 'search');
+$query  = Request::getString('query', '');
+$andor  = Request::getString('andor', 'AND');
+$mid    = Request::getInt('mid', 0);
+$uid    = Request::getInt('uid', 0);
+$start  = Request::getInt('start', 0);
 
 $queries = array();
 
@@ -114,7 +115,7 @@ switch ($action) {
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $moduleHandler->getObjects($criteria, true);
-        $mids    = XoopsRequest::getArray('mids', array());
+        $mids    = Request::getArray('mids', array());
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($xmid);

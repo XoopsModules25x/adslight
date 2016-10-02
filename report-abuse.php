@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 //include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
@@ -169,13 +171,13 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
 }
 
 ##############################################################
-$yname = XoopsRequest::getString('yname', '', 'POST');
-$ymail = XoopsRequest::getString('ymail', '', 'POST');
-$fname = XoopsRequest::getString('fname', '', 'POST');
-$fmail = XoopsRequest::getString('fmail', '', 'POST');
+$yname = Request::getString('yname', '', 'POST');
+$ymail = Request::getString('ymail', '', 'POST');
+$fname = Request::getString('fname', '', 'POST');
+$fmail = Request::getString('fmail', '', 'POST');
 
-$lid = XoopsRequest::getInt('lid', 0);
-$op  = XoopsRequest::getString('op', '');
+$lid = Request::getInt('lid', 0);
+$op  = Request::getString('op', '');
 
 switch ($op) {
     case 'ReportAbuse':

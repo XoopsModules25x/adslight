@@ -20,9 +20,11 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getString('op', 'liste');
+$op = Request::getString('op', 'liste');
 
 /**
  * Main Ad Display
@@ -427,9 +429,9 @@ function listingDel($lid, $photo)
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
-$pa  = XoopsRequest::getString('pa', '', 'GET');
-$lid = XoopsRequest::getInt('lid', 0);
-$op  = XoopsRequest::getString('op', '');
+$pa  = Request::getString('pa', '', 'GET');
+$lid = Request::getInt('lid', 0);
+$op  = Request::getString('op', '');
 
 switch ($op) {
     case 'IndexView':

@@ -27,7 +27,7 @@ require_once $roothpath . '/include/cp_header.php';
 include_once $roothpath . '/class/xoopsformloader.php';
 require __DIR__ . '/../class/utilities.php';
 
-xoops_load('XoopsRequest');
+
 
 global $xoopsModule;
 $moduleDirName = $xoopsModule->getVar('dirname');
@@ -63,5 +63,5 @@ if ($GLOBALS['xoopsUser']) {
     redirect_header(XOOPS_URL . '/', 3, _NOPERM);
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts        = MyTextSanitizer::getInstance();
 $adminObject = new ModuleAdmin();

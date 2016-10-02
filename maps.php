@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
@@ -33,7 +35,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 }
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid = Request::getInt('item_id', 0, 'POST');
 //If no access
 if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -104,7 +106,7 @@ function adslightMaps()
 
 ######################################################
 
-$pa      = XoopsRequest::getInt('pa', null, 'GET');
+$pa      = Request::getInt('pa', null, 'GET');
 
 switch ($pa) {
     default:

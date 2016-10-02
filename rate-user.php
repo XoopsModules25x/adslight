@@ -20,19 +20,21 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 //include_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 //include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 if (!empty($HTTP_POST_VARS['submit'])) {
-//    $erh         = new ErrorHandler; //ErrorHandler object
+    //    $erh         = new ErrorHandler; //ErrorHandler object
     $ratinguser = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
 
     //Make sure only 1 anonymous from an IP in a single day.
     $anonwaitdays = 1;
     $ip           = getenv('REMOTE_ADDR');
-    $usid         = XoopsRequest::getInt('usid', 0, 'POST');
-    $rating       = XoopsRequest::getInt('rating', 0, 'POST');
+    $usid         = Request::getInt('usid', 0, 'POST');
+    $rating       = Request::getInt('rating', 0, 'POST');
 
     // Check if Rating is Null
     if ($rating == '--') {
@@ -79,20 +81,20 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . mysql_error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
-        $modHandler      = xoops_getModuleHandler('module');
-        $myModule = $modHandler->getByDirname('adslight');
+        $modHandler = xoops_getModuleHandler('module');
+        $myModule   = $modHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
 
     //All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
-//    updateUrating($usid);
+    //    updateUrating($usid);
     AdslightUtilities::updateUserRating($usid);
     $ratemessage = constant('_ADSLIGHT_VOTEAPPRE') . '<br>' . sprintf(constant('_ADSLIGHT_THANKURATEUSER'), $xoopsConfig['sitename']);
     redirect_header('members.php?usid=' . addslashes($usid) . '', 3, $ratemessage);
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_rate_user.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
-    $usid   = XoopsRequest::getInt('usid', 0, 'GET');
+    $usid   = Request::getInt('usid', 0, 'GET');
     $result = $xoopsDB->query('SELECT title, usid, submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid));
     list($title, $usid, $submitter) = $xoopsDB->fetchRow($result);
     $xoopsTpl->assign('link', array('usid' => $usid, 'title' => $myts->htmlSpecialChars($title), 'submitter' => $submitter));

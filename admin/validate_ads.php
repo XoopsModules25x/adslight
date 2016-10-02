@@ -20,9 +20,11 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getString('op', 'liste');
+$op = Request::getString('op', 'liste');
 
 global $moduleDirName;
 $moduleDirName = basename(dirname(__DIR__));
@@ -103,11 +105,11 @@ function index()
                 $color = 'head';
             }
 
-            $status    = $myts->htmlSpecialChars($status);
-            $expire    = $myts->htmlSpecialChars($expire);
-            $type      = $myts->htmlSpecialChars($type);
-            $tel       = $myts->htmlSpecialChars($tel);
-//            $price     = number_format($price, 2, ',', ' ');
+            $status = $myts->htmlSpecialChars($status);
+            $expire = $myts->htmlSpecialChars($expire);
+            $type   = $myts->htmlSpecialChars($type);
+            $tel    = $myts->htmlSpecialChars($tel);
+            //            $price     = number_format($price, 2, ',', ' ');
 
             xoops_load('XoopsLocal');
             $tempXoopsLocal = new XoopsLocal;
@@ -275,14 +277,14 @@ function indexView($lid)
 
         list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo) = $xoopsDB->fetchRow($result);
 
-        $date2     = formatTimestamp($date, 's');
-        $title     = $myts->htmlSpecialChars($title);
-        $status    = $myts->htmlSpecialChars($status);
-        $expire    = $myts->htmlSpecialChars($expire);
-        $type      = $myts->htmlSpecialChars($type);
-        $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel       = $myts->htmlSpecialChars($tel);
-//        $price     = number_format($price, 2, ',', ' ');
+        $date2    = formatTimestamp($date, 's');
+        $title    = $myts->htmlSpecialChars($title);
+        $status   = $myts->htmlSpecialChars($status);
+        $expire   = $myts->htmlSpecialChars($expire);
+        $type     = $myts->htmlSpecialChars($type);
+        $desctext = $myts->displayTarea($desctext, 1, 1, 1);
+        $tel      = $myts->htmlSpecialChars($tel);
+        //        $price     = number_format($price, 2, ',', ' ');
         xoops_load('XoopsLocal');
         $tempXoopsLocal = new XoopsLocal;
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
@@ -416,8 +418,8 @@ function modifyAds($lid)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    $id_price  = '';
-    $nom_price = '';
+    $id_price      = '';
+    $nom_price     = '';
     $contactselect = '';
 
     //    include_once __DIR__ . '/admin_header.php';
@@ -431,13 +433,13 @@ function modifyAds($lid)
                               . " WHERE lid=$lid");
 
     while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result)) {
-        $title     = $myts->htmlSpecialChars($title);
-        $status    = $myts->htmlSpecialChars($status);
-        $expire    = $myts->htmlSpecialChars($expire);
-        $type      = $myts->htmlSpecialChars($type);
-        $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel       = $myts->htmlSpecialChars($tel);
-//        $price     = number_format($price, 2, ',', ' ');
+        $title    = $myts->htmlSpecialChars($title);
+        $status   = $myts->htmlSpecialChars($status);
+        $expire   = $myts->htmlSpecialChars($expire);
+        $type     = $myts->htmlSpecialChars($type);
+        $desctext = $myts->displayTarea($desctext, 1, 1, 1);
+        $tel      = $myts->htmlSpecialChars($tel);
+        //        $price     = number_format($price, 2, ',', ' ');
 
         xoops_load('XoopsLocal');
         $tempXoopsLocal = new XoopsLocal;
@@ -839,8 +841,8 @@ function listingValid(
     $row                     = $xoopsDB->fetchArray($result);
     $tags['CATEGORY_TITLE']  = $row['title'];
     $tags['CATEGORY_URL']    = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cat);
-    /** @var XoopsNotificationHandler $notificationHandler*/
-    $notificationHandler    = xoops_getHandler('notification');
+    /** @var XoopsNotificationHandler $notificationHandler */
+    $notificationHandler = xoops_getHandler('notification');
     $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
     $notificationHandler->triggerEvent('category', $cat, 'new_listing', $tags);
     $notificationHandler->triggerEvent('listing', $lid, 'new_listing', $tags);
@@ -855,14 +857,16 @@ foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
 
-$pa      = XoopsRequest::getInt('pa', '', 'GET');
+$pa = Request::getInt('pa', '', 'GET');
 
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = $_GET['lid'];
+if (!Request::hasVar('lid', 'POST') && Request::hasVar('lid', 'GET')) {
+    $lid = Request::getInt('lid', 0, 'GET');
 }
-if (!isset($_POST['op']) && isset($_GET['op'])) {
-    $op = $_GET['op'];
+
+if (!Request::hasVar('op', 'POST') && Request::hasVar('op', 'GET')) {
+    $op = Request::getString('op', '', 'GET');
 }
+
 if (!isset($op)) {
     $op = '';
 }

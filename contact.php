@@ -20,16 +20,18 @@
 -------------------------------------------------------------------------
 */
 
-if ('' != XoopsRequest::getString('submit', '', 'POST')) {
+use Xmf\Request;
+
+if ('' != Request::getString('submit', '', 'POST')) {
     // Define Variables for register_globals Off. contribution by Peekay
-    $id        = XoopsRequest::getString('id', null);
-    $date      = XoopsRequest::getString('date', null);
-    $namep     = XoopsRequest::getString('namep', null);
-    $ipnumber  = XoopsRequest::getString('ipnumber', null);
-    $messtext  = XoopsRequest::getString('messtext', null);
-    $typeprice = XoopsRequest::getString('typeprice', null);
-    $price     = XoopsRequest::getString('price', null);
-    $tele      = XoopsRequest::getString('tele', null);
+    $id        = Request::getString('id', null);
+    $date      = Request::getString('date', null);
+    $namep     = Request::getString('namep', null);
+    $ipnumber  = Request::getString('ipnumber', null);
+    $messtext  = Request::getString('messtext', null);
+    $typeprice = Request::getString('typeprice', null);
+    $price     = Request::getString('price', null);
+    $tele      = Request::getString('tele', null);
     // end define vars
 
     include_once __DIR__ . '/header.php';
@@ -44,7 +46,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 
-    $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
+    $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
     //If no access
     if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
@@ -63,11 +65,11 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
             redirect_header(XOOPS_URL . '/modules/adslight/contact.php?lid=' . addslashes($id) . '', 2, $xoopsCaptcha->getMessage());
         }
     }
-    $lid    = XoopsRequest::getInt('id', 0, 'POST');
+    $lid    = Request::getInt('id', 0, 'POST');
     $result = $xoopsDB->query('SELECT email, submitter, title, type, desctext, price, typeprice FROM  ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $xoopsDB->escape($id));
 
     while (list($email, $submitter, $title, $type, $desctext, $price, $typeprice) = $xoopsDB->fetchRow($result)) {
-        $teles = XoopsRequest::getString('tele', '', 'POST');
+        $teles = Request::getString('tele', '', 'POST');
 
         if ($price) {
             $price = '' . _ADSLIGHT_PRICE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " $price";
@@ -89,9 +91,9 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
         $tags['STARTMESS']   = _ADSLIGHT_STARTMESS;
         $tags['MESSFROM']    = _ADSLIGHT_MESSFROM;
         $tags['CANJOINT']    = _ADSLIGHT_CANJOINT;
-        $tags['NAMEP']       =  XoopsRequest::getString('namep', '', 'POST');
+        $tags['NAMEP']       =  Request::getString('namep', '', 'POST');
         $tags['TO']          = _ADSLIGHT_TO;
-        $tags['POST']        = "<a href=\"mailto:" . XoopsRequest::getString('post', '', 'POST') . "\">" . XoopsRequest::getString('post', '', 'POST') . '</a>';
+        $tags['POST']        = "<a href=\"mailto:" . Request::getString('post', '', 'POST') . "\">" . Request::getString('post', '', 'POST') . '</a>';
         $tags['TELE']        = $teles;
         $tags['MESSAGE_END'] = _ADSLIGHT_MESSAGE_END;
         $tags['ENDMESS']     = _ADSLIGHT_ENDMESS;
@@ -129,7 +131,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
         $mail->setTemplate('listing_contact.tpl');
 
         $mail->useMail();
-        $mail->setFromEmail(XoopsRequest::getString('post', '', 'POST'));
+        $mail->setFromEmail(Request::getString('post', '', 'POST'));
         $mail->setToEmails($email);
         $mail->setSubject($subject);
         $mail->multimailer->isHTML(true);
@@ -138,14 +140,14 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
         $mail->send();
         echo $mail->getErrors();
 
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date', '$namep', '$ipnumber', '" . XoopsRequest::getString('post', '', 'POST') . "')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date', '$namep', '$ipnumber', '" . Request::getString('post', '', 'POST') . "')");
 
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '" . XoopsRequest::getString('post', '', 'POST') . "', '$r_usid')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '" . Request::getString('post', '', 'POST') . "', '$r_usid')");
 
         redirect_header('index.php', 3, _ADSLIGHT_MESSEND);
     }
 } else {
-    $lid = XoopsRequest::getInt('lid', 0, 'GET');
+    $lid = Request::getInt('lid', 0, 'GET');
     $idd = $idde = $iddee = '';
     include_once __DIR__ . '/header.php';
 
@@ -159,7 +161,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     }
     /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
-    $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
+    $perm_itemid  = Request::getInt('item_id', 0, 'POST');
     //If no access
     if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);

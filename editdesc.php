@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . strtoupper($moduleDirName);
 
@@ -67,10 +69,10 @@ if ($xCube) {
 /**
  * Receiving info from get parameters
  */
-$cod_img = XoopsRequest::getString('cod_img', '', 'POST');
+$cod_img = Request::getString('cod_img', '', 'POST');
 //$lid = (int)$_POST['lid'];
 //$marker = $_POST['marker'];
-$marker = XoopsRequest::getInt('marker', '', 'POST');
+$marker = Request::getInt('marker', '', 'POST');
 
 if ($marker == 1) {
     /**
@@ -78,8 +80,8 @@ if ($marker == 1) {
      */
     $picture_factory = new Xoopsjlm_picturesHandler($xoopsDB);
     $picture         = $picture_factory->create(false);
-    $picture->load(XoopsRequest::getString('cod_img', '', 'POST'));
-    $picture->setVar('title', XoopsRequest::getString('caption', '', 'POST'));
+    $picture->load(Request::getString('cod_img', '', 'POST'));
+    $picture->setVar('title', Request::getString('caption', '', 'POST'));
 
     /**
      * Verifying who's the owner to allow changes

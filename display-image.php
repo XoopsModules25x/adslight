@@ -20,10 +20,12 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 
-if (null !==  XoopsRequest::getInt('cod_img', null, 'GET')) {
-    $cod_img = XoopsRequest::getInt('cod_img', null, 'GET');
+if (null !==  Request::getInt('cod_img', null, 'GET')) {
+    $cod_img = Request::getInt('cod_img', null, 'GET');
 } else {
     redirect_header('index.php', 1, _ADSLIGHT_VALIDATE_FAILED);
 }

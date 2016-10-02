@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
@@ -31,9 +33,9 @@ xoops_cp_header();
 //    loadModuleAdminMenu (6, "");
 //}
 
-$action = XoopsRequest::getString('action', '', 'POST');
+$action = Request::getString('action', '', 'POST');
 if (!empty($action)) {
-    $file = XoopsRequest::getString('file', '', 'POST');
+    $file = Request::getString('file', '', 'POST');
 }
 /*
 $action = '';

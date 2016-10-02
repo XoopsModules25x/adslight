@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 /**
  * Protection against inclusion outside the site
  */
@@ -501,7 +503,7 @@ class Xoopsjlm_picturesHandler extends XoopsObjectHandler
         global $xoopsDB, $_POST, $_FILES, $lid;
         //busca id do user logado
         $uid = $GLOBALS['xoopsUser']->getVar('uid');
-        $lid = XoopsRequest::getInt('lid', 0, 'POST');
+        $lid = Request::getInt('lid', 0, 'POST');
         //create a hash so it does not erase another file
         $hash1 = time();
         $hash  = substr($hash1, 0, 4);

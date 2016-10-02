@@ -32,4 +32,4 @@ if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
 }
 
 $myts = MyTextSanitizer::getInstance();
-xoops_load('XoopsRequest');
+

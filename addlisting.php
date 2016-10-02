@@ -19,6 +19,9 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();// MyTextSanitizer object
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
@@ -36,7 +39,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 }
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid = Request::getInt('item_id', 0, 'POST');
 if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
@@ -55,44 +58,44 @@ if (empty($GLOBALS['xoopsUser'])) {
     redirect_header(XOOPS_URL . '/user.php', 2, _MA_ADSLIGHT_MUSTREGFIRST);
 }
 
-if ('' != XoopsRequest::getString('submit', '', 'POST')) {
+if (Request::hasVar('submit', 'POST')) {
     $howlong = $GLOBALS['xoopsModuleConfig']['adslight_howlong'];
 
     if (!$xoopsGTicket->check(true, 'token')) {
         redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
     }
 
-    if (XoopsRequest::getString('title', '', 'POST') == '') {
+    if (Request::getString('title', '', 'POST') == '') {
         //        $erh->show('1001'); //'0001' => 'Could not connect to the forums database.',
         $modHandler = xoops_getModuleHandler('module');
         $myModule   = $modHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
-    $cid = XoopsRequest::getInt('cid', 0, 'POST');
+    $cid = Request::getInt('cid', 0, 'POST');
 
     $cat_perms = AdslightUtilities::getMyItemIds('adslight_submit');
     if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
 
-    $title     = XoopsRequest::getString('title', '', 'POST');
-    $status    = XoopsRequest::getInt('status', 0, 'POST');
-    $expire    = XoopsRequest::getString('expire', '', 'POST');
-    $type      = XoopsRequest::getString('type', '', 'POST');
-    $desctext  = XoopsRequest::getText('desctext', '', 'POST'); // $myts->displayTarea($_POST['desctext'], 1, 1, 1);
-    $tel       = XoopsRequest::getString('tel', '', 'POST');
-    $price     = str_replace(array(' '), '', XoopsRequest::getFloat('price', 0, 'POST'));
-    $typeprice = XoopsRequest::getString('typeprice', '', 'POST');
-    $typeusure = XoopsRequest::getString('typeusure', '', 'POST');
-    $date      = XoopsRequest::getInt('date', 0, 'POST');
-    $email     = XoopsRequest::getString('email', '', 'POST');
-    $submitter = XoopsRequest::getString('submitter', '', 'POST');
-    $usid      = XoopsRequest::getString('usid', '', 'POST');
-    $town      = XoopsRequest::getString('town', '', 'POST');
-    $country   = XoopsRequest::getString('country', 0, 'POST');
-    $contactby = XoopsRequest::getString('contactby', '', 'POST');
-    $premium   = XoopsRequest::getString('premium', '', 'POST');
-    $valid     = XoopsRequest::getString('valid', '', 'POST');
+    $title     = Request::getString('title', '', 'POST');
+    $status    = Request::getInt('status', 0, 'POST');
+    $expire    = Request::getString('expire', '', 'POST');
+    $type      = Request::getString('type', '', 'POST');
+    $desctext  = Request::getText('desctext', '', 'POST'); // $myts->displayTarea($_POST['desctext'], 1, 1, 1);
+    $tel       = Request::getString('tel', '', 'POST');
+    $price     = str_replace(array(' '), '', Request::getFloat('price', 0, 'POST'));
+    $typeprice = Request::getString('typeprice', '', 'POST');
+    $typeusure = Request::getString('typeusure', '', 'POST');
+    $date      = Request::getInt('date', 0, 'POST');
+    $email     = Request::getString('email', '', 'POST');
+    $submitter = Request::getString('submitter', '', 'POST');
+    $usid      = Request::getString('usid', '', 'POST');
+    $town      = Request::getString('town', '', 'POST');
+    $country   = Request::getString('country', 0, 'POST');
+    $contactby = Request::getString('contactby', '', 'POST');
+    $premium   = Request::getString('premium', '', 'POST');
+    $valid     = Request::getString('valid', '', 'POST');
 
     $date  = time();
     $newid = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
@@ -168,7 +171,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
         echo $mail->getErrors();
     }
 
-      $addphotonow = XoopsRequest::getInt('addphotonow', 0, 'POST');
+      $addphotonow = Request::getInt('addphotonow', 0, 'POST');
 
 
     if ($addphotonow) {
@@ -182,9 +185,9 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     include XOOPS_ROOT_PATH . '/header.php';
     include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $cid = XoopsRequest::getInt('cid', 0, 'POST');
+    $cid = Request::getInt('cid', 0, 'POST');
 
-    $cat_moderate = XoopsRequest::getInt('cat_moderate', 0, 'POST');
+    $cat_moderate = Request::getInt('cat_moderate', 0, 'POST');
 
     $howlong      = $GLOBALS['xoopsModuleConfig']['adslight_howlong'];
     $member_usid  = $GLOBALS['xoopsUser']->getVar('uid', 'E');
@@ -235,7 +238,7 @@ if ('' != XoopsRequest::getString('submit', '', 'POST')) {
     }
     $form->addElement(new XoopsFormText(_ADSLIGHT_TEL, 'tel', 50, 50, ''), false);
 
-    $cat_id    = XoopsRequest::getInt('cid', 0, 'GET');
+    $cat_id    = Request::getInt('cid', 0, 'GET');
     $cid       = addslashes($cat_id);
     $cat_perms = AdslightUtilities::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {

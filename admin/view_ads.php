@@ -20,9 +20,11 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getInt('op', 'liste');
+$op = Request::getInt('op', 'liste');
 
 #  function index
 #####################################################
@@ -790,14 +792,16 @@ foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
 
-$pa      = XoopsRequest::getInt('pa', '', 'GET');
+$pa      = Request::getInt('pa', '', 'GET');
 
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = $_GET['lid'];
+if (!Request::hasVar('lid', 'POST') && Request::hasVar('lid', 'GET')) {
+    $lid = Request::getInt('lid', 0, 'GET');
 }
-if (!isset($_POST['op']) && isset($_GET['op'])) {
-    $op = $_GET['op'];
+
+if (!Request::hasVar('op', 'POST') && Request::hasVar('op', 'GET')) {
+    $op = Request::getString('op', '', 'GET');
 }
+
 if (!isset($op)) {
     $op = '';
 }

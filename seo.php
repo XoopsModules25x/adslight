@@ -25,11 +25,11 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-xoops_load('XoopsRequest');
+use Xmf\Request;
 
-$seoOp    = XoopsRequest::getString('seoOp', '', 'GET');
-$seoArg   = XoopsRequest::getString('seoArg', '', 'GET');
-$seoOther = XoopsRequest::getString('seoOther', '', 'GET');
+$seoOp    = Request::getString('seoOp', '', 'GET');
+$seoArg   = Request::getString('seoArg', '', 'GET');
+$seoOther = Request::getString('seoOther', '', 'GET');
 
 if (!empty($seoOther)) {
     $seoOther = explode('/', $seoOther);

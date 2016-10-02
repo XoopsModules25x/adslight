@@ -19,9 +19,12 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 
-$op = XoopsRequest::getString('op', 'liste');
+$op = Request::getString('op', 'liste');
 
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 

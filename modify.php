@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 $moduleDirName = basename(__DIR__);
 $main_lang     = '_' . strtoupper($moduleDirName);
@@ -30,7 +32,7 @@ $module_id = $xoopsModule->getVar('mid');
 $groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid  = Request::getInt('item_id', 0, 'POST');
 
 //If no access
 if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
@@ -279,7 +281,7 @@ function modAd($lid)
 
             /** @var XoopsGroupPermHandler $gpermHandler */
             $gpermHandler = xoops_getHandler('groupperm');
-            $perm_itemid  = XoopsRequest::getInt('item_id', 0, 'GET');
+            $perm_itemid  = Request::getInt('item_id', 0, 'GET');
 
             //If no access
             if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
@@ -342,7 +344,7 @@ function modAd($lid)
             }
             /** @var XoopsGroupPermHandler $gpermHandler */
             $gpermHandler = xoops_getHandler('groupperm');
-            $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
+            $perm_itemid = Request::getInt('item_id', 0, 'POST');
             //If no access
             if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 if ($GLOBALS['xoopsModuleConfig']['adslight_moderated'] == '1') {
@@ -436,16 +438,16 @@ function modAdS(
 foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
-$ok = XoopsRequest::getString('ok', '', 'GET');
+$ok = Request::getString('ok', '', 'GET');
 
-if (!isset($_POST['lid']) && isset($_GET['lid'])) {
-    $lid = $_GET['lid'];
+if (!Request::hasVar('lid', 'POST') && Request::hasVar('lid', 'GET')) {
+    $lid = Request::getInt('lid', 0, 'GET');
 }
-if (!isset($_POST['r_lid']) && isset($_GET['r_lid'])) {
-    $r_lid = $_GET['r_lid'];
+if (!Request::hasVar('r_lid', 'POST') && Request::hasVar('r_lid', 'GET')) {
+    $r_lid = Request::getInt('r_lid', '', 'GET');
 }
-if (!isset($_POST['op']) && isset($_GET['op'])) {
-    $op = $_GET['op'];
+if (!Request::hasVar('op', 'POST') && Request::hasVar('op', 'GET')) {
+    $op = Request::getString('op', '', 'GET');
 }
 switch ($op) {
 

@@ -20,10 +20,12 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 //include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 
-$op = XoopsRequest::getString('op', 'liste');
+$op = Request::getString('op', 'liste');
 xoops_cp_header();
 //loadModuleAdminMenu(3, "");
 echo $adminObject->addNavigation(basename(__FILE__));
@@ -36,7 +38,7 @@ if ($cat_rows == '0') {
     echo '' . _MI_ADSLIGHT_MUST_ADD_CAT . '';
 } else {
     //$permtoset= isset($_POST['permtoset']) ? intval($_POST['permtoset']) : 1;
-    $permtoset                = XoopsRequest::getInt('permtoset', 1, 'POST');
+    $permtoset                = Request::getInt('permtoset', 1, 'POST');
     $selected                 = array('', '', '');
     $selected[$permtoset - 1] = ' selected';
     echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='document.jselperm.submit()'><option value='1'"

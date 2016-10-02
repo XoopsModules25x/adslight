@@ -20,10 +20,12 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$op = XoopsRequest::getString('op', 'liste');
+$op = Request::getString('op', 'liste');
 
 #  function adsNewCat
 #####################################################
@@ -48,7 +50,7 @@ function adsNewCat($cat)
     <tr>
       <td class=\"even\">" . _AM_ADSLIGHT_CATNAME . " </td><td class=\"odd\" colspan=2><input type=\"text\" name=\"title\" size=\"50\" maxlength=\"100\">&nbsp; " . _AM_ADSLIGHT_IN . ' &nbsp;';
 
-    $cid = XoopsRequest::getInt('cid', 0, 'GET');
+    $cid = Request::getInt('cid', 0, 'GET');
 
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, ordre, affprice, cat_moderate, moderate_subcat FROM '
                               . $xoopsDB->prefix('adslight_categories')
@@ -155,7 +157,7 @@ function adsModCat($cid)
 
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-//    include_once __DIR__ . '/admin_header.php';
+    //    include_once __DIR__ . '/admin_header.php';
 
     //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODIFCAT . '</legend>';
@@ -370,7 +372,7 @@ function adsDelCat($cid, $ok = 0)
 
         redirect_header('map.php', 1, _AM_ADSLIGHT_CATDEL);
     } else {
-//        include_once __DIR__ . '/admin_header.php';
+        //        include_once __DIR__ . '/admin_header.php';
         //        loadModuleAdminMenu(1, "");
 
         OpenTable();
@@ -387,9 +389,9 @@ foreach ($_POST as $k => $v) {
     ${$k} = $v;
 }
 
-$ok  = XoopsRequest::getString('ok', '', 'GET');
-$cid = XoopsRequest::getInt('cid', 0);
-$op  = XoopsRequest::getString('op', '');
+$ok  = Request::getString('ok', '', 'GET');
+$cid = Request::getInt('cid', 0);
+$op  = Request::getString('op', '');
 
 switch ($op) {
 

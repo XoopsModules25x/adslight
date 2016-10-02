@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 //include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
@@ -33,8 +35,8 @@ $GLOBALS['xoopsOption']['template_main'] = 'adslight_members.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 include XOOPS_ROOT_PATH . '/include/comment_view.php';
 
-$lid       = XoopsRequest::getInt('lid', 0, 'GET');
-$usid      = XoopsRequest::getInt('usid', 0, 'GET');
+$lid       = Request::getInt('lid', 0, 'GET');
+$usid      = Request::getInt('usid', 0, 'GET');
 $module_id = $xoopsModule->getVar('mid');
 if (is_object($GLOBALS['xoopsUser'])) {
     $groups = $GLOBALS['xoopsUser']->getGroups();
@@ -43,7 +45,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 }
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid  = Request::getInt('item_id', 0, 'POST');
 
 //If no access
 $permit = (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
@@ -73,7 +75,7 @@ $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight
 $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
 $show = 4;
-$min  = XoopsRequest::getInt('min', 0, 'GET');
+$min  = Request::getInt('min', 0, 'GET');
 if (!isset($max)) {
     $max = $min + $show;
 }
@@ -279,7 +281,7 @@ if ($trows > '0') {
             'sold'        => $sold
         ));
     }
-    $usid = XoopsRequest::getInt('usid', 0, 'GET');
+    $usid = Request::getInt('usid', 0, 'GET');
 
     //Calculates how many pages exist.  Which page one should be on, etc...
     $linkpages = ceil($trows / $show);

@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 /**
  * AdslightUtilities Class
  *
@@ -177,7 +179,7 @@ class AdslightUtilities
     {
         global $xoopsDB, $moduleDirName, $main_lang;
 
-        $usid      = XoopsRequest::getInt('usid', 0, 'GET');
+        $usid      = Request::getInt('usid', 0, 'GET');
 
         $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($sel_id) . '';
         //echo $query;
@@ -202,7 +204,7 @@ class AdslightUtilities
     {
         global $xoopsDB, $moduleDirName, $main_lang;
 
-        $lid      = XoopsRequest::getInt('lid', 0, 'GET');
+        $lid      = Request::getInt('lid', 0, 'GET');
 
         $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . '';
         //echo $query;
@@ -573,7 +575,7 @@ class AdslightUtilities
     {
         global $xoopsDB;
 
-        $cid      = XoopsRequest::getInt('cid', null, 'GET');
+        $cid      = Request::getInt('cid', null, 'GET');
 
         $result = array();
 

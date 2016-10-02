@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . strtoupper($moduleDirName);
 
@@ -67,7 +69,7 @@ if ($xCube) {
 /**
  * Receiving info from get parameters
  */
-$cod_img = XoopsRequest::getString('cod_img', '', 'POST');
+$cod_img = Request::getString('cod_img', '', 'POST');
 
 /**
  * Creating the factory  and the criteria to delete the picture
@@ -95,7 +97,7 @@ if ($album_factory->deleteAll($criteria)) {
 
     unlink("$path_upload/midsize/resized_$image_name");
 
-    $lid =  XoopsRequest::getInt('lid', 0, 'POST');
+    $lid =  Request::getInt('lid', 0, 'POST');
 
     $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo-1 WHERE lid='$lid'");
 

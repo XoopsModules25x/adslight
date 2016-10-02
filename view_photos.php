@@ -19,6 +19,9 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 
 /**
@@ -32,7 +35,7 @@ include_once XOOPS_ROOT_PATH . '/header.php';
  * Module classes
  */
 include_once __DIR__ . '/class/pictures.php';
-$lid = XoopsRequest::getInt('lid', 0, 'GET');
+$lid = Request::getInt('lid', 0, 'GET');
 if (empty($lid)) {
     header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
 }
@@ -40,8 +43,8 @@ if (empty($lid)) {
 // Is a member looking ?
 if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
     // If no $_GET['uid'] then redirect to own
-    if (isset($_GET['uid'])) {
-        $uid = XoopsRequest::getInt('uid', 0, 'GET');
+    if (Request::hasVar('uid', 'GET')) {
+        $uid = Request::getInt('uid', 0, 'GET');
     } else {
         header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
     }
@@ -59,7 +62,7 @@ if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
     /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 
-    $perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
+    $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
     //If no access
     if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
@@ -73,8 +76,8 @@ if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
      */
 } else {
     // user is anon
-    if (isset($_GET['uid'])) {
-        $uid = XoopsRequest::getInt('uid', 0, 'GET');
+    if (Request::hasVar('uid', 'GET')) {
+        $uid = Request::getInt('uid', 0, 'GET');
     } else {
         header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
         $isOwner = false;

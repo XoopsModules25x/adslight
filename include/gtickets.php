@@ -198,7 +198,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             // get key&val of the ticket from a user's query
-            $ticket = $post ? @$_POST['XOOPS_G_TICKET'] : @$_GET['XOOPS_G_TICKET'];
+            $ticket = $post ? @Request::getString('XOOPS_G_TICKET', '', 'POST') : @Request::getString('XOOPS_G_TICKET', '', 'GET') ;
 
             // CHECK: no tickets found
             if (empty($ticket)) {

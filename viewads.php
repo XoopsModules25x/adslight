@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
@@ -34,7 +36,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 }
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid = Request::getInt('item_id', 0, 'POST');
 //If no access
 if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -553,13 +555,13 @@ function categorynewgraphic($cid)
 
 ######################################################
 
-$pa      = XoopsRequest::getInt('pa', null, 'GET');
-$lid     = XoopsRequest::getInt('lid', null, 'GET');
-$cid     = XoopsRequest::getInt('cid', null, 'GET');
-$usid    = XoopsRequest::getString('usid', '', 'GET');
-$min     = XoopsRequest::getInt('min', null, 'GET');
-$show    = XoopsRequest::getInt('show', null, 'GET');
-$orderby = XoopsRequest::getInt('orderby', null, 'GET');
+$pa      = Request::getInt('pa', null, 'GET');
+$lid     = Request::getInt('lid', null, 'GET');
+$cid     = Request::getInt('cid', null, 'GET');
+$usid    = Request::getString('usid', '', 'GET');
+$min     = Request::getInt('min', null, 'GET');
+$show    = Request::getInt('show', null, 'GET');
+$orderby = Request::getInt('orderby', null, 'GET');
 
 switch ($pa) {
 

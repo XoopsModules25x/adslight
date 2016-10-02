@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 include_once __DIR__ . '/header.php';
 //include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
 
@@ -28,7 +30,7 @@ $module_id    = $xoopsModule->getVar('mid');
 $groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = XoopsRequest::getInt('item_id', 0, 'POST');
+$perm_itemid  = Request::getInt('item_id', 0, 'POST');
 
 //If no access
 if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
@@ -37,13 +39,13 @@ if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $modul
 include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-$lid                                     = XoopsRequest::getInt('lid', 0, 'GET');
+$lid                                     = Request::getInt('lid', 0, 'GET');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_replies.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
 $xoopsTpl->assign('nav_main', "<a href=\"index.php\">" . _ADSLIGHT_MAIN . '</a>');
 $show = 1;
-$min  = XoopsRequest::getInt('min', 0, 'GET');
+$min  = Request::getInt('min', 0, 'GET');
 if (!isset($max)) {
     $max = $min + $show;
 }
@@ -121,7 +123,7 @@ if ($trows > '0') {
             'tele'    => $myts->htmlSpecialChars($tele)
         ));
     }
-    $lid = XoopsRequest::getInt('lid', 0, 'GET');
+    $lid = Request::getInt('lid', 0, 'GET');
     //Calculates how many pages exist.  Which page one should be on, etc...
     $linkpages = ceil($trows / $show);
     //Page Numbering
