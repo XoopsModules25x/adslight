@@ -17,14 +17,14 @@
  * @author       XOOPS Development Team
  */
 
-$roothpath = dirname(dirname(dirname(__DIR__)));
+$rootPath = dirname(dirname(dirname(__DIR__)));
 //$moduleDirName = $GLOBALS['xoopsModule']->getVar('dirname');
 //$moduleDirName = $xoopsModule->getVar('dirname');
 
-include_once $roothpath . '/mainfile.php';
-include_once $roothpath . '/include/cp_functions.php';
-require_once $roothpath . '/include/cp_header.php';
-include_once $roothpath . '/class/xoopsformloader.php';
+include_once $rootPath . '/mainfile.php';
+include_once $rootPath . '/include/cp_functions.php';
+require_once $rootPath . '/include/cp_header.php';
+include_once $rootPath . '/class/xoopsformloader.php';
 require __DIR__ . '/../class/utilities.php';
 
 
@@ -33,12 +33,12 @@ global $xoopsModule;
 $moduleDirName = $xoopsModule->getVar('dirname');
 //$moduleDirName2 = basename(dirname(__DIR__));
 
-include_once $roothpath . '/modules/' . $moduleDirName . '/include/gtickets.php';
-include_once $roothpath . '/modules/' . $moduleDirName . '/class/utilities.php';
-include_once $roothpath . '/modules/' . $moduleDirName . '/class/classifiedstree.php';
+include_once $rootPath . '/modules/' . $moduleDirName . '/include/gtickets.php';
+include_once $rootPath . '/modules/' . $moduleDirName . '/class/utilities.php';
+include_once $rootPath . '/modules/' . $moduleDirName . '/class/classifiedstree.php';
 //include_once $GLOBALS['xoops']->path( "/modules/adslight/class/grouppermform.php");
-include_once $roothpath . '/class/xoopsform/grouppermform.php';
-include_once $roothpath . '/modules/adslight/class/classifiedstree.php';
+include_once $rootPath . '/class/xoopsform/grouppermform.php';
+include_once $rootPath . '/modules/adslight/class/classifiedstree.php';
 
 //if functions.php file exist
 //require_once dirname(__DIR__) . '/include/functions.php';
@@ -48,8 +48,8 @@ xoops_loadLanguage('admin', $moduleDirName);
 xoops_loadLanguage('modinfo', $moduleDirName);
 xoops_loadLanguage('main', $moduleDirName);
 
-$pathIcon16      = '../' . $xoopsModule->getInfo('icons16');
-$pathIcon32      = '../' . $xoopsModule->getInfo('icons32');
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
 $pathModuleAdmin =& $xoopsModule->getInfo('dirmoduleadmin');
 
 include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');

@@ -1,4 +1,7 @@
 <?php
+
+use Xmf\Request;
+
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -20,9 +23,9 @@
 -------------------------------------------------------------------------
 */
 
-use Xmf\Request;
+include_once __DIR__ . '/header.php';
 
-if ('' != Request::getString('submit', '', 'POST')) {
+if (Request::hasVar('submit', 'POST')) {
     // Define Variables for register_globals Off. contribution by Peekay
     $id        = Request::getString('id', null);
     $date      = Request::getString('date', null);
@@ -34,7 +37,7 @@ if ('' != Request::getString('submit', '', 'POST')) {
     $tele      = Request::getString('tele', null);
     // end define vars
 
-    include_once __DIR__ . '/header.php';
+//    include_once __DIR__ . '/header.php';
 
     $module_id = $xoopsModule->getVar('mid');
 

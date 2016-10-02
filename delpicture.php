@@ -28,8 +28,8 @@ $main_lang     = '_' . strtoupper($moduleDirName);
 /**
  * Xoops Header
  */
-include dirname(dirname(__DIR__)) . '/mainfile.php';
-include_once XOOPS_ROOT_PATH . '/header.php';
+include_once __DIR__ . '/header.php';
+//include_once XOOPS_ROOT_PATH . '/header.php';
 include_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**

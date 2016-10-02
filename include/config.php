@@ -69,5 +69,5 @@ return array(
 );
 
 // module information
-$mod_copyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
+$modCopyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($modir . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project' /></a>";
