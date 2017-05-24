@@ -150,7 +150,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['NO_REPLY']           = _ADSLIGHT_NOREPLY;
     $subject                    = '' . _ADSLIGHT_REPORTSUBJET . ' ' . $xoopsConfig['sitename'] . '';
 
-    $xoopsMailer =& xoops_getMailer();
+    $xoopsMailer = xoops_getMailer();
     $xoopsMailer->multimailer->isHTML(true);
     $xoopsMailer->useMail();
     $xoopsMailer->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');

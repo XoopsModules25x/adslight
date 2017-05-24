@@ -146,8 +146,8 @@ define('_ADSLIGHT_DISPO', 'Expires on');
 define('_ADSLIGHT_NOMAIL',
        'We do not give out users email addresses, to contact them by e-mail please use the contact form on our site by clicking on the e-mail link in the ad, you can view the ad at the following web address. ');
 // modify.php //
-define('_ADSLIGHT_OUI', 'Yes');
-define('_ADSLIGHT_NON', 'No');
+//define('_ADSLIGHT_OUI', 'Yes');
+//define('_ADSLIGHT_NON', 'No');
 define('_ADSLIGHT_SURDELANN', 'ATTENTION: Are you sure you want to delete this advertisement');
 define('_RETURNANN', 'Return to classified ads listing');
 define('_ADSLIGHT_ANNDEL', 'Classified Ad selected has been deleted');
@@ -276,7 +276,7 @@ define('_ADSLIGHT_DELETE', 'Delete');
 define('_ADSLIGHT_EDITDESC', 'Edit description');
 define('_ADSLIGHT_TOKENEXPIRED', 'Your Security Token has Expired<br> Try Again');
 define('_ADSLIGHT_DESC_EDITED', "Your image's description was edited succesfuly");
-define('_ADSLIGHT_DELETED', 'Image deleted succesfuly');
+define('_ADSLIGHT_DELETED', 'Image deleted succesfully');
 define('_ADSLIGHT_SUBMIT_PIC_TITLE', 'Submit a Picture to Your Album');
 define('_ADSLIGHT_SELECT_PHOTO', 'Select Photo');
 define('_ADSLIGHT_CAPTION', 'Caption');
@@ -375,7 +375,7 @@ define('_ADSLIGHT_ADD_TITLEMENU8', 'You must be logged in to read your messages.
 define('_ADSLIGHT_ADD_TITLEMENU9', 'You must be logged in to see your profile.');
 define('_ADSLIGHT_ADD_TITLEMENU10', 'View or edit your profile here.');
 //viewcats.php >> Infos Bulle //
-define('_ADSLIGHT_ADD_LISTING_BULLCATS', 'You can add <br>ads in this category');
+define('_ADSLIGHT_ADD_LISTING_BULLCATS', 'You can add <br>ads in this category<br>');
 define('_ADSLIGHT_ADD_LISTING_BULLCATSOK', 'To add one or more <br>ads in this category<br>Thank you for ');
 // Reserved
 //define("_ADSLIGHT_RESERVED","Reserved");
@@ -383,13 +383,13 @@ define('_ADSLIGHT_ADD_LISTING_BULLCATSOK', 'To add one or more <br>ads in this c
 define('_ADSLIGHT_TIPSWRITE', 'Our tips for you<br>on how to write your ads');
 define('_ADSLIGHT_TIPSWRITE_TITLE', 'The Tips on writing your ad');
 define('_ADSLIGHT_TIPSWRITE_TEXT', "<strong> 1. One or more photos </strong> <br> <br>
-The first contact with visitors qu'auront your ad will be a photo or photos of the item you sell. <br> It is advisable to put a photo or photos of your object. <Br />
+The first contact with visitors qu'auront your ad will be a photo or photos of the item you sell. <br> It is advisable to put a photo or photos of your object. <Br >
 An ad with photo is viewed 7 times more than an ad without a photo! <br> It also gives a first idea of ??the state of your object. <br> <br> <br>
 - A proper object is always more attractive. <br> - Heal the quality of the photo. (Not too dark) <br>
 - Frame the object so that it is visible. <br>
 - Avoid photos 'fuzzy' <br> <br> <strong> 2. Clear and detailed </strong> <br> <br>
 After carefully preparing the photos of the item you sell. <br> Now you need to write the ad. <br> <br>
-- Avoid language 'SMS', it is imperative that the announcement is clearly visible. <br> Otherwise, you lose your chance to sell spare parts. <Br /> <br>
+- Avoid language 'SMS', it is imperative that the announcement is clearly visible. <br> Otherwise, you lose your chance to sell spare parts. <Br > <br>
 - The title in uppercase and any ad written in uppercase, <br> is strongly discouraged. <br> <br>
 - Superlatives are avoided. <br> <br>
 - Write down all the details and make sure that visitors can best identify your object. <br> Otherwise they will contact you by email or telephone to ask you. (Loss of time for you and the buyer) <br> <br>

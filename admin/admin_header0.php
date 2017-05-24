@@ -43,4 +43,4 @@ if ($xoopsUser) {
 xoops_loadLanguage('admin', 'system');
 xoops_loadLanguage('admin', $xoopsModule->getVar('dirname', 'e'));
 xoops_loadLanguage('modinfo', $xoopsModule->getVar('dirname', 'e'));
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();

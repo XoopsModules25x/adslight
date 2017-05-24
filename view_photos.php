@@ -97,7 +97,7 @@ $album_factory = new JlmPicturesHandler($xoopsDB);
 /**
  * Fetch pictures from the factory
  */
-$pictures_object_array =& $album_factory->getObjects($criteria_lid, $criteria_uid);
+$pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
 
 // How many pictures are on the user album
 $pictures_number = $album_factory->getCount($criteria_lid, $criteria_uid);
