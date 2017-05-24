@@ -83,7 +83,7 @@ $criteria_uid  = new Criteria('uid_owner', $uid);
 $criteria = new CriteriaCompo($criteria_img);
 $criteria->add($criteria_uid);
 
-$objects_array =& $album_factory->getObjects($criteria);
+$objects_array = $album_factory->getObjects($criteria);
 $image_name    = $objects_array[0]->getVar('url');
 /**
  * Try to delete

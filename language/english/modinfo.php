@@ -46,7 +46,7 @@ define('_MI_ADSLIGHT_CONFSAVE', 'Configuration saved');
 define('_MI_ADSLIGHT_CANPOST', 'Anonymous user can post Listings :');
 define('_MI_ADSLIGHT_PERPAGE', 'Listings per page :');
 define('_MI_ADSLIGHT_RES_PERPAGE', 'Resumes per page :');
-define('_MI_ADSLIGHT_MONEY', 'Currency symbol :');
+define('_MI_ADSLIGHT_CURRENCY_SYMBOL', 'Currency symbol :');
 define('_MI_ADSLIGHT_KOIVI', 'Use Koivi Editor :');
 define('_MI_ADSLIGHT_NUMNEW', 'Number of new Listings :');
 define('_MI_ADSLIGHT_MODERAT', 'Moderate Listings :');
@@ -204,13 +204,11 @@ define('_MI_ADSLIGHT_ACTIVE_REWRITEURL', 'Enable URL Rewrite');
 define('_MI_ADSLIGHT_ACTIVE_REWRITEURL_DESC', 'Enable URL rewriting for a better ranking.<br>To install the rewrite, thank you to read the file README.txt');
 // Activer thumbs_index
 define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX', 'Enable Snapshot page index');
-define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC', "Enable the display of thumbnail images to homepage<br>If it is off an icon <img src='"
-                                               . XOOPS_URL
+define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC', "Enable the display of thumbnail images to homepage<br>If it is off an icon <img src='" . XOOPS_URL
                                                . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
 // Activer thumbs_cats
 define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS', 'Enable Snapshot in categories');
-define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC', "Enable the display of thumbnail pictures in the categories<br>If it is off an icon <img src='"
-                                              . XOOPS_URL
+define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC', "Enable the display of thumbnail pictures in the categories<br>If it is off an icon <img src='" . XOOPS_URL
                                               . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
 // Code Adscence index
 define('_MI_ADSLIGHT_ADSLIGHT_INDEX_CODE', 'Code additional home page');
@@ -259,7 +257,7 @@ define('_MI_ADSLIGHT_TEXTDESC_XPAYMENT', 'Xpayment module must be installed');
 // Xpayment
 define('_MI_ADSLIGHT_PURCHASE', 'Available for purchase');
 define('_MI_ADSLIGHT_PURCHASE_DESC', 'These are the categories that are available for purchase on Xpayment');
-define('_MI_ADSLIGHT_CURRENCY', 'ISO currency code');
+define('_MI_ADSLIGHT_CURRENCY_CODE', 'ISO Currency Code');
 define('_MI_ADSLIGHT_LISTING_COST', 'The registration will be charged at this rate per day');
 define('_MI_ADSLIGHT_PURCHASELISTING', 'Inscriptions Purchasable');
 define('_MI_ADSLIGHT_PURCHASELISTING_DESC', 'These are the categories that the cost per day to list an ad');
@@ -269,6 +267,18 @@ define('_MI_ADSLIGHT_ADVISE_TITLE', 'Our Advise');
 define('_MI_ADSLIGHT_ADVISE_TEXT', 'Here goes your text');
 //Help
 define('_MI_ADSLIGHT_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_ADSLIGHT_HELP_HEADER', __DIR__.'/help/helpheader.html');
+define('_MI_ADSLIGHT_HELP_HEADER', __DIR__ . '/help/helpheader.html');
 define('_MI_ADSLIGHT_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_ADSLIGHT_HELP_OVERVIEW', 'Overview');
+
+//2.2
+define('_MI_ADSLIGHT_CURRENCY_POSITION', 'Currency symbol position ?');
+define('_MI_ADSLIGHT_CURRENCY_POSITION_DESC', 'Yes = left (e.g. $25), No = right (e.g. 25 €)');
+// Settings
+define('_MI_ADSLIGHT_SETTING_1', 'euro(s)');
+define('_MI_ADSLIGHT_SETTING_2', '$');
+define('_MI_ADSLIGHT_SETTING_3', '2');
+define('_MI_ADSLIGHT_SETTING_4', '1');
+define('_MI_ADSLIGHT_SETTING_5', '[space]');
+define('_MI_ADSLIGHT_SETTING_6', ',');
+define('_MI_ADSLIGHT_SETTING_7', '0');

@@ -112,7 +112,7 @@ $criteria->add($criteria_uid);
  * Lets fetch the info of the pictures to be able to render the form
  * The user must be the owner
  */
-if ($array_pict =& $album_factory->getObjects($criteria)) {
+if ($array_pict = $album_factory->getObjects($criteria)) {
     $caption = $array_pict[0]->getVar('title');
     $url     = $array_pict[0]->getVar('url');
 }

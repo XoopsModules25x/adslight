@@ -29,8 +29,8 @@ define('_AM_ADSLIGHT_DELSUBCAT', 'Delete sub-category');
 define('_AM_ADSLIGHT_MODIFSUBCAT', 'Edit a sub-category');
 define('_AM_ADSLIGHT_ADD', 'Add');
 define('_AM_ADSLIGHT_CATDEL', 'Selected category has been deleted');
-define('_AM_ADSLIGHT_OUI', 'Yes');
-define('_AM_ADSLIGHT_NON', 'No');
+//define('_AM_ADSLIGHT_OUI', 'Yes');
+//define('_AM_ADSLIGHT_NON', 'No');
 define('_AM_ADSLIGHT_SURDELCAT', 'WARNING: Are you sure you want to remove this category, and all subcategories and advertisement.');
 define('_AM_ADSLIGHT_IN', 'in');
 define('_AM_ADSLIGHT_MODIF', 'Modify');
@@ -69,7 +69,7 @@ define('_AM_ADSLIGHT_TYPE', 'Type:');
 define('_AM_ADSLIGHT_TYPE_USURE', 'The state of wear:');
 define('_AM_ADSLIGHT_PRICE2', 'Price:');
 define('_AM_ADSLIGHT_CAT2', 'Category:');
-define('_AM_ADSLIGHT_DESCRIPTION', 'Google adsence code or code of a banner:<br>Format: width = 300 height = 250');
+define('_AM_ADSLIGHT_DESCRIPTION', 'Google adsense code or code of a banner:<br>Format: width = 300 height = 250');
 define('_AM_ADSLIGHT_THEREIS', 'There are ');
 define('_AM_ADSLIGHT_WAIT', 'Ads waiting to be moderated');
 define('_AM_ADSLIGHT_ADDTYPE', 'Add Ad type');
@@ -95,15 +95,14 @@ define('_AM_ADSLIGHT_ORDRECLASS', 'Category Order:');
 define('_AM_ADSLIGHT_ORDREALPHA', 'Sort alphabetically');
 define('_AM_ADSLIGHT_ORDREPERSO', 'Personalised Order');
 define('_AM_ADSLIGHT_BIGCAT', 'Main Category');
-define('_AM_ADSLIGHT_HELP1', "<b>To add a category:</b> click on the image <img src=\""
-                             . XOOPS_URL
+define('_AM_ADSLIGHT_HELP1', "<b>To add a category:</b> click on the image <img src=\"" . XOOPS_URL
                              . "/modules/adslight/assets/images/plus.gif\" border=0 width=10 height=10 alt=\"Add a category\"> alongside the category you want to add the category under.<p><b>To change or delete a category:</b> click on the name of the category");
 define('_AM_ADSLIGHT_HELP2', '<B>Category Order:</B> integer in brackets corresponds to the order within the superior category or of the principal category. Negative integers can be used.: -1');
 // fichier pref.php //
 define('_AM_ADSLIGHT_CONFSAVE', 'Configuration saved');
 define('_AM_ADSLIGHT_ANNOCANPOST', 'Anonymous user can post ads:');
 define('_AM_ADSLIGHT_PERPAGE', 'Ads per page:');
-define('_AM_ADSLIGHT_MONEY', 'Currency symbol:');
+define('_AM_ADSLIGHT_CURRENCY_SYMBOL', 'Currency symbol:');
 define('_AM_ADSLIGHT_NUMNEW', 'Number of new ads:');
 define('_AM_ADSLIGHT_MODERAT', 'Moderate Ads:');
 define('_CAL_MAXIIMGS', 'Maximum photo size:');
@@ -146,6 +145,7 @@ define('_AM_ADSLIGHT_STATUS', 'Status');
 define('_AM_ADSLIGHT_UPDATECOMPLETE', 'Update Complete');
 define('_AM_ADSLIGHT_UPDATEMODULE', '<b>Update Module</b>');
 define('_AM_ADSLIGHT_UPGRADEFAILED', 'Update Failed');
+//define('_AM_ADSLIGHT_UPGRADEFAILED0', 'Update');
 define('_AM_ADSLIGHT_UPGR_ACCESS_ERROR', 'Access Error');
 define('_AM_ADSLIGHT_WEBMASTER', 'Webmaster');
 define('_AM_ADSLIGHT_YOUR_AD', 'Your ad');
@@ -217,7 +217,7 @@ define('_AM_ADSLIGHT_PREMIUM_DESC', 'Choose groups that can select the duration 
 define('_AM_ADSLIGHT_RELEASEOK', 'You are using the latest version of the module.');
 define('_AM_ADSLIGHT_RELEASEISNOTOK', 'Your module is outdated, a new version is available.');
 define('_AM_ADSLIGHT_RELEASEDOWNLOAD', 'Download.');
-//define("_AM_ADSLIGHT_NBR_PHOTO","Photo(s)");
+//define('_AM_ADSLIGHT_NBR_PHOTO', "Photo(s)");
 //Version 1.05
 // Méta Description / keywords Categories
 define('_AM_ADSLIGHT_CAT_META_DESCRIPTION', '<strong>Meta Description:</strong><br>For better optimization,</b>add here a precise description of your class. ');
