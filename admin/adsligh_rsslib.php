@@ -130,7 +130,7 @@ function RSS_Links($url, $size = 15)
 {
     global $RSS_Content;
     $recents = array();
-    $page = '<ul>';
+    $page    = '<ul>';
 
     RSS_RetrieveLinks($url);
     if ($size > 0) {
@@ -144,7 +144,7 @@ function RSS_Links($url, $size = 15)
         }
         $title = $article['title'];
         $link  = $article['link'];
-        $page .= "<li><a href=\"$link\">$title</a></li>\n";
+        $page  .= "<li><a href=\"{$link}\">{$title}</a></li>\n";
     }
 
     $page .= "</ul>\n";
@@ -163,9 +163,9 @@ function RSS_Display($url, $size = 15, $site = 0)
 {
     global $RSS_Content;
     $recents = array();
-    $opened = false;
-    $page   = '';
-    $site   = ((int)$site == 0) ? 1 : 0;
+    $opened  = false;
+    $page    = '';
+    $site    = (0 == (int)$site) ? 1 : 0;
 
     RSS_Retrieve($url);
     if ($size > 0) {
@@ -176,36 +176,36 @@ function RSS_Display($url, $size = 15, $site = 0)
         $type = $article['type'];
         if ($type == 0) {
             if ($opened === true) {
-                $page .= '</ul>';
+                $page   .= '</ul>';
                 $opened = false;
             }
             $page .= '<b>';
         } else {
             if ($opened === false) {
-                $page .= '<ul>';
+                $page   .= '<ul>';
                 $opened = true;
             }
         }
         $title = $article['title'];
         $link  = $article['link'];
-        $page .= "<tr class=\"even\"><td width=\"300\"><img src=\"../assets/images/admin/info_button.png\" border=0 /> <a href=\"$link\">$title</a><br>";
+        $page  .= "<tr class=\"even\"><td width=\"300\"><img src=\"../assets/images/admin/info_button.png\" border=\"0\"> <a href=\"{$link}\">{$title}</a><br>";
 
         $description = $article['description'];
-        if ($description !== false) {
-            $page .= "$description<br><br></td></tr>";
+        if (false !== $description) {
+            $page .= "{$description}<br><br></td></tr>";
         }
         $page .= '';
 
-        if ($type == 0) {
+        if (0 == $type) {
             $page .= '</b>';
         }
     }
 
-    if ($opened === true) {
+    if (true === $opened) {
         $page .= '</ul>';
     }
 
-    return $page . '';
+    return "{$page}";
 }
 
 /**
@@ -220,9 +220,9 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
 {
     global $RSS_Content;
     $recents = array();
-    $opened = false;
-    $page   = '';
-    $site   = ((int)$site == 0) ? 1 : 0;
+    $opened  = false;
+    $page    = '';
+    $site    = (0 == (int)$site) ? 1 : 0;
 
     RSS_Retrieve($url);
     if ($size > 0) {
@@ -231,15 +231,15 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
 
     foreach ($recents as $article) {
         $type = $article['type'];
-        if ($type == 0) {
-            if ($opened === true) {
-                $page .= '</ul>';
+        if (0 == $type) {
+            if (true === $opened) {
+                $page   .= '</ul>';
                 $opened = false;
             }
             $page .= '<b>';
         } else {
-            if ($opened === false) {
-                $page .= '<ul>';
+            if (false === $opened) {
+                $page   .= '<ul>';
                 $opened = true;
             }
         }
@@ -247,16 +247,16 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
         $title = $article['title'];
         $link  = $article['link'];
 
-        $page .= "<img src=\"../assets/images/admin/comment.png\" border=0 />&nbsp;&nbsp;&nbsp;<a href=\"$link\">$title</a><br><br>";
+        $page .= "<img src=\"../assets/images/admin/comment.png\" border=0 >&nbsp;&nbsp;&nbsp;<a href=\"$link\">$title</a><br><br>";
 
-        if ($type == 0) {
+        if (0 == $type) {
             $page .= '</b>';
         }
     }
 
-    if ($opened === true) {
+    if (true === $opened) {
         $page .= '</ul>';
     }
 
-    return $page . '';
+    return "{$page}";
 }

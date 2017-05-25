@@ -23,11 +23,11 @@
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
-    include_once XOOPS_ROOT_PATH . '/class/template.php';
+    require_once XOOPS_ROOT_PATH . '/class/template.php';
     $xoopsTpl = new XoopsTpl();
 }
-$adminObject = new ModuleAdmin();
-if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
+$adminObject = \Xmf\Module\Admin::getInstance();
+if (!@ require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
 
     /**
      * @param        $currentoption
@@ -37,7 +37,7 @@ if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
      */
     function loadModuleAdminMenu($currentoption, $breadcrumb = '')
     {
-        if (!$adminmenu = $GLOBALS['xoopsModule']->getAdminMenu()) {
+        if (!$adminObject = $GLOBALS['xoopsModule']->getAdminMenu()) {
             return false;
         }
 
@@ -45,7 +45,7 @@ if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
         $module_link = XOOPS_URL . '/modules/adslight/';
         $image_link  = XOOPS_URL . '/modules/adslight/images';
 
-        $adminmenu_text = '
+        $adminMenu_text = '
     <style type="text/css">
     <!--
     #buttontop { float:left; width:100%; background: #e7e7e7; font-size:93%; line-height:normal; border-top: 1px solid black; border-left: 1px solid black; border-right: 1px solid black; margin: 0;}
@@ -79,8 +79,8 @@ if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
     <div id="buttonbar">
      <ul>
     ';
-        foreach (array_keys($adminmenu) as $key) {
-            $adminmenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>')
+        foreach (array_keys($adminObject) as $key) {
+            $adminMenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>')
                                . '<a href="'
                                . $module_link
                                . $adminmenu[$key]['link']
@@ -88,19 +88,19 @@ if (!@ include_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
                                . $adminmenu[$key]['title']
                                . '</span></a></li>';
         }
-        $adminmenu_text .= '<li><a href="'
+        $adminMenu_text .= '<li><a href="'
                            . XOOPS_URL
                            . '/modules/system/admin.php?fct=preferences&op=showmod&mod='
                            . $GLOBALS['xoopsModule']->getVar('mid')
                            . '"><span>'
                            . _PREFERENCES
                            . '</span></a></li>';
-        $adminmenu_text .= '
+        $adminMenu_text .= '
      </ul>
     </div>
-    <br style="clear:both;" />';
+    <br style="clear:both;">';
 
-        return $adminmenu_text;
+        return $adminMenu_text;
     }
 
 endif;

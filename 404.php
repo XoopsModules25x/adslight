@@ -20,10 +20,10 @@
 -------------------------------------------------------------------------
 */
 
-if (file_exists('mainfile.php')) {
-    include 'mainfile.php';
-} elseif (file_exists('../mainfile.php')) {
-    include '../mainfile.php';
+if (file_exists(__DIR__ . '/mainfile.php')) {
+    include __DIR__ . '/mainfile.php';
+} elseif (file_exists(__DIR__ . '/../mainfile.php')) {
+    include __DIR__ . '/../mainfile.php';
 } else {
     include dirname(dirname(__DIR__)) . '/mainfile.php';
 }

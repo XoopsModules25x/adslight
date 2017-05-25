@@ -17,51 +17,42 @@
  * @author       XOOPS Development Team
  */
 
-$rootPath = dirname(dirname(dirname(__DIR__)));
-//$moduleDirName = $GLOBALS['xoopsModule']->getVar('dirname');
-//$moduleDirName = $xoopsModule->getVar('dirname');
+require_once __DIR__ . '/../../../include/cp_header.php';
+require_once __DIR__ . '/../../../class/xoopsformloader.php';
+//require_once __DIR__ . '/../class/utility.php';
 
-include_once $rootPath . '/mainfile.php';
-include_once $rootPath . '/include/cp_functions.php';
-require_once $rootPath . '/include/cp_header.php';
-include_once $rootPath . '/class/xoopsformloader.php';
-require __DIR__ . '/../class/utilities.php';
-
-
-
-global $xoopsModule;
-$moduleDirName = $xoopsModule->getVar('dirname');
-//$moduleDirName2 = basename(dirname(__DIR__));
-
-include_once $rootPath . '/modules/' . $moduleDirName . '/include/gtickets.php';
-include_once $rootPath . '/modules/' . $moduleDirName . '/class/utilities.php';
-include_once $rootPath . '/modules/' . $moduleDirName . '/class/classifiedstree.php';
-//include_once $GLOBALS['xoops']->path( "/modules/adslight/class/grouppermform.php");
-include_once $rootPath . '/class/xoopsform/grouppermform.php';
-include_once $rootPath . '/modules/adslight/class/classifiedstree.php';
-
-//if functions.php file exist
-//require_once dirname(__DIR__) . '/include/functions.php';
-
-// Load language files
-xoops_loadLanguage('admin', $moduleDirName);
-xoops_loadLanguage('modinfo', $moduleDirName);
-xoops_loadLanguage('main', $moduleDirName);
-
-$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
-$pathModuleAdmin =& $xoopsModule->getInfo('dirmoduleadmin');
-
-include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
-
-if ($GLOBALS['xoopsUser']) {
-    //  $xoopsModule = XoopsModule::getByDirname($moduleDirName);
-    if (!$GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
-        redirect_header(XOOPS_URL . '/', 3, _NOPERM);
-    }
-} else {
-    redirect_header(XOOPS_URL . '/', 3, _NOPERM);
+if (!isset($moduleDirName)) {
+    $moduleDirName = basename(dirname(__DIR__));
 }
 
-$myts        = MyTextSanitizer::getInstance();
-$adminObject = new ModuleAdmin();
+require_once __DIR__ . '/../include/gtickets.php';
+require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/classifiedstree.php';
+//require_once __DIR__ . '/../class/grouppermform.php';
+require_once __DIR__ . '/../../../class/xoopsform/grouppermform.php';
+require_once __DIR__ . '/../class/classifiedstree.php';
+
+//require_once __DIR__ . '/../class/utility.php';
+//require_once __DIR__ . '/../include/common.php';
+
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
+
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
+
+// Load language files
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
+
+$myts = MyTextSanitizer::getInstance();
+
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
+}

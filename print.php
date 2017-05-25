@@ -22,9 +22,9 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 
 /**
  * @param $lid
@@ -46,7 +46,7 @@ function PrintAd($lid)
 
     $title     = $myts->htmlSpecialChars($title);
     $expire    = $myts->htmlSpecialChars($expire);
-    $type      = AdslightUtilities::getNameType($myts->htmlSpecialChars($type));
+    $type      = AdslightUtility::getNameType($myts->htmlSpecialChars($type));
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
     $tel       = $myts->htmlSpecialChars($tel);
     $price     = $myts->htmlSpecialChars($price);
@@ -58,8 +58,8 @@ function PrintAd($lid)
     echo '
     <html>
     <head><title>' . $xoopsConfig['sitename'] . "</title>
-    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
-    <meta http-equiv=\”robots\” content=\"noindex, nofollow, noarchive\" />
+    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >
+    <meta http-equiv=\”robots\” content=\"noindex, nofollow, noarchive\" >
     <link rel=\"StyleSheet\" href=\"../../themes/" . $currenttheme . "/style/style.css\" type=\"text/css\">
     </head>
     <body bgcolor=\"#FFFFFF\" text=\"#000000\">
@@ -83,10 +83,10 @@ function PrintAd($lid)
 
     echo " <strong>$type :</strong> <i>$title</i><br>";
     if ($price > 0) {
-        echo '<strong>' . _ADSLIGHT_PRICE2 . "</strong> $price " . $GLOBALS['xoopsModuleConfig']['adslight_money'] . "  - $typeprice<br>";
+        echo '<strong>' . _ADSLIGHT_PRICE2 . "</strong> $price " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . "  - $typeprice<br>";
     }
     if ($photo) {
-        echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/$url\" width=\"130px\" border=0 /></div>";
+        echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/$url\" width=\"130px\" border=0 ></div>";
     }
     echo '</td>
           </tr>
@@ -101,7 +101,7 @@ function PrintAd($lid)
     if ($country) {
         echo '<br><strong>' . _ADSLIGHT_COUNTRY . "</strong> $country";
     }
-    echo '<hr />';
+    echo '<hr>';
     echo '' . _ADSLIGHT_NOMAIL . ' <br>' . XOOPS_URL . '/modules/adslight/viewads.php?lid=' . $lid . '<br>';
     echo '<br><br>' . _ADSLIGHT_DATE2 . " $date " . _ADSLIGHT_AND . ' ' . _ADSLIGHT_DISPO . " $date2<br><br>";
     echo '</td>

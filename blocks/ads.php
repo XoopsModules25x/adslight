@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 
 /**
  * @param $options
@@ -29,19 +29,18 @@
  */
 function adslight_show($options)
 {
-    include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
-    global $xoopsDB, $blockdirname, $block_lang;
+    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+    global $xoopsDB, $moduleDirName, $block_lang;
 
     $block = array();
     $myts  = MyTextSanitizer::getInstance();
 
-    $blockdirname = basename(dirname(__DIR__));
-    $block_lang   = '_MB_' . strtoupper($blockdirname);
+    $moduleDirName = basename(dirname(__DIR__));
+    $block_lang    = '_MB_' . strtoupper($moduleDirName);
 
-    $block['title'] = '' . constant($block_lang . '_TITLE') . '';
+    $block['title'] = constant("{$block_lang}_TITLE");
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, type, date, hits FROM ' . $xoopsDB->prefix('' . $blockdirname . '_listing') . " WHERE valid='Yes' ORDER BY " . $options[0] . ' DESC',
-                              $options[1], 0);
+    $result = $xoopsDB->query('SELECT lid, cid, title, type, date, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' ORDER BY {$options[0]} DESC", $options[1], 0);
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $a_item = array();
@@ -54,23 +53,23 @@ function adslight_show($options)
             }
         }
 
-        $a_item['type'] = AdslightUtilities::getNameType($type);
+        $a_item['type'] = AdslightUtility::getNameType($type);
         $a_item['id']   = $myrow['lid'];
         $a_item['cid']  = $myrow['cid'];
 
-        $a_item['link'] = "<a href=\"" . XOOPS_URL . "/modules/$blockdirname/viewads.php?lid=" . addslashes($myrow['lid']) . "\"><b>$title</b></a>";
+        $a_item['link'] = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/viewads.php?lid=" . addslashes($myrow['lid']) . "\"><b>{$title}</b></a>";
 
-        if ($options[0] === 'date') {
+        if ('date' === $options[0]) {
             $a_item['date'] = formatTimestamp($myrow['date'], 's');
-        } elseif ($options[0] === 'hits') {
+        } elseif ('hits' === $options[0]) {
             $a_item['hits'] = $myrow['hits'];
         }
 
         $block['items'][] = $a_item;
     }
 
-    $block['link'] = "<a href=\"" . XOOPS_URL . "/modules/$blockdirname/\"><b>" . constant($block_lang . '_ALL_LISTINGS') . '</b></a><br>';
-    $block['add']  = "<a href=\"" . XOOPS_URL . "/modules/$blockdirname/\"><b>" . constant($block_lang . '_ADDNOW') . '</b></a><br>';
+    $block['link'] = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ALL_LISTINGS") . '</b></a><br>';
+    $block['add']  = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ADDNOW") . '</b></a><br>';
 
     return $block;
 }
@@ -83,25 +82,25 @@ function adslight_show($options)
 function adslight_edit($options)
 {
     global $xoopsDB;
-    $blockdirname = basename(dirname(__DIR__));
-    $block_lang   = '_MB_' . strtoupper($blockdirname);
+    $moduleDirName = basename(dirname(__DIR__));
+    $block_lang    = '_MB_' . strtoupper($moduleDirName);
 
-    $form = constant($block_lang . '_ORDER') . "&nbsp;<select name='options[]'>";
+    $form = constant("{$block_lang}_ORDER") . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";
-    if ($options[0] === 'date') {
-        $form .= ' selected';
+    if ('date' === $options[0]) {
+        $form .= " selected='selected'";
     }
-    $form .= '>' . constant($block_lang . '_DATE') . "</option>\n";
+    $form .= '>' . constant("{$block_lang}_DATE") . "</option>\n";
 
     $form .= "<option value='hits'";
-    if ($options[0] === 'hits') {
-        $form .= ' selected';
+    if ('hits' === $options[0]) {
+        $form .= " selected='selected'";
     }
     $form .= '>' . constant($block_lang . '_HITS') . '</option>';
     $form .= "</select>\n";
 
-    $form .= '&nbsp;' . constant($block_lang . '_DISP') . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . "'/>&nbsp;" . constant($block_lang . '_LISTINGS');
-    $form .= '&nbsp;<br><br>' . constant($block_lang . '_CHARS') . "&nbsp;<input type='text' name='options[]' value='" . $options[2] . "'/>&nbsp;" . constant($block_lang . '_LENGTH') . '<br><br>';
+    $form .= '&nbsp;' . constant($block_lang . '_DISP') . "&nbsp;<input type='text' name='options[]' value='{$options[1]}'>&nbsp;" . constant("{$block_lang}_LISTINGS");
+    $form .= '&nbsp;<br><br>' . constant("{$block_lang}_CHARS") . "&nbsp;<input type='text' name='options[]' value='{$options[2]}'>&nbsp;" . constant("{$block_lang}_LENGTH") . '<br><br>';
 
     return $form;
 }

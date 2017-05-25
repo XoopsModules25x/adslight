@@ -20,14 +20,14 @@
 -------------------------------------------------------------------------
 */
 
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once __DIR__ . '/header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once __DIR__ . '/header.php';
 xoops_cp_header();
 
 //if ( !is_readable(XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php")) {
 //    adslight_adminmenu(6, "");
 //} else {
-//    include_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
+//    require_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
 //   loadModuleAdminMenu (6, "");
 //}
 /** @var XoopsModuleHandler $moduleHandler */
@@ -51,10 +51,10 @@ echo "
     </style>
 ";
 ///// Présentation du Module
-echo '<table width=100 border="0" class="outer"><tr>
-           <th width="50%" align="left">' . $xoopsModule->getVar('name') . '</th></tr>
+echo '<table class="outer width100 bnone"><tr>
+           <th class="width50 left">' . $xoopsModule->getVar('name') . '</th></tr>
            <tr class="odd"><td>
-           <img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $versioninfo->getInfo('image') . '" alt="" hspace="10" vspace="0" /></a>
+           <img src="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/' . $versioninfo->getInfo('image') . '" alt="" hspace="10" vspace="0" ></a>
         </td></tr>
         <tr class="even"><td>
             <div style="padding: 5px;"><b>' . $versioninfo->getInfo('name') . ' version ' . $versioninfo->getInfo('version') . '</b></div>
@@ -66,8 +66,8 @@ echo '<table width=100 border="0" class="outer"><tr>
           </table><br>';
 
 ///// People who participate in improving the module
-echo '<table width=100 border="0" class="outer" ><tr>
-         <th width="50%" align="left">' . _AM_ADSLIGHT_PERSONS_PARTICIPATED . '</th></tr>';
+echo '<table class="outer width100 bnone" ><tr>
+         <th class="width50 left">' . _AM_ADSLIGHT_PERSONS_PARTICIPATED . '</th></tr>';
 
 //// iLuc ///
 echo "<tr class='odd'><td><br>
@@ -162,7 +162,7 @@ echo "<tr class='odd'><td><br>
         <br></td></tr>
 
 
-</table><br clear=\"all\" />";
+</table><br clear=\"all\" >";
 
 ///// Change log du module ////////
 //
@@ -173,7 +173,7 @@ echo "<tr class='odd'><td><br>
 //      <div>". utf8_encode(implode("<br>", file( $file ))) . "</div>
 //      </div>
 //      </fieldset>
-//      <br clear=\"all\" />";
+//      <br clear=\"all\" >";
 // }
 
 xoops_cp_footer();

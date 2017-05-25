@@ -21,15 +21,15 @@
 */
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();// MyTextSanitizer object
 require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//include_once __DIR__ . '/include/functions.php';
-// include_once XOOPS_ROOT_PATH."/class/captcha/xoopscaptcha.php";
+//require_once __DIR__ . '/include/functions.php';
+// require_once XOOPS_ROOT_PATH . '/class/captcha/xoopscaptcha.php';
 
-$module_id    = $xoopsModule->getVar('mid');
-$groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$module_id = $xoopsModule->getVar('mid');
+$groups    = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
@@ -40,9 +40,9 @@ if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module
 
 $premium = $gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? 1 : 0;
 
-//include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 if (!$GLOBALS['xoopsUser'] instanceof XoopsUser) {
@@ -62,13 +62,13 @@ if (Request::hasVar('submit', 'POST')) {
     //        redirect_header( XOOPS_URL . "/modules/adslight/index.php", 2, $xoopsCaptcha->getMessage() );
     //    }
     if (Request::hasVar('submit', 'POST')) {
-        $modHandler = xoops_getModuleHandler('module');
-        $myModule   = $modHandler->getByDirname('adslight');
+        $moduleHandler = xoops_getHandler('module');
+        $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
 
     $cid       = Request::getInt('cid', 0, 'POST');
-    $cat_perms = AdslightUtilities::getMyItemIds('adslight_submit');
+    $cat_perms = AdslightUtility::getMyItemIds('adslight_submit');
     if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
@@ -95,20 +95,20 @@ if (Request::hasVar('submit', 'POST')) {
     $date      = time();
     $newid     = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
-    $sql     = sprintf("INSERT INTO %s (lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+    $sql     = sprintf("INSERT INTO %s (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                        $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town,
                        $country, $contactby, $premium, $valid);
     $success = $xoopsDB->query($sql);
     if (!$success) {
-        $modHandler = xoops_getModuleHandler('module');
-        $myModule   = $modHandler->getByDirname('adslight');
+        $moduleHandler = xoops_getHandler('module');
+        $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
 
     $lid = $xoopsDB->getInsertId();
 
     if ('Yes' === $valid) {
-        /** @var XoopsNotificationHandler $notificationHandler*/
+        /** @var XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         //$lid = $xoopsDB->getInsertId();
         $tags                    = array();
@@ -119,15 +119,15 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['WEBMASTER']       = _ADSLIGHT_WEBMASTER;
         $tags['HELLO']           = _ADSLIGHT_HELLO;
         $tags['FOLLOW_LINK']     = _ADSLIGHT_FOLLOW_LINK;
-        $tags['TYPE']            = AdslightUtilities::getNameType($type);
+        $tags['TYPE']            = AdslightUtility::getNameType($type);
         $tags['LINK_URL']        = XOOPS_URL . '/modules/adslight/viewads.php?' . '&lid=' . $lid;
         $sql                     = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
         $result2                 = $xoopsDB->query($sql);
         $row                     = $xoopsDB->fetchArray($result2);
         $tags['CATEGORY_TITLE']  = $row['title'];
         $tags['CATEGORY_URL']    = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cid);
-        /** @var XoopsNotificationHandler $notificationHandler*/
-        $notificationHandler    = xoops_getHandler('notification');
+        /** @var XoopsNotificationHandler $notificationHandler */
+        $notificationHandler = xoops_getHandler('notification');
         $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
         $notificationHandler->triggerEvent('category', $cid, 'new_listing', $tags);
         $notificationHandler->triggerEvent('listing', $lid, 'new_listing', $tags);
@@ -142,7 +142,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['WEBMASTER']      = _ADSLIGHT_WEBMASTER;
         $tags['HELLO']          = _ADSLIGHT_HELLO;
         $tags['FOLLOW_LINK']    = _ADSLIGHT_FOLLOW_LINK;
-        $tags['TYPE']           = AdslightUtilities::getNameType($type);
+        $tags['TYPE']           = AdslightUtility::getNameType($type);
         $tags['NEED_TO_LOGIN']  = _ADSLIGHT_NEED_TO_LOGIN;
         $tags['ADMIN_LINK']     = XOOPS_URL . '/modules/adslight/admin/validate_ads.php';
         $sql                    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
@@ -176,7 +176,7 @@ if (Request::hasVar('submit', 'POST')) {
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $cid          = Request::getInt('cide', 0, 'GET');
     $cat_moderate = Request::getInt('cat_moderate', 0, 'POST');
@@ -195,7 +195,7 @@ if (Request::hasVar('submit', 'POST')) {
 
     $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
 
-    //@todo - this "if" code doesn't do anything, what should happen for premium accounts?
+    //@todo - this 'if' code doesn't do anything, what should happen for premium accounts?
     if ($cat_moderate) {
         if ($premium != '0') {
             echo '';
@@ -232,7 +232,7 @@ if (Request::hasVar('submit', 'POST')) {
 
     // $cat_id = $_GET['cid'];
     $cid       = 1;
-    $cat_perms = AdslightUtilities::getMyItemIds('adslight_submit');
+    $cat_perms = AdslightUtility::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {
         if (!in_array($cid, $cat_perms)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
@@ -282,7 +282,7 @@ if (Request::hasVar('submit', 'POST')) {
 
         $form->addElement(new XoopsFormText(_ADSLIGHT_TITLE2, 'title', 40, 50, ''), true);
 
-        $form->addElement(AdslightUtilities::getEditor(_ADSLIGHT_DESC, 'desctext', '', '100%', 40), true);
+        $form->addElement(AdslightUtility::getEditor(_ADSLIGHT_DESC, 'desctext', '', '100%', 40), true);
 
         //        $form->addElement(new XoopsFormEditor(_ADSLIGHT_DESC, $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = FALSE, $onfailure = 'textarea'));
         //        $optionsTrayNote->addElement($bodynote);

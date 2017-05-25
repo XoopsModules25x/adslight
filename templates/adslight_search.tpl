@@ -1,17 +1,17 @@
-<table cellspacing="1" class="outer" style="width:100%;">
+<table cellspacing="1" class="outer width100">
     <tr>
         <th><{$add_from_title}> <{$add_from_sitename}></th>
     </tr>
     <{if $moderated}>
         <{if $xoops_isadmin}>
             <tr>
-                <td align="center" class="even">
+                <td class="center even">
                     <table class="outer" cellspacing="0">
                         <tr>
-                            <td class="head" align="center"><{$admin_block}></td>
+                            <td class="head center"><{$admin_block}></td>
                         </tr>
                         <tr>
-                            <td class="odd" align="center"><{$confirm_ads}></td>
+                            <td class="odd center"><{$confirm_ads}></td>
                         </tr>
                     </table>
                 </td>
@@ -19,7 +19,7 @@
         <{/if}>
     <{/if}>
     <tr>
-        <td class="even" align="center">
+        <td class="even center">
             <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td>
@@ -36,13 +36,13 @@
                             <tr>
                                 <form name='search' id='search' action='search.php' method='post'
                                       onsubmit='return xoopsFormValidate_search();'>
-                                    <input type='hidden' name='mids[]' value='<{$xmid}>'/>
+                                    <input type='hidden' name='mids[]' value='<{$xmid}>'>
                                     <td colspan="2"><strong><{$smarty.const._ADSLIGHT_SEARCH_LISTINGS}></strong><br><br>
                                     </td>
                             </tr>
                             <tr>
                                 <td colspan="2"><input type='text' name='query' id='query' size='30' maxlength='255'
-                                                       value=''/><br><br></td>
+                                                       value=''><br><br></td>
                             </tr>
                             <tr>
                                 <td><select size='1' name='andor' id='andor'>
@@ -52,9 +52,9 @@
                                         <option value='exact'><{$smarty.const._ADSLIGHT_EXACT_MATCH}></option>
                                     </select></td>
                                 <td><input type='submit' class='formButton' name='submit' id='submit'
-                                           value='<{$smarty.const._ADSLIGHT_SEARCH}>'/></td>
+                                           value='<{$smarty.const._ADSLIGHT_SEARCH}>'></td>
                             </tr>
-                            <input type='hidden' name='action' id='action' value='results'/>
+                            <input type='hidden' name='action' id='action' value='results'>
                             </form>
                             </tr>
                         </table>

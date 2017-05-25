@@ -22,14 +22,14 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+require_once __DIR__ . '/header.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
-$pathIcon16 = $xoopsModule->getInfo('icons16');
+$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 xoops_load('XoopsLocal');
 
-include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree                                  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_members.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
@@ -51,7 +51,8 @@ $perm_itemid  = Request::getInt('item_id', 0, 'POST');
 $permit = (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
 $xoopsTpl->assign('permit', $permit);
-$isadmin = (($GLOBALS['xoopsUser'] instanceof XoopsUser) && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) ? true : false;
+$isadmin = (($GLOBALS['xoopsUser'] instanceof XoopsUser)
+            && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) ? true : false;
 
 $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
 $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM);
@@ -68,7 +69,7 @@ $xoopsTpl->assign('expires_head', _ADSLIGHT_EXPIRES_ON);
 $xoopsTpl->assign('all_user_listings', _ADSLIGHT_ALL_USER_LISTINGS);
 $xoopsTpl->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
 $xoopsTpl->assign('mydirname', $moduleDirName);
-$xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
+$xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >');
 
 $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
 $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
@@ -89,7 +90,7 @@ if ($GLOBALS['xoopsUser']) {
 }
 
 $cat_perms  = '';
-$categories = AdslightUtilities::getMyItemIds('adslight_view');
+$categories = AdslightUtility::getMyItemIds('adslight_view');
 if (is_array($categories) && count($categories) > 0) {
     $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
 }
@@ -141,7 +142,7 @@ if ($trows > '0') {
         $startdate = (time() - (86400 * $newcount));
         if ($startdate < $date) {
             //@todo move "New" alt text to language file
-            $newitem = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" alt="New" />';
+            $newitem = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" alt="New" >';
         }
 
         if (0 == $status) {
@@ -170,7 +171,7 @@ if ($trows > '0') {
                          . $pathIcon16
                          . "/edit.png' border=0 alt=\""
                          . _ADSLIGHT_MODADMIN
-                         . "\" /></a>";
+                         . "\" ></a>";
             $xoopsTpl->assign('isadmin', $isadmin);
         } else {
             $adminlink = '';
@@ -181,7 +182,7 @@ if ($trows > '0') {
             if ($usid == $member_usid) {
                 $istheirs = true;
                 $xoopsTpl->assign('istheirs', $istheirs);
-                $modify_link = "<a href='modify.php?op=ModAd&amp;lid=" . $lid . "'><img src='" . $pathIcon16 . "/edit.png'  border=0 alt=\"" . _ADSLIGHT_MODADMIN . "\" /></a>";
+                $modify_link = "<a href='modify.php?op=ModAd&amp;lid=" . $lid . "'><img src='" . $pathIcon16 . "/edit.png'  border=0 alt=\"" . _ADSLIGHT_MODADMIN . "\" ></a>";
             } else {
                 $istheirs = false;
                 $xoopsTpl->assign('istheirs', '');
@@ -198,9 +199,9 @@ if ($trows > '0') {
         $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
         //      $price = $tempXoopsLocal->number_format($price);
-        $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " - $typeprice");
+        $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . " - $typeprice");
         $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE);
-        $xoopsTpl->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_money']);
+        $xoopsTpl->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']);
         $xoopsTpl->assign('price_typeprice', $typeprice);
         $xoopsTpl->assign('local_town', "$town");
         $xoopsTpl->assign('local_country', "$country");
@@ -235,14 +236,14 @@ if ($trows > '0') {
                    . $xoopsDB->escape($usid)
                    . ' AND lid='
                    . $xoopsDB->escape($lid)
-                   . ' ORDER BY date_added ASC limit 1';
+                   . ' ORDER BY date_added ASC LIMIT 1';
         $resultp = $xoopsDB->query($sql);
         while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
             if ($photo) {
-                $photo = "<a href='viewads.php?lid=" . $lid . "'><img class=\"thumb\" src=\"$updir/thumbs/thumb_$url\" align=\"left\" width=\"100px\" alt=\"$title\" /></a>";
+                $photo = "<a href='viewads.php?lid=" . $lid . "'><img class=\"thumb\" src=\"$updir/thumbs/thumb_$url\" align=\"left\" width=\"100px\" alt=\"$title\" ></a>";
             }
         }
-        $no_photo = "<a href='viewads.php?lid=" . $lid . "'><img class=\"thumb\" src=\"assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$title\" /></a>";
+        $no_photo = "<a href='viewads.php?lid=" . $lid . "'><img class=\"thumb\" src=\"assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$title\" ></a>";
 
         $xoopsTpl->append('items', array(
             'id'          => $lid,

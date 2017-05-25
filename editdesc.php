@@ -29,23 +29,20 @@ $main_lang     = '_' . strtoupper($moduleDirName);
  * Xoops Header
  */
 include dirname(dirname(__DIR__)) . '/mainfile.php';
-include_once XOOPS_ROOT_PATH . '/header.php';
-include_once XOOPS_ROOT_PATH . '/class/criteria.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**
  * Include modules classes
  */
-include_once __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/pictures.php';
 
 /**
  * Check if using XoopsCube (by jlm69)
  * Needed because of a difference in the way Xoops and XoopsCube handle tokens
  */
-
-$xCube = false;
-if (preg_match('/^XOOPS Cube/', XOOPS_VERSION)) { // XOOPS Cube 2.1x
-    $xCube = true;
-}
+// XOOPS Cube 2.1x
+$xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
 
 /**
  * Verify Ticket for Xoops Cube (by jlm69)
@@ -62,26 +59,26 @@ if ($xCube) {
      * If your site is Xoops it uses xoopsSecurity for the token.
      */
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header($_SERVER['HTTP_REFERER'], 3, constant('_ADSLIGHT_TOKENEXPIRED'));
+        redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
     }
 }
 
 /**
  * Receiving info from get parameters
  */
-$cod_img = Request::getString('cod_img', '', 'POST');
-//$lid = (int)$_POST['lid'];
-//$marker = $_POST['marker'];
-$marker = Request::getInt('marker', '', 'POST');
+$cod_img = Request::getInt('cod_img', 0, 'POST');
+$marker  = Request::getInt('marker', 0, 'POST');
 
-if ($marker == 1) {
+if (1 == $marker) {
     /**
      * Creating the factory  loading the picture changing its caption
      */
-    $picture_factory = new JlmPicturesHandler($xoopsDB);
+    $title = Request::getString('caption', '', 'POST');
+
+    $picture_factory = new AdslightPicturesHandler($xoopsDB);
     $picture         = $picture_factory->create(false);
-    $picture->load(Request::getString('cod_img', '', 'POST'));
-    $picture->setVar('title', Request::getString('caption', '', 'POST'));
+    $picture->load($cod_img);
+    $picture->setVar('title', $title);
 
     /**
      * Verifying who's the owner to allow changes
@@ -90,9 +87,9 @@ if ($marker == 1) {
     $lid = $picture->getVar('lid');
     if ($uid == $picture->getVar('uid_owner')) {
         if ($picture_factory->insert($picture)) {
-            redirect_header('view_photos.php?lid=' . $lid . '&uid=' . $uid . '', 2, constant('_ADSLIGHT_DESC_EDITED'));
+            redirect_header("view_photos.php?lid={$lid}&uid={$uid}", 2, _ADSLIGHT_DESC_EDITED);
         } else {
-            redirect_header('view_photos.php?lid=' . $lid . '&uid=' . $uid . '', 2, constant('_ADSLIGHT_NOCACHACA'));
+            redirect_header("view_photos.php?lid={$lid}&uid={$uid}", 2, _ADSLIGHT_NOCACHACA);
         }
     }
 }
@@ -101,7 +98,7 @@ if ($marker == 1) {
  * Creating the factory  and the criteria to edit the desc of the picture
  * The user must be the owner
  */
-$album_factory = new JlmPicturesHandler($xoopsDB);
+$album_factory = new AdslightPicturesHandler($xoopsDB);
 $criteria_img  = new Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new Criteria('uid_owner', $uid);
@@ -116,7 +113,7 @@ if ($array_pict = $album_factory->getObjects($criteria)) {
     $caption = $array_pict[0]->getVar('title');
     $url     = $array_pict[0]->getVar('url');
 }
-$url = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'] . '/thumbs/thumb_' . $url;
+$url = "{$GLOBALS['xoopsModuleConfig']['adslight_link_upload']}/thumbs/thumb_{$url}";
 $album_factory->renderFormEdit($caption, $cod_img, $url);
 
 /**

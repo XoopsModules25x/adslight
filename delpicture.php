@@ -28,9 +28,9 @@ $main_lang     = '_' . strtoupper($moduleDirName);
 /**
  * Xoops Header
  */
-include_once __DIR__ . '/header.php';
-//include_once XOOPS_ROOT_PATH . '/header.php';
-include_once XOOPS_ROOT_PATH . '/class/criteria.php';
+require_once __DIR__ . '/header.php';
+//require_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**
  * Module classes
@@ -43,10 +43,9 @@ include __DIR__ . '/class/pictures.php';
  * Needed because of a difference in the way Xoops and XoopsCube handle tokens
  */
 
-$xCube = false;
-if (preg_match('/^XOOPS Cube/', XOOPS_VERSION)) { // XOOPS Cube 2.1x
-    $xCube = true;
-}
+// XOOPS Cube 2.1x
+$xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
+
 /**
  * Verify Ticket for Xoops Cube (by jlm69)
  * If your site is XoopsCube it uses $xoopsGTicket for the token.
@@ -62,12 +61,12 @@ if ($xCube) {
      * If your site is Xoops it uses xoopsSecurity for the token.
      */
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header($_SERVER['HTTP_REFERER'], 3, constant('_ADSLIGHT_TOKENEXPIRED'));
+        redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
     }
 }
 
 /**
- * Receiving info from get parameters
+ * Receiving info from input parameters
  */
 $cod_img = Request::getString('cod_img', '', 'POST');
 
@@ -75,7 +74,7 @@ $cod_img = Request::getString('cod_img', '', 'POST');
  * Creating the factory  and the criteria to delete the picture
  * The user must be the owner
  */
-$album_factory = new JlmPicturesHandler($xoopsDB);
+$album_factory = new AdslightPicturesHandler($xoopsDB);
 $criteria_img  = new Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new Criteria('uid_owner', $uid);
@@ -90,23 +89,20 @@ $image_name    = $objects_array[0]->getVar('url');
  */
 if ($album_factory->deleteAll($criteria)) {
     $path_upload = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
+    unlink("{$path_upload}/{$image_name}");
+    unlink("{$path_upload}/thumbs/thumb_{$image_name}");
+    unlink("{$path_upload}/midsize/resized_{$image_name}");
 
-    unlink("$path_upload/$image_name");
+    $lid = Request::getInt('lid', 0, 'POST');
 
-    unlink("$path_upload/thumbs/thumb_$image_name");
+    $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo-1 WHERE lid='{$lid}'");
 
-    unlink("$path_upload/midsize/resized_$image_name");
-
-    $lid =  Request::getInt('lid', 0, 'POST');
-
-    $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo-1 WHERE lid='$lid'");
-
-    redirect_header('view_photos.php?lid=' . $lid . '&uid=' . $uid . '', 13, constant('_ADSLIGHT_DELETED'));
+    redirect_header("view_photos.php?lid={$lid}&uid={$uid}", 10, _ADSLIGHT_DELETED);
 } else {
-    redirect_header('view_photos.php?lid=' . $lid . '&uid=' . $uid . '', 13, constant('_ADSLIGHT_NOCACHACA'));
+    redirect_header("view_photos.php?lid={$lid}&uid={$uid}", 10, _ADSLIGHT_NOCACHACA);
 }
 
 /**
  * Close page
  */
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

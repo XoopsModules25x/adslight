@@ -30,6 +30,6 @@
 
     <input type="hidden" name="return" value="<{$xoops_url}>/modules/adslight/viewads.php?lid=<{$lid}>">
     <input type="hidden" name="cancel" value="<{$xoops_url}>/modules/adslight/viewads.php?lid=<{$lid}>">
-    <input type="submit" name='submit' value="<{$smarty.const._MN_ADSLIGHT_PURCHASE}>"/>
+    <input type="submit" name='submit' value="<{$smarty.const._MN_ADSLIGHT_PURCHASE}>">
 </form>
-<hr/>
+<hr>

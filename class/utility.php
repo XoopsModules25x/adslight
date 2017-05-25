@@ -1,4 +1,6 @@
 <?php
+
+// namespace Xoopsmodules/adslight;
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -20,8 +22,6 @@
 -------------------------------------------------------------------------
 */
 
-use Xmf\Request;
-
 /**
  * AdslightUtil Class
  *
@@ -33,18 +33,19 @@ use Xmf\Request;
  *
  */
 
-//namespace Xoopsmodules/Adslight;
+use Xmf\Request;
+use Xmf\Module\Helper;
 
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . strtoupper($moduleDirName);
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 $myts = MyTextSanitizer::getInstance();
 
 /**
- * Class AdslightUtil
+ * Class AdslightUtility
  */
-class AdslightUtil
+class AdslightUtility
 {
     public static function expireAd()
     {
@@ -53,12 +54,11 @@ class AdslightUtil
         $datenow = time();
         $message = '';
 
-        $result5
-            = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM ' . $xoopsDB->prefix('adslight_listing')
-                              . " WHERE valid='Yes'");
+        $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM '
+                                   . $xoopsDB->prefix('adslight_listing')
+                                   . " WHERE valid='Yes'");
 
-        while (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind)
-            = $xoopsDB->fetchRow($result5)) {
+        while (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5)) {
             $title     = $myts->htmlSpecialChars($title);
             $expire    = $myts->htmlSpecialChars($expire);
             $type      = $myts->htmlSpecialChars($type);
@@ -186,7 +186,7 @@ class AdslightUtil
 
         $usid = Request::getInt('usid', 0, 'GET');
 
-        $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($sel_id) . '';
+        $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($sel_id) . ' ';
         //echo $query;
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
@@ -236,11 +236,11 @@ class AdslightUtil
     public static function getTotalItems($sel_id, $status = '')
     {
         global $xoopsDB, $mytree, $moduleDirName;
-        $categories = AdslightUtil::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         $count      = 0;
         $arr        = array();
         if (in_array($sel_id, $categories)) {
-            $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " and valid='Yes' AND status!='1'";
+            $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " AND valid='Yes' AND status!='1'";
 
             $result = $xoopsDB->query($query);
             list($thing) = $xoopsDB->fetchRow($result);
@@ -249,7 +249,7 @@ class AdslightUtil
             $size  = count($arr);
             for ($i = 0; $i < $size; ++$i) {
                 if (in_array($arr[$i], $categories)) {
-                    $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$arr[$i] . " and valid='Yes' AND status!='1'";
+                    $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$arr[$i] . " AND valid='Yes' AND status!='1'";
 
                     $result2 = $xoopsDB->query($query2);
                     list($thing) = $xoopsDB->fetchRow($result2);
@@ -279,8 +279,7 @@ class AdslightUtil
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $myModule      = $moduleHandler->getByDirname('adslight');
-        $groups
-                       = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
         /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler           = xoops_getHandler('groupperm');
         $categories             = $gpermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
@@ -317,12 +316,12 @@ class AdslightUtil
             /** @var XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
-            /** @var XoopsConfigHandler $configHandler */
+            /** @var XoopsModuleHandler $moduleHandler */
             $configHandler = xoops_getHandler('config');
             if ($module) {
-                $moduleConfig =& $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
-                if (isset($moduleConfig[$option])) {
-                    $retval = $moduleConfig[$option];
+                $moduleConfig = $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
+                if (null !== ($moduleHelper->getConfig($option))) {
+                    $retval = $moduleHelper->getConfig($option);
                 }
             }
         }
@@ -517,8 +516,7 @@ class AdslightUtil
     public static function checkFieldExists($fieldname, $table)
     {
         global $xoopsDB;
-        $result
-            = $xoopsDB->queryF("SHOW COLUMNS FROM $table LIKE '$fieldname'");
+        $result = $xoopsDB->queryF("SHOW COLUMNS FROM $table LIKE '$fieldname'");
 
         return ($xoopsDB->getRowsNum($result) > 0);
     }
@@ -665,8 +663,7 @@ class AdslightUtil
             );
             $width      = trim($fmatch[2]) ? (int)$fmatch[2] : 0;
             $left       = trim($fmatch[3]) ? (int)$fmatch[3] : 0;
-            $right
-                        = trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
+            $right      = trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
             $conversion = $fmatch[5];
 
             $positive = true;
@@ -678,8 +675,7 @@ class AdslightUtil
 
             $prefix = $suffix = $cprefix = $csuffix = $signal = '';
 
-            $signal
-                = $positive ? $locale['positive_sign'] : $locale['negative_sign'];
+            $signal = $positive ? $locale['positive_sign'] : $locale['negative_sign'];
             switch (true) {
                 case $locale["{$letter}_sign_posn"] == 1
                      && $flags['usesignal'] == '+':
@@ -743,10 +739,12 @@ class AdslightUtil
     public static function createFolder($folder)
     {
         try {
-            if (!@mkdir($folder) && !is_dir($folder)) {
-                throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-            } else {
-                file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+            if (!file_exists($folder)) {
+                if (!mkdir($folder) && !is_dir($folder)) {
+                    throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
+                } else {
+                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
+                }
             }
         } catch (Exception $e) {
             echo 'Caught exception: ', $e->getMessage(), "\n", '<br/>';
@@ -848,8 +846,8 @@ class AdslightUtil
         xoops_loadLanguage('admin', $module->dirname());
         // check for minimum PHP version
         $success = true;
-        $verNum  = phpversion();
-        $reqVer  =& $module->getInfo('min_php');
+        $verNum  = PHP_VERSION;
+        $reqVer  = $module->getInfo('min_php');
         if (false !== $reqVer && '' !== $reqVer) {
             if (version_compare($verNum, $reqVer, '<')) {
                 $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_PHP, $reqVer, $verNum));
@@ -858,5 +856,45 @@ class AdslightUtil
         }
 
         return $success;
+    }
+
+    /**
+     * Saves permissions for the selected category
+     *
+     *   saveCategory_Permissions()
+     *
+     * @param  array   $groups     : group with granted permission
+     * @param  integer $categoryid : categoryid on which we are setting permissions
+     * @param  string  $perm_name  : name of the permission
+     * @return boolean : TRUE if the no errors occured
+     */
+
+    public static function saveCategoryPermissions($groups, $categoryId, $permName)
+    {
+        global $xoopsModule;
+        if (!isset($moduleDirName)) {
+            $moduleDirName = basename(dirname(__DIR__));
+        }
+
+        if (false !== ($moduleHelper = Helper::getHelper($moduleDirName))) {
+        } else {
+            $moduleHelper = Helper::getHelper('system');
+        }
+
+        $result = true;
+        //        $xoopsModule = sf_getModuleInfo();
+        $moduleId = $moduleHelper->getModule()->getVar('mid');
+
+        $gpermHandler = xoops_getHandler('groupperm');
+        // First, if the permissions are already there, delete them
+        $gpermHandler->deleteByModule($moduleId, $permName, $categoryId);
+        // Save the new permissions
+        if (count($groups) > 0) {
+            foreach ($groups as $groupId) {
+                $gpermHandler->addRight($permName, $categoryId, $groupId, $moduleId);
+            }
+        }
+
+        return $result;
     }
 }

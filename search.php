@@ -36,7 +36,7 @@ include dirname(dirname(__DIR__)) . '/mainfile.php';
 $xmid              = $xoopsModule->getVar('mid');
 /** @var XoopsConfigHandler $configHandler */
 $configHandler    = xoops_getHandler('config');
-$xoopsConfigSearch =& $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
     //    header("Location: '.XOOPS_URL.'modules/adslight/index.php");
@@ -73,7 +73,7 @@ $available_modules = $gpermHandler->getItemIds('module_read', $groups);
 
 if ($action === 'search') {
     include XOOPS_ROOT_PATH . '/header.php';
-    include_once __DIR__ . '/include/searchform.php';
+    require_once __DIR__ . '/include/searchform.php';
     $search_form->display();
     include XOOPS_ROOT_PATH . '/footer.php';
     exit();
@@ -157,10 +157,12 @@ switch ($action) {
                         echo "<table width=\"100%\" class=\"outer\"><tr>";
                         echo "<td width=\"30%\">";
                         echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
-                        if (isset($results[$i]['photo']) && $results[$i]['photo'] != '') {
-                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' /></a></td>&nbsp;";
+                        if (isset($results[$i]['photo'])
+                            && $results[$i]['photo'] != ''
+                        ) {
+                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
-                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' /></a></td>&nbsp;";
+                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         }
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = '' . $results[$i]['link'];
@@ -179,7 +181,7 @@ switch ($action) {
 
                         echo "</td><td width=\"20%\">";
                         echo ''
-                             . $GLOBALS['xoopsModuleConfig']['adslight_money']
+                             . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']
                              . ''
                              . $myts->htmlSpecialChars($results[$i]['price'])
                              . '</a>&nbsp;'
@@ -207,7 +209,7 @@ switch ($action) {
             }
             unset($results, $module);
         }
-        include_once __DIR__ . '/include/searchform.php';
+        require_once __DIR__ . '/include/searchform.php';
         $search_form->display();
         break;
     case 'showall':
@@ -217,9 +219,9 @@ switch ($action) {
 
         // for xoops 2.2.x versions
         if (file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-            include_once __DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php';
+            require_once __DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php';
         } else {
-            include_once __DIR__ . '/language/english/main.php';
+            require_once __DIR__ . '/language/english/main.php';
         }
         // end
         $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
@@ -254,10 +256,12 @@ switch ($action) {
                 echo "<table width=\"100%\" class=\"outer\"><tr>";
                 echo "<td width=\"30%\">";
                 echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
-                if (isset($results[$i]['photo']) && $results[$i]['photo'] != '') {
-                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' /></a></td>&nbsp;";
+                if (isset($results[$i]['photo'])
+                    && $results[$i]['photo'] != ''
+                ) {
+                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 } else {
-                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' /></a></td>&nbsp;";
+                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 }
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = '' . $results[$i]['link'];
@@ -275,7 +279,7 @@ switch ($action) {
                 echo '' . $myts->htmlSpecialChars($results[$i]['desctext']) . '';
 
                 echo "</td><td width=\"20%\">";
-                echo '' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . '
+                echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '
 ' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
 
                 echo '</td></tr><tr><td>';
@@ -323,7 +327,7 @@ switch ($action) {
         } else {
             echo '<p>' . _SR_NOMATCH . '</p>';
         }
-        include_once __DIR__ . '/include/searchform.php';
+        require_once __DIR__ . '/include/searchform.php';
         $search_form->display();
         echo '</p>
     ';

@@ -20,14 +20,14 @@
 -------------------------------------------------------------------------
 */
 
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once __DIR__ . '/admin_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 //if ( !is_readable(XOOPS_ROOT_PATH. "/Frameworks/art/functions.admin.php")) {
 //    adslight_adminmenu(7, "");
 //} else {
-//    include_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
+//    require_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
 //    loadModuleAdminMenu (7, "");
 //}
 /** @var XoopsModuleHandler $moduleHandler */
@@ -143,6 +143,6 @@ echo '</tr></table><br>';
 
 echo '</div>';
 echo '</fieldset>';
-echo "<br clear=\"all\" />";
+echo "<br clear=\"all\" >";
 
 xoops_cp_footer();

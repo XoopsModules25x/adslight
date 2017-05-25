@@ -22,9 +22,9 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 
 /**
  * @param $lid
@@ -43,7 +43,7 @@ function SendFriend($lid)
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>
         <strong>" . _ADSLIGHT_SENDTO . " $lid \"<strong>$type : $title</strong>\" " . _ADSLIGHT_FRIEND . "<br><br>
         <form action=\"sendfriend.php\" method=post>
-        <input type=\"hidden\" name=\"lid\" value=\"$lid\" />";
+        <input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
 
     if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
         $idd  = $GLOBALS['xoopsUser']->getVar('uname', 'E');
@@ -54,19 +54,19 @@ function SendFriend($lid)
     <table width='99%' class='outer' cellspacing='1'>
     <tr>
       <td class='head' width='30%'>" . _ADSLIGHT_NAME . " </td>
-      <td class='even'><input class='textbox' type='text' name='yname' value='$idd' /></td>
+      <td class='even'><input class='textbox' type='text' name='yname' value='$idd' ></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_MAIL . " </td>
-      <td class='even'><input class='textbox' type='text' name='ymail' value='$idde' /></td>
+      <td class='even'><input class='textbox' type='text' name='ymail' value='$idde' ></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_NAMEFR . " </td>
-      <td class='even'><input class='textbox' type='text' name='fname' /></td>
+      <td class='even'><input class='textbox' type='text' name='fname' ></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_MAILFR . " </td>
-      <td class='even'><input class='textbox' type='text' name='fmail' /></td>
+      <td class='even'><input class='textbox' type='text' name='fmail' ></td>
     </tr>";
 
     if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
@@ -128,7 +128,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['LID']                = $lid;
     $tags['LISTING_NUMBER']     = _ADSLIGHT_LISTING_NUMBER;
     $tags['TITLE']              = $title;
-    $tags['TYPE']               = AdslightUtilities::getNameType($type);
+    $tags['TYPE']               = AdslightUtility::getNameType($type);
     $tags['DESCTEXT']           = $desctext;
     $tags['PRICE']              = $price;
     $tags['TYPEPRICE']          = $typeprice;

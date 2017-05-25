@@ -24,7 +24,7 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 
 define('REAL_MODULE_NAME', 'adslight');
 define('SEO_MODULE_NAME', 'annonces');
@@ -67,7 +67,7 @@ function replace_links($matches)
     $add_to_url = '';
     switch ($matches[5]) {
         case 'viewcats.php':
-//            $add_to_url = '';
+            //            $add_to_url = '';
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //              replacing cid=x
@@ -80,7 +80,7 @@ function replace_links($matches)
             }
             break;
         case 'viewads.php':
-//            $add_to_url = '';
+            //            $add_to_url = '';
             $req_string = $matches[6];
             if (!empty($matches[6])) {
                 //              replacing lid=x
@@ -184,7 +184,7 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%28/', // (
         '/%29/', // )
         '/%2C/', // ,
-        '/%2F/', // /
+        '/%2F/',// /
         '/%3A/', // :
         '/%3B/', // ;
         '/%3C/', // <
@@ -201,10 +201,10 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%7D/', // }
         '/%7E/', // ~
         "/\./", // .
-        '/%2A/',
+        '/%2A/', 
         '/%2B/',
         '/quot/'
-    );
+);
     $rep_pat = array(
         '-',
         '-',
@@ -243,22 +243,22 @@ function adslight_seo_title($title = '', $withExt = false)
     // Transformation of characters with accents
     //                  °        è        é        ê        ë        ç        à        â        ä        î        ï        ù        ü        û        ô        ö
     $pattern = array(
-        '/%B0/', // °
-        '/%E8/', // è
-        '/%E9/', // é
-        '/%EA/', // ê
-        '/%EB/', // ë
-        '/%E7/', // ç
-        '/%E0/', // à
-        '/%E2/', // â
-        '/%E4/', // ä
-        '/%EE/', // î
-        '/%EF/', // ï
-        '/%F9/', // ù
-        '/%FC/', // ü
-        '/%FB/', // û
-        '/%F4/', // ô
-        '/%F6/', // ö
+        '/%B0/',        // °
+        '/%E8/',        // è
+        '/%E9/',        // é
+        '/%EA/',        // ê
+        '/%EB/',        // ë
+        '/%E7/',        // ç
+        '/%E0/',        // à
+        '/%E2/',        // â
+        '/%E4/',        // ä
+        '/%EE/',        // î
+        '/%EF/',        // ï
+        '/%F9/',        // ù
+        '/%FC/',        // ü
+        '/%FB/',        // û
+        '/%F4/',        // ô
+        '/%F6/',        // ö
         '/%E3%A8/',
         '/%E3%A9/',
         '/%E3%A0/',

@@ -13,7 +13,7 @@
                 <strong><{$price_price}></strong>
                 <{$price_typeprice}>&nbsp;-&nbsp;<{$usure_typeusure}>&nbsp;
                 <{$admin}>
-                <hr/>
+                <hr>
                 <br>
                 <{if $sold}>
                     <br>
@@ -24,25 +24,25 @@
                 <{/if}>
                 <{if $adslight_active_bookmark == 1 }>
                     <br>
-                    <hr/>
+                    <hr>
                     <{include file='db:adslight_bookmark.tpl'}>
                 <{/if}>
                 <br>
-                <hr/>
+                <hr>
                 <{if $photo != "0"}>
                     <{section name=i loop=$pics_array}>
                         <a href="<{$path_uploads}>/midsize/resized_<{$pics_array[i].url}>" target="_self"
                            rel="lightbox[album]" title="<{$pics_array[i].desc}>">
                             <img class="thumb" src="<{$path_uploads}>/thumbs/thumb_<{$pics_array[i].url}>"
-                                 rel="lightbox" title="<{$pics_array[i].desc}>"/>
+                                 rel="lightbox" title="<{$pics_array[i].desc}>">
                         </a>
                         &nbsp;&nbsp;
                     <{/section}>
                 <{else}>
                     <div>
-                        <img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo"/>&nbsp;&nbsp;
-                        <img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo"/>&nbsp;&nbsp;
-                        <img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo"/>
+                        <img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo">&nbsp;&nbsp;
+                        <img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo">&nbsp;&nbsp;
+                        <img src="<{$xoops_url}>/modules/adslight/assets/images/nophoto_item.gif" alt="no photo">
                     </div>
                 <{/if}>
                 <{if $xoops_isuser}>
@@ -66,12 +66,12 @@
                             <{$date}><br>
                             <strong><{$local_head}></strong> <{$local_town}><br>
                             <strong><{$country_head}></strong> <{$local_country}><br>
-                            <hr/>
+                            <hr>
                             <{$submitter}><br>
                             <{$user_profile}><br>
                             <{$printA}><br>
                             <{$friend}><br>
-                            <hr/>
+                            <hr>
                             <{$add_photos}><br>
                             <{$modifyads}><br>
                             <{$deleteads}><br>
@@ -79,7 +79,7 @@
                             <br>
                             <{if $local_country}>
                                 <img class="mapsgoogle"
-                                     src="http://maps.google.com/maps/api/staticmap?size=200x200&maptype=roadmap\&markers=size:mid|color:red|<{$local_town}>+<{$local_country}>&sensor=false"/>
+                                     src="http://maps.google.com/maps/api/staticmap?size=200x200&maptype=roadmap\&markers=size:mid|color:red|<{$local_town}>+<{$local_country}>&sensor=false">
                             <{/if}>
                         </td>
                     </tr>

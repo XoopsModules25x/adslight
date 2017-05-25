@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 
 /**
  * @param $queryarray
@@ -47,46 +47,46 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
            . time()
            . '';
 
-    if ($userid != 0) {
-        $sql .= ' AND usid=' . $userid . ' ';
+    if (0 != $userid) {
+        $sql .= " AND usid={$userid} ";
     }
 
     //if (lid=lid)
     // because count() returns 1 even if a supplied variable
     // is not an array, we must check if $querryarray is really an array
     if (is_array($queryarray) && $count = count($queryarray)) {
-        $sql .= " AND ((title LIKE '%$queryarray[0]%' OR type LIKE '%$queryarray[0]%' OR desctext LIKE '%$queryarray[0]%' OR tel LIKE '%$queryarray[0]%' OR price LIKE '%$queryarray[0]%' OR typeprice LIKE '%$queryarray[0]%' OR submitter LIKE '%$queryarray[0]%' OR town LIKE '%$queryarray[0]%' OR country LIKE '%$queryarray[0]%' )";
+        $sql .= " AND ((title LIKE '%{$queryarray[0]}%' OR type LIKE '%{$queryarray[0]}%' OR desctext LIKE '%{$queryarray[0]}%' OR tel LIKE '%{$queryarray[0]}%' OR price LIKE '%{$queryarray[0]}%' OR typeprice LIKE '%{$queryarray[0]}%' OR submitter LIKE '%{$queryarray[0]}%' OR town LIKE '%{$queryarray[0]}%' OR country LIKE '%{$queryarray[0]}%')";
         for ($i = 1; $i < $count; ++$i) {
             $sql .= " $andor ";
-            $sql .= "(title LIKE '%$queryarray[$i]%' OR type LIKE '%$queryarray[$i]%' OR desctext LIKE '%$queryarray[$i]%' OR tel LIKE '%$queryarray[$i]%' OR price LIKE '%$queryarray[$i]%' OR typeprice LIKE '%$queryarray[$i]%' OR submitter LIKE '%$queryarray[$i]%' OR town LIKE '%$queryarray[$i]%' OR country LIKE '%$queryarray[$i]%' )";
+            $sql .= "(title LIKE '%{$queryarray[$i]}%' OR type LIKE '%{$queryarray[$i]}%' OR desctext LIKE '%{$queryarray[$i]}%' OR tel LIKE '%{$queryarray[$i]}%' OR price LIKE '%{$queryarray[$i]}%' OR typeprice LIKE '%{$queryarray[$i]}%' OR submitter LIKE '%{$queryarray[$i]}%' OR town LIKE '%{$queryarray[$i]}%' OR country LIKE '%{$queryarray[$i]}%')";
         }
         $sql .= ') ';
     }
-    $sql .= ' ORDER BY premium DESC, date DESC';
+    $sql    .= ' ORDER BY premium DESC, date DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
     $ret    = array();
     $i      = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $myts    = MyTextSanitizer::getInstance();
-        $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $myrow['lid'] . ' ORDER BY date_added LIMIT 1 ');
+        $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE lid={$myrow['lid']} ORDER BY date_added LIMIT 1 ");
         list($url) = $xoopsDB->fetchRow($result2);
         $url = $myts->htmlSpecialChars($url);
 
         $ret[$i]['image']     = 'assets/images/deco/icon.png';
         $ret[$i]['link']      = 'viewads.php?lid=' . $myrow['lid'] . '';
         $ret[$i]['title']     = $myrow['title'];
-        $ret[$i]['type']      = AdslightUtilities::getNameType($myrow['type']);
+        $ret[$i]['type']      = AdslightUtility::getNameType($myrow['type']);
         $ret[$i]['price']     = number_format($myrow['price'], 2, '.', ',');
         $ret[$i]['typeprice'] = $myrow['typeprice'];
         $ret[$i]['town']      = $myrow['town'];
         $ret[$i]['desctext']  = $myts->displayTarea($myrow['desctext'], 1, 1, 1, 1, 1);
         $ret[$i]['nophoto']   = 'assets/images/nophoto.jpg';
         $ret[$i]['photo']     = $url;
+        $ret[$i]['time']      = $myrow['date'];
+        $ret[$i]['uid']       = $myrow['usid'];
         if ($visible) {
-            $ret[$i]['sphoto'] = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'] . 'thumbs/thumb_' . $url . '';
+            $ret[$i]['sphoto'] = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'] . "thumbs/thumb_{$url}";
         }
-        $ret[$i]['time'] = $myrow['date'];
-        $ret[$i]['uid']  = $myrow['usid'];
         ++$i;
     }
 

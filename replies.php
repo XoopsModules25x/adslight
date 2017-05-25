@@ -22,12 +22,12 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+require_once __DIR__ . '/header.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 
-$myts         = MyTextSanitizer::getInstance(); // MyTextSanitizer object
-$module_id    = $xoopsModule->getVar('mid');
-$groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$myts      = MyTextSanitizer::getInstance(); // MyTextSanitizer object
+$module_id = $xoopsModule->getVar('mid');
+$groups    = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
@@ -36,7 +36,7 @@ $perm_itemid  = Request::getInt('item_id', 0, 'POST');
 if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
 }
-include_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 $lid                                     = Request::getInt('lid', 0, 'GET');

@@ -22,13 +22,13 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-$groups       = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
@@ -59,7 +59,7 @@ function tips_writing()
     $xoopsTpl->assign('adslight_writetitle', $GLOBALS['xoopsModuleConfig']['adslight_tips_writetitle']);
     $xoopsTpl->assign('ads_use_tipswrite', $GLOBALS['xoopsModuleConfig']['adslight_use_tipswrite']);
 
-    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
+    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >');
     $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     // adslight 2
@@ -81,7 +81,7 @@ function tips_writing()
 
 ######################################################
 
-$pa      = Request::getInt('pa', null, 'GET');
+$pa = Request::getInt('pa', null, 'GET');
 
 switch ($pa) {
     default:

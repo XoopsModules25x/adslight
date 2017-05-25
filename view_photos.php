@@ -22,19 +22,19 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 /**
  * Xoops header
  */
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_view_photos.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /**
  * Module classes
  */
-include_once __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/pictures.php';
 $lid = Request::getInt('lid', 0, 'GET');
 if (empty($lid)) {
     header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
@@ -92,7 +92,7 @@ $criteria_uid = new criteria('uid', $uid);
 
 // Creating a factory of pictures
 
-$album_factory = new JlmPicturesHandler($xoopsDB);
+$album_factory = new AdslightPicturesHandler($xoopsDB);
 
 /**
  * Fetch pictures from the factory
@@ -126,7 +126,9 @@ if (0 == $pictures_number) {
  * Show the form if it is the owner and he can still upload pictures
  */
 if (!empty($GLOBALS['xoopsUser'])) {
-    if ($isOwner && $GLOBALS['xoopsModuleConfig']['adslight_nb_pict'] > $pictures_number) {
+    if ($isOwner
+        && $GLOBALS['xoopsModuleConfig']['adslight_nb_pict'] > $pictures_number
+    ) {
         $maxfilebytes = $GLOBALS['xoopsModuleConfig']['adslight_maxfilesize'];
         $album_factory->renderFormSubmit($uid, $lid, $maxfilebytes, $xoopsTpl);
     }
@@ -146,17 +148,17 @@ if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
     $header_lightbox = '<script type="text/javascript" src="lightbox/js/prototype.js"></script>
 <script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
 <script type="text/javascript" src="lightbox/js/lightbox.js"></script>
-<link rel="stylesheet" href="include/adslight.css" type="text/css" media="screen" />
-<link rel="stylesheet" href="lightbox/css/lightbox.css" type="text/css" media="screen" />';
+<link rel="stylesheet" href="include/adslight.css" type="text/css" media="screen" >
+<link rel="stylesheet" href="lightbox/css/lightbox.css" type="text/css" media="screen" >';
 } else {
-    $header_lightbox = '<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" />';
+    $header_lightbox = '<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
 }
 
 /**
  * Assigning smarty variables
  */
 
-$sql    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $lid . " and valid='Yes'";
+$sql    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $lid . " AND valid='Yes'";
 $result = $xoopsDB->query($sql);
 while (list($title) = $xoopsDB->fetchRow($result)) {
     $xoopsTpl->assign('lang_gtitle', "<a href='viewads.php?lid=" . $lid . "'>" . $title . '</a>');

@@ -1,6 +1,6 @@
 <br>
 <div id="head"><{$lang_albumtitle}></div>
-<hr/>
+<hr>
 <div id="Titulo">
     <h2><{$lang_gtitle}></h2>
 </div>
@@ -27,7 +27,7 @@
                             <a href="<{$path_uploads}>/midsize/resized_<{$pics_array[i].url}>" target="_self"
                                rel="lightbox[album]">
                                 <img class="thumb" src="<{$path_uploads}>/thumbs/thumb_<{$pics_array[i].url}>"
-                                     rel="lightbox" alt="<{$pics_array[i].desc}>"/>
+                                     rel="lightbox" alt="<{$pics_array[i].desc}>">
                             </a>
                         </td>
                     </tr>
@@ -36,22 +36,22 @@
                             <div align="right">
                                 <form action="<{$xoops_url}>/modules/adslight/delpicture.php" method="post"
                                       id="deleteform" class="lado">
-                                    <input type="hidden" value="<{$pics_array[i].cod_img}>" name="cod_img"/><input
-                                            type="hidden" value="<{$pics_array[i].lid}>" name="lid"/>
+                                    <input type="hidden" value="<{$pics_array[i].cod_img}>" name="cod_img"><input
+                                            type="hidden" value="<{$pics_array[i].lid}>" name="lid">
                                     <{$token}>
                                     <input name="submit2" type="image" alt="<{$lang_delete}>"
-                                           src="<{xoModuleIcons16 delete.png}>"/>
+                                           src="<{xoModuleIcons16 delete.png}>">
                                 </form>
                             </div>
                         </td>
                         <td width="5">
                             <form action="<{$xoops_url}>/modules/adslight/editdesc.php" method="post" id="editform"
                                   class="lado">
-                                <input type="hidden" value="<{$pics_array[i].cod_img}>" name="cod_img"/><input
-                                        type="hidden" value="<{$pics_array[i].lid}>" name="lid"/>
+                                <input type="hidden" value="<{$pics_array[i].cod_img}>" name="cod_img"><input
+                                        type="hidden" value="<{$pics_array[i].lid}>" name="lid">
                                 <{$token}>
                                 <input name="submit" type="image" alt="<{$lang_editdesc}>"
-                                       src="<{xoModuleIcons16 edit.png}>"/>
+                                       src="<{xoModuleIcons16 edit.png}>">
                             </form>
                         </td>
                         <td width="90">

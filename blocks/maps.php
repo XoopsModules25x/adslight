@@ -20,29 +20,29 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 
 // <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/assets/images/map.png
 
 /**
- * @param $options
+ * @param array $options
  *
  * @return array
  */
 function adslight_maps_show($options)
 {
-    global $xoopsDB, $xoopsConfig, $blockdirname, $xoopsTpl, $block_lang;
+    global $xoopsConfig, $moduleDirName, $block_lang;
 
     $maps_name = $xoopsConfig['language'];
 
     $block = array();
     $myts  = MyTextSanitizer::getInstance();
 
-    $blockdirname = basename(dirname(__DIR__));
-    $block_lang   = '_MB_' . strtoupper($blockdirname);
+    $moduleDirName = basename(dirname(__DIR__));
+    $block_lang    = '_MB_' . strtoupper($moduleDirName);
 
-    $block['title'] = '' . constant($block_lang . '_TITLE') . '';
-
+    $block['title'] = constant("{$block_lang}_TITLE");
+    //@todo - move language string to language file
     $block['imgmapsurl'] = '<a title="Recherche dans votre r&eacute;gion" href="'
                            . XOOPS_URL
                            . '/modules/adslight/maps.php"><img src="'
@@ -51,39 +51,39 @@ function adslight_maps_show($options)
                            . $xoopsConfig['language']
                            . '/assets/images/map.png" alt="Recherche dans votre r&eacute;gion" border="0"></a><br>';
 
-    $block['link'] = "<a href=\"" . XOOPS_URL . "/modules/$blockdirname/\"><b>" . constant($block_lang . '_ALL_LISTINGS') . '</b></a><br>';
-    $block['add']  = "<a href=\"" . XOOPS_URL . "/modules/$blockdirname/\"><b>" . constant($block_lang . '_ADDNOW') . '</b></a><br>';
+    $block['link'] = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ALL_LISTINGS") . '</b></a><br>';
+    $block['add']  = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ADDNOW") . '</b></a><br>';
 
     return $block;
 }
 
 /**
- * @param $options
+ * @param array $options
  *
- * @return string
+ * @return string html form to display
  */
 function adslight_maps_edit($options)
 {
     global $xoopsDB;
-    $blockdirname = basename(dirname(__DIR__));
-    $block_lang   = '_MB_' . strtoupper($blockdirname);
+    $moduleDirName = basename(dirname(__DIR__));
+    $block_lang    = '_MB_' . strtoupper($moduleDirName);
 
-    $form = constant($block_lang . '_ORDER') . "&nbsp;<select name='options[]'>";
+    $form = constant("{$block_lang}_ORDER") . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";
-    if ($options[0] === 'date') {
+    if ('date' === $options[0]) {
         $form .= ' selected';
     }
     $form .= '>' . constant($block_lang . '_DATE') . "</option>\n";
 
     $form .= "<option value='hits'";
-    if ($options[0] === 'hits') {
+    if ('hits' === $options[0]) {
         $form .= ' selected';
     }
-    $form .= '>' . constant($block_lang . '_HITS') . '</option>';
+    $form .= '>' . constant("{$block_lang}_HITS") . '</option>';
     $form .= "</select>\n";
 
-    $form .= '&nbsp;' . constant($block_lang . '_DISP') . "&nbsp;<input type='text' name='options[]' value='" . $options[1] . "'/>&nbsp;" . constant($block_lang . '_LISTINGS');
-    $form .= '&nbsp;<br><br>' . constant($block_lang . '_CHARS') . "&nbsp;<input type='text' name='options[]' value='" . $options[2] . "'/>&nbsp;" . constant($block_lang . '_LENGTH') . '<br><br>';
+    $form .= '&nbsp;' . constant("{$block_lang}_DISP") . "&nbsp;<input type='text' name='options[]' value='{$options[1]}'>&nbsp;" . constant("{$block_lang}_LISTINGS");
+    $form .= '&nbsp;<br><br>' . constant("{$block_lang}_CHARS") . "&nbsp;<input type='text' name='options[]' value='{$options[2]}'>&nbsp;" . constant("{$block_lang}_LENGTH") . '<br><br>';
 
     return $form;
 }

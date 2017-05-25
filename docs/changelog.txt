@@ -1,4 +1,48 @@
-2.2 RC1        2016-10-02
+2.2 Beta 4        2016-10-02
+=================================
+- filter user input using XoopsRequest (zyspec)
+- changed jlm_pictures class to AdslightPictures class (zyspec)
+- changed from using HTTP_GET_VARS to _GET in ./rate-item.php on form submission (zyspec)
+- changed calling deprecated XoopsTree to using ClassifiedsTree (zyspec)
+- replaced all occurances of mysql_real_escape_string (deprecated) (zyspec)
+- removed unnecessary exit() statements (zyspec)
+- fixed rating bug in ./rate-item compare that would allow entering a zero rating (zyspec)
+- fixed bug(s) - $timezone should check for empty, not isset (zyspec)
+- fixed bug in ./index.php where $usid was set instead of compared in 'if' statement (zyspec)
+- fixed bug in ./members.php where if $istheirs was set instead of compared in 'if' statement (zyspec)
+- fixed bug in ./viewcats.php where $usid was set instead of compared in 'if' statement (zyspec)
+- fixed bug in ./viewcats.php where $usid was not set as global in Adsview function (zyspec)
+- fixed bug in ./admin/category $xoopsModuleConfig["adslight_cat_desc"] was set instead of compared in 'if' statement (zyspec)
+- fixed bug in ./admin/category $moderate_subcat was set instead of compared in 'if' statement (zyspec)
+- fixed bug where contact select box did not recall contact method properly (zyspec)
+- general code cleanup (mamba & zyspec)
+- started transition to XMF (mamba)
+- adjusted help links to operations manual (mamba)
+
+
+TODO:
+- remove flash maps support - find alternative
+- eliminate all 'extract' type code (i.e. foreach ($_POST as $k => $v)) in code for security reasons
+- refactor code to significantly reduce need for globals (change functions w/ switch statements)
+- refactor upgrade script(s) to include movement of assets to ./assets directory
+- remove XCube support - it's current implementation will fail (now using more modern "XOOPS" functions
+- change tree manipulation to XoopsObjectTree instead of using ClassifiedsTree class
+- change AdslightPicturesHandler to be a XoopsPersistableObjectHandler class
+- implement new error handling methods - XOOPS ErrorHandler has been deprecated
+- move ./style (css) files to ./assets/css (don't forget to modify upgrade script to del old files)
+- create and implement AdslightListing / AdslightListingHandler classes
+- create and implement AdslightPrice / AdslightPriceHandler classes
+- create and implement AdslightUserVotedata / AdslightUserVotedata classes
+- create and implement AdslightItemVotedata / AdslightItemVotedataHandler classes
+- create and implement AdslightIpLog / AdslightIpLogHandler classes
+- create and implement AdslightUsure / AdslightUsureHandler classes
+- create and implement AdslightType / AdslightTypeHandler classes
+- create and implement AdslightCategories / AdslightCategoriesHandler classes
+- create and implement AdslightReplies / AdslightRepliesHandler classes
+
+
+
+2.2 Beta 3        2016-10-01
 =================================
 - updated currency to use locale
 - moved all images, CSS, and JS files to /assets (mamba)
@@ -10,7 +54,7 @@
 - unnecessary Parentheses (mamba)
 - remove @version (mamba)
 - filter user input using XoopsRequest (zyspec)
-- replaced < b /> with < b > (mamba)
+- replaced < b > with < b > (mamba)
 - addNavigation(basename(__FILE__))  (mamba)
 - dirname(__FILE__) to __DIR__ (mamba)
 - reference mismatch (mamba)

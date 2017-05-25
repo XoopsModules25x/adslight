@@ -22,24 +22,29 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
-//include_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
+require_once __DIR__ . '/admin_header.php';
+//require_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 
 $op = Request::getString('op', 'liste');
 xoops_cp_header();
-//loadModuleAdminMenu(3, "");
-echo $adminObject->addNavigation(basename(__FILE__));
+//loadModuleAdminMenu(3, '');
+$adminObject->displayNavigation(basename(__FILE__));
 echo '<br><br>';
 global $xoopsDB;
 $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories'));
 list($cat_row) = $xoopsDB->fetchRow($countresult);
 $cat_rows = $cat_row;
-if ($cat_rows == '0') {
-    echo '' . _MI_ADSLIGHT_MUST_ADD_CAT . '';
+
+if ('0' == $cat_rows) {
+    echo _MI_ADSLIGHT_MUST_ADD_CAT;
 } else {
-    //$permtoset= isset($_POST['permtoset']) ? intval($_POST['permtoset']) : 1;
+    //$permtoset= isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
     $permtoset                = Request::getInt('permtoset', 1, 'POST');
-    $selected                 = array('', '', '');
+    $selected                 = array(
+        '',
+        '',
+        ''
+    );
     $selected[$permtoset - 1] = ' selected';
     echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='document.jselperm.submit()'><option value='1'"
          . $selected[0]

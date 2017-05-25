@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 // comment callback functions
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 
 $moduleDirName = basename(dirname(__DIR__));
 if (isset($usid)) {
@@ -31,7 +31,7 @@ if (isset($usid)) {
     function adslight_com_update($usid, $total_num)
     {
         $db  = XoopsDatabaseFactory::getDatabaseConnection();
-        $sql = 'UPDATE ' . $db->prefix('adslight_listing') . ' SET comments = ' . $total_num . ' WHERE usid = ' . $usid;
+        $sql = 'UPDATE ' . $db->prefix('adslight_listing') . " SET comments = {$total_num} WHERE usid = {$usid}";
         $db->query($sql);
     }
 

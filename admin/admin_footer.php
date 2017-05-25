@@ -28,4 +28,3 @@ echo "<div class='adminfooter'>\n"
      . '</div>';
 
 xoops_cp_footer();
-

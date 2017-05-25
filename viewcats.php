@@ -22,7 +22,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
 $tempXoopsLocal = new XoopsLocal;
@@ -49,7 +49,7 @@ if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $modul
 }
 
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function view (categories)
@@ -63,7 +63,7 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'p
 function adsView($cid = 0, $min = 0, $orderby, $show = 0)
 {
     global $xoopsDB, $xoopsTpl, $xoopsConfig, $myts, $mytree, $imagecat, $meta, $moduleDirName, $main_lang, $mid, $prem_perm, $xoopsModule;
-    $pathIcon16 = $xoopsModule->getInfo('icons16');
+    $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
@@ -76,7 +76,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
     $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
     $xoopsTpl->assign('permit', $prem_perm);
 
-    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" />');
+    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >');
 
     // $adslight_use_catscode = $GLOBALS['xoopsModuleConfig']['adslight_use_catscode'];
     // $adslight_cats_code = $GLOBALS['xoopsModuleConfig']['adslight_cats_code'];
@@ -101,9 +101,11 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
     $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 
     /// No Adds in this Cat ///
-    $submit_perms = AdslightUtilities::getMyItemIds('adslight_submit');
+    $submit_perms = AdslightUtility::getMyItemIds('adslight_submit');
 
-    if ($GLOBALS['xoopsUser'] && is_array($submit_perms) && count($submit_perms) > 0) {
+    if ($GLOBALS['xoopsUser'] && is_array($submit_perms)
+        && count($submit_perms) > 0
+    ) {
         $xoopsTpl->assign('not_adds_in_this_cat',
                           '' . _ADSLIGHT_ADD_LISTING_NOTADDSINTHISCAT . '<a href="addlisting.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_ADD_LISTING_NOTADDSSUBMIT . '</a>');
     } else {
@@ -111,7 +113,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                           '' . _ADSLIGHT_ADD_LISTING_NOTADDSINTHISCAT . '<br>' . _ADSLIGHT_ADD_LISTING_BULL . '<a href="' . XOOPS_URL . '/register.php">' . _ADSLIGHT_ADD_LISTING_SUB . '</a>.');
     }
 
-    $xoopsTpl->assign('Feed_RSS_cat', '&nbsp;&nbsp;&nbsp;<a href="rss.php?cid=' . addslashes($cid) . '"><img border="0" alt="Feed RSS" src="assets/images/rssfeed_buttons.png" /></a>');
+    $xoopsTpl->assign('Feed_RSS_cat', '&nbsp;&nbsp;&nbsp;<a href="rss.php?cid=' . addslashes($cid) . '"><img border="0" alt="Feed RSS" src="assets/images/rssfeed_buttons.png" ></a>');
 
     if ($GLOBALS['xoopsUser']) {
         $member_usid = $GLOBALS['xoopsUser']->getVar('uid');
@@ -131,7 +133,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
     $min     = ((int)$min > 0) ? (int)$min : 0;
     $show    = ((int)$show > 0) ? (int)$show : $GLOBALS['xoopsModuleConfig']['adslight_perpage'];
     $max     = $min + $show;
-    $orderby = isset($orderby) ? AdslightUtilities::convertOrderByIn($orderby) : $default_sort;
+    $orderby = isset($orderby) ? AdslightUtility::convertOrderByIn($orderby) : $default_sort;
 
     $updir = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
     $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -139,7 +141,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
     $xoopsTpl->assign('add_from_sitename', $xoopsConfig['sitename']);
     $xoopsTpl->assign('subcat_title2', _ADSLIGHT_ANNONCES);
 
-    $categories = AdslightUtilities::getMyItemIds('adslight_view');
+    $categories = AdslightUtility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         if (!in_array($cid, $categories)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
@@ -148,7 +150,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
-    $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" />';
+    $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
 
     $pathstring = '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>';
     $pathstring .= $mytree->getNicePathFromId($cid, 'title', 'viewcats.php?');
@@ -182,8 +184,10 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         $GLOBALS['xoTheme']->addMeta('meta', 'keywords', '' . substr($cat_keywords_clean, 0, 1000));
     }
 
-    $submit_perms = AdslightUtilities::getMyItemIds('adslight_submit');
-    if ($GLOBALS['xoopsUser'] && is_array($submit_perms) && count($submit_perms) > 0) {
+    $submit_perms = AdslightUtility::getMyItemIds('adslight_submit');
+    if ($GLOBALS['xoopsUser'] && is_array($submit_perms)
+        && count($submit_perms) > 0
+    ) {
         $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLCATS . '<a href="addlisting.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>
 ';
     } else {    // User can't see any category
@@ -207,7 +211,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                 $space           = 0;
                 $chcount         = 0;
                 $infercategories = '';
-                $totallisting    = AdslightUtilities::getTotalItems($ele['cid'], 1);
+                $totallisting    = AdslightUtility::getTotalItems($ele['cid'], 1);
                 foreach ($sub_arr as $sub_ele) {
                     if (in_array($sub_ele['cid'], $categories)) {
                         $chtitle = $myts->htmlSpecialChars($sub_ele['title']);
@@ -221,7 +225,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                         }
                         $infercategories .= '<a href="' . XOOPS_URL . '/modules/adslight/viewcats.php?cid=' . $sub_ele['cid'] . '">' . $chtitle . '</a>';
 
-                        $infercategories .= '&nbsp;(' . AdslightUtilities::getTotalItems($sub_ele['cid']) . ')';
+                        $infercategories .= '&nbsp;(' . AdslightUtility::getTotalItems($sub_ele['cid']) . ')';
                         $infercategories .= '&nbsp;' . categorynewgraphic($sub_ele['cid']) . '';
                         ++$space;
                         ++$chcount;
@@ -262,7 +266,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
 
         $sql     = 'SELECT lid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM '
                    . $xoopsDB->prefix('adslight_listing')
-                   . ' WHERE valid="Yes" and cid='
+                   . ' WHERE valid="Yes" AND cid='
                    . $xoopsDB->escape($cid)
                    . ' AND status!="1" '
                    . $cat_perms
@@ -272,7 +276,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         $result1 = $xoopsDB->query($sql, $show, $min);
         if ($trows > '1') {
             $xoopsTpl->assign('show_nav', true);
-            $orderbyTrans = AdslightUtilities::convertOrderByTrans($orderby);
+            $orderbyTrans = AdslightUtility::convertOrderByTrans($orderby);
             $xoopsTpl->assign('lang_sortby', _ADSLIGHT_SORTBY);
             $xoopsTpl->assign('lang_title', _ADSLIGHT_TITLE);
             $xoopsTpl->assign('lang_titleatoz', _ADSLIGHT_TITLEATOZ);
@@ -286,7 +290,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             $xoopsTpl->assign('lang_popularity', _ADSLIGHT_POPULARITY);
             $xoopsTpl->assign('lang_popularityleast', _ADSLIGHT_POPULARITYLTOM);
             $xoopsTpl->assign('lang_popularitymost', _ADSLIGHT_POPULARITYMTOL);
-            $xoopsTpl->assign('lang_cursortedby', sprintf(_ADSLIGHT_CURSORTEDBY, AdslightUtilities::convertOrderByTrans($orderby)));
+            $xoopsTpl->assign('lang_cursortedby', sprintf(_ADSLIGHT_CURSORTEDBY, AdslightUtility::convertOrderByTrans($orderby)));
         }
 
         while (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $contactby, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result1)) {
@@ -302,7 +306,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
             $startdate = (time() - (86400 * $newcount));
             if ($startdate < $date) {
-                $newitem       = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" />';
+                $newitem       = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" >';
                 $a_item['new'] = $newitem;
             }
             if ($GLOBALS['xoopsUser']) {
@@ -343,8 +347,8 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             $a_item['status'] = $status;
             if ($price > 0) {
 
-                //          $a_item['price'] = $price. ' '. $GLOBALS['xoopsModuleConfig']['adslight_money'].'';
-                $a_item['price']           = AdslightUtilities::getMoneyFormat('%.2n', $price);
+                //          $a_item['price'] = $price. ' '. $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].'';
+                $a_item['price']           = AdslightUtility::getMoneyFormat('%.2n', $price);
                 $a_item['price_typeprice'] = $myts->htmlSpecialChars($nom_price);
             }
             $a_item['date']  = $date;
@@ -371,7 +375,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                                       . XOOPS_URL
                                       . '/modules/adslight/assets/images/nophoto.jpg" align="left" width="100px" alt="'
                                       . $title
-                                      . '" /></a>';
+                                      . '" ></a>';
 
                 $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
                 $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
@@ -380,7 +384,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                            . $xoopsDB->escape($usid)
                            . ' AND lid='
                            . $xoopsDB->escape($lid)
-                           . ' ORDER BY date_added ASC limit 1';
+                           . ' ORDER BY date_added ASC LIMIT 1';
                 $resultp = $xoopsDB->query($sql);
 
                 while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
@@ -395,11 +399,11 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                                            . $url
                                            . '" align="left" width="100px" alt="'
                                            . $title
-                                           . '" /></a>';
+                                           . '" ></a>';
                     }
                 }
             } else {
-                $a_item['no_photo'] = '<p><img src="' . XOOPS_URL . '/modules/adslight/assets/images/camera_nophoto.png" align="left" width="24" alt="' . $title . '" /></p>';
+                $a_item['no_photo'] = '<p><img src="' . XOOPS_URL . '/modules/adslight/assets/images/camera_nophoto.png" align="left" width="24" alt="' . $title . '" ></p>';
                 $updir              = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
                 $sql                = 'SELECT cod_img, lid, uid_owner, url FROM '
                                       . $xoopsDB->prefix('adslight_pictures')
@@ -407,11 +411,11 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                                       . $xoopsDB->escape($usid)
                                       . ' AND lid='
                                       . $xoopsDB->escape($lid)
-                                      . ' ORDER BY date_added ASC limit 1';
+                                      . ' ORDER BY date_added ASC LIMIT 1';
                 $resultp            = $xoopsDB->query($sql);
                 while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
                     if ($photo) {
-                        $a_item['photo'] = '<p><img src="' . XOOPS_URL . '/modules/adslight/assets/images/camera_photo.png" align="left" width="24" alt="' . $title . '" /></p>';
+                        $a_item['photo'] = '<p><img src="' . XOOPS_URL . '/modules/adslight/assets/images/camera_photo.png" align="left" width="24" alt="' . $title . '" ></p>';
                     }
                 }
             }
@@ -423,7 +427,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
 
         $cid = ((int)$cid > 0) ? (int)$cid : 0;
 
-        $orderby   = AdslightUtilities::convertOrderByOut($orderby);
+        $orderby   = AdslightUtility::convertOrderByOut($orderby);
         $linkpages = ceil($trows / $show);
 
         //Page Numbering

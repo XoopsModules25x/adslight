@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+require_once __DIR__ . '/../class/utility.php';
 /**
  * @param XoopsObject $xoopsModule
  *
@@ -30,18 +30,23 @@ function xoops_module_update_adslight(XoopsObject $xoopsModule)
 {
     global $xoopsDB;
 
-    $sql = 'ALTER TABLE `' . $xoopsDB->prefix('adslight_listing') . "` MODIFY `price` decimal(20,2) NOT NULL default '0.00' AFTER `tel` ;";
+    $sql = 'ALTER TABLE `' . $xoopsDB->prefix('adslight_listing') . "` MODIFY `price` DECIMAL(20,2) NOT NULL DEFAULT '0.00' AFTER `tel` ;";
     $xoopsDB->query($sql);
 
-    $sql = 'ALTER TABLE `' . $xoopsDB->prefix('adslight_listing') . "` MODIFY `photo` varchar(100) NOT NULL default '0';";
+    $sql = 'ALTER TABLE `' . $xoopsDB->prefix('adslight_listing') . "` MODIFY `photo` VARCHAR(100) NOT NULL DEFAULT '0';";
     $xoopsDB->query($sql);
 
     // remove old html template files
     $template_directory = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/templates/';
-    $template_list      = array_diff(scandir($template_directory), array('..', '.'));
+    $template_list      = array_diff(scandir($template_directory), array(
+        '..',
+        '.'
+    ));
     foreach ($template_list as $k => $v) {
         $fileinfo = new SplFileInfo($template_directory . $v);
-        if ($fileinfo->getExtension() === 'html' && $fileinfo->getFilename() !== 'index.html') {
+        if ($fileinfo->getExtension() === 'html'
+            && $fileinfo->getFilename() !== 'index.html'
+        ) {
             @unlink($template_directory . $v);
         }
     }

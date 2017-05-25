@@ -29,23 +29,23 @@ $main_lang     = '_' . strtoupper($moduleDirName);
  */
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
-include_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 /**
  * Modules class includes
  */
-include_once __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/pictures.php';
 
 /**
  * Factory of pictures created
  */
-$album_factory = new JlmPicturesHandler($xoopsDB);
+$album_factory = new AdslightPicturesHandler($xoopsDB);
 
 /**
  * Getting the title
  */
 $title = Request::getString('caption', '', 'POST');
-$lid =  Request::getInt('lid', 0, 'POST');
+$lid   = Request::getInt('lid', 0, 'POST');
 /**
  * Getting parameters defined in admin side
  */
@@ -56,8 +56,8 @@ $pictheight    = $GLOBALS['xoopsModuleConfig']['adslight_resized_height'];
 $thumbwidth    = $GLOBALS['xoopsModuleConfig']['adslight_thumb_width'];
 $thumbheight   = $GLOBALS['xoopsModuleConfig']['adslight_thumb_height'];
 $maxfilebytes  = $GLOBALS['xoopsModuleConfig']['adslight_maxfilesize'];
-$maxfileheight = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_height'];
-$maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_width'];
+$maxfileheight = $GLOBALS['xoopsModuleConfig']['adslight_max_original_height'];
+$maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_original_width'];
 
 /**
  * If we are receiving a file
@@ -71,32 +71,31 @@ if ('sel_photo' === Request::getArray('xoops_upload_file', '', 'POST')[0]) {
      * This could change if Xoops adds a Directory called preload
      */
 
-    $xCube = false;
-    if (preg_match('/^XOOPS Cube/', XOOPS_VERSION)) { // XOOPS Cube 2.1x
-        $xCube = true;
-    }
+    // XOOPS Cube 2.1x
+    $xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
+
     if ($xCube) {
         if (!$xoopsGTicket->check(true, 'token')) {
             redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
         }
     } else {
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header($_SERVER['HTTP_REFERER'], 3, constant('_ADSLIGHT_TOKENEXPIRED'));
+            redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
         }
     }
     /**
      * Try to upload picture resize it insert in database and then redirect to index
      */
     if ($album_factory->receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)) {
-        header('Location: ' . XOOPS_URL . "/modules/adslight/view_photos.php?lid=$lid&uid=" . $GLOBALS['xoopsUser']->getVar('uid'));
+        header('Location: ' . XOOPS_URL . "/modules/adslight/view_photos.php?lid={$lid}&uid=" . $GLOBALS['xoopsUser']->getVar('uid'));
 
-        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET photo=photo+1 WHERE lid = ' . $xoopsDB->escape($lid));
+        $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo+1 WHERE lid={$lid}");
     } else {
-        redirect_header(XOOPS_URL . '/modules/adslight/view_photos.php?uid=' . $GLOBALS['xoopsUser']->getVar('uid'), 15, constant('_ADSLIGHT_NOCACHACA'));
+        redirect_header(XOOPS_URL . '/modules/adslight/view_photos.php?uid=' . $xoopsUser->getVar('uid'), 15, _ADSLIGHT_NOCACHACA);
     }
 }
 
 /**
  * Close page
  */
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

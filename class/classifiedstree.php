@@ -46,7 +46,7 @@ class ClassifiedsTree
     }
 
     /**
-     * @param        $sel_id
+     * @param int    $sel_id
      * @param string $order
      *
      * @return array
@@ -54,20 +54,20 @@ class ClassifiedsTree
     public function getFirstChild($sel_id, $order = '')
     {
         $arr = array();
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . '';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
 
-        if ($order != '') {
+        if ('' != $order) {
             $sql .= " ORDER BY $order";
         }
 
         $result = $this->db->query($sql);
         $count  = $this->db->getRowsNum($result);
-        if ($count == 0) {
+        if (0 == $count) {
             return $arr;
         }
         while ($myrow = $this->db->fetchArray($result)) {
@@ -85,15 +85,16 @@ class ClassifiedsTree
     public function getFirstChildId($sel_id)
     {
         $idarray = array();
-        $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id));
+        $sel_id  = (int)$sel_id;
+        $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id);
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $result .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
 
         $count = $this->db->getRowsNum($result);
-        if ($count == 0) {
+        if (0 == $count) {
             return $idarray;
         }
         while (list($id) = $this->db->fetchRow($result)) {
@@ -112,9 +113,10 @@ class ClassifiedsTree
      */
     public function getAllChildId($sel_id, $order = '', $idarray = array())
     {
-        $sql = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '';
+        $sel_id = (int)$sel_id;
+        $sql    = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -124,7 +126,7 @@ class ClassifiedsTree
         }
         $result = $this->db->query($sql);
         $count  = $this->db->getRowsNum($result);
-        if ($count == 0) {
+        if (0 == $count) {
             return $idarray;
         }
         while (list($r_id) = $this->db->fetchRow($result)) {
@@ -144,19 +146,19 @@ class ClassifiedsTree
      */
     public function getAllParentId($sel_id, $order = '', $idarray = array())
     {
-        $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '';
+        $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
 
-        if ($order != '') {
+        if ('' != $order) {
             $sql .= " ORDER BY {$order}";
         }
         $result = $this->db->query($sql);
         list($r_id) = $this->db->fetchRow($result);
-        if ($r_id == 0) {
+        if (0 == $r_id) {
             return $idarray;
         }
         array_push($idarray, $r_id);
@@ -174,11 +176,10 @@ class ClassifiedsTree
      */
     public function getPathFromId($sel_id, $title, $path = '')
     {
-
-        $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '';
+        $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id . '';
         //        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . "'");
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             //            $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
@@ -186,14 +187,14 @@ class ClassifiedsTree
 
         $result = $this->db->query($sql);
 
-        if ($this->db->getRowsNum($result) == 0) {
+        if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
         $myts = MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
         $path = '/' . $name . $path . '';
-        if ($parentid == 0) {
+        if (0 == $parentid) {
             return $path;
         }
         $path = $this->getPathFromId($parentid, $title, $path);
@@ -222,12 +223,13 @@ class ClassifiedsTree
         echo '>';
 
         $sql        = 'SELECT SQL_CACHE cid, title FROM ' . $this->table . ' WHERE pid=0';
-        $categories = AdslightUtilities::getMyItemIds('adslight_submit');
+        $categories = AdslightUtility::getMyItemIds('adslight_submit');
 
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
-        if ($order != '') {
+
+        if ('' != $order) {
             $sql .= " ORDER BY $order";
         }
 
@@ -240,7 +242,7 @@ class ClassifiedsTree
             if ($catid == $preset_id) {
                 $sel = ' selected';
             }
-            echo '<option value=' . $catid . '' . $sel . '>' . $name . '</option>';
+            echo "<option value=\"{$catid}\"{$sel}>{$name}</option>";
             $sel = '';
             $arr = $this->getChildTreeArray($catid, $order);
             foreach ($arr as $option) {
@@ -249,7 +251,7 @@ class ClassifiedsTree
                 if ($option['cid'] == $preset_id) {
                     $sel = ' selected';
                 }
-                echo '<option value="' . $option['cid'] . '"' . $sel . '>' . $catpath . '</option>';
+                echo "<option value=\"{$option['cid']}\"{$sel}>{$catpath}</option>";
                 $sel = '';
             }
         }
@@ -266,36 +268,20 @@ class ClassifiedsTree
      */
     public function getNicePathFromId($sel_id, $title, $funcURL, $path = '')
     {
-        $sql    = 'SELECT SQL_CACHE ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . '';
+        $sql    = 'SELECT SQL_CACHE ' . $this->pid . ", {$title} FROM " . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
         $result = $this->db->query($sql);
-        if ($this->db->getRowsNum($result) == 0) {
+        if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
         $myts = MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
 
-        $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" />';
+        $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
 
-        $path = '&nbsp;&nbsp;'
-                . $arrow
-                . '&nbsp;&nbsp;<a title="'
-                . _ADSLIGHT_ANNONCES
-                . ' '
-                . $name
-                . '" href="'
-                . $funcURL
-                . ''
-                . $this->id
-                . '='
-                . $this->db->escape($sel_id)
-                . '">'
-                . $name
-                . '</a>'
-                . $path
-                . '';
+        $path = "&nbsp;&nbsp;{$arrow}&nbsp;&nbsp;<a title=\"" . _ADSLIGHT_ANNONCES . " {$name}\" href=\"{$funcURL}" . $this->id . '=' . (int)$sel_id . "\">{$name}</a>{$path}";
 
-        if ($parentid == 0) {
+        if (0 == $parentid) {
             return $path;
         }
         $path = $this->getNicePathFromId($parentid, $title, $funcURL, $path);
@@ -311,13 +297,14 @@ class ClassifiedsTree
      */
     public function getIdPathFromId($sel_id, $path = '')
     {
-        $result = $this->db->query('SELECT SQL_CACHE ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id));
-        if ($this->db->getRowsNum($result) == 0) {
+        $sel_id = (int)$sel_id;
+        $result = $this->db->query('SELECT SQL_CACHE ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $sel_id);
+        if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
         list($parentid) = $this->db->fetchRow($result);
-        $path = '/' . $sel_id . $path . '';
-        if ($parentid == 0) {
+        $path = "/{$sel_id}{$path}";
+        if (0 == $parentid) {
             return $path;
         }
         $path = $this->getIdPathFromId($parentid, $path);
@@ -334,9 +321,9 @@ class ClassifiedsTree
      */
     public function getAllChild($sel_id = 0, $order = '', $parray = array())
     {
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -370,9 +357,9 @@ class ClassifiedsTree
     {
         global $moduleDirName;
 
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $this->db->escape($sel_id) . '';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
@@ -404,69 +391,53 @@ class ClassifiedsTree
      */
     public function makeAdSelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '')
     {
-        global $myts, $xoopsDB, $pathIcon16;
+        global $myts, $xoopsDB;
+        $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
         require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
-        if ($sel_name == '') {
+        if ('' == $sel_name) {
             $sel_name = $this->id;
         }
 
-        $sql = 'SELECT ' . $this->id . ', ' . $title . ', ordre FROM ' . $this->table . ' WHERE ' . $this->pid . '=0';
-        if ($order != '') {
+        $sql = 'SELECT ' . $this->id . ', ' . $title . ', cat_order FROM ' . $this->table . ' WHERE ' . $this->pid . '=0';
+        if ('' != $order) {
             $sql .= " ORDER BY {$order}";
         }
         $result = $xoopsDB->query($sql);
-        while (list($catid, $name, $ordre) = $xoopsDB->fetchRow($result)) {
-            echo '<table width="100%" border="0" class="outer"><tr>
-                <th align="left">';
-            if ($GLOBALS['xoopsModuleConfig']['adslight_csortorder'] === 'ordre') {
-                echo '(' . $ordre . ')';
+        while (list($catid, $name, $cat_order) = $xoopsDB->fetchRow($result)) {
+            echo '<table class="width100 bnone outer"><tr>
+                <th class="left">';
+            if ('cat_order' === $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
+                echo "({$cat_order})";
             }
-            echo '&nbsp;&nbsp;'
-                 . $name
-                 . '&nbsp;&nbsp;</th>
-                <th align="center" width="10%"><a href="category.php?op=AdsNewCat&amp;cid='
-                 . addslashes($catid)
-                 . '"><img src="'
-                 . $pathIcon16
-                 . '/add.png'
-                 . '" border=0 width=18 height=18 alt="'
+            echo "&nbsp;&nbsp;{$name}&nbsp;&nbsp;</th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsNewCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/add.png\" border=\"0\" width=\"18\" height=\"18\" alt=\""
                  . _AM_ADSLIGHT_ADDSUBCAT
-                 . '" title="'
+                 . "\" title=\""
                  . _AM_ADSLIGHT_ADDSUBCAT
-                 . '"></a></th>
-                <th align="center" width="10%"><a href="category.php?op=AdsModCat&amp;cid='
-                 . addslashes($catid)
-                 . '"><img src="'
-                 . $pathIcon16
-                 . '/edit.png'
-                 . '" border=0 width=18 height=18 alt="'
+                 . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsModCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" width=\"18\" height=\"18\" alt=\""
                  . _AM_ADSLIGHT_MODIFSUBCAT
-                 . '" title ="'
+                 . "\" title=\""
                  . _AM_ADSLIGHT_MODIFSUBCAT
-                 . '"></a></th>
-                <th align="center" width="10%"><a href="category.php?op=AdsDelCat&amp;cid='
-                 . addslashes($catid)
-                 . '"><img src="'
-                 . $pathIcon16
-                 . '/delete.png'
-                 . '" border=0 width=18 height=18 alt="'
+                 . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsDelCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/delete.png\" border=\"0\" width=\"18\" height=\"18\" alt=\""
                  . _AM_ADSLIGHT_DELSUBCAT
-                 . '" title="'
+                 . "\" title=\""
                  . _AM_ADSLIGHT_DELSUBCAT
-                 . '"></a></th>
-                </tr>';
+                 . "\"></a></th>
+                </tr>";
 
             $arr   = $this->getChildTreeMapArray($catid, $order);
             $class = 'odd';
             foreach ($arr as $option) {
-                echo '<tr class="' . $class . '"><td>';
+                echo "<tr class=\"{$class}\"><td>";
 
                 $option['prefix'] = str_replace('.', ' &nbsp;&nbsp;-&nbsp;', $option['prefix']);
                 $catpath          = $option['prefix'] . '&nbsp;&nbsp;' . $myts->htmlSpecialChars($option[$title]);
-                $ordreS           = $option['ordre'];
-                if ($GLOBALS['xoopsModuleConfig']['adslight_csortorder'] === 'ordre') {
-                    echo '(' . $ordreS . ')';
+                $cat_orderS       = $option['cat_order'];
+                if ('cat_order' == $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
+                    echo "({$cat_orderS})";
                 }
                 echo ''
                      . $catpath
@@ -502,7 +473,7 @@ class ClassifiedsTree
                      . _AM_ADSLIGHT_DELSUBCAT
                      . '"></a></td>';
 
-                $class = ($class === 'even') ? 'odd' : 'even';
+                $class = ('even' == $class) ? 'odd' : 'even';
             }
             echo '</td></tr></table><br>';
         }
@@ -519,19 +490,19 @@ class ClassifiedsTree
     public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = array(), $r_prefix = '')
     {
         global $xoopsDB;
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $xoopsDB->escape($sel_id) . '';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
 
-        $categories = AdslightUtilities::getMyItemIds('adslight_view');
+        $categories = AdslightUtility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
 
-        if ($order != '') {
+        if ('' != $order) {
             $sql .= " ORDER BY {$order}";
         }
         $result = $xoopsDB->query($sql);
         $count  = $xoopsDB->getRowsNum($result);
-        if ($count == 0) {
+        if (0 == $count) {
             return $parray;
         }
         while ($row = $xoopsDB->fetchArray($result)) {
@@ -552,7 +523,10 @@ class ClassifiedsTree
         $ret    = array();
         $myts   = MyTextSanitizer::getInstance();
         while ($myrow = $this->db->fetchArray($result)) {
-            $ret[$myrow['cid']] = array('title' => $myts->htmlspecialchars($myrow['title']), 'pid' => $myrow['pid']);
+            $ret[$myrow['cid']] = array(
+                'title' => $myts->htmlspecialchars($myrow['title']),
+                'pid'   => $myrow['pid']
+            );
         }
 
         return $ret;

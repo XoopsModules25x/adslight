@@ -90,10 +90,10 @@ define('_AM_ADSLIGHT_MODPRICE', 'Modify a price type');
 define('_AM_ADSLIGHT_ADDPRICE2', 'Price type has been added');
 define('_AM_ADSLIGHT_PRICEMOD', 'Price type has been modified');
 define('_AM_ADSLIGHT_PRICEDEL', 'Price type has been deleted');
-define('_AM_ADSLIGHT_ORDRE', 'Sort:');
-define('_AM_ADSLIGHT_ORDRECLASS', 'Category Order:');
-define('_AM_ADSLIGHT_ORDREALPHA', 'Sort alphabetically');
-define('_AM_ADSLIGHT_ORDREPERSO', 'Personalised Order');
+define('_AM_ADSLIGHT_ORDER', 'Sort:');
+define('_AM_ADSLIGHT_ORDERCLASS', 'Category Order:');
+define('_AM_ADSLIGHT_ORDERALPHA', 'Sort alphabetically');
+define('_AM_ADSLIGHT_ORDERPERSO', 'Personalised Order');
 define('_AM_ADSLIGHT_BIGCAT', 'Main Category');
 define('_AM_ADSLIGHT_HELP1', "<b>To add a category:</b> click on the image <img src=\"" . XOOPS_URL
                              . "/modules/adslight/assets/images/plus.gif\" border=0 width=10 height=10 alt=\"Add a category\"> alongside the category you want to add the category under.<p><b>To change or delete a category:</b> click on the name of the category");

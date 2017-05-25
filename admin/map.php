@@ -22,7 +22,7 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $op = Request::getString('op', 'liste');
 
@@ -31,10 +31,10 @@ $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'p
 global $mytree, $xoopsDB, $moduleDirName;
 xoops_cp_header();
 //loadModuleAdminMenu(1, "");
-echo $adminObject->addNavigation(basename(__FILE__));
+$adminObject->displayNavigation(basename(__FILE__));
 
 echo "<fieldset style='padding: 20px;'><legend style='font-weight: bold; color: #FF7300;'>" . _AM_ADSLIGHT_GESTCAT . ' </legend>';
-echo "<p align=\"left\"><button name=\"buttonName\" type=\"button\" onclick=\"document.location.href='category.php?op=AdsNewCat&amp;cid=0';\">" . _AM_ADSLIGHT_ADDCATPRINC . '</button></p>';
+echo "<p class=\"left\"><button name=\"buttonName\" type=\"button\" onclick=\"document.location.href='category.php?op=AdsNewCat&amp;cid=0';\">" . _AM_ADSLIGHT_ADDCATPRINC . '</button></p>';
 $mytree->makeAdSelBox('title', $GLOBALS['xoopsModuleConfig']['adslight_csortorder']);
 echo '<br>';
 echo '<br></fieldset><br>';
