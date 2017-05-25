@@ -65,7 +65,6 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
 
     $configurator = include __DIR__ . '/config.php';
     $classUtility     = ucfirst($moduleDirName) . 'Utility';
-    ;
     if (!class_exists($classUtility)) {
         xoops_load('utility', $moduleDirName);
     }
@@ -107,7 +106,7 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
     $result = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('adslight_categories'));
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $categoryId = (int)($myrow['cid']);
+        $categoryId = (int)$myrow['cid'];
         $classUtility::saveCategoryPermissions($groups1, $categoryId, $permName1);
         $classUtility::saveCategoryPermissions($groups2, $categoryId, $permName2);
         $classUtility::saveCategoryPermissions($groups3, $categoryId, $permName3);

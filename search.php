@@ -33,9 +33,9 @@ $xoopsOption['pagetype'] = 'search';
 
 include dirname(dirname(__DIR__)) . '/mainfile.php';
 
-$xmid              = $xoopsModule->getVar('mid');
+$xmid = $xoopsModule->getVar('mid');
 /** @var XoopsConfigHandler $configHandler */
-$configHandler    = xoops_getHandler('config');
+$configHandler     = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
@@ -66,7 +66,7 @@ if ($action === 'results') {
     }
 }
 
-$groups            = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler      = xoops_getHandler('groupperm');
 $available_modules = $gpermHandler->getItemIds('module_read', $groups);
@@ -153,9 +153,9 @@ switch ($action) {
                     echo '<p>' . _SR_NOMATCH . '</p>';
                 } else {
                     for ($i = 0; $i < $count; ++$i) {
-                        echo "<style type=\"text/css\" media=\"all\">@import url(" . XOOPS_URL . '/modules/adslight/assets/css/adslight.css);</style>';
-                        echo "<table width=\"100%\" class=\"outer\"><tr>";
-                        echo "<td width=\"30%\">";
+                        echo '<style type="text/css" media="all">@import url(' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css);</style>';
+                        echo '<table width="100%" class="outer"><tr>';
+                        echo '<td width="30%">';
                         echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                         if (isset($results[$i]['photo'])
                             && $results[$i]['photo'] != ''
@@ -167,7 +167,7 @@ switch ($action) {
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = '' . $results[$i]['link'];
                         }
-                        echo "<td width=\"50%\">";
+                        echo '<td width="50%">';
 
                         echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
 
@@ -179,7 +179,7 @@ switch ($action) {
 
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
-                        echo "</td><td width=\"20%\">";
+                        echo '</td><td width="20%">';
                         echo ''
                              . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']
                              . ''
@@ -253,8 +253,8 @@ switch ($action) {
             //    echo "<br>";
             printf(_SR_SHOWING, $start + 1, $start + $count);
             for ($i = 0; $i < $count; ++$i) {
-                echo "<table width=\"100%\" class=\"outer\"><tr>";
-                echo "<td width=\"30%\">";
+                echo '<table width="100%" class="outer"><tr>';
+                echo '<td width="30%">';
                 echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                 if (isset($results[$i]['photo'])
                     && $results[$i]['photo'] != ''
@@ -266,7 +266,7 @@ switch ($action) {
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = '' . $results[$i]['link'];
                 }
-                echo "<td width=\"50%\">";
+                echo '<td width="50%">';
 
                 echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
 
@@ -278,7 +278,7 @@ switch ($action) {
 
                 echo '' . $myts->htmlSpecialChars($results[$i]['desctext']) . '';
 
-                echo "</td><td width=\"20%\">";
+                echo '</td><td width="20%">';
                 echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '
 ' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
 

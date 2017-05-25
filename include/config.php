@@ -70,6 +70,9 @@ return array(
 );
 */
 
+/**
+ * Class AdsligthConfigurator
+ */
 class AdsligthConfigurator
 {
     public $uploadFolders   = array();
@@ -79,6 +82,9 @@ class AdsligthConfigurator
     public $oldFolders      = array();
     public $name;
 
+    /**
+     * AdsligthConfigurator constructor.
+     */
     public function __construct()
     {
         $moduleDirName        = basename(dirname(__DIR__));

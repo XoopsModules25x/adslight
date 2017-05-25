@@ -27,10 +27,10 @@ require_once __DIR__ . '/header.php';
 $allads     = AdslightUtility::returnAllAdsRss();
 $base_xoops = 'http://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], 'modules'));
 
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>
-<rss version=\"2.0\" xmlns:atom=\"http://www.w3.org/2005/Atom\">
+echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 <channel>
-<title>" . $xoopsConfig['sitename'] . '</title>
+<title>' . $xoopsConfig['sitename'] . '</title>
 <link>' . $base_xoops . '</link>
 <description>' . $xoopsConfig['slogan'] . '</description>
 <language>fr</language>';

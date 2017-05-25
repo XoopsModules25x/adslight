@@ -84,7 +84,6 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
         require_once __DIR__ . '/config.php';
         $configurator = new AdsligthConfigurator();
         $classUtility     = ucfirst($moduleDirName) . 'Utility';
-        ;
         if (!class_exists($classUtility)) {
             xoops_load('utility', $moduleDirName);
         }

@@ -43,7 +43,7 @@ $lid                                     = Request::getInt('lid', 0, 'GET');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_replies.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-$xoopsTpl->assign('nav_main', "<a href=\"index.php\">" . _ADSLIGHT_MAIN . '</a>');
+$xoopsTpl->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
 $show = 1;
 $min  = Request::getInt('min', 0, 'GET');
 if (!isset($max)) {

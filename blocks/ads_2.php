@@ -81,7 +81,7 @@ function adslight_b2_show($options)
         $a_item['country']   = $country;
         $a_item['id']        = (int)$myrow['lid'];
         $a_item['cid']       = (int)$myrow['cid'];
-        $a_item['no_photo']  = "<a href=\""
+        $a_item['no_photo']  = '<a href="'
                                . XOOPS_URL
                                . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\""
                                . XOOPS_URL
@@ -90,7 +90,7 @@ function adslight_b2_show($options)
         $a_item['price_symbol'] = $helper->getConfig($moduleDirName . '_currency_symbol', '');
 
         if (2 == $status) {
-            $a_item['sold'] = "<img src=\"assets/images/sold.gif\" align=\"left\" alt=\"\">";
+            $a_item['sold'] = '<img src="assets/images/sold.gif" align="left" alt="">';
         }
 
         if ('' != $myrow['photo']) {
@@ -111,7 +111,7 @@ function adslight_b2_show($options)
             //            }
             $resultp = $xoopsDB->query($sql);
             while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
-                $a_item['photo'] = "<a href=\""
+                $a_item['photo'] = '<a href="'
                                    . XOOPS_URL
                                    . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\""
                                    . XOOPS_URL
@@ -120,7 +120,7 @@ function adslight_b2_show($options)
         } else {
             $a_item['photo'] = '';
         }
-        $a_item['link'] = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/viewads.php?lid={$a_item['id']}\"><b>{$title}</b></a>";
+        $a_item['link'] = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/viewads.php?lid={$a_item['id']}\"><b>{$title}</b></a>";
         $a_item['date'] = formatTimestamp($myrow['date'], 's');
         $a_item['hits'] = $myrow['hits'];
 
@@ -132,8 +132,8 @@ function adslight_b2_show($options)
     $block['lang_date']      = constant("{$block_lang}_DATE");
     $block['lang_local']     = constant("{$block_lang}_LOCAL2");
     $block['lang_hits']      = constant("{$block_lang}_HITS");
-    $block['link']           = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant($block_lang . '_ALL_LISTINGS') . '</b></a><br>';
-    $block['add']            = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant($block_lang . '_ADDNOW') . '</b></a><br>';
+    $block['link']           = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant($block_lang . '_ALL_LISTINGS') . '</b></a><br>';
+    $block['add']            = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant($block_lang . '_ADDNOW') . '</b></a><br>';
 
     return $block;
 }

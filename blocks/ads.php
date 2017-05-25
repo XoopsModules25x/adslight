@@ -57,7 +57,7 @@ function adslight_show($options)
         $a_item['id']   = $myrow['lid'];
         $a_item['cid']  = $myrow['cid'];
 
-        $a_item['link'] = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/viewads.php?lid=" . addslashes($myrow['lid']) . "\"><b>{$title}</b></a>";
+        $a_item['link'] = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/viewads.php?lid=" . addslashes($myrow['lid']) . "\"><b>{$title}</b></a>";
 
         if ('date' === $options[0]) {
             $a_item['date'] = formatTimestamp($myrow['date'], 's');
@@ -68,8 +68,8 @@ function adslight_show($options)
         $block['items'][] = $a_item;
     }
 
-    $block['link'] = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ALL_LISTINGS") . '</b></a><br>';
-    $block['add']  = "<a href=\"" . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ADDNOW") . '</b></a><br>';
+    $block['link'] = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ALL_LISTINGS") . '</b></a><br>';
+    $block['add']  = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ADDNOW") . '</b></a><br>';
 
     return $block;
 }

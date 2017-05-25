@@ -169,7 +169,7 @@ $xoopsTpl->assign('lang_not_premium', sprintf(_ADSLIGHT_BMCANHAVE, $GLOBALS['xoo
 
 $xoopsTpl->assign('lang_no_prem_nb', sprintf(_ADSLIGHT_PREMYOUHAVE, $pictures_number));
 
-$upgrade = "<a href=\"premium.php\"><strong> " . _ADSLIGHT_UPGRADE_NOW . '</strong></a>';
+$upgrade = '<a href="premium.php"><strong> ' . _ADSLIGHT_UPGRADE_NOW . '</strong></a>';
 $xoopsTpl->assign('lang_upgrade_now', $upgrade);
 
 $xoopsTpl->assign('lang_max_nb_pict', sprintf(_ADSLIGHT_YOUCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_nb_pict']));

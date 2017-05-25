@@ -89,12 +89,12 @@ class AdslightPictures extends XoopsObject
      * @param array  $criteria
      * @param bool   $asobject
      * @param string $sort
-     * @param string $order
+     * @param string $cat_order
      * @param int    $limit
      * @param int    $start
-     *
-     * @deprecated this should be handled through {@see AdslightPicturesHandler}
      * @return array
+     * @internal   param string $order
+     * @deprecated this should be handled through {@see AdslightPicturesHandler}
      */
     public function getAllPictures($criteria = array(), $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
     {
@@ -524,7 +524,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
             //now let s upload the file
             if (!$uploader->upload()) {
                 // if there are errors lets return them
-                echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;\"><p>"
+                echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>'
                      . $uploader->getErrors()
                      . '</p></div>';
 
@@ -544,7 +544,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
                 $this->resizeImage($saved_destination, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload);
             }
         } else {
-            echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;\"><p>" . $uploader->getErrors() . '</p></div>';
+            echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>' . $uploader->getErrors() . '</p></div>';
 
             return false;
         }

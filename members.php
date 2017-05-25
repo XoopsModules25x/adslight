@@ -171,7 +171,7 @@ if ($trows > '0') {
                          . $pathIcon16
                          . "/edit.png' border=0 alt=\""
                          . _ADSLIGHT_MODADMIN
-                         . "\" ></a>";
+                         . '" ></a>';
             $xoopsTpl->assign('isadmin', $isadmin);
         } else {
             $adminlink = '';
@@ -182,7 +182,7 @@ if ($trows > '0') {
             if ($usid == $member_usid) {
                 $istheirs = true;
                 $xoopsTpl->assign('istheirs', $istheirs);
-                $modify_link = "<a href='modify.php?op=ModAd&amp;lid=" . $lid . "'><img src='" . $pathIcon16 . "/edit.png'  border=0 alt=\"" . _ADSLIGHT_MODADMIN . "\" ></a>";
+                $modify_link = "<a href='modify.php?op=ModAd&amp;lid=" . $lid . "'><img src='" . $pathIcon16 . "/edit.png'  border=0 alt=\"" . _ADSLIGHT_MODADMIN . '" ></a>';
             } else {
                 $istheirs = false;
                 $xoopsTpl->assign('istheirs', '');

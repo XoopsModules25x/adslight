@@ -95,8 +95,8 @@ define('_AM_ADSLIGHT_ORDERCLASS', 'Category Order:');
 define('_AM_ADSLIGHT_ORDERALPHA', 'Sort alphabetically');
 define('_AM_ADSLIGHT_ORDERPERSO', 'Personalised Order');
 define('_AM_ADSLIGHT_BIGCAT', 'Main Category');
-define('_AM_ADSLIGHT_HELP1', "<b>To add a category:</b> click on the image <img src=\"" . XOOPS_URL
-                             . "/modules/adslight/assets/images/plus.gif\" border=0 width=10 height=10 alt=\"Add a category\"> alongside the category you want to add the category under.<p><b>To change or delete a category:</b> click on the name of the category");
+define('_AM_ADSLIGHT_HELP1', '<b>To add a category:</b> click on the image <img src="' . XOOPS_URL
+                             . '/modules/adslight/assets/images/plus.gif" border=0 width=10 height=10 alt="Add a category"> alongside the category you want to add the category under.<p><b>To change or delete a category:</b> click on the name of the category');
 define('_AM_ADSLIGHT_HELP2', '<B>Category Order:</B> integer in brackets corresponds to the order within the superior category or of the principal category. Negative integers can be used.: -1');
 // fichier pref.php //
 define('_AM_ADSLIGHT_CONFSAVE', 'Configuration saved');
