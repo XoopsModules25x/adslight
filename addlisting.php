@@ -161,7 +161,7 @@ if (Request::hasVar('submit', 'POST')) {
         $row                    = $xoopsDB->fetchArray($result2);
         $tags['CATEGORY_TITLE'] = $row['title'];
 
-        $mail =& xoops_getMailer();
+        $mail = xoops_getMailer();
         $mail->setTemplateDir(XOOPS_ROOT_PATH . "/modules/adslight/language/{$xoopsConfig['language']}/mail_template/");
         $mail->setTemplate('listing_notify_admin.tpl');
         $mail->useMail();
