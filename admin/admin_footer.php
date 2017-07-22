@@ -10,7 +10,7 @@
  */
 
 /**
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
@@ -28,4 +28,3 @@ echo "<div class='adminfooter'>\n"
      . '</div>';
 
 xoops_cp_footer();
-

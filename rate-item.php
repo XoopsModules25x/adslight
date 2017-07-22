@@ -22,10 +22,10 @@
 
 use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
-//include_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
+require_once __DIR__ . '/header.php';
+//require_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
 $myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
-//include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 if (!empty($HTTP_POST_VARS['submit'])) {
     //    $erh         = new ErrorHandler; //ErrorHandler object
     $ratinguser = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
@@ -77,17 +77,17 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $datetime = time();
     $sql      = sprintf("INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp) VALUES (%u, %u, %u, %u, '%s', %u)", $xoopsDB->prefix('adslight_item_votedata'), $newid,
                         $lid, $ratinguser, $rating, $ip, $datetime);
-    // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . mysql_error() . '',
+    // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
-        $modHandler = xoops_getModuleHandler('module');
-        $myModule   = $modHandler->getByDirname('adslight');
+        $moduleHandler = xoops_getModuleHandler('module');
+        $myModule   = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
 
     //All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
     //    updateIrating($lid);
-    AdslightUtilities::updateItemRating($lid);
+    AdslightUtility::updateItemRating($lid);
     $ratemessage = constant('_ADSLIGHT_VOTEAPPRE') . '<br>' . sprintf(constant('_ADSLIGHT_THANKURATEITEM'), $xoopsConfig['sitename']);
     redirect_header('viewads.php?lid=' . $lid . '', 3, $ratemessage);
 } else {
@@ -96,7 +96,10 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $lid    = Request::getInt('lid', 0, 'GET');
     $result = $xoopsDB->query('SELECT lid, title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $title) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign('link', array('lid' => $lid, 'title' => $myts->htmlSpecialChars($title)));
+    $xoopsTpl->assign('link', array(
+        'lid'   => $lid,
+        'title' => $myts->htmlSpecialChars($title)
+    ));
     $xoopsTpl->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));
     $xoopsTpl->assign('lang_ratingscale', constant('_ADSLIGHT_RATINGSCALE'));
     $xoopsTpl->assign('lang_beobjective', constant('_ADSLIGHT_BEOBJECTIVE'));

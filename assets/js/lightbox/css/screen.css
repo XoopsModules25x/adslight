@@ -191,7 +191,7 @@ i {
 
 /* line 96, ../sass/screen.sass */
 pre {
-    background: rgba(0, 0, 0, 0.4);
+    background: #000000;
     color: #e7931a;
     font: 14px Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
     line-height: 1.5;
@@ -203,18 +203,18 @@ pre {
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1), inset 0 2px 6px 2px black;
-    -moz-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1), inset 0 2px 6px 2px black;
-    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1), inset 0 2px 6px 2px black;
+    -webkit-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
+    -moz-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
+    box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
 }
 
 /* line 107, ../sass/screen.sass */
 code, kbd {
     font: 14px Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-    background: rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1), inset 0 2px 6px 2px black;
-    -moz-box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1), inset 0 2px 6px 2px black;
-    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1), inset 0 2px 6px 2px black;
+    background: #000000;
+    -webkit-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
+    -moz-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
+    box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
     padding: 5px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -344,8 +344,8 @@ a:hover {
     height: 2em;
     padding: 0.6em 0.2em 0.3em 20px;
     background: #505050;
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    border-top: 1px solid #ffffff;
+    border-bottom: 1px solid #000000;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     -ms-transition: all 0.2s ease-out;
@@ -355,13 +355,13 @@ a:hover {
 
 /* line 181, ../sass/screen.sass */
 #nav a:hover {
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+    text-shadow: 0 1px 0 #000000;
     background-color: #88a616;
 }
 
 /* line 184, ../sass/screen.sass */
 #nav a.first {
-    border-bottom-color: rgba(0, 0, 0, 0.5);
+    border-bottom-color: #000000;
     -moz-border-radius-topleft: 4px;
     -webkit-border-top-left-radius: 4px;
     -ms-border-top-left-radius: 4px;
@@ -377,7 +377,7 @@ a:hover {
 
 /* line 188, ../sass/screen.sass */
 #nav a.last {
-    border-top-color: rgba(255, 255, 255, 0.25);
+    border-top-color: #ffffff;
     -moz-border-radius-bottomleft: 4px;
     -webkit-border-bottom-left-radius: 4px;
     -ms-border-bottom-left-radius: 4px;
@@ -626,7 +626,7 @@ hr {
 .imageRow .single a {
     float: left;
     display: block;
-    background: rgba(255, 255, 255, 0.1);
+    background: #ffffff;
     padding: 7px;
     line-height: 1em;
     -webkit-border-radius: 4px;
@@ -634,9 +634,9 @@ hr {
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 1px 4px 0 #000000;
+    -moz-box-shadow: 0 1px 4px 0 #000000;
+    box-shadow: 0 1px 4px 0 #000000;
     margin-right: 40px;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
@@ -652,7 +652,7 @@ hr {
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     border-radius: 4px;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: 1px solid #000000;
 }
 
 /* line 335, ../sass/screen.sass */
@@ -663,15 +663,15 @@ hr {
 /* line 337, ../sass/screen.sass */
 .imageRow .set {
     float: left;
-    background: rgba(255, 255, 255, 0.1);
+    background: #ffffff;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 1px 4px 0 #000000;
+    -moz-box-shadow: 0 1px 4px 0 #000000;
+    box-shadow: 0 1px 4px 0 #000000;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;
     -ms-transition: all 0.2s ease-out;
@@ -681,7 +681,7 @@ hr {
 
 /* line 343, ../sass/screen.sass */
 .imageRow .set:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: #ffffff;
 }
 
 /* line 346, ../sass/screen.sass */
@@ -701,9 +701,9 @@ hr {
 /* line 351, ../sass/screen.sass */
 .imageRow .set .single a:hover {
     background-color: #8ad459;
-    -webkit-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
-    -moz-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
-    box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 -1px 0 0 #ffffff, 0 1px 4px 0 #000000;
+    -moz-box-shadow: 0 -1px 0 0 #ffffff, 0 1px 4px 0 #000000;
+    box-shadow: 0 -1px 0 0 #ffffff, 0 1px 4px 0 #000000;
 }
 
 /* line 355, ../sass/screen.sass */

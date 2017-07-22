@@ -10,58 +10,47 @@
  */
 
 /**
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
  * @author       XOOPS Development Team
  */
 
-$rootPath = dirname(dirname(dirname(__DIR__)));
-//$moduleDirName = $GLOBALS['xoopsModule']->getVar('dirname');
-//$moduleDirName = $xoopsModule->getVar('dirname');
+require_once __DIR__ . '/../../../include/cp_header.php';
+require_once __DIR__ . '/../../../class/xoopsformloader.php';
+//require_once __DIR__ . '/../class/utility.php';
 
-include_once $rootPath . '/mainfile.php';
-include_once $rootPath . '/include/cp_functions.php';
-require_once $rootPath . '/include/cp_header.php';
-include_once $rootPath . '/class/xoopsformloader.php';
-require __DIR__ . '/../class/utilities.php';
+$moduleDirName = basename(dirname(__DIR__));
 
+require_once __DIR__ . '/../include/gtickets.php';
+require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/classifiedstree.php';
+//require_once __DIR__ . '/../class/grouppermform.php';
+require_once __DIR__ . '/../../../class/xoopsform/grouppermform.php';
+require_once __DIR__ . '/../class/classifiedstree.php';
 
+//require_once __DIR__ . '/../class/utility.php';
+//require_once __DIR__ . '/../include/common.php';
 
-global $xoopsModule;
-$moduleDirName = $xoopsModule->getVar('dirname');
-//$moduleDirName2 = basename(dirname(__DIR__));
+if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
+} else {
+    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+}
+$adminObject = \Xmf\Module\Admin::getInstance();
 
-include_once $rootPath . '/modules/' . $moduleDirName . '/include/gtickets.php';
-include_once $rootPath . '/modules/' . $moduleDirName . '/class/utilities.php';
-include_once $rootPath . '/modules/' . $moduleDirName . '/class/classifiedstree.php';
-//include_once $GLOBALS['xoops']->path( "/modules/adslight/class/grouppermform.php");
-include_once $rootPath . '/class/xoopsform/grouppermform.php';
-include_once $rootPath . '/modules/adslight/class/classifiedstree.php';
-
-//if functions.php file exist
-//require_once dirname(__DIR__) . '/include/functions.php';
+$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
 // Load language files
-xoops_loadLanguage('admin', $moduleDirName);
-xoops_loadLanguage('modinfo', $moduleDirName);
-xoops_loadLanguage('main', $moduleDirName);
+$moduleHelper->loadLanguage('admin');
+$moduleHelper->loadLanguage('modinfo');
+$moduleHelper->loadLanguage('main');
 
-$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32 = \Xmf\Module\Admin::iconUrl('', 32);
-$pathModuleAdmin =& $xoopsModule->getInfo('dirmoduleadmin');
+$myts = MyTextSanitizer::getInstance();
 
-include_once $GLOBALS['xoops']->path($pathModuleAdmin . '/moduleadmin.php');
-
-if ($GLOBALS['xoopsUser']) {
-    //  $xoopsModule = XoopsModule::getByDirname($moduleDirName);
-    if (!$GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) {
-        redirect_header(XOOPS_URL . '/', 3, _NOPERM);
-    }
-} else {
-    redirect_header(XOOPS_URL . '/', 3, _NOPERM);
+if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
+    require_once $GLOBALS['xoops']->path('class/template.php');
+    $xoopsTpl = new XoopsTpl();
 }
-
-$myts        = MyTextSanitizer::getInstance();
-$adminObject = new ModuleAdmin();

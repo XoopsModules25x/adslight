@@ -1,7 +1,4 @@
 <?php
-
-use Xmf\Request;
-
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -22,8 +19,9 @@ use Xmf\Request;
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+use Xmf\Request;
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 if (Request::hasVar('submit', 'POST')) {
     // Define Variables for register_globals Off. contribution by Peekay
@@ -37,15 +35,12 @@ if (Request::hasVar('submit', 'POST')) {
     $tele      = Request::getString('tele', null);
     // end define vars
 
-//    include_once __DIR__ . '/header.php';
+    //    require_once __DIR__ . '/header.php';
 
     $module_id = $xoopsModule->getVar('mid');
 
-    if (is_object($GLOBALS['xoopsUser'])) {
-        $groups = $GLOBALS['xoopsUser']->getGroups();
-    } else {
-        $groups = XOOPS_GROUP_ANONYMOUS;
-    }
+    $module_id = $xoopsModule->getVar('mid');
+    $groups    = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 
@@ -75,7 +70,7 @@ if (Request::hasVar('submit', 'POST')) {
         $teles = Request::getString('tele', '', 'POST');
 
         if ($price) {
-            $price = '' . _ADSLIGHT_PRICE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_money'] . " $price";
+            $price = '' . _ADSLIGHT_PRICE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . " $price";
         } else {
             $price = '';
         }
@@ -85,7 +80,7 @@ if (Request::hasVar('submit', 'POST')) {
 
         $tags                = array();
         $tags['TITLE']       = $title;
-        $tags['TYPE']        = AdslightUtilities::getNameType($type);
+        $tags['TYPE']        = AdslightUtility::getNameType($type);
         $tags['PRICE']       = $price;
         $tags['DESCTEXT']    = stripslashes($desctext);
         $tags['MY_SITENAME'] = $xoopsConfig['sitename'];
@@ -94,9 +89,9 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['STARTMESS']   = _ADSLIGHT_STARTMESS;
         $tags['MESSFROM']    = _ADSLIGHT_MESSFROM;
         $tags['CANJOINT']    = _ADSLIGHT_CANJOINT;
-        $tags['NAMEP']       =  Request::getString('namep', '', 'POST');
+        $tags['NAMEP']       = Request::getString('namep', '', 'POST');
         $tags['TO']          = _ADSLIGHT_TO;
-        $tags['POST']        = "<a href=\"mailto:" . Request::getString('post', '', 'POST') . "\">" . Request::getString('post', '', 'POST') . '</a>';
+        $tags['POST']        = '<a href="mailto:' . Request::getString('post', '', 'POST') . '">' . Request::getString('post', '', 'POST') . '</a>';
         $tags['TELE']        = $teles;
         $tags['MESSAGE_END'] = _ADSLIGHT_MESSAGE_END;
         $tags['ENDMESS']     = _ADSLIGHT_ENDMESS;
@@ -110,15 +105,15 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['YOUR_AD']     = _ADSLIGHT_YOUR_AD;
         $tags['THANKS']      = _ADSLIGHT_THANKS;
         $tags['WEBMASTER']   = _ADSLIGHT_WEBMASTER;
-        $tags['SITE_URL']    = "<a href=\"" . XOOPS_URL . "\">" . XOOPS_URL . '</a>';
+        $tags['SITE_URL']    = '<a href="' . XOOPS_URL . '">' . XOOPS_URL . '</a>';
         $tags['AT']          = _ADSLIGHT_AT;
-        $tags['LINK_URL']    = "<a href=\""
+        $tags['LINK_URL']    = '<a href="'
                                . XOOPS_URL
                                . '/modules/'
                                . $xoopsModule->getVar('dirname')
                                . '/viewads.php?lid='
                                . addslashes($id)
-                               . "\">"
+                               . '">'
                                . XOOPS_URL
                                . '/modules/'
                                . $xoopsModule->getVar('dirname')
@@ -128,7 +123,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['VIEW_AD']     = _ADSLIGHT_VIEW_AD;
 
         $subject = '' . _ADSLIGHT_CONTACTAFTERANN . '';
-        $mail    =& xoops_getMailer();
+        $mail    = xoops_getMailer();
 
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
         $mail->setTemplate('listing_contact.tpl');
@@ -145,14 +140,18 @@ if (Request::hasVar('submit', 'POST')) {
 
         $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date', '$namep', '$ipnumber', '" . Request::getString('post', '', 'POST') . "')");
 
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '" . Request::getString('post', '', 'POST') . "', '$r_usid')");
+        $xoopsDB->query('INSERT INTO '
+                        . $xoopsDB->prefix('adslight_replies')
+                        . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '"
+                        . Request::getString('post', '', 'POST')
+                        . "', '$r_usid')");
 
         redirect_header('index.php', 3, _ADSLIGHT_MESSEND);
     }
 } else {
     $lid = Request::getInt('lid', 0, 'GET');
     $idd = $idde = $iddee = '';
-    include_once __DIR__ . '/header.php';
+    require_once __DIR__ . '/header.php';
 
     global $xoopsConfig, $xoopsDB, $myts, $meta;
 
@@ -171,16 +170,16 @@ if (Request::hasVar('submit', 'POST')) {
     }
 
     require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     include XOOPS_ROOT_PATH . '/header.php';
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     $time     = time();
     $ipnumber = "$_SERVER[REMOTE_ADDR]";
-    echo "<script type=\"text/javascript\">
+    echo '<script type="text/javascript">
           function verify()
           {
-                var msg = \"" . _ADSLIGHT_VALIDERORMSG . "\\n__________________________________________________\\n\\n\";
+                var msg = "' . _ADSLIGHT_VALIDERORMSG . "\\n__________________________________________________\\n\\n\";
                 var errors = \"FALSE\";
                 if (window.document.cont.namep.value == \"\") {
                         errors = \"TRUE\";
@@ -205,9 +204,9 @@ if (Request::hasVar('submit', 'POST')) {
 
     echo '<b>' . _ADSLIGHT_CONTACTAUTOR . '</b><br><br>';
     echo '' . _ADSLIGHT_TEXTAUTO . '<br>';
-    echo "<form onSubmit=\"return verify();\" method=\"post\" action=\"contact.php\" name=\"cont\">";
-    echo "<input type=\"hidden\" name=\"id\" value=\"$lid\" />";
-    echo "<input type=\"hidden\" name=\"submit\" value=\"1\" />";
+    echo '<form onSubmit="return verify();" method="post" action="contact.php" name="cont">';
+    echo "<input type=\"hidden\" name=\"id\" value=\"$lid\" >";
+    echo '<input type="hidden" name="submit" value="1" >';
     echo "<table width='100%' class='outer' cellspacing='1'>
     <tr>
       <td class='head'>" . _ADSLIGHT_YOURNAME . '</td>';
@@ -215,22 +214,22 @@ if (Request::hasVar('submit', 'POST')) {
         $idd  = $GLOBALS['xoopsUser']->getVar('uname', 'E');
         $idde = $GLOBALS['xoopsUser']->getVar('email', 'E');
 
-        echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" value=\"$idd\" />";
+        echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" value=\"$idd\" >";
     } else {
-        echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" /></td>";
+        echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" ></td>";
     }
     echo "</tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_YOUREMAIL . "</td>
-      <td class='even'><input type=\"text\" name=\"post\" size=\"42\" value=\"$idde\" /></font></td>
+      <td class='even'><input type=\"text\" name=\"post\" size=\"42\" value=\"$idde\" ></font></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_YOURPHONE . "</td>
-      <td class='even'><input type=\"text\" name=\"tele\" size=\"42\" /></font></td>
+      <td class='even'><input type=\"text\" name=\"tele\" size=\"42\" ></font></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_YOURMESSAGE . "</td>
-      <td class='even'><textarea rows=\"5\" name=\"messtext\" cols=\"40\" /></textarea></td>
+      <td class='even'><textarea rows=\"5\" name=\"messtext\" cols=\"40\" ></textarea></td>
     </tr>";
     if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
@@ -240,16 +239,16 @@ if (Request::hasVar('submit', 'POST')) {
     }
 
     echo '</td></tr></table>';
-    echo "<table class='outer'><tr><td>" . _ADSLIGHT_YOUR_IP . "&nbsp;
-        <img src=\"" . XOOPS_URL . "/modules/adslight/ip_image.php\" alt=\"\" /><br>" . _ADSLIGHT_IP_LOGGED . '
+    echo "<table class='outer'><tr><td>" . _ADSLIGHT_YOUR_IP . '&nbsp;
+        <img src="' . XOOPS_URL . '/modules/adslight/ip_image.php" alt="" ><br>' . _ADSLIGHT_IP_LOGGED . '
         </td></tr></table>
     <br>';
-    echo "<input type=\"hidden\" name=\"ip_id\" value=\"\" />";
-    echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" />";
-    echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" />";
-    echo "<input type=\"hidden\" name=\"date\" value=\"$time\" />";
-    echo "<p><input type=\"submit\" name=\"submit\" value=\"" . _ADSLIGHT_SENDFR . "\" /></p>
-" . $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__, 1800, 'token') . '
+    echo '<input type="hidden" name="ip_id" value="" >';
+    echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
+    echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" >";
+    echo "<input type=\"hidden\" name=\"date\" value=\"$time\" >";
+    echo '<p><input type="submit" name="submit" value="' . _ADSLIGHT_SENDFR . '" ></p>
+' . $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__, 1800, 'token') . '
     </form>';
 }
 echo '</td></tr></table>';

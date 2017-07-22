@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Request;
+
 // GIJOE's Ticket Class (based on Marijuana's Oreteki XOOPS)
 // nobunobu's suggestions are applied
 
@@ -45,8 +47,8 @@ if (!class_exists('XoopsGTicket')) {
             if (defined('XOOPS_ROOT_PATH') && !empty($xoopsConfig['language'])
                 && false === strpos($xoopsConfig['language'], '/')
             ) {
-                if (file_exists(dirname(__DIR__) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml')) {
-                    include dirname(__DIR__) . '/language/' . $xoopsConfig['language'] . '/gticket_messages.phtml';
+                if (file_exists(dirname(__DIR__) . "/language/{$xoopsConfig['language']}/gticket_messages.phtml")) {
+                    include dirname(__DIR__) . "/language/{$xoopsConfig['language']}/gticket_messages.phtml";
                 }
             }
 
@@ -66,6 +68,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // render form as plain html
+
         /**
          * @param string $salt
          * @param int    $timeout
@@ -75,10 +78,11 @@ if (!class_exists('XoopsGTicket')) {
          */
         public function getTicketHtml($salt = '', $timeout = 1800, $area = '')
         {
-            return '<input type="hidden" name="XOOPS_G_TICKET" value="' . $this->issue($salt, $timeout, $area) . '" />';
+            return '<input type="hidden" name="XOOPS_G_TICKET" value="' . $this->issue($salt, $timeout, $area) . '" >';
         }
 
         // returns an object of XoopsFormHidden including theh ticket
+
         /**
          * @param string $salt
          * @param int    $timeout
@@ -92,6 +96,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // add a ticket as Hidden Element into XoopsForm
+
         /**
          * @param        $form
          * @param string $salt
@@ -104,6 +109,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // returns an array for xoops_confirm() ;
+
         /**
          * @param string $salt
          * @param int    $timeout
@@ -113,10 +119,13 @@ if (!class_exists('XoopsGTicket')) {
          */
         public function getTicketArray($salt = '', $timeout = 1800, $area = '')
         {
-            return array('XOOPS_G_TICKET' => $this->issue($salt, $timeout, $area));
+            return array(
+                'XOOPS_G_TICKET' => $this->issue($salt, $timeout, $area)
+            );
         }
 
         // return GET parameter string.
+
         /**
          * @param string $salt
          * @param bool   $noamp
@@ -131,6 +140,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // issue a ticket
+
         /**
          * @param string $salt
          * @param int    $timeout
@@ -141,6 +151,13 @@ if (!class_exists('XoopsGTicket')) {
         public function issue($salt = '', $timeout = 1800, $area = '')
         {
             global $xoopsModule;
+
+            if ('' === $salt) {
+                if (function_exists('mcrypt_create_iv') && !defined('PHALANGER')) {
+                    // $salt = '$2y$07$' . strtr(base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)), '+', '.');
+                    $salt = '$2y$07$' . str_replace('+', '.', base64_encode(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)));
+                }
+            }
 
             // create a token
             list($usec, $sec) = explode(' ', microtime());
@@ -161,7 +178,7 @@ if (!class_exists('XoopsGTicket')) {
             $referer = empty($_SERVER['HTTP_REFERER']) ? '' : $_SERVER['REQUEST_URI'];
 
             // area as module's dirname
-            if (!$area && is_object(@$xoopsModule)) {
+            if (!$area && ($xoopsModule instanceof XoopsModule)) {
                 $area = $xoopsModule->getVar('dirname');
             }
 
@@ -178,6 +195,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // check a ticket
+
         /**
          * @param bool   $post
          * @param string $area
@@ -198,7 +216,7 @@ if (!class_exists('XoopsGTicket')) {
             }
 
             // get key&val of the ticket from a user's query
-            $ticket = $post ? @Request::getString('XOOPS_G_TICKET', '', 'POST') : @Request::getString('XOOPS_G_TICKET', '', 'GET') ;
+            $ticket = $post ? @Request::getString('XOOPS_G_TICKET', '', 'POST') : @Request::getString('XOOPS_G_TICKET', '', 'GET');
 
             // CHECK: no tickets found
             if (empty($ticket)) {
@@ -233,10 +251,9 @@ if (!class_exists('XoopsGTicket')) {
                     $this->_errors[] = $this->messages['err_timeout'];
                 }
             } else {
-
                 // set area if necessary
                 // area as module's dirname
-                if (!$area && is_object(@$xoopsModule)) {
+                if (!$area && ($xoopsModule instanceof XoopsModule)) {
                     $area = $xoopsModule->getVar('dirname');
                 }
 
@@ -273,6 +290,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // draw form for repost
+
         /**
          * @param string $area
          */
@@ -304,17 +322,17 @@ if (!class_exists('XoopsGTicket')) {
                 if (is_array($val)) {
                     list($tmp_table, $tmp_form) = $this->extractPostRecursive(htmlspecialchars($key, ENT_QUOTES), $val);
                     $table .= $tmp_table;
-                    $form .= $tmp_form;
+                    $form  .= $tmp_form;
                 } else {
                     if (get_magic_quotes_gpc()) {
                         $val = stripslashes($val);
                     }
                     $table .= '<tr><th>' . htmlspecialchars($key, ENT_QUOTES) . '</th><td>' . htmlspecialchars($val, ENT_QUOTES) . '</td></tr>' . "\n";
-                    $form .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES) . '" value="' . htmlspecialchars($val, ENT_QUOTES) . '" />' . "\n";
+                    $form  .= '<input type="hidden" name="' . htmlspecialchars($key, ENT_QUOTES) . '" value="' . htmlspecialchars($val, ENT_QUOTES) . '" >' . "\n";
                 }
             }
             $table .= '</table>';
-            $form .= $this->getTicketHtml(__LINE__, 300, $area) . '<input type="submit" value="' . $this->messages['btn_repost'] . '" /></form>';
+            $form  .= $this->getTicketHtml(__LINE__, 300, $area) . '<input type="submit" value="' . $this->messages['btn_repost'] . '" ></form>';
 
             echo '<html><head><title>'
                  . $this->messages['err_general']
@@ -342,17 +360,20 @@ if (!class_exists('XoopsGTicket')) {
                 if (is_array($val)) {
                     list($tmp_table, $tmp_form) = $this->extractPostRecursive($key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']', $val);
                     $table .= $tmp_table;
-                    $form .= $tmp_form;
+                    $form  .= $tmp_form;
                 } else {
                     if (get_magic_quotes_gpc()) {
                         $val = stripslashes($val);
                     }
                     $table .= '<tr><th>' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']</th><td>' . htmlspecialchars($val, ENT_QUOTES) . '</td></tr>' . "\n";
-                    $form .= '<input type="hidden" name="' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']" value="' . htmlspecialchars($val, ENT_QUOTES) . '" />' . "\n";
+                    $form  .= '<input type="hidden" name="' . $key_name . '[' . htmlspecialchars($key, ENT_QUOTES) . ']" value="' . htmlspecialchars($val, ENT_QUOTES) . '" >' . "\n";
                 }
             }
 
-            return array($table, $form);
+            return array(
+                $table,
+                $form
+            );
         }
 
         // clear all stubs
@@ -362,6 +383,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // Ticket Using
+
         /**
          * @return bool
          */
@@ -375,6 +397,7 @@ if (!class_exists('XoopsGTicket')) {
         }
 
         // return errors
+
         /**
          * @param bool $ashtml
          *
@@ -432,10 +455,10 @@ if (!function_exists('admin_refcheck')) {
             $ref = $_SERVER['HTTP_REFERER'];
         }
         $cr = XOOPS_URL;
-        if ($chkref != '') {
+        if ('' != $chkref) {
             $cr .= $chkref;
         }
-        if (strpos($ref, $cr) !== 0) {
+        if (0 !== strpos($ref, $cr)) {
             return false;
         }
 

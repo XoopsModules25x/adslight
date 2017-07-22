@@ -24,12 +24,18 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-require __DIR__ . '/../../mainfile.php';
-require __DIR__ . '/class/utilities.php';
+use Xmf\Module\Admin;
+
+$moduleDirName = basename(__DIR__);
+require_once __DIR__ . '/../../mainfile.php';
+require_once __DIR__ . '/class/utility.php';
 
 if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
-    include_once __DIR__ . '/seo_url.php';
+    require_once __DIR__ . '/seo_url.php';
 }
+
+$pathIcon16 = Admin::iconUrl('', 16);
 
 $myts = MyTextSanitizer::getInstance();
 
+xoops_loadLanguage('main', $moduleDirName);

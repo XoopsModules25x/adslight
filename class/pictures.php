@@ -25,26 +25,27 @@ use Xmf\Request;
 /**
  * Protection against inclusion outside the site
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 
 /**
  * Includes of form objects and uploader
  */
-include_once XOOPS_ROOT_PATH . '/class/uploader.php';
-include_once XOOPS_ROOT_PATH . '/kernel/object.php';
-include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-include_once XOOPS_ROOT_PATH . '/kernel/object.php';
-include_once XOOPS_ROOT_PATH . '/modules/adslight/class/utilities.php';
+require_once XOOPS_ROOT_PATH . '/class/uploader.php';
+require_once XOOPS_ROOT_PATH . '/kernel/object.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+require_once XOOPS_ROOT_PATH . '/kernel/object.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 
 /**
  * light_pictures class.
  * $this class is responsible for providing data access mechanisms to the data source
  * of XOOPS user class objects.
  */
-class JlmPictures extends XoopsObject
+class AdslightPictures extends XoopsObject
 {
     public $db;
     // constructor
+
     /**
      * @param null       $id
      * @param null|array $lid
@@ -88,20 +89,15 @@ class JlmPictures extends XoopsObject
      * @param array  $criteria
      * @param bool   $asobject
      * @param string $sort
-     * @param string $order
+     * @param string $cat_order
      * @param int    $limit
      * @param int    $start
-     *
      * @return array
+     * @internal   param string $order
+     * @deprecated this should be handled through {@see AdslightPicturesHandler}
      */
-    public function getAllPictures(
-        $criteria = array(),
-        $asobject = false,
-        $sort = 'cod_img',
-        $order = 'ASC',
-        $limit = 0,
-        $start = 0
-    ) {
+    public function getAllPictures($criteria = array(), $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
+    {
         global $moduleDirName;
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = array();
@@ -109,23 +105,23 @@ class JlmPictures extends XoopsObject
         if (is_array($criteria) && count($criteria) > 0) {
             $where_query = ' WHERE';
             foreach ($criteria as $c) {
-                $where_query .= " $c AND";
+                $where_query .= " {$c} AND";
             }
             $where_query = substr($where_query, 0, -4);
         } elseif (!is_array($criteria) && $criteria) {
             $where_query = " WHERE {$criteria}";
         }
         if (!$asobject) {
-            $sql    = 'SELECT cod_img FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $order";
+            $sql    = 'SELECT cod_img FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
             $result = $db->query($sql, $limit, $start);
             while ($myrow = $db->fetchArray($result)) {
-                $ret[] = $myrow['jlm_pictures_id'];
+                $ret[] = $myrow['cog_img'];
             }
         } else {
-            $sql    = 'SELECT * FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $order";
+            $sql    = 'SELECT * FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
             $result = $db->query($sql, $limit, $start);
             while ($myrow = $db->fetchArray($result)) {
-                $ret[] = new JlmPictures($myrow);
+                $ret[] = new AdslightPictures($myrow);
             }
         }
 
@@ -136,12 +132,28 @@ class JlmPictures extends XoopsObject
 // -------------------------------------------------------------------------
 // ------------------light_pictures user handler class -------------------
 // -------------------------------------------------------------------------
+
 /**
- * light_pictureshandler class.
- * This class provides simple mechanism for light_pictures object and generate forms for inclusion etc
+ * AdslightPicturesHandler class definition
+ *
+ * This class provides simple mechanism to manage {@see AdslightPictures} objects
+ * and generate forms for inclusion
+ *
+ * @todo change this to a XoopsPersistableObjectHandler and remove
+ *       'most' method overloads
  */
-class JlmPicturesHandler extends XoopsObjectHandler
+class AdslightPicturesHandler extends XoopsObjectHandler
 {
+    /**
+     * Class constructor
+     * @param XoopsDatabase $db
+     */
+
+    public function __construct($db)
+    {
+        parent::__construct($db, 'adslight_pictures', 'AdslightPictures', 'cod_img', 'title');
+    }
+
     /**
      * create a new light_pictures
      *
@@ -150,14 +162,14 @@ class JlmPicturesHandler extends XoopsObjectHandler
      */
     public function create($isNew = true)
     {
-        $jlm_pictures = new JlmPictures();
+        $adslightPictures = new AdslightPictures();
         if ($isNew) {
-            $jlm_pictures->setNew();
+            $adslightPictures->setNew();
         } else {
-            $jlm_pictures->unsetNew();
+            $adslightPictures->unsetNew();
         }
 
-        return $jlm_pictures;
+        return $adslightPictures;
     }
 
     /**
@@ -178,55 +190,53 @@ class JlmPicturesHandler extends XoopsObjectHandler
         }
         $numrows = $this->db->getRowsNum($result);
         if ($numrows == 1) {
-            $jlm_pictures = new JlmPictures();
-            $jlm_pictures->assignVars($this->db->fetchArray($result));
+            $adslightPictures = new AdslightPictures();
+            $adslightPictures->assignVars($this->db->fetchArray($result));
 
-            return $jlm_pictures;
+            return $adslightPictures;
         }
 
         return false;
     }
 
     /**
-     * insert a new light_pictures in the database
+     * insert a new AdslightPicture object into the database
      *
-     * @param XoopsObject $jlm_pictures
+     * @param XoopsObject $adslightPictures
      * @param bool        $force
-     * @internal param object $light_pictures reference to the {@link light_pictures} object object
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(XoopsObject $jlm_pictures, $force = false)
+    public function insert(XoopsObject $adslightPictures, $force = false)
     {
         global $xoopsConfig, $lid, $moduleDirName;
-        $cod_img = '';
-        if (get_class($jlm_pictures) !== 'JlmPictures') {
+        if (!$adslightPictures instanceof AdslightPictures) {
             return false;
         }
-        if (!$jlm_pictures->isDirty()) {
+        if (!$adslightPictures->isDirty()) {
             return true;
         }
-        if (!$jlm_pictures->cleanVars()) {
+        if (!$adslightPictures->cleanVars()) {
             return false;
         }
-        foreach ($jlm_pictures->cleanVars as $k => $v) {
+        foreach ($adslightPictures->cleanVars as $k => $v) {
             ${$k} = $v;
         }
         $now = time();
-        if ($jlm_pictures->isNew()) {
-            // ajout/modification d'un JlmPictures
-            $jlm_pictures = new JlmPictures();
+        if ($adslightPictures->isNew()) {
+            // add/modify of AdslightPictures
+            $adslightPictures = new AdslightPictures();
 
             $format = 'INSERT INTO %s (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
-            $sql   = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner),
-                             $this->db->quoteString($url));
-            $force = true;
+            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner),
+                              $this->db->quoteString($url));
+            $force  = true;
         } else {
             $format = 'UPDATE %s SET ';
             $format .= 'cod_img=%u, title=%s, date_added=%s, date_modified=%s, lid=%s, uid_owner=%s, url=%s';
             $format .= ' WHERE cod_img = %u';
-            $sql = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner),
-                           $this->db->quoteString($url), $cod_img);
+            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner),
+                              $this->db->quoteString($url), $cod_img);
         }
         if (false !== $force) {
             $result = $this->db->queryF($sql);
@@ -239,28 +249,30 @@ class JlmPicturesHandler extends XoopsObjectHandler
         if (empty($cod_img)) {
             $cod_img = $this->db->getInsertId();
         }
-        $jlm_pictures->assignVar('cod_img', $cod_img);
-        $jlm_pictures->assignVar('lid', $lid);
-        $jlm_pictures->assignVar('url', $url);
+        $adslightPictures->assignVars(array(
+                                          'cod_img' => $cod_img,
+                                          'lid'     => $lid,
+                                          'url'     => $url
+                                      ));
 
         return true;
     }
 
     /**
-     * delete a JlmPictures from the database
+     * delete AdslightPictures object from the database
      *
-     * @param  XoopsObject $jlm_pictures reference to the JlmPictures to delete
+     * @param  XoopsObject $adslightPictures reference to the AdslightPictures to delete
      * @param  bool        $force
      * @return bool        FALSE if failed.
      */
-    public function delete(XoopsObject $jlm_pictures, $force = false)
+    public function delete(XoopsObject $adslightPictures, $force = false)
     {
         global $moduleDirName;
 
-        if (get_class($jlm_pictures) !== 'JlmPictures') {
+        if (!$adslightPictures instanceof AdslightPictures) {
             return false;
         }
-        $sql = sprintf('DELETE FROM %s WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $jlm_pictures->getVar('cod_img'));
+        $sql = sprintf('DELETE FROM %s WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $adslightPictures->getVar('cod_img'));
         if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
@@ -274,11 +286,11 @@ class JlmPicturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * retrieve JlmPictures from the database
+     * retrieve AdslightPictures object(s) from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param  bool            $id_as_key use the UID as key for the array?
-     * @return array  array of {@link JlmPictures} objects
+     * @return array  array of {@link AdslightPictures} objects
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -300,24 +312,24 @@ class JlmPicturesHandler extends XoopsObjectHandler
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $jlm_pictures = new JlmPictures();
-            $jlm_pictures->assignVars($myrow);
+            $adslightPictures = new AdslightPictures();
+            $adslightPictures->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $jlm_pictures;
+                $ret[] = $adslightPictures;
             } else {
-                $ret[$myrow['cod_img']] =& $jlm_pictures;
+                $ret[$myrow['cod_img']] = $adslightPictures;
             }
-            unset($jlm_pictures);
+            unset($adslightPictures);
         }
 
         return $ret;
     }
 
     /**
-     * count JlmPictures matching a condition
+     * count AdslightPictures matching a condition
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match
-     * @return int    count of JlmPictures
+     * @return int    count of AdslightPictures
      */
     public function getCount(CriteriaElement $criteria = null)
     {
@@ -337,7 +349,7 @@ class JlmPicturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * delete JlmPictures matching a set of conditions
+     * delete AdslightPictures matching a set of conditions
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement}
      * @return bool   FALSE if deletion failed
@@ -370,24 +382,22 @@ class JlmPicturesHandler extends XoopsObjectHandler
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
     {
         global $moduleDirName, $main_lang;
-        $field_token = '';
-        $form       = new XoopsThemeForm(constant('_ADSLIGHT_SUBMIT_PIC_TITLE'), 'form_picture',
-                                         '' . XOOPS_URL . "/modules/adslight/add_photo.php?lid=$lid&uid=" . $GLOBALS['xoopsUser']->getVar('uid') . '', 'post', true);
-        $field_url  = new XoopsFormFile(constant('_ADSLIGHT_SELECT_PHOTO'), 'sel_photo', 2000000);
-        $field_desc = new XoopsFormText(constant('_ADSLIGHT_CAPTION'), 'caption', 35, 55);
+        $uid        = (int)$uid;
+        $lid        = (int)$lid;
+        $form       = new XoopsThemeForm(_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
+        $field_url  = new XoopsFormFile(_ADSLIGHT_SELECT_PHOTO, 'sel_photo', 2000000);
+        $field_desc = new XoopsFormText(_ADSLIGHT_CAPTION, 'caption', 35, 55);
+
         $form->setExtra('enctype="multipart/form-data"');
-        $button_send   = new XoopsFormButton('', 'submit_button', constant('_ADSLIGHT_UPLOADPICTURE'), 'submit');
-        $field_warning = new XoopsFormLabel(sprintf(constant('_ADSLIGHT_YOUCANUPLOAD'), $maxbytes / 1024));
+        $button_send   = new XoopsFormButton('', 'submit_button', _ADSLIGHT_UPLOADPICTURE, 'submit');
+        $field_warning = new XoopsFormLabel(sprintf(_ADSLIGHT_YOUCANUPLOAD, $maxbytes / 1024));
         $field_lid     = new XoopsFormHidden('lid', $lid);
         $field_uid     = new XoopsFormHidden('uid', $uid);
         /**
          * Check if using Xoops or XoopsCube (by jlm69)
          */
-
-        $xCube = false;
-        if (preg_match('/^XOOPS Cube/', XOOPS_VERSION)) { // XOOPS Cube 2.1x
-            $xCube = true;
-        }
+        // XOOPS Cube 2.1x
+        $xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
 
         /**
          * Verify Ticket (by jlm69)
@@ -433,10 +443,11 @@ class JlmPicturesHandler extends XoopsObjectHandler
         $form       = new XoopsThemeForm(_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
         $field_desc = new XoopsFormText($caption, 'caption', 35, 55);
         $form->setExtra('enctype="multipart/form-data"');
-        $button_send   = new XoopsFormButton('' . _ADSLIGHT_EDIT . '', 'submit_button', 'Submit', 'submit');
-        $field_warning = new XoopsFormLabel("<img src='" . $filename . "' alt='sssss'>");
+        $button_send = new XoopsFormButton(_ADSLIGHT_EDIT, 'submit_button', _SUBMIT, 'submit');
+        //@todo - replace alt with language string
+        $field_warning = new XoopsFormLabel("<img src='{$filename}' alt='sssss'>");
         $field_cod_img = new XoopsFormHidden('cod_img', $cod_img);
-        //  $field_lid = new XoopsFormHidden("lid",$lid);
+        //    $field_lid = new XoopsFormHidden('lid', $lid);
         $field_marker = new XoopsFormHidden('marker', 1);
 
         /**
@@ -489,18 +500,9 @@ class JlmPicturesHandler extends XoopsObjectHandler
      * @param  int  $maxfileheight the maximum height in pixels that a pic can have
      * @return bool FALSE if upload fails or database fails
      */
-    public function receivePicture(
-        $title,
-        $path_upload,
-        $thumbwidth,
-        $thumbheight,
-        $pictwidth,
-        $pictheight,
-        $maxfilebytes,
-        $maxfilewidth,
-        $maxfileheight
-    ) {
-        global $xoopsDB, $_POST, $_FILES, $lid;
+    public function receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)
+    {
+        global $xoopsDB, $lid;
         //busca id do user logado
         $uid = $GLOBALS['xoopsUser']->getVar('uid');
         $lid = Request::getInt('lid', 0, 'POST');
@@ -508,18 +510,21 @@ class JlmPicturesHandler extends XoopsObjectHandler
         $hash1 = time();
         $hash  = substr($hash1, 0, 4);
         // mimetypes and settings put this in admin part later
-        $allowed_mimetypes = array('image/jpeg', 'image/gif');
+        $allowed_mimetypes = array(
+            'image/jpeg',
+            'image/gif'
+        );
         $maxfilesize       = $maxfilebytes;
         // create the object to upload
         $uploader = new XoopsMediaUploader($path_upload, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
         // fetch the media
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             //lets create a name for it
-            $uploader->setPrefix('pic_' . $lid . '_');
+            $uploader->setPrefix("pic_{$lid}_");
             //now let s upload the file
             if (!$uploader->upload()) {
                 // if there are errors lets return them
-                echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;\"><p>"
+                echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>'
                      . $uploader->getErrors()
                      . '</p></div>';
 
@@ -539,7 +544,7 @@ class JlmPicturesHandler extends XoopsObjectHandler
                 $this->resizeImage($saved_destination, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload);
             }
         } else {
-            echo "<div style=\"color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;\"><p>" . $uploader->getErrors() . '</p></div>';
+            echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>' . $uploader->getErrors() . '</p></div>';
 
             return false;
         }
@@ -572,10 +577,10 @@ class JlmPicturesHandler extends XoopsObjectHandler
                 $resized = imagecreatetruecolor(floor(imagesx($img) * $yratio), $thumbheight);
             }
             imagecopyresampled($resized, $img, 0, 0, 0, 0, imagesx($resized) + 1, imagesy($resized) + 1, imagesx($img), imagesy($img));
-            imagejpeg($resized, $path_upload . '/thumbs/thumb_' . $path['basename']);
+            imagejpeg($resized, "{$path_upload}/thumbs/thumb_{$path['basename']}");
             imagedestroy($resized);
         } else {
-            imagejpeg($img, $path_upload . '/thumbs/thumb_' . $path['basename']);
+            imagejpeg($img, "{$path_upload}/thumbs/thumb_{$path['basename']}");
         }
         imagedestroy($img);
         $path2   = pathinfo($img2);
@@ -589,10 +594,10 @@ class JlmPicturesHandler extends XoopsObjectHandler
                 $resized2 = imagecreatetruecolor(floor(imagesx($img2) * $yratio2), $pictheight);
             }
             imagecopyresampled($resized2, $img2, 0, 0, 0, 0, imagesx($resized2) + 1, imagesy($resized2) + 1, imagesx($img2), imagesy($img2));
-            imagejpeg($resized2, $path_upload . '/midsize/resized_' . $path2['basename']);
+            imagejpeg($resized2, "{$path_upload}/midsize/resized_{$path2['basename']}");
             imagedestroy($resized2);
         } else {
-            imagejpeg($img2, $path_upload . '/midsize/resized_' . $path2['basename']);
+            imagejpeg($img2, "{$path_upload}/midsize/resized_{$path2['basename']}");
         }
         imagedestroy($img2);
     }

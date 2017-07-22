@@ -18,8 +18,7 @@
     <{if $rate !='0'}><strong><{$lang_user_rating}></strong> <{$rating}> (<{$user_votes}>)
         <br>
         >
-        <ahref
-        ="rate-user.php?usid=<{$usid}>" rel="nofollow"><{$lang_ratethisuser}></a><{/if}>
+        <ahref="rate-user.php?usid=<{$usid}>" rel="nofollow"><{$lang_ratethisuser}></a><{/if}>
 <{/if}>
 <br><br><{$nav_page}><br><br>
 <table cellspacing="0" class="outer" style="width:100%;">

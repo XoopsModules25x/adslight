@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 
 $moduleDirName = basename(dirname(__DIR__));
 
@@ -32,27 +32,29 @@ $moduleDirName = basename(dirname(__DIR__));
  */
 function adslight_notify_iteminfo($category, $item_id)
 {
-    global $xoopsDB, $moduleDirName;
+    global $xoopsDB;
+    $moduleDirName = basename(dirname(__DIR__));
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname("$moduleDirName");
 
-    if ($category === 'global') {
+    if ('global' === $category) {
         $item['name'] = '';
         $item['url']  = '';
 
         return $item;
     }
 
-    if ($category === 'category') {
+    $item_id = (int)$item_id;
+    if ('category' === $category) {
 
         // Assume we have a valid topid id
-        $sql = 'SELECT SQL_CACHE title  FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid = ' . $item_id . ' limit 1';
+        $sql = 'SELECT SQL_CACHE title  FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid ={$item_id} LIMIT 1";
 
         $result = $xoopsDB->query($sql);
         if (!$result) {
-            $modHandler = xoops_getModuleHandler('module');
-            $myModule   = $modHandler->getByDirname('adslight');
+            $moduleHandler = xoops_getModuleHandler('module');
+            $myModule   = $moduleHandler->getByDirname('adslight');
             $myModule->setErrors('Could not query the database.');
         } else {
             $result_array = $xoopsDB->fetchArray($result);
@@ -63,9 +65,9 @@ function adslight_notify_iteminfo($category, $item_id)
         }
     }
 
-    if ($category === 'listing') {
+    if ('listing' === $category) {
         // Assume we have a valid post id
-        $sql          = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $item_id . ' LIMIT 1';
+        $sql          = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$item_id} LIMIT 1";
         $result       = $xoopsDB->query($sql);
         $result_array = $xoopsDB->fetchArray($result);
         $item['name'] = $result_array['title'];

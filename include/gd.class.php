@@ -68,9 +68,9 @@ class GD
 
         if ($new > $org) {
             $sizex = round($this->width / ($this->height / $sizey), 0);
-//            $sizey = $sizey;
+            //            $sizey = $sizey;
         } else {
-//            $sizex = $sizex;
+            //            $sizex = $sizex;
             $sizey = round($this->height / ($this->width / $sizex), 0);
         }
 
@@ -103,8 +103,13 @@ class GD
             exit('Unknown color');
         }
 
-        foreach (array('r', 'g', 'b') as $value) {
-            if (!array_key_exists($value, $rgb) || $rgb[$value] < 0 || $rgb[$value] > 255
+        foreach (array(
+                     'r',
+                     'g',
+                     'b'
+                 ) as $value) {
+            if (!array_key_exists($value, $rgb) || $rgb[$value] < 0
+                || $rgb[$value] > 255
                 || !is_numeric($rgb[$value])
             ) {
                 exit('Wrong color');

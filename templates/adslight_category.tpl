@@ -73,26 +73,26 @@
                     <{$lang_title}>
                     <span style="color: #1d1d1d; ">: </span><a rel="nofollow"
                                                                href="viewcats.php?cid=<{$cat}>&orderby=titleA"><img
-                                src="assets/images/up.gif" align="top" alt="<{$lang_titleatoz}>" border="0"/></a><a
+                                src="assets/images/up.gif" align="top" alt="<{$lang_titleatoz}>" border="0"></a><a
                             rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=titleD"><img
-                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_titleztoa}>"/></a>&nbsp;
+                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_titleztoa}>"></a>&nbsp;
                     <{$lang_price}>
                     <span style="color: #1d1d1d; ">: </span><a rel="nofollow"
                                                                href="viewcats.php?cid=<{$cat}>&orderby=priceA"><img
-                                src="assets/images/up.gif" border="0" align="top" alt="<{$lang_pricelow}>"/></a><a
+                                src="assets/images/up.gif" border="0" align="top" alt="<{$lang_pricelow}>"></a><a
                             rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=priceD"><img
-                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_pricehigh}>"/></a>&nbsp;
+                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_pricehigh}>"></a>&nbsp;
                     <{$lang_date}>
                     <span style="color: #1d1d1d; ">: </span><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateA"><img
-                                src="assets/images/up.gif" border="0" align="top" alt="<{$lang_dateold}>"/></a><a
+                                src="assets/images/up.gif" border="0" align="top" alt="<{$lang_dateold}>"></a><a
                             rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=dateD"><img
-                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_datenew}>"/></a>&nbsp;
+                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_datenew}>"></a>&nbsp;
                     <{$lang_popularity}>
                     <span style="color: #1d1d1d; ">: </span><a rel="nofollow" href="viewcats.php?cid=<{$cat}>&orderby=hitsA"><img
                                 src="assets/images/up.gif" border="0" align="top"
-                                alt="<{$lang_popularityleast}>"/></a><a rel="nofollow"
+                                alt="<{$lang_popularityleast}>"></a><a rel="nofollow"
                                                                         href="viewcats.php?cid=<{$cat}>&orderby=hitsD"><img
-                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_popularitymost}>"/></a><br>
+                                src="assets/images/down.gif" border="0" align="top" alt="<{$lang_popularitymost}>"></a><br>
                     <br>
                     <span style="color: #ff6203; ">
                         <{$lang_cursortedby}>

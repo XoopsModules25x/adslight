@@ -38,7 +38,7 @@ CREATE TABLE adslight_categories (
   cat_desc        VARCHAR(200)    NOT NULL DEFAULT '',
   cat_keywords    VARCHAR(1000)   NOT NULL DEFAULT '',
   img             VARCHAR(150)    NOT NULL DEFAULT 'default.png',
-  ordre           INT(5)          NOT NULL DEFAULT '0',
+  cat_order       INT(5)          NOT NULL DEFAULT '0',
   affprice        INT(5)          NOT NULL DEFAULT '1',
   cat_moderate    INT(5)          NOT NULL DEFAULT '1',
   moderate_subcat INT(5)          NOT NULL DEFAULT '1',
@@ -46,7 +46,7 @@ CREATE TABLE adslight_categories (
 )
   ENGINE = MyISAM;
 
-INSERT INTO `adslight_categories` (`cid`, `pid`, `title`, `cat_desc`, `cat_keywords`, `img`, `ordre`, `affprice`, `cat_moderate`, `moderate_subcat`) VALUES
+INSERT INTO `adslight_categories` (`cid`, `pid`, `title`, `cat_desc`, `cat_keywords`, `img`, `cat_order`, `affprice`, `cat_moderate`, `moderate_subcat`) VALUES
   (1, 0, 'Auti / Motocikli', '', '', 'car.png', 0, 1, 1, 1),
   (2, 0, 'Imanje', '', '', 'home.png', 0, 1, 1, 1),
   (3, 0, 'Dobre poslovne', '', '', 'jewelry.png', 0, 1, 1, 1),

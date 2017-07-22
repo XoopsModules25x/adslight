@@ -22,14 +22,14 @@
 
 use Xmf\Request;
 
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once __DIR__ . '/admin_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
 //if ( !is_readable(XOOPS_ROOT_PATH . "/Frameworks/art/functions.admin.php")) {
 //    adslight_adminmenu(6, "");
 //} else {
-//    include_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
+//    require_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
 //    loadModuleAdminMenu (6, "");
 //}
 
@@ -48,40 +48,40 @@ $sql = 'SELECT conf_id FROM ' . $xoopsDB->prefix('config') . ' WHERE conf_name =
 $res = $xoopsDB->query($sql);
 list($conf_id) = $xoopsDB->fetchRow($res);
 /** @var XoopsModuleHandler $moduleHandler */
-$moduleHandler  = xoops_getHandler('module');
-$module         = $moduleHandler->getByDirname('system');
-/** @var XoopsConfigHandler $configHandler */
+$moduleHandler = xoops_getHandler('module');
+$module        = $moduleHandler->getByDirname('system');
+/** @var XoopsModuleHandler $moduleHandler */
 $configHandler = xoops_getHandler('config');
-$config_theme   = $configHandler->getConfig($conf_id, true);
+$config_theme  = $configHandler->getConfig($conf_id, true);
 
 switch ($action) {
     case 'new':
-        copy(XOOPS_ROOT_PATH . '/modules/adslight/Root/' . $file, XOOPS_ROOT_PATH . '/' . $file);
+        copy(XOOPS_ROOT_PATH . "/modules/adslight/Root/{$file}", XOOPS_ROOT_PATH . "/{$file}");
         break;
     case 'remove':
-        unlink(XOOPS_ROOT_PATH . '/' . $file);
+        unlink(XOOPS_ROOT_PATH . "/{$file}");
         break;
     case 'copy':
-        rename(XOOPS_ROOT_PATH . '/' . $file, XOOPS_ROOT_PATH . '/' . $file . '.svg');
-        copy(XOOPS_ROOT_PATH . '/modules/adslight/Root/' . $file, XOOPS_ROOT_PATH . '/' . $file);
+        rename(XOOPS_ROOT_PATH . "/{$file}", XOOPS_ROOT_PATH . "/{$file}.svg");
+        copy(XOOPS_ROOT_PATH . "/modules/adslight/Root/{$file}", XOOPS_ROOT_PATH . "/{$file}");
         break;
     case 'restore':
-        unlink(XOOPS_ROOT_PATH . '/' . $file);
-        rename(XOOPS_ROOT_PATH . '/' . $file . '.svg', XOOPS_ROOT_PATH . '/' . $file);
+        unlink(XOOPS_ROOT_PATH . "/{$file}");
+        rename(XOOPS_ROOT_PATH . "/{$file}.svg", XOOPS_ROOT_PATH . "/{$file}");
         break;
     case 'install_template':
-        if (file_exists(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . '/modules/' . $file)) {
-            unlink(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . '/modules/' . $file);
+        if (file_exists(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . "/modules/{$file}")) {
+            unlink(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . "/modules/{$file}");
         }
         FS_Storage::dircopy(XOOPS_ROOT_PATH . '/modules/adslight/Root/themes/', XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . '/', $success, $error);
-        include_once XOOPS_ROOT_PATH . '/class/template.php';
+        require_once XOOPS_ROOT_PATH . '/class/template.php';
         $xoopsTpl = new XoopsTpl();
         $xoopsTpl->clear_cache('db:system_block_user.tpl');
         $xoopsTpl->clear_cache('db:system_userinfo.tpl');
         $xoopsTpl->clear_cache('db:profile_userinfo.tpl');
         break;
     case 'remove_template':
-        unlink(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . '/modules/' . $file);
+        unlink(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . "/modules/{$file}");
         break;
 }
 
