@@ -19,6 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
 use Xmf\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
@@ -64,25 +65,10 @@ $maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_original_width'];
  */
 if ('sel_photo' === Request::getArray('xoops_upload_file', '', 'POST')[0]) {
 
-    /**
-     * Check if using Xoops or XoopsCube (by jlm69)
-     * Right now Xoops does not have a directory called preload, Xoops Cube does.
-     * If this finds a diectory called preload in the Xoops Root folder $xCube=true.
-     * This could change if Xoops adds a Directory called preload
-     */
-
-    // XOOPS Cube 2.1x
-    $xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
-
-    if ($xCube) {
-        if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
-            redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
-        }
-    } else {
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
-        }
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
     }
+
     /**
      * Try to upload picture resize it insert in database and then redirect to index
      */

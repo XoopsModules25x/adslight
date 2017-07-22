@@ -37,30 +37,8 @@ require_once XOOPS_ROOT_PATH . '/class/criteria.php';
  */
 require_once __DIR__ . '/class/pictures.php';
 
-/**
- * Check if using XoopsCube (by jlm69)
- * Needed because of a difference in the way Xoops and XoopsCube handle tokens
- */
-// XOOPS Cube 2.1x
-$xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
-
-/**
- * Verify Ticket for Xoops Cube (by jlm69)
- * If your site is XoopsCube it uses $xoopsGTicket for the token.
- */
-
-if ($xCube) {
-    if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
-        redirect_header($_SERVER['HTTP_REFERER'], 3, $GLOBALS['xoopsSecurity']->getErrors());
-    }
-} else {
-    /**
-     * Verify TOKEN for Xoops
-     * If your site is Xoops it uses xoopsSecurity for the token.
-     */
-    if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
-    }
+if (!$GLOBALS['xoopsSecurity']->check()) {
+    redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
 }
 
 /**

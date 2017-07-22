@@ -69,11 +69,7 @@
     </table>
 <form name="<{$form_picture.name}>" action="<{$form_picture.action}>"
       method="<{$form_picture.method}>" <{$form_picture.extra}> id="submitpicture">
-    <{if $xcube}>
-        <{$form_picture.elements.XOOPS_G_TICKET.body}>
-    <{else}>
-        <{$form_picture.elements.XOOPS_TOKEN_REQUEST.body}>
-    <{/if}>
+    <{securityToken}><{*//mb*}>
     <p><strong><{$form_picture.elements.1.caption}></strong></p>
     <p><strong><{$form_picture.elements.sel_photo.caption}></strong>
         <{$form_picture.elements.sel_photo.body}></p>

@@ -24,7 +24,7 @@ use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();// MyTextSanitizer object
-require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
 //require_once __DIR__ . '/include/functions.php';

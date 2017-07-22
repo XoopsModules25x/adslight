@@ -393,7 +393,7 @@ class ClassifiedsTree
     {
         global $myts, $xoopsDB;
         $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
-        require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//        require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
         if ('' == $sel_name) {
             $sel_name = $this->id;

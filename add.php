@@ -23,7 +23,7 @@ use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
 $myts = MyTextSanitizer::getInstance();// MyTextSanitizer object
-require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once __DIR__ . '/include/functions.php';
 // require_once XOOPS_ROOT_PATH . '/class/captcha/xoopscaptcha.php';
@@ -190,7 +190,7 @@ if (Request::hasVar('submit', 'POST')) {
     $result3 = $xoopsDB->query('SELECT id_usure, nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY id_usure');
 
     ob_start();
-    $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'add.php');
+    $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'add.php', 'post', true);
     $form->setExtra('enctype="multipart/form-data"');
 
 //    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');

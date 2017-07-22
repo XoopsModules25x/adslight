@@ -189,27 +189,8 @@ $xoopsTpl->assign('isOwner', $isOwner);
 $xoopsTpl->assign('permit', $permit);
 $xoopsTpl->assign('xoops_module_header', $header_lightbox);
 
-/**
- * Check if using Xoops or XoopsCube (by jlm69)
- */
-$xCube = false;
-if (preg_match('/^XOOPS Cube/', XOOPS_VERSION)) { // XOOPS Cube 2.1x
-    $xCube = true;
-}
+$xoopsTpl->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getTokenHTML());
 
-/**
- * Verify Ticket (by jlm69)
- * If your site is XoopsCube it uses $xoopsGTicket for the token.
- * If your site is Xoops it uses xoopsSecurity for the token.
- */
-
-if ($xCube) {
-    $xoopsTpl->assign('xoopsSecurity', $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__));
-    $xoopsTpl->assign('xcube', '1');
-} else {
-    $xoopsTpl->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getTokenHTML());
-    $xoopsTpl->assign('xcube', '');
-}
 
 /**
  * Adding the comment system

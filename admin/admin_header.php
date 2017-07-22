@@ -23,7 +23,7 @@ require_once __DIR__ . '/../../../class/xoopsformloader.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-require_once __DIR__ . '/../include/gtickets.php';
+//require_once __DIR__ . '/../include/gtickets.php';
 require_once __DIR__ . '/../class/utility.php';
 require_once __DIR__ . '/../class/classifiedstree.php';
 //require_once __DIR__ . '/../class/grouppermform.php';

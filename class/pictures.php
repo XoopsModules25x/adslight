@@ -139,8 +139,7 @@ class AdslightPictures extends XoopsObject
  * This class provides simple mechanism to manage {@see AdslightPictures} objects
  * and generate forms for inclusion
  *
- * @todo change this to a XoopsPersistableObjectHandler and remove
- *       'most' method overloads
+ * @todo change this to a XoopsPersistableObjectHandler and remove 'most' method overloads
  */
 class AdslightPicturesHandler extends XoopsObjectHandler
 {
@@ -393,23 +392,9 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         $field_warning = new XoopsFormLabel(sprintf(_ADSLIGHT_YOUCANUPLOAD, $maxbytes / 1024));
         $field_lid     = new XoopsFormHidden('lid', $lid);
         $field_uid     = new XoopsFormHidden('uid', $uid);
-        /**
-         * Check if using Xoops or XoopsCube (by jlm69)
-         */
-        // XOOPS Cube 2.1x
-        $xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
 
-        /**
-         * Verify Ticket (by jlm69)
-         * If your site is XoopsCube it uses $xoopsGTicket for the token.
-         * If your site is Xoops it uses xoopsSecurity for the token.
-         */
+        $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
 
-        if ($xCube) {
-//            $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
-        } else {
-            $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
-        }
         $form->addElement($field_warning);
         $form->addElement($field_url, true);
         $form->addElement($field_desc, true);
@@ -450,30 +435,9 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         //    $field_lid = new XoopsFormHidden('lid', $lid);
         $field_marker = new XoopsFormHidden('marker', 1);
 
-        /**
-         * Check if using Xoops or XoopsCube (by jlm69)
-         * Right now Xoops does not have a directory called preload, Xoops Cube does.
-         * If this finds a diectory called preload in the Xoops Root folder $xCube=true.
-         * This could change if Xoops adds a Directory called preload
-         */
 
-        $xCube   = false;
-        $preload = XOOPS_ROOT_PATH . '/preload';
-        if (is_dir($preload)) {
-            $xCube = true;
-        }
+        $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
 
-        /**
-         * Verify Ticket (by jlm69)
-         * If your site is XoopsCube it uses $xoopsGTicket for the token.
-         * If your site is Xoops it uses xoopsSecurity for the token.
-         */
-
-        if ($xCube = true) {
-            $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
-        } else {
-            $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
-        }
 
         $form->addElement($field_warning);
         $form->addElement($field_desc);

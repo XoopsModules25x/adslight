@@ -38,7 +38,7 @@ use Xmf\Module\Helper;
 
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . strtoupper($moduleDirName);
-require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 $myts = MyTextSanitizer::getInstance();
 

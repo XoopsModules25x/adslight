@@ -25,7 +25,7 @@ use Xmf\Request;
 require_once __DIR__ . '/header.php';
 $moduleDirName = basename(__DIR__);
 $main_lang     = '_' . strtoupper($moduleDirName);
-require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 $myts      = MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 

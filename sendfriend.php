@@ -23,7 +23,7 @@
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
-require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 //include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 
 /**
