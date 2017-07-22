@@ -53,8 +53,8 @@ if (Request::hasVar('submit', 'POST')) {
     global $xoopsConfig, $xoopsDB, $myts, $meta;
     require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
-    if (!$xoopsGTicket->check(true, 'token')) {
-        redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $xoopsGTicket->getErrors());
+    if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
+        redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
     if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
         xoops_load('xoopscaptcha');
@@ -248,7 +248,7 @@ if (Request::hasVar('submit', 'POST')) {
     echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" >";
     echo "<input type=\"hidden\" name=\"date\" value=\"$time\" >";
     echo '<p><input type="submit" name="submit" value="' . _ADSLIGHT_SENDFR . '" ></p>
-' . $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__, 1800, 'token') . '
+' .$GLOBALS['xoopsSecurity']->getTokenHTML('token') . '
     </form>';
 }
 echo '</td></tr></table>';

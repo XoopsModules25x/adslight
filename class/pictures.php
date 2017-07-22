@@ -406,7 +406,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
          */
 
         if ($xCube) {
-            $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
+//            $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
         } else {
             $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
         }

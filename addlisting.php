@@ -63,8 +63,8 @@ if (!$GLOBALS['xoopsUser'] instanceof XoopsUser) {
 if (Request::hasVar('submit', 'POST')) {
     $howlong = $GLOBALS['xoopsModuleConfig']['adslight_howlong'];
 
-    if (!$xoopsGTicket->check(true, 'token')) {
-        redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
+    if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
+        redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
 
     if (Request::getString('title', '', 'POST') == '') {
@@ -203,7 +203,7 @@ if (Request::hasVar('submit', 'POST')) {
     $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'addlisting.php');
     $form->setExtra('enctype="multipart/form-data"');
 
-    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
+//    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
 
     //@todo - what should be echo'd here? Code commented out
     //        because it doesn't currently do anything

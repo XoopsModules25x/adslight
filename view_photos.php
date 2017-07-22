@@ -204,10 +204,10 @@ if (preg_match('/^XOOPS Cube/', XOOPS_VERSION)) { // XOOPS Cube 2.1x
  */
 
 if ($xCube) {
-    $xoopsTpl->assign('token', $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__));
+    $xoopsTpl->assign('xoopsSecurity', $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__));
     $xoopsTpl->assign('xcube', '1');
 } else {
-    $xoopsTpl->assign('token', $GLOBALS['xoopsSecurity']->getTokenHTML());
+    $xoopsTpl->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getTokenHTML());
     $xoopsTpl->assign('xcube', '');
 }
 

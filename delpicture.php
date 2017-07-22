@@ -52,8 +52,8 @@ $xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
  */
 
 if ($xCube) {
-    if (!$xoopsGTicket->check(true, 'token')) {
-        redirect_header($_SERVER['HTTP_REFERER'], 3, $xoopsGTicket->getErrors());
+    if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
+        redirect_header($_SERVER['HTTP_REFERER'], 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
 } else {
     /**

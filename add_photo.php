@@ -75,8 +75,8 @@ if ('sel_photo' === Request::getArray('xoops_upload_file', '', 'POST')[0]) {
     $xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
 
     if ($xCube) {
-        if (!$xoopsGTicket->check(true, 'token')) {
-            redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
+        if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
+            redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
         }
     } else {
         if (!$GLOBALS['xoopsSecurity']->check()) {

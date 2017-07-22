@@ -14,6 +14,7 @@
     <tr>
         <td class="center">
             <form method="post" action="rate-item.php">
+                <{securityToken}><{*//mb*}>
                 <input type="hidden" name="lid" value="<{$link.lid}>">
                 <select name="rating">
                     <option>--</option>

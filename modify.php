@@ -358,7 +358,7 @@ function modAd($lid)
             echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
             echo "<input type=\"hidden\" name=\"premium\" value=\"$premium\" >";
             echo "<input type=\"hidden\" name=\"date\" value=\"$date\" >
-    " . $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__, 1800, 'token') . '';
+    " .$GLOBALS['xoopsSecurity']->getTokenHTML('token') . '';
             echo '</form><br></fieldset><br>';
         }
     }
@@ -387,10 +387,10 @@ function modAd($lid)
  */
 function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang, $xoopsGTicket;
+    global $xoopsDB, $xoopsConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
-    if (!$xoopsGTicket->check(true, 'token')) {
-        redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, $xoopsGTicket->getErrors());
+    if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
+        redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
     $title     = $myts->addSlashes($title);
     $status    = $myts->addSlashes($status);
