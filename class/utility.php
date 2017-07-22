@@ -872,9 +872,8 @@ class AdslightUtility
     public static function saveCategoryPermissions($groups, $categoryId, $permName)
     {
         global $xoopsModule;
-        if (!isset($moduleDirName)) {
-            $moduleDirName = basename(dirname(__DIR__));
-        }
+
+        $moduleDirName = basename(dirname(__DIR__));
 
         if (false !== ($moduleHelper = Helper::getHelper($moduleDirName))) {
         } else {

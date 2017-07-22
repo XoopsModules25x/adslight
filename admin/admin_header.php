@@ -21,9 +21,7 @@ require_once __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/../../../class/xoopsformloader.php';
 //require_once __DIR__ . '/../class/utility.php';
 
-if (!isset($moduleDirName)) {
-    $moduleDirName = basename(dirname(__DIR__));
-}
+$moduleDirName = basename(dirname(__DIR__));
 
 require_once __DIR__ . '/../include/gtickets.php';
 require_once __DIR__ . '/../class/utility.php';
