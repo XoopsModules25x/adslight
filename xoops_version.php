@@ -46,18 +46,18 @@ if (file_exists(XOOPS_ROOT_PATH . '/modules/adslight/sql/' . $xoopsConfig['langu
     $adslight_sql = 'sql/english/mysql.sql';
 }
 
-$modversion['version']      = '2.2';
+$modversion['version']       = '2.2';
 $modversion['module_status'] = 'RC 2';
 $modversion['release_date']  = '2017/01/12';
 $modversion['name']          = _MI_ADSLIGHT_NAME;
-$modversion['description']  = _MI_ADSLIGHT_DESC;
-$modversion['credits']      = 'AdsLight';
-$modversion['author']       = 'Luc Bizet';
-$modversion['help']         = 'page=help';
-$modversion['license']      = 'GPL';
-$modversion['license_file'] = 'http://www.gnu.org/licenses/gpl.html';
-$modversion['official']     = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']        = 'assets/images/logoModule.png';
+$modversion['description']   = _MI_ADSLIGHT_DESC;
+$modversion['credits']       = 'AdsLight';
+$modversion['author']        = 'Luc Bizet';
+$modversion['help']          = 'page=help';
+$modversion['license']       = 'GPL';
+$modversion['license_file']  = 'http://www.gnu.org/licenses/gpl.html';
+$modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+$modversion['image']         = 'assets/images/logoModule.png';
 $modversion['dirname']      = $moduleDirName;
 
 //$modversion['dirmoduleadmin']      = 'Frameworks/moduleclasses/moduleadmin';
@@ -68,13 +68,13 @@ $modversion['modicons32']          = 'assets/images/icons/';
 $modversion['module_website_url']  = 'www.xoops.org';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
+$modversion['min_xoops']           = '2.5.9';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = array('mysql' => '5.5');
 
 $modversion['sqlfile']['mysql'] = $adslight_sql;
 $modversion['onInstall']        = 'include/oninstall.php';
-$modversion['onUpdate'] = 'include/onupdate.php';
+$modversion['onUpdate']         = 'include/onupdate.php';
 
 $modversion['release']           = '27-09-2016';
 $modversion['support_site_url']  = 'http://#';
@@ -307,14 +307,14 @@ $modversion['config'][] = array(
     'valuetype'   => 'int',
     'default'     => '15',
     'options'     => array(
-    '10' => 10,
-    '15' => 15,
-    '20' => 20,
-    '25' => 25,
-    '30' => 30,
-    '35' => 35,
-    '40' => 40,
-    '50' => 50
+        '10' => 10,
+        '15' => 15,
+        '20' => 20,
+        '25' => 25,
+        '30' => 30,
+        '35' => 35,
+        '40' => 40,
+        '50' => 50
     ),
 );
 
@@ -518,10 +518,10 @@ $modversion['config'][] = array(
     'valuetype'   => 'text',
     'default'     => 'date DESC',
     'options'     => array(
-    '_MI_ADSLIGHT_ORDER_DATE'  => 'date DESC',
-    '_MI_ADSLIGHT_ORDER_PRICE' => 'price ASC',
-    '_MI_ADSLIGHT_ORDER_TITLE' => 'title ASC',
-    '_MI_ADSLIGHT_ORDER_POP'   => 'hits DESC'
+        '_MI_ADSLIGHT_ORDER_DATE'  => 'date DESC',
+        '_MI_ADSLIGHT_ORDER_PRICE' => 'price ASC',
+        '_MI_ADSLIGHT_ORDER_TITLE' => 'title ASC',
+        '_MI_ADSLIGHT_ORDER_POP'   => 'hits DESC'
     ),
 );
 
