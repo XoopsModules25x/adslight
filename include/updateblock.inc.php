@@ -28,7 +28,7 @@ defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 global $xoopsDB;
 $query  = 'SELECT SQL_CACHE mid FROM ' . $xoopsDB->prefix('modules') . " WHERE dirname='" . $modversion['dirname'] . "' ";
 $result = $xoopsDB->query($query);
-$record = $xoopsDB->fetcharray($result);
+$record = $xoopsDB->fetchArray($result);
 if ($record) {
     $mid   = $record['mid'];
     $count = count($modversion['blocks']);
