@@ -28,8 +28,7 @@
                     <option>2</option>
                     <option>1</option>
                 </select>&nbsp;&nbsp;
-                <input type="submit" name="submit" value="<{$lang_rateit}>"><input type=button value="<{$lang_cancel}>"
-                                                                                    onclick="location='<{$xoops_url}>/modules/adslight/viewads.php?lid=<{$link.lid}>'">
+                <input type="submit" name="submit" value="<{$lang_rateit}>"><input type=button value="<{$lang_cancel}>" onclick="location='<{$xoops_url}>/modules/adslight/viewads.php?lid=<{$link.lid}>'">
             </form>
         </td>
     </tr>

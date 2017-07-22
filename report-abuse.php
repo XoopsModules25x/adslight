@@ -69,7 +69,7 @@ function ReportAbuse($lid)
     </tr>
     <tr>
       <td class='head'></td>
-      <td class='even'><input class=\"textbox\" type=\"hidden\" name=\"fmail\" value=\"$iddee\"/></td>
+      <td class='even'><input class=\"textbox\" type=\"hidden\" name=\"fmail\" value=\"$iddee\"></td>
     </tr>";
 
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {

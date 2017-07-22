@@ -98,7 +98,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
                 if ($tables->useTable($table)) {
                     $tables->alterColumn($table, $column, $attributes, $newName);
                     if (!$tables->executeQueue()) {
-                        echo '<br />' . _AM_ADSLIGHT_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
+                        echo '<br >' . _AM_ADSLIGHT_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
                     }
                 }
 

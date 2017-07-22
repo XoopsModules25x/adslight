@@ -332,7 +332,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                                        . _ADSLIGHT_MODADMIN
                                        . '" title="'
                                        . _ADSLIGHT_MODADMIN
-                                       . '"/></a>';
+                                       . '"></a>';
                 }
             }
 
