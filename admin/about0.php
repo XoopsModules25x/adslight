@@ -81,7 +81,7 @@ echo "<tr class='odd'><td><br>
 echo "<tr class='odd'><td><br>
         <label>" . _AM_ADSLIGHT_PERSONS_PARTICIP_NAME . ':</label><text><b>Simon Roberts</b></text><br>
         <label>' . _AM_ADSLIGHT_PERSONS_PARTICIP_WEBSITE . ':</label><text><a href="http://www.chronolabs.coop" target="_blank" >www.chronolabs.coop</a></text><br>
-        <label>' . _AM_ADSLIGHT_PERSONS_PARTICIP_WEBSITE . ':</label><text><a href="http://xoops.org" target="_blank" >XOOPS Support Website EN</a></text><br>
+        <label>' . _AM_ADSLIGHT_PERSONS_PARTICIP_WEBSITE . ':</label><text><a href="https://xoops.org" target="_blank" >XOOPS Support Website EN</a></text><br>
         <label>' . _AM_ADSLIGHT_PERSONS_PARTICIP_VERSION . ':</label><text>AdsLight 1.x</text><br>
         <label>' . _AM_ADSLIGHT_PERSONS_PARTICIP_DESC . ':</label><text>Plugin Xpayment</text><br>
         <br></td></tr>';

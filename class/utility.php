@@ -25,7 +25,7 @@
 /**
  * AdslightUtil Class
  *
- * @copyright   XOOPS Project (http://xoops.org)
+ * @copyright   XOOPS Project (https://xoops.org)
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author      XOOPS Development Team
  * @package     AdsLight

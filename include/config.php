@@ -10,7 +10,7 @@
  */
 
 /**
- * @copyright    XOOPS Project http://xoops.org/
+ * @copyright    XOOPS Project https://xoops.org/
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @since
@@ -119,5 +119,5 @@ class AdsligthConfigurator
 }
 
 // module information
-$modCopyright = "<a href='http://xoops.org' title='XOOPS Project' target='_blank'>
+$modCopyright = "<a href='https://xoops.org' title='XOOPS Project' target='_blank'>
                      <img src='" . constant($capsDirName . '_AUTHOR_LOGOIMG') . "' alt='XOOPS Project' ></a>";
