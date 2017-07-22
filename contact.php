@@ -51,7 +51,6 @@ if (Request::hasVar('submit', 'POST')) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
     global $xoopsConfig, $xoopsDB, $myts, $meta;
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
     if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
         redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
