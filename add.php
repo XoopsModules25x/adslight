@@ -151,7 +151,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['CATEGORY_TITLE'] = $row['title'];
         $tags['NEWAD']          = _ADSLIGHT_NEWAD;
 
-        $mail =& xoops_getMailer();
+        $mail = xoops_getMailer();
         //@todo - add check to see if directory (and file) exists, otherwise use english
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/adslight/language/' . $xoopsConfig['language'] . '/mail_template/');
         $mail->setTemplate('listing_notify_admin.tpl');
