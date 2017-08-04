@@ -163,15 +163,7 @@ if ($trows > '0') {
         list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
 
         if ($isadmin) {
-            $adminlink = "<a href='"
-                         . XOOPS_URL
-                         . '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid='
-                         . $lid
-                         . "'><img src='"
-                         . $pathIcon16
-                         . "/edit.png' border=0 alt=\""
-                         . _ADSLIGHT_MODADMIN
-                         . '" ></a>';
+            $adminlink = "<a href='" . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid=' . $lid . "'><img src='" . $pathIcon16 . "/edit.png' border=0 alt=\"" . _ADSLIGHT_MODADMIN . '" ></a>';
             $xoopsTpl->assign('isadmin', $isadmin);
         } else {
             $adminlink = '';
@@ -230,13 +222,7 @@ if ($trows > '0') {
 
         $xoopsTpl->assign('xoops_pagetitle', '' . _ADSLIGHT_ALL_USER_LISTINGS . ' ' . $submitter);
         $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
-        $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
-                   . $xoopsDB->prefix('adslight_pictures')
-                   . ' WHERE  uid_owner='
-                   . $xoopsDB->escape($usid)
-                   . ' AND lid='
-                   . $xoopsDB->escape($lid)
-                   . ' ORDER BY date_added ASC LIMIT 1';
+        $sql     = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE  uid_owner=' . $xoopsDB->escape($usid) . ' AND lid=' . $xoopsDB->escape($lid) . ' ORDER BY date_added ASC LIMIT 1';
         $resultp = $xoopsDB->query($sql);
         while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
             if ($photo) {

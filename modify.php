@@ -95,12 +95,7 @@ function delReply($r_lid, $ok)
 {
     global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
-    $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM '
-                              . $xoopsDB->prefix('adslight_listing')
-                              . ' l LEFT JOIN '
-                              . $xoopsDB->prefix('adslight_replies')
-                              . ' r ON l.lid=r.lid  WHERE r.r_lid='
-                              . $xoopsDB->escape($r_lid));
+    $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_replies') . ' r ON l.lid=r.lid  WHERE r.r_lid=' . $xoopsDB->escape($r_lid));
     list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
 
     if ($GLOBALS['xoopsUser']) {
@@ -114,15 +109,7 @@ function delReply($r_lid, $ok)
                 echo '<br><div style="text-align:center">';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
-            echo "[ <a href=\"modify.php?op=DelReply&amp;r_lid="
-                 . addslashes($r_lid)
-                 . "&amp;ok=1\">"
-                 . _ADSLIGHT_OUI
-                 . "</a> | <a href=\"members.php?usid="
-                 . addslashes($usid)
-                 . "\">"
-                 . _ADSLIGHT_NON
-                 . '</a> ]<br><br>';
+            echo "[ <a href=\"modify.php?op=DelReply&amp;r_lid=" . addslashes($r_lid) . "&amp;ok=1\">" . _ADSLIGHT_OUI . "</a> | <a href=\"members.php?usid=" . addslashes($usid) . "\">" . _ADSLIGHT_NON . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }
@@ -142,10 +129,7 @@ function modAd($lid)
     require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
     $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM '
-                              . $xoopsDB->prefix('adslight_listing')
-                              . ' WHERE lid='
-                              . $xoopsDB->escape($lid));
+    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
 
     $categories = AdslightUtility::getMyItemIds('adslight_submit');
@@ -194,7 +178,7 @@ function modAd($lid)
 
             echo "<form action=\"modify.php\" method=post enctype=\"multipart/form-data\">";
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-    echo "<table><tr class=\"head\" border=\"2\">
+            echo "<table><tr class=\"head\" border=\"2\">
     <td class=\"head\">" . _ADSLIGHT_NUMANNN . " </td><td class=\"head\" border=\"1\">$lid " . _ADSLIGHT_DU . " $dates</td>
     </tr><tr>";
 
@@ -260,10 +244,7 @@ function modAd($lid)
             echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_TITLE2 . " </td><td class=\"head\"><input type=\"text\" name=\"title\" size=\"50\" value=\"$title\" ></td>
     </tr>";
-            echo "<tr><td class=\"head\">"
-                 . _ADSLIGHT_PRICE2
-                 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" > "
-                 . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'];
+            echo "<tr><td class=\"head\">" . _ADSLIGHT_PRICE2 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" > " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'];
 
             $result3 = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
             echo " <select name=\"typeprice\">";
@@ -358,7 +339,7 @@ function modAd($lid)
             echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
             echo "<input type=\"hidden\" name=\"premium\" value=\"$premium\" >";
             echo "<input type=\"hidden\" name=\"date\" value=\"$date\" >
-    " .$GLOBALS['xoopsSecurity']->getTokenHTML('token') . '';
+    " . $GLOBALS['xoopsSecurity']->getTokenHTML('token') . '';
             echo '</form><br></fieldset><br>';
         }
     }

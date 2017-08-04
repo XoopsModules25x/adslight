@@ -146,11 +146,9 @@ define('_MI_ADSLIGHT_THUMBW_DESC', 'Thumbnails width in pixels<br>This means you
 define('_MI_ADSLIGHT_THUMBH_TITLE', 'Thumb Height');
 define('_MI_ADSLIGHT_THUMBH_DESC', 'Thumbnails Height in pixels<br>This means your picture thumbnail will have<br>at most this size in height<br>All proportions are maintained');
 define('_MI_ADSLIGHT_RESIZEDW_TITLE', 'Resized picture width');
-define('_MI_ADSLIGHT_RESIZEDW_DESC',
-       'Resized picture width in pixels<br>This means your picture will have<br>at most this size in width<br>All proportions are maintained<br> The original picture if bigger than this size will <br>be resized so it wont break your template');
+define('_MI_ADSLIGHT_RESIZEDW_DESC', 'Resized picture width in pixels<br>This means your picture will have<br>at most this size in width<br>All proportions are maintained<br> The original picture if bigger than this size will <br>be resized so it wont break your template');
 define('_MI_ADSLIGHT_RESIZEDH_TITLE', 'Resized picture height');
-define('_MI_ADSLIGHT_RESIZEDH_DESC',
-       'Resized picture height in pixels<br>This means your picture will have<br>at most this size in height<br>All proportions are maintained<br> The original picture if bigger than this size will <br>be resized so it wont break your template design');
+define('_MI_ADSLIGHT_RESIZEDH_DESC', 'Resized picture height in pixels<br>This means your picture will have<br>at most this size in height<br>All proportions are maintained<br> The original picture if bigger than this size will <br>be resized so it wont break your template design');
 define('_MI_ADSLIGHT_ORIGW_TITLE', 'Max original picture width');
 define('_MI_ADSLIGHT_ORIGW_DESC', "Maximum original picture width in pixels<br>This means user's original picture can't exceed <br>this size in height<br>or else it won't be uploaded");
 define('_MI_ADSLIGHT_ORIGH_TITLE', 'Max original picture height');
@@ -204,12 +202,10 @@ define('_MI_ADSLIGHT_ACTIVE_REWRITEURL', 'Enable URL Rewrite');
 define('_MI_ADSLIGHT_ACTIVE_REWRITEURL_DESC', 'Enable URL rewriting for a better ranking.<br>To install the rewrite, thank you to read the file README.txt');
 // Activer thumbs_index
 define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX', 'Enable Snapshot page index');
-define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC', "Enable the display of thumbnail images to homepage<br>If it is off an icon <img src='" . XOOPS_URL
-                                               . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
+define('_MI_ADSLIGHT_ACTIVE_THUMBSINDEX_DESC', "Enable the display of thumbnail images to homepage<br>If it is off an icon <img src='" . XOOPS_URL . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
 // Activer thumbs_cats
 define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS', 'Enable Snapshot in categories');
-define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC', "Enable the display of thumbnail pictures in the categories<br>If it is off an icon <img src='" . XOOPS_URL
-                                              . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
+define('_MI_ADSLIGHT_ACTIVE_THUMBSCATS_DESC', "Enable the display of thumbnail pictures in the categories<br>If it is off an icon <img src='" . XOOPS_URL . "/modules/adslight/assets/images/camera_photo.png' width='24px' ><br> indicates whether or not there is a picture in the ad.");
 // Code Adscence index
 define('_MI_ADSLIGHT_ADSLIGHT_INDEX_CODE', 'Code additional home page');
 define('_MI_ADSLIGHT_ADSLIGHT_INDEX_CODE_DESC', 'Put your adsense code or other here');
@@ -239,7 +235,7 @@ define('_MI_ADSLIGHT_TEXT_TIPS_WRITE', 'Text of the page info / advice');
 define('_MI_ADSLIGHT_TEXTDESC_TIPS_WRITE', 'Enter the text that appears here on the page info / advice');
 // Version 1.0.53
 // adslight_maps
-define('_MI_ADSLIGHT_MAPSSET', 'Select the card from your country');
+define('_MI_ADSLIGHT_MAPSSET', 'SELECT the card FROM your country');
 define('_MI_ADSLIGHT_MAPSSET_DESC', 'If you want to create the map of your country.<br>Thank you to read the module docs.');
 define('_MI_ADSLIGHT_MAPSW_TITLE', 'Width of the map');
 define('_MI_ADSLIGHT_MAPSH_TITLE', 'Height map');
@@ -267,7 +263,7 @@ define('_MI_ADSLIGHT_ADVISE_TITLE', 'Our Advise');
 define('_MI_ADSLIGHT_ADVISE_TEXT', 'Here goes your text');
 //Help
 define('_MI_ADSLIGHT_DIRNAME', basename(dirname(dirname(__DIR__))));
-define('_MI_ADSLIGHT_HELP_HEADER', __DIR__ . '/help/helpheader.html');
+define('_MI_ADSLIGHT_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_ADSLIGHT_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_ADSLIGHT_HELP_OVERVIEW', 'Overview');
 

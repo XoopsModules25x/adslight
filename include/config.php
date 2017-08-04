@@ -76,7 +76,7 @@ return array(
 class AdsligthConfigurator
 {
     public $uploadFolders   = array();
-    public $blankFiles  = array();
+    public $blankFiles      = array();
     public $templateFolders = array();
     public $oldFiles        = array();
     public $oldFolders      = array();
@@ -87,15 +87,15 @@ class AdsligthConfigurator
      */
     public function __construct()
     {
-        $moduleDirName        = basename(dirname(__DIR__));
-        $capsDirName          = strtoupper($moduleDirName);
-        $this->name           = 'Module Configurator';
-        $this->uploadFolders  = array(
+        $moduleDirName       = basename(dirname(__DIR__));
+        $capsDirName         = strtoupper($moduleDirName);
+        $this->name          = 'Module Configurator';
+        $this->uploadFolders = array(
             constant($capsDirName . '_UPLOAD_PATH'),
             constant($capsDirName . '_UPLOAD_PATH') . '/midsize',
             constant($capsDirName . '_UPLOAD_PATH') . '/thumbs',
         );
-        $this->blankFiles = array(
+        $this->blankFiles    = array(
             constant($capsDirName . '_UPLOAD_PATH'),
             constant($capsDirName . '_UPLOAD_PATH') . '/midsize',
             constant($capsDirName . '_UPLOAD_PATH') . '/thumbs',

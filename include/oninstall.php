@@ -64,7 +64,7 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
     xoops_loadLanguage('modinfo', $moduleDirName);
 
     $configurator = include __DIR__ . '/config.php';
-    $classUtility     = ucfirst($moduleDirName) . 'Utility';
+    $classUtility = ucfirst($moduleDirName) . 'Utility';
     if (!class_exists($classUtility)) {
         xoops_load('utility', $moduleDirName);
     }

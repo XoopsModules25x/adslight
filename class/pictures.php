@@ -227,15 +227,13 @@ class AdslightPicturesHandler extends XoopsObjectHandler
 
             $format = 'INSERT INTO %s (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
-            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner),
-                              $this->db->quoteString($url));
+            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url));
             $force  = true;
         } else {
             $format = 'UPDATE %s SET ';
             $format .= 'cod_img=%u, title=%s, date_added=%s, date_modified=%s, lid=%s, uid_owner=%s, url=%s';
             $format .= ' WHERE cod_img = %u';
-            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner),
-                              $this->db->quoteString($url), $cod_img);
+            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url), $cod_img);
         }
         if (false !== $force) {
             $result = $this->db->queryF($sql);
@@ -435,9 +433,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         //    $field_lid = new XoopsFormHidden('lid', $lid);
         $field_marker = new XoopsFormHidden('marker', 1);
 
-
         $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
-
 
         $form->addElement($field_warning);
         $form->addElement($field_desc);
@@ -488,9 +484,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
             //now let s upload the file
             if (!$uploader->upload()) {
                 // if there are errors lets return them
-                echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>'
-                     . $uploader->getErrors()
-                     . '</p></div>';
+                echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>' . $uploader->getErrors() . '</p></div>';
 
                 return false;
             } else {

@@ -54,7 +54,7 @@ function adslight_notify_iteminfo($category, $item_id)
         $result = $xoopsDB->query($sql);
         if (!$result) {
             $moduleHandler = xoops_getModuleHandler('module');
-            $myModule   = $moduleHandler->getByDirname('adslight');
+            $myModule      = $moduleHandler->getByDirname('adslight');
             $myModule->setErrors('Could not query the database.');
         } else {
             $result_array = $xoopsDB->fetchArray($result);

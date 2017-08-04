@@ -95,7 +95,8 @@ define('_AM_ADSLIGHT_ORDERCLASS', 'Category Order:');
 define('_AM_ADSLIGHT_ORDERALPHA', 'Sort alphabetically');
 define('_AM_ADSLIGHT_ORDERPERSO', 'Personalised Order');
 define('_AM_ADSLIGHT_BIGCAT', 'Main Category');
-define('_AM_ADSLIGHT_HELP1', '<b>To add a category:</b> click on the image <img src="' . XOOPS_URL
+define('_AM_ADSLIGHT_HELP1', '<b>To add a category:</b> click on the image <img src="'
+                             . XOOPS_URL
                              . '/modules/adslight/assets/images/plus.gif" border=0 width=10 height=10 alt="Add a category"> alongside the category you want to add the category under.<p><b>To change or delete a category:</b> click on the name of the category');
 define('_AM_ADSLIGHT_HELP2', '<B>Category Order:</B> integer in brackets corresponds to the order within the superior category or of the principal category. Negative integers can be used.: -1');
 // fichier pref.php //
@@ -221,8 +222,7 @@ define('_AM_ADSLIGHT_RELEASEDOWNLOAD', 'Download.');
 //Version 1.05
 // Méta Description / keywords Categories
 define('_AM_ADSLIGHT_CAT_META_DESCRIPTION', '<strong>Meta Description:</strong><br>For better optimization,</b>add here a precise description of your class. ');
-define('_AM_ADSLIGHT_CAT_META_KEYWORDS',
-       "<strong>Meta keywords:</strong><br>For better SEO,</b>add here a precise description of your category..<br><strong><span style='color:#ff3300;'>separate words by commas</span></strong>. ( english, spanish, french,...)");
+define('_AM_ADSLIGHT_CAT_META_KEYWORDS', "<strong>Meta keywords:</strong><br>For better SEO,</b>add here a precise description of your category..<br><strong><span style='color:#ff3300;'>separate words by commas</span></strong>. ( english, spanish, french,...)");
 //Version 1.053
 // Test Maps Xml
 define('_AM_ADSLIGHT_XMLNOTOK', 'The xml file for the card is absent, or else does not match the card selected in the preferences.');

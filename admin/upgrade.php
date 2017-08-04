@@ -28,8 +28,7 @@ xoops_cp_header();
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
 
 if (($xoopsUser instanceof XoopsUser)
-    && $xoopsUser->isAdmin($xoopsModule->mid())
-) {
+    && $xoopsUser->isAdmin($xoopsModule->mid())) {
     $errors = 0;
 
     if (!AdslightUtility::checkTableExists($xoopsDB->prefix('adslight_pictures'))) {
@@ -58,7 +57,7 @@ if (($xoopsUser instanceof XoopsUser)
       title VARCHAR(50) NOT NULL DEFAULT '',
       date INT(10) NOT NULL DEFAULT '0',
       submitter VARCHAR(60) NOT NULL DEFAULT '',
-      message text NULL,
+      message TEXT NULL,
       tele VARCHAR(20) NOT NULL DEFAULT '0',
       email VARCHAR(100) NOT NULL DEFAULT '',
       r_usid INT(11) NOT NULL DEFAULT '0',
@@ -105,12 +104,7 @@ if (($xoopsUser instanceof XoopsUser)
         echo '<h1>' . constant("{$admin_lang}_UPGRADEFAILED") . '</h1>';
         echo '<br>' . constant("{$admin_lang}_UPGRADEFAILED0");
     } else {
-        echo constant("{$admin_lang}_UPDATECOMPLETE")
-             . " - <a href='"
-             . XOOPS_URL
-             . "/modules/system/admin.php?fct=modulesadmin&op=update&module={$moduleDirName}'>"
-             . constant("{$admin_lang}_UPDATEMODULE")
-             . '</a>';
+        echo constant("{$admin_lang}_UPDATECOMPLETE") . " - <a href='" . XOOPS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module={$moduleDirName}'>" . constant("{$admin_lang}_UPDATEMODULE") . '</a>';
     }
 } else {
     printf("<h2>%s</h2>\n", constant("{$admin_lang}_UPGR_ACCESS_ERROR"));

@@ -110,8 +110,7 @@ class GD
                  ) as $value) {
             if (!array_key_exists($value, $rgb) || $rgb[$value] < 0
                 || $rgb[$value] > 255
-                || !is_numeric($rgb[$value])
-            ) {
+                || !is_numeric($rgb[$value])) {
                 exit('Wrong color');
             }
         }

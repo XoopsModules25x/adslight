@@ -274,9 +274,9 @@ function index()
                  '._AM_ADSLIGHT_DONATE.'
                  </td></tr>
 
-                 <tr class="even"><td><center>
+                 <tr class="even"><td><div class='center;'>
                  '._AM_ADSLIGHT_DONATE_LOGO.'
-                 </center></td></tr>
+                 </div></td></tr>
 
                   </table><br>';  */
 

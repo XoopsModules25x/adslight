@@ -201,10 +201,10 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%7D/', // }
         '/%7E/', // ~
         "/\./", // .
-        '/%2A/', 
+        '/%2A/',
         '/%2B/',
         '/quot/'
-);
+    );
     $rep_pat = array(
         '-',
         '-',

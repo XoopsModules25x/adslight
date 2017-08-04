@@ -393,7 +393,7 @@ class ClassifiedsTree
     {
         global $myts, $xoopsDB;
         $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
-//        require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+        //        require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
         if ('' == $sel_name) {
             $sel_name = $this->id;
@@ -411,21 +411,9 @@ class ClassifiedsTree
                 echo "({$cat_order})";
             }
             echo "&nbsp;&nbsp;{$name}&nbsp;&nbsp;</th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsNewCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/add.png\" border=\"0\" width=\"18\" height=\"18\" alt=\""
-                 . _AM_ADSLIGHT_ADDSUBCAT
-                 . "\" title=\""
-                 . _AM_ADSLIGHT_ADDSUBCAT
-                 . "\"></a></th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsModCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" width=\"18\" height=\"18\" alt=\""
-                 . _AM_ADSLIGHT_MODIFSUBCAT
-                 . "\" title=\""
-                 . _AM_ADSLIGHT_MODIFSUBCAT
-                 . "\"></a></th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsDelCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/delete.png\" border=\"0\" width=\"18\" height=\"18\" alt=\""
-                 . _AM_ADSLIGHT_DELSUBCAT
-                 . "\" title=\""
-                 . _AM_ADSLIGHT_DELSUBCAT
-                 . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsNewCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/add.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_ADDSUBCAT . "\" title=\"" . _AM_ADSLIGHT_ADDSUBCAT . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsModCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_MODIFSUBCAT . "\" title=\"" . _AM_ADSLIGHT_MODIFSUBCAT . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsDelCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/delete.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_DELSUBCAT . "\" title=\"" . _AM_ADSLIGHT_DELSUBCAT . "\"></a></th>
                 </tr>";
 
             $arr   = $this->getChildTreeMapArray($catid, $order);
@@ -439,39 +427,10 @@ class ClassifiedsTree
                 if ('cat_order' == $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
                     echo "({$cat_orderS})";
                 }
-                echo ''
-                     . $catpath
-                     . '</a></td>
-                    <td align="center"><a href="category.php?op=AdsNewCat&amp;cid='
-                     . $option[$this->id]
-                     . '"><img src="'
-                     . $pathIcon16
-                     . '/add.png'
-                     . '" border=0 width=18 height=18 alt="'
-                     . _AM_ADSLIGHT_ADDSUBCAT
-                     . '"title="'
-                     . _AM_ADSLIGHT_ADDSUBCAT
-                     . '"></a></td>
-                    <td align="center"><a href="category.php?op=AdsModCat&amp;cid='
-                     . $option[$this->id]
-                     . '"><img src="'
-                     . $pathIcon16
-                     . '/edit.png'
-                     . '" border=0 width=18 height=18 alt="'
-                     . _AM_ADSLIGHT_MODIFSUBCAT
-                     . '" title ="'
-                     . _AM_ADSLIGHT_MODIFSUBCAT
-                     . '"></a></td>
-                    <td align="center"><a href="category.php?op=AdsDelCat&amp;cid='
-                     . $option[$this->id]
-                     . '"><img src="'
-                     . $pathIcon16
-                     . '/delete.png'
-                     . '" border=0 width=18 height=18 alt="'
-                     . _AM_ADSLIGHT_DELSUBCAT
-                     . '" title="'
-                     . _AM_ADSLIGHT_DELSUBCAT
-                     . '"></a></td>';
+                echo '' . $catpath . '</a></td>
+                    <td align="center"><a href="category.php?op=AdsNewCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/add.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_ADDSUBCAT . '"title="' . _AM_ADSLIGHT_ADDSUBCAT . '"></a></td>
+                    <td align="center"><a href="category.php?op=AdsModCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/edit.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_MODIFSUBCAT . '" title ="' . _AM_ADSLIGHT_MODIFSUBCAT . '"></a></td>
+                    <td align="center"><a href="category.php?op=AdsDelCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/delete.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_DELSUBCAT . '" title="' . _AM_ADSLIGHT_DELSUBCAT . '"></a></td>';
 
                 $class = ('even' == $class) ? 'odd' : 'even';
             }

@@ -64,7 +64,6 @@ $maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_original_width'];
  * If we are receiving a file
  */
 if ('sel_photo' === Request::getArray('xoops_upload_file', '', 'POST')[0]) {
-
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
     }

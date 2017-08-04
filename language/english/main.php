@@ -143,8 +143,7 @@ define('_ADSLIGHT_INTERESS', 'Other Ads can be seen at ');
 define('_ADSLIGHT_TEL2', 'Telephone:');
 define('_ADSLIGHT_BYMAIL', 'Email:');
 define('_ADSLIGHT_DISPO', 'Expires on');
-define('_ADSLIGHT_NOMAIL',
-       'We do not give out users email addresses, to contact them by e-mail please use the contact form on our site by clicking on the e-mail link in the ad, you can view the ad at the following web address. ');
+define('_ADSLIGHT_NOMAIL', 'We do not give out users email addresses, to contact them by e-mail please use the contact form on our site by clicking on the e-mail link in the ad, you can view the ad at the following web address. ');
 // modify.php //
 //define('_ADSLIGHT_OUI', 'Yes');
 //define('_ADSLIGHT_NON', 'No');

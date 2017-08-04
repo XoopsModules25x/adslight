@@ -61,11 +61,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
 
         // Check if ANONYMOUS user is trying to vote more than once per day.
         $yesterday = (time() - (86400 * $anonwaitdays));
-        $result    = $xoopsDB->query('SELECT count(*) FROM '
-                                     . $xoopsDB->prefix('adslight_user_votedata')
-                                     . ' WHERE usid='
-                                     . $xoopsDB->escape($usid)
-                                     . " AND ratinguser=0 AND ratinghostname = '$ip' AND ratingtimestamp > $yesterday");
+        $result    = $xoopsDB->query('SELECT count(*) FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($usid) . " AND ratinguser=0 AND ratinghostname = '$ip' AND ratingtimestamp > $yesterday");
         list($anonvotecount) = $xoopsDB->fetchRow($result);
         if ($anonvotecount > 0) {
             redirect_header('members.php?usid=' . addslashes($usid) . '', 4, constant('_ADSLIGHT_VOTEONCE2'));
@@ -76,13 +72,12 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     //All is well.  Add to Line Item Rate to DB.
     $newid    = $xoopsDB->genId($xoopsDB->prefix('adslight_user_votedata') . '_ratingid_seq');
     $datetime = time();
-    $sql      = sprintf("INSERT INTO %s (ratingid, usid, ratinguser, rating, ratinghostname, ratingtimestamp) VALUES (%u, %u, %u, %u, '%s', %u)", $xoopsDB->prefix('adslight_user_votedata'), $newid,
-                        $usid, $ratinguser, $rating, $ip, $datetime);
-    // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
+    $sql      = sprintf("INSERT INTO %s (ratingid, usid, ratinguser, rating, ratinghostname, ratingtimestamp) VALUES (%u, %u, %u, %u, '%s', %u)", $xoopsDB->prefix('adslight_user_votedata'), $newid, $usid, $ratinguser, $rating, $ip, $datetime);
+    // $xoopsDB->query($sql) || $eh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
         $moduleHandler = xoops_getModuleHandler('module');
-        $myModule   = $moduleHandler->getByDirname('adslight');
+        $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
 

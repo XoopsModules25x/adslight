@@ -127,8 +127,7 @@ if (0 == $pictures_number) {
  */
 if (!empty($GLOBALS['xoopsUser'])) {
     if ($isOwner
-        && $GLOBALS['xoopsModuleConfig']['adslight_nb_pict'] > $pictures_number
-    ) {
+        && $GLOBALS['xoopsModuleConfig']['adslight_nb_pict'] > $pictures_number) {
         $maxfilebytes = $GLOBALS['xoopsModuleConfig']['adslight_maxfilesize'];
         $album_factory->renderFormSubmit($uid, $lid, $maxfilebytes, $xoopsTpl);
     }
@@ -190,7 +189,6 @@ $xoopsTpl->assign('permit', $permit);
 $xoopsTpl->assign('xoops_module_header', $header_lightbox);
 
 $xoopsTpl->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getTokenHTML());
-
 
 /**
  * Adding the comment system

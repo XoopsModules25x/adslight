@@ -21,8 +21,7 @@ use Xmf\Database\Migrate;
 
 if ((!defined('XOOPS_ROOT_PATH'))
     || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()
-) {
+    || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -83,7 +82,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
         //        $configurator   = include __DIR__ . '/config.php';
         require_once __DIR__ . '/config.php';
         $configurator = new AdsligthConfigurator();
-        $classUtility     = ucfirst($moduleDirName) . 'Utility';
+        $classUtility = ucfirst($moduleDirName) . 'Utility';
         if (!class_exists($classUtility)) {
             xoops_load('utility', $moduleDirName);
         }

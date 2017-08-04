@@ -218,8 +218,7 @@ function viewAds($lid = 0)
             }
 
             if (($adslight_admin = true)
-                || ($GLOBALS['xoopsUser']->getVar('uid') == $usid)
-            ) {
+                || ($GLOBALS['xoopsUser']->getVar('uid') == $usid)) {
                 $viewcount_judge = false;
             }
 
@@ -262,15 +261,7 @@ function viewAds($lid = 0)
         $xoopsTpl->assign('printA', '<a href="print.php?op=PrintAd&amp;lid=' . $lid . '" ><img src="assets/images/print.gif" border=0 alt="' . _ADSLIGHT_PRINT . '" ></a>&nbsp;');
 
         if ($usid > 0) {
-            $xoopsTpl->assign('submitter', '<img src="assets/images/lesannonces.png" border="0" alt="'
-                                           . _ADSLIGHT_VIEW_MY_ADS
-                                           . '" >&nbsp;&nbsp;<a href="members.php?usid='
-                                           . addslashes($usid)
-                                           . '" >'
-                                           . _ADSLIGHT_VIEW_MY_ADS
-                                           . ' '
-                                           . $submitter
-                                           . '</a>');
+            $xoopsTpl->assign('submitter', '<img src="assets/images/lesannonces.png" border="0" alt="' . _ADSLIGHT_VIEW_MY_ADS . '" >&nbsp;&nbsp;<a href="members.php?usid=' . addslashes($usid) . '" >' . _ADSLIGHT_VIEW_MY_ADS . ' ' . $submitter . '</a>');
         } else {
             $xoopsTpl->assign('submitter', _ADSLIGHT_VIEW_MY_ADS . ' $submitter');
         }
@@ -286,47 +277,15 @@ function viewAds($lid = 0)
             $xoopsTpl->assign('xoop_user', true);
             $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
             if ($usid == $currentid) {
-                $xoopsTpl->assign('modifyads', '<img src='
-                                               . $pathIcon16
-                                               . '/edit.png border="0" alt="'
-                                               . _ADSLIGHT_MODIFANN
-                                               . '" >&nbsp;&nbsp;<a href="modify.php?op=ModAd&amp;lid='
-                                               . $lid
-                                               . '">'
-                                               . _ADSLIGHT_MODIFANN
-                                               . '</a>');
-                $xoopsTpl->assign('deleteads', '<img src='
-                                               . $pathIcon16
-                                               . '/delete.png  border="0" alt="'
-                                               . _ADSLIGHT_SUPPRANN
-                                               . '" >&nbsp;&nbsp;<a href="modify.php?op=ListingDel&amp;lid='
-                                               . $lid
-                                               . '">'
-                                               . _ADSLIGHT_SUPPRANN
-                                               . '</a>');
-                $xoopsTpl->assign('add_photos', '<img src="assets/images/shape_square_add.png" border="0" alt="'
-                                                . _ADSLIGHT_SUPPRANN
-                                                . '" >&nbsp;&nbsp;<a href="view_photos.php?lid='
-                                                . $lid
-                                                . '&uid='
-                                                . $usid
-                                                . '">'
-                                                . _ADSLIGHT_ADD_PHOTOS
-                                                . '</a>');
+                $xoopsTpl->assign('modifyads', '<img src=' . $pathIcon16 . '/edit.png border="0" alt="' . _ADSLIGHT_MODIFANN . '" >&nbsp;&nbsp;<a href="modify.php?op=ModAd&amp;lid=' . $lid . '">' . _ADSLIGHT_MODIFANN . '</a>');
+                $xoopsTpl->assign('deleteads', '<img src=' . $pathIcon16 . '/delete.png  border="0" alt="' . _ADSLIGHT_SUPPRANN . '" >&nbsp;&nbsp;<a href="modify.php?op=ListingDel&amp;lid=' . $lid . '">' . _ADSLIGHT_SUPPRANN . '</a>');
+                $xoopsTpl->assign('add_photos', '<img src="assets/images/shape_square_add.png" border="0" alt="' . _ADSLIGHT_SUPPRANN . '" >&nbsp;&nbsp;<a href="view_photos.php?lid=' . $lid . '&uid=' . $usid . '">' . _ADSLIGHT_ADD_PHOTOS . '</a>');
 
                 $isOwner = true;
                 $xoopsTpl->assign('isOwner', $isOwner);
             }
             if ($GLOBALS['xoopsUser']->isAdmin()) {
-                $xoopsTpl->assign('admin', '<a href="'
-                                           . XOOPS_URL
-                                           . '/modules/adslight/admin/modify_ads.php?op=ModifyAds&amp;lid='
-                                           . $lid
-                                           . '"><img src='
-                                           . $pathIcon16
-                                           . '/edit.png  border=0 alt="'
-                                           . _ADSLIGHT_MODADMIN
-                                           . '" ></a>');
+                $xoopsTpl->assign('admin', '<a href="' . XOOPS_URL . '/modules/adslight/admin/modify_ads.php?op=ModifyAds&amp;lid=' . $lid . '"><img src=' . $pathIcon16 . '/edit.png  border=0 alt="' . _ADSLIGHT_MODADMIN . '" ></a>');
             }
         }
 
@@ -410,17 +369,7 @@ function viewAds($lid = 0)
         }
 
         $user_profile = XoopsUser::getUnameFromId($usid);
-        $xoopsTpl->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="'
-                                          . _ADSLIGHT_PROFILE
-                                          . '" >&nbsp;&nbsp;<a rel="nofollow" href="'
-                                          . XOOPS_URL
-                                          . '/user.php?usid='
-                                          . addslashes($usid)
-                                          . '">'
-                                          . _ADSLIGHT_PROFILE
-                                          . ' '
-                                          . $user_profile
-                                          . '</a>');
+        $xoopsTpl->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
 
         if ($photo != '') {
             require_once __DIR__ . '/class/pictures.php';
@@ -480,46 +429,21 @@ function viewAds($lid = 0)
         } else {
             $xoopsTpl->assign('photo', '');
         }
-        $xoopsTpl->assign('date', '<img alt="date" border="0" src="assets/images/date.png" >&nbsp;&nbsp;<strong>'
-                                  . _ADSLIGHT_DATE2
-                                  . ':</strong> '
-                                  . $date
-                                  . '<br><img alt="date_error" border="0" src="assets/images/date_error.png" >&nbsp;&nbsp;<strong>'
-                                  . _ADSLIGHT_DISPO
-                                  . ':</strong> '
-                                  . $date2);
+        $xoopsTpl->assign('date', '<img alt="date" border="0" src="assets/images/date.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DATE2 . ':</strong> ' . $date . '<br><img alt="date_error" border="0" src="assets/images/date_error.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DISPO . ':</strong> ' . $date2);
     } else {
         $xoopsTpl->assign('no_ad', _ADSLIGHT_NOCLAS);
     }
     $result8 = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid));
 
     list($ctitle) = $xoopsDB->fetchRow($result8);
-    $xoopsTpl->assign('friend', '<img src="assets/images/friend.gif" border="0" alt="'
-                                . _ADSLIGHT_SENDFRIENDS
-                                . '" >&nbsp;&nbsp;<a rel="nofollow" href="sendfriend.php?op=SendFriend&amp;lid='
-                                . $lid
-                                . '">'
-                                . _ADSLIGHT_SENDFRIENDS
-                                . '</a>');
+    $xoopsTpl->assign('friend', '<img src="assets/images/friend.gif" border="0" alt="' . _ADSLIGHT_SENDFRIENDS . '" >&nbsp;&nbsp;<a rel="nofollow" href="sendfriend.php?op=SendFriend&amp;lid=' . $lid . '">' . _ADSLIGHT_SENDFRIENDS . '</a>');
 
-    $xoopsTpl->assign('alerteabus', '<img src="assets/images/error.png" border="0" alt="'
-                                    . _ADSLIGHT_ALERTEABUS
-                                    . '" >&nbsp;&nbsp;<a rel="nofollow" href="report-abuse.php?op=ReportAbuse&amp;lid='
-                                    . $lid
-                                    . '">'
-                                    . _ADSLIGHT_ALERTEABUS
-                                    . '</a>');
+    $xoopsTpl->assign('alerteabus', '<img src="assets/images/error.png" border="0" alt="' . _ADSLIGHT_ALERTEABUS . '" >&nbsp;&nbsp;<a rel="nofollow" href="report-abuse.php?op=ReportAbuse&amp;lid=' . $lid . '">' . _ADSLIGHT_ALERTEABUS . '</a>');
 
     $xoopsTpl->assign('link_main', '<a href="../adslight/">' . _ADSLIGHT_MAIN . '</a>');
     $xoopsTpl->assign('link_cat', '<a href="viewcats.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_GORUB . ' ' . $ctitle . '</a>');
 
-    $xoopsTpl->assign('printA', '<img src="assets/images/print.gif" border="0" alt="'
-                                . _ADSLIGHT_PRINT
-                                . '" >&nbsp;&nbsp;<a rel="nofollow" href="print.php?op=PrintAd&amp;lid='
-                                . $lid
-                                . '">'
-                                . _ADSLIGHT_PRINT
-                                . '</a>');
+    $xoopsTpl->assign('printA', '<img src="assets/images/print.gif" border="0" alt="' . _ADSLIGHT_PRINT . '" >&nbsp;&nbsp;<a rel="nofollow" href="print.php?op=PrintAd&amp;lid=' . $lid . '">' . _ADSLIGHT_PRINT . '</a>');
 }
 
 #  function categorynewgraphic
@@ -539,13 +463,7 @@ function categorynewgraphic($cid)
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
 
-    $newresult = $xoopsDB->query('SELECT date FROM '
-                                 . $xoopsDB->prefix('adslight_listing')
-                                 . ' WHERE cid='
-                                 . $xoopsDB->escape($cid)
-                                 . ' AND valid = "Yes" '
-                                 . $cat_perms
-                                 . ' ORDER BY DATE DESC LIMIT 1');
+    $newresult = $xoopsDB->query('SELECT date FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . $xoopsDB->escape($cid) . ' AND valid = "Yes" ' . $cat_perms . ' ORDER BY DATE DESC LIMIT 1');
     list($date) = $xoopsDB->fetchRow($newresult);
 
     $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];

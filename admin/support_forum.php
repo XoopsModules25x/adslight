@@ -115,14 +115,10 @@ echo '</tr></table><br>';
 
 //// Russie ///
 echo "<table width='100%' border='0' class='outer'><tr><td>";
-echo '<label>'
-     . _AM_ADSLIGHT_SUPPORTFORUM_CONTRYLANG
-     . ':</label><img src="../assets/images/flags/unavailable.png" width="16" height="11" border="0"><b>  &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</b><br>';
+echo '<label>' . _AM_ADSLIGHT_SUPPORTFORUM_CONTRYLANG . ':</label><img src="../assets/images/flags/unavailable.png" width="16" height="11" border="0"><b>  &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</b><br>';
 echo '<label>' . _AM_ADSLIGHT_SUPPORTFORUM_WEBLINKS . ':</label> -<br>';
 echo '<label>' . _AM_ADSLIGHT_SUPPORTFORUM_DESC . ':</label> -<br>';
-echo '<label>'
-     . _AM_ADSLIGHT_SUPPORTFORUM_TRANSLATE
-     . ':</label><a href="mailto:adslight.translate@gmail.com?subject=Traduction AdsLight"> &#1054;&#1090;&#1087;&#1088;&#1072;&#1074;&#1080;&#1090;&#1100; &#1087;&#1077;&#1088;&#1077;&#1074;&#1086;&#1076;</a><br>';
+echo '<label>' . _AM_ADSLIGHT_SUPPORTFORUM_TRANSLATE . ':</label><a href="mailto:adslight.translate@gmail.com?subject=Traduction AdsLight"> &#1054;&#1090;&#1087;&#1088;&#1072;&#1074;&#1080;&#1090;&#1100; &#1087;&#1077;&#1088;&#1077;&#1074;&#1086;&#1076;</a><br>';
 echo '</tr></table><br>';
 
 //// Polonais ///

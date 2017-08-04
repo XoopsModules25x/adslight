@@ -54,9 +54,7 @@ class AdslightUtility
         $datenow = time();
         $message = '';
 
-        $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM '
-                                   . $xoopsDB->prefix('adslight_listing')
-                                   . " WHERE valid='Yes'");
+        $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes'");
 
         while (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5)) {
             $title     = $myts->htmlSpecialChars($title);
@@ -72,8 +70,7 @@ class AdslightUtility
 
             if ($almost > 0 && ($supprdate - $almost * 86400) < $datenow
                 && $valid === 'Yes'
-                && $remind == 0
-            ) {
+                && $remind == 0) {
                 $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET remind='1' WHERE lid=$lids");
 
                 if ($email) {
@@ -212,7 +209,7 @@ class AdslightUtility
 
         $lid = Request::getInt('lid', 0, 'GET');
 
-        $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . '';
+        $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . ' ';
         //echo $query;
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
@@ -271,8 +268,7 @@ class AdslightUtility
         global $moduleDirName;
         static $permissions = array();
         if (is_array($permissions)
-            && array_key_exists($permtype, $permissions)
-        ) {
+            && array_key_exists($permtype, $permissions)) {
             return $permissions[$permtype];
         }
 
@@ -307,8 +303,7 @@ class AdslightUtility
         if (isset($GLOBALS['xoopsModuleConfig'])
             && (is_object($xoopsModule)
                 && $xoopsModule->getVar('dirname') == $repmodule
-                && $xoopsModule->getVar('isactive'))
-        ) {
+                && $xoopsModule->getVar('isactive'))) {
             if (isset($GLOBALS['xoopsModuleConfig'][$option])) {
                 $retval = $GLOBALS['xoopsModuleConfig'][$option];
             }
@@ -819,7 +814,7 @@ class AdslightUtility
                     break;
                 }
             } else {
-                if ((int)$v > 0) { // handles things like x.x.x.0_RC2
+                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
                     $success = false;
                     break;
                 }

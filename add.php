@@ -19,6 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
@@ -96,8 +97,7 @@ if (Request::hasVar('submit', 'POST')) {
     $newid     = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
     $sql     = sprintf("INSERT INTO %s (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                       $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town,
-                       $country, $contactby, $premium, $valid);
+                       $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid);
     $success = $xoopsDB->query($sql);
     if (!$success) {
         $moduleHandler = xoops_getHandler('module');
@@ -193,7 +193,7 @@ if (Request::hasVar('submit', 'POST')) {
     $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'add.php', 'post', true);
     $form->setExtra('enctype="multipart/form-data"');
 
-//    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
+    //    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
 
     //@todo - this 'if' code doesn't do anything, what should happen for premium accounts?
     if ($cat_moderate) {

@@ -19,6 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
@@ -106,19 +107,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['WEBMASTER']   = _ADSLIGHT_WEBMASTER;
         $tags['SITE_URL']    = '<a href="' . XOOPS_URL . '">' . XOOPS_URL . '</a>';
         $tags['AT']          = _ADSLIGHT_AT;
-        $tags['LINK_URL']    = '<a href="'
-                               . XOOPS_URL
-                               . '/modules/'
-                               . $xoopsModule->getVar('dirname')
-                               . '/viewads.php?lid='
-                               . addslashes($id)
-                               . '">'
-                               . XOOPS_URL
-                               . '/modules/'
-                               . $xoopsModule->getVar('dirname')
-                               . '/viewads.php?lid='
-                               . addslashes($id)
-                               . '</a>';
+        $tags['LINK_URL']    = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?lid=' . addslashes($id) . '">' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?lid=' . addslashes($id) . '</a>';
         $tags['VIEW_AD']     = _ADSLIGHT_VIEW_AD;
 
         $subject = '' . _ADSLIGHT_CONTACTAFTERANN . '';
@@ -139,11 +128,7 @@ if (Request::hasVar('submit', 'POST')) {
 
         $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date', '$namep', '$ipnumber', '" . Request::getString('post', '', 'POST') . "')");
 
-        $xoopsDB->query('INSERT INTO '
-                        . $xoopsDB->prefix('adslight_replies')
-                        . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '"
-                        . Request::getString('post', '', 'POST')
-                        . "', '$r_usid')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '" . Request::getString('post', '', 'POST') . "', '$r_usid')");
 
         redirect_header('index.php', 3, _ADSLIGHT_MESSEND);
     }
@@ -168,7 +153,7 @@ if (Request::hasVar('submit', 'POST')) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
-//    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     include XOOPS_ROOT_PATH . '/header.php';
@@ -247,7 +232,7 @@ if (Request::hasVar('submit', 'POST')) {
     echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" >";
     echo "<input type=\"hidden\" name=\"date\" value=\"$time\" >";
     echo '<p><input type="submit" name="submit" value="' . _ADSLIGHT_SENDFR . '" ></p>
-' .$GLOBALS['xoopsSecurity']->getTokenHTML() . '
+' . $GLOBALS['xoopsSecurity']->getTokenHTML() . '
     </form>';
 }
 echo '</td></tr></table>';

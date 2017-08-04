@@ -53,11 +53,11 @@ $start  = Request::getInt('start', 0);
 $queries = array();
 
 if ($action === 'results') {
-    if ($query == '') {
+    if ($query === '') {
         redirect_header('search.php', 1, _SR_PLZENTER);
     }
 } elseif ($action === 'showall') {
-    if ($query == '' || empty($mid)) {
+    if ($query === '' || empty($mid)) {
         redirect_header('search.php', 1, _SR_PLZENTER);
     }
 } elseif ($action === 'showallbyuser') {
@@ -158,8 +158,7 @@ switch ($action) {
                         echo '<td width="30%">';
                         echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                         if (isset($results[$i]['photo'])
-                            && $results[$i]['photo'] != ''
-                        ) {
+                            && $results[$i]['photo'] !== '') {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
@@ -180,13 +179,7 @@ switch ($action) {
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
                         echo '</td><td width="20%">';
-                        echo ''
-                             . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']
-                             . ''
-                             . $myts->htmlSpecialChars($results[$i]['price'])
-                             . '</a>&nbsp;'
-                             . $myts->htmlSpecialChars($results[$i]['typeprice'])
-                             . '</a>';
+                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
 
                         echo '</td></tr><tr><td>';
                         echo '<small>';
@@ -257,8 +250,7 @@ switch ($action) {
                 echo '<td width="30%">';
                 echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                 if (isset($results[$i]['photo'])
-                    && $results[$i]['photo'] != ''
-                ) {
+                    && $results[$i]['photo'] !== '') {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 } else {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";

@@ -49,9 +49,8 @@ function adslight_b2_show($options)
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM '
-                              . $xoopsDB->prefix("{$moduleDirName}_listing")
-                              . " WHERE valid='Yes' AND status!='1' {$cat_perms} ORDER BY {$options[0]} DESC", $options[1], 0);
+    $result = $xoopsDB->query('SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' AND status!='1' {$cat_perms} ORDER BY {$options[0]} DESC", $options[1],
+                              0);
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $a_item = array();
@@ -81,11 +80,7 @@ function adslight_b2_show($options)
         $a_item['country']   = $country;
         $a_item['id']        = (int)$myrow['lid'];
         $a_item['cid']       = (int)$myrow['cid'];
-        $a_item['no_photo']  = '<a href="'
-                               . XOOPS_URL
-                               . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\""
-                               . XOOPS_URL
-                               . "/modules/{$moduleDirName}/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"{$ad_title}\"></a>";
+        $a_item['no_photo']  = '<a href="' . XOOPS_URL . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"{$ad_title}\"></a>";
 
         $a_item['price_symbol'] = $helper->getConfig($moduleDirName . '_currency_symbol', '');
 
@@ -95,11 +90,7 @@ function adslight_b2_show($options)
 
         if ('' != $myrow['photo']) {
             //            $updir = $xoopsModuleConfig["{$moduleDirName}_link_upload"];
-            $sql = 'SELECT cod_img, lid, uid_owner, url FROM '
-                   . $xoopsDB->prefix("{$moduleDirName}_pictures")
-                   . ' WHERE uid_owner='
-                   . (int)$usid
-                   . " AND lid={$a_item['id']} ORDER BY date_added ASC LIMIT 1";
+            $sql = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix("{$moduleDirName}_pictures") . ' WHERE uid_owner=' . (int)$usid . " AND lid={$a_item['id']} ORDER BY date_added ASC LIMIT 1";
 
             //            if ('' != $myrow['photo']) {
             //                //  $updir = $GLOBALS['xoopsModuleConfig']["".$moduleDirName."_link_upload"];
@@ -111,11 +102,7 @@ function adslight_b2_show($options)
             //            }
             $resultp = $xoopsDB->query($sql);
             while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
-                $a_item['photo'] = '<a href="'
-                                   . XOOPS_URL
-                                   . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\""
-                                   . XOOPS_URL
-                                   . "/uploads/AdsLight/thumbs/thumb_{$url}\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
+                $a_item['photo'] = '<a href="' . XOOPS_URL . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/thumbs/thumb_{$url}\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
             }
         } else {
             $a_item['photo'] = '';

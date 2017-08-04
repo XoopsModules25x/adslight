@@ -72,9 +72,7 @@ function index()
         echo '</fieldset><br>';
     }
 
-    $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM '
-                               . $xoopsDB->prefix('adslight_listing')
-                               . " WHERE valid='no' ORDER BY lid");
+    $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid");
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
 
@@ -127,25 +125,15 @@ function index()
             $premium   = $myts->htmlSpecialChars($premium);
 
             $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
-            $sql     = 'SELECT cod_img, lid, uid_owner, url FROM '
-                       . $xoopsDB->prefix('adslight_pictures')
-                       . ' WHERE  uid_owner='
-                       . (int)$usid
-                       . ' AND lid='
-                       . (int)$lid
-                       . ' ORDER BY date_added ASC LIMIT 1';
+            $sql     = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE  uid_owner=' . (int)$usid . ' AND lid=' . (int)$lid . ' ORDER BY date_added ASC LIMIT 1';
             $resultp = $xoopsDB->query($sql);
             while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
                 if ($photo) {
-                    $photo3 = "<a href='"
-                              . XOOPS_URL
-                              . "/modules/adslight/viewads.php?lid={$lid}'><img class=\"thumb\" src=\"{$updir}/thumbs/thumb_{$url}\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
+                    $photo3 = "<a href='" . XOOPS_URL . "/modules/adslight/viewads.php?lid={$lid}'><img class=\"thumb\" src=\"{$updir}/thumbs/thumb_{$url}\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
                 }
             }
             if ($photo <= 0) {
-                $photo3 = "<a href=\"index.php?op=IndexView&lid={$lid}\"><img class=\"thumb\" src=\""
-                          . XOOPS_URL
-                          . "/modules/adslight/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
+                $photo3 = "<a href=\"index.php?op=IndexView&lid={$lid}\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/modules/adslight/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
             }
 
             $photo4 = ($photo > 0) ? "$photo" : '0';
@@ -161,15 +149,7 @@ function index()
 
             echo "<form action=\"validate_ads.php\" method=\"post\">";
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-            echo "<tr><th class='left'>"
-                 . _AM_ADSLIGHT_LID
-                 . ": {$lid}</th><th class='left'>{$photo4} "
-                 . _AM_ADSLIGHT_NBR_PHOTO
-                 . "</th><th align='left'>"
-                 . _AM_ADSLIGHT_TITLE
-                 . ":</th><th align='left'>"
-                 . _AM_ADSLIGHT_DESC
-                 . "</th><th align='left'></th></tr>";
+            echo "<tr><th class='left'>" . _AM_ADSLIGHT_LID . ": {$lid}</th><th class='left'>{$photo4} " . _AM_ADSLIGHT_NBR_PHOTO . "</th><th align='left'>" . _AM_ADSLIGHT_TITLE . ":</th><th align='left'>" . _AM_ADSLIGHT_DESC . "</th><th align='left'></th></tr>";
 
             echo "<tr><td class='even' width='3%'></td>";
             echo "<td class='odd width10'>{$photo3}</td>";
@@ -260,11 +240,7 @@ function indexView($lid)
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
-    $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo FROM '
-                               . $xoopsDB->prefix('adslight_listing')
-                               . " WHERE valid='No' AND lid='"
-                               . (int)$lid
-                               . "'");
+    $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='No' AND lid='" . (int)$lid . "'");
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
         echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td valign='top'>";
@@ -362,11 +338,7 @@ function indexView($lid)
         }
         echo '</select></td></tr>';
 
-        echo "<tr class='head' border='1'><td>"
-             . _AM_ADSLIGHT_PRICE2
-             . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"{$price}\"> "
-             . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']
-             . '';
+        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"{$price}\"> " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '';
         $result3 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
         echo " <select name=\"typeprice\"><option value=\"{$typeprice}\">{$typeprice}</option>";
 
@@ -425,9 +397,7 @@ function modifyAds($lid)
 
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM '
-                              . $xoopsDB->prefix('adslight_listing')
-                              . " WHERE lid={$lid}");
+    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
 
     while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result)) {
         $title    = $myts->htmlSpecialChars($title);
@@ -543,10 +513,7 @@ function modifyAds($lid)
 
         //////// Price
 
-        echo "<tr class='head' border='1'><td>"
-             . _AM_ADSLIGHT_PRICE2
-             . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"{$price}\"> "
-             . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'];
+        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"{$price}\"> " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'];
 
         //////// Price type
         $resultx = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY nom_price');

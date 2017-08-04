@@ -72,9 +72,7 @@ function index()
         echo '</fieldset><br>';
     }
 
-    $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM '
-                               . $xoopsDB->prefix('adslight_listing')
-                               . " WHERE valid='no' ORDER BY lid");
+    $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid");
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
 
@@ -135,9 +133,7 @@ function modifyAds($lid)
 
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM '
-                              . $xoopsDB->prefix('adslight_listing')
-                              . " WHERE lid={$lid}");
+    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
 
     while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result)) {
         $title    = $myts->htmlSpecialChars($title);
@@ -254,11 +250,7 @@ function modifyAds($lid)
         echo '</select></td></tr>';
 
         /////// Price
-        echo "<tr class='head' border='1'><td>"
-             . _AM_ADSLIGHT_PRICE2
-             . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> "
-             . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']
-             . '';
+        echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '';
 
         //////// Price type
 

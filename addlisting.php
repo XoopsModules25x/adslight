@@ -68,9 +68,9 @@ if (Request::hasVar('submit', 'POST')) {
     }
 
     if (Request::getString('title', '', 'POST') == '') {
-        //        $erh->show('1001'); //'0001' => 'Could not connect to the forums database.',
+        //        $eh->show('1001'); //'0001' => 'Could not connect to the forums database.',
         $moduleHandler = xoops_getModuleHandler('module');
-        $myModule   = $moduleHandler->getByDirname('adslight');
+        $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
     $cid = Request::getInt('cid', 0, 'POST');
@@ -103,13 +103,12 @@ if (Request::hasVar('submit', 'POST')) {
     $newid = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
     $sql = sprintf("INSERT INTO %s (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                   $xoopsDB->prefix('adslight_listing'), (int)$newid, $cid, $title, (int)$status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter,
-                   (int)$usid, $town, $country, $contactby, $premium, $valid);
-    // $xoopsDB->query($sql) || $erh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
+                   $xoopsDB->prefix('adslight_listing'), (int)$newid, $cid, $title, (int)$status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, (int)$usid, $town, $country, $contactby, $premium, $valid);
+    // $xoopsDB->query($sql) || $eh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
         $moduleHandler = xoops_getModuleHandler('module');
-        $myModule   = $moduleHandler->getByDirname('adslight');
+        $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
 
@@ -203,7 +202,7 @@ if (Request::hasVar('submit', 'POST')) {
     $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'addlisting.php');
     $form->setExtra('enctype="multipart/form-data"');
 
-//    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
+    //    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
 
     //@todo - what should be echo'd here? Code commented out
     //        because it doesn't currently do anything

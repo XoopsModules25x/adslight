@@ -297,7 +297,7 @@ function listingModPrice($id_price)
 
     echo "<form action=\"options.php\" method=\"post\">";
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-    echo  _AM_ADSLIGHT_TYPE
+    echo _AM_ADSLIGHT_TYPE
          . " <input type=\"text\" name=\"nom_price\" value=\"{$nom_price}\" size=\"51\" maxlength=\"50\"><br>"
          . "<input type=\"hidden\" name=\"id_price\" value=\"{$id_price}\">"
          . "<input type=\"hidden\" name=\"op\" value=\"ListingModPriceS\">"
@@ -405,7 +405,7 @@ function listingModUsure($id_usure)
 
     echo "<form action=\"options.php\" method=\"post\">";
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-         echo _AM_ADSLIGHT_USURE
+    echo _AM_ADSLIGHT_USURE
          . " <input type=\"text\" name=\"nom_usure\" value=\"{$nom_usure}\" size=\"51\" maxlength=\"50\"><br>"
          . "<input type=\"hidden\" name=\"id_usure\" value=\"{$id_usure}\">"
          . "<input type=\"hidden\" name=\"op\" value=\"ListingModUsureS\">"

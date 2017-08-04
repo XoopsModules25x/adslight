@@ -29,8 +29,7 @@ $path = XOOPS_ROOT_PATH . '/modules/adslight/maps';
 if ($handle = opendir($path)) {
     while (false !== ($file = readdir($handle))) {
         if (!is_dir($path . '.' . $file) && $file !== '.' && $file !== '..'
-            && $file !== 'index.html'
-        ) {
+            && $file !== 'index.html') {
             $maps_name                 = $file;
             $adslight_maps[$maps_name] = $file;
         }
@@ -58,7 +57,7 @@ $modversion['license']       = 'GPL';
 $modversion['license_file']  = 'http://www.gnu.org/licenses/gpl.html';
 $modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
 $modversion['image']         = 'assets/images/logoModule.png';
-$modversion['dirname']      = $moduleDirName;
+$modversion['dirname']       = $moduleDirName;
 
 //$modversion['dirmoduleadmin']      = 'Frameworks/moduleclasses/moduleadmin';
 //$modversion['sysicons16']          = 'Frameworks/moduleclasses/icons/16';

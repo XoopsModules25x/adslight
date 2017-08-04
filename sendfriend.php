@@ -102,10 +102,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
         }
     }
 
-    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM '
-                              . $xoopsDB->prefix('adslight_listing')
-                              . ' WHERE lid='
-                              . $xoopsDB->escape($lid));
+    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
