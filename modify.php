@@ -379,7 +379,7 @@ function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $p
     $type      = $myts->addSlashes($type);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
     $tel       = $myts->addSlashes($tel);
-    $price     = str_replace(array(' '), '', $price);
+    $price     = str_replace([' '], '', $price);
     $typeprice = $myts->addSlashes($typeprice);
     $typeusure = $myts->addSlashes($typeusure);
     $submitter = $myts->addSlashes($submitter);

@@ -40,11 +40,11 @@ if ('0' == $cat_rows) {
 } else {
     //$permtoset= isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
     $permtoset                = Request::getInt('permtoset', 1, 'POST');
-    $selected                 = array(
+    $selected                 = [
         '',
         '',
         ''
-    );
+    ];
     $selected[$permtoset - 1] = ' selected';
     echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='document.jselperm.submit()'><option value='1'"
          . $selected[0]

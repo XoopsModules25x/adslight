@@ -54,7 +54,7 @@ function index()
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 
-    include XOOPS_ROOT_PATH . '/header.php';
+//    include XOOPS_ROOT_PATH . '/header.php';
 
     $xoopsTpl->assign('xmid', $xoopsModule->getVar('mid'));
     $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -142,7 +142,7 @@ function index()
         $totallisting = AdslightUtility::getTotalItems($myrow['cid'], 1);
         $content      .= $title . ' ';
 
-        $arr = array();
+        $arr = [];
         if (in_array($myrow['cid'], $categories)) {
             $arr           = $mytree->getFirstChild($myrow['cid'], 'title');
             $space         = 0;
@@ -166,7 +166,7 @@ function index()
                     }
                 }
             }
-            $xoopsTpl->append('categories', array(
+            $xoopsTpl->append('categories', [
                 'image'         => $img,
                 'id'            => $myrow['cid'],
                 'title'         => $myts->htmlSpecialChars($myrow['title']),
@@ -174,7 +174,7 @@ function index()
                 'subcategories' => $subcategories,
                 'totallisting'  => $totallisting,
                 'count'         => $count
-            ));
+            ]);
             ++$count;
         }
     }
@@ -224,7 +224,7 @@ function index()
                 $town      = $myts->htmlSpecialChars($town);
                 $country   = $myts->htmlSpecialChars($country);
                 $premium   = $myts->htmlSpecialChars($premium);
-                $a_item    = array();
+                $a_item    = [];
                 $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
                 $startdate = (time() - (86400 * $newcount));
 

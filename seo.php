@@ -35,12 +35,12 @@ if (!empty($seoOther)) {
     $seoOther = explode('/', $seoOther);
 }
 
-$seoMap = array(
+$seoMap = [
     'c' => 'viewcats.php',
     'p' => 'viewads.php'
     //  'addlisting' => 'addlisting.php'
 
-);
+];
 
 if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
     // module specific dispatching logic, other module must implement as

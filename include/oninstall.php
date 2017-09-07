@@ -64,8 +64,9 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
     xoops_loadLanguage('modinfo', $moduleDirName);
 
     $configurator = include __DIR__ . '/config.php';
-    $classUtility = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($classUtility)) {
+    /** @var AdslightUtility $utilityClass */
+    $utilityClass = ucfirst($moduleDirName) . 'Utility';
+    if (!class_exists($utilityClass)) {
         xoops_load('utility', $moduleDirName);
     }
 
@@ -90,7 +91,7 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
 
 
 
-    $classUtility::saveCategoryPermissions($groups, $categoryId, $permName);
+    $utilityClass::saveCategoryPermissions($groups, $categoryId, $permName);
 */
 
     $groups1 = [XOOPS_GROUP_ADMIN];
@@ -107,16 +108,16 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $categoryId = (int)$myrow['cid'];
-        $classUtility::saveCategoryPermissions($groups1, $categoryId, $permName1);
-        $classUtility::saveCategoryPermissions($groups2, $categoryId, $permName2);
-        $classUtility::saveCategoryPermissions($groups3, $categoryId, $permName3);
+        $utilityClass::saveCategoryPermissions($groups1, $categoryId, $permName1);
+        $utilityClass::saveCategoryPermissions($groups2, $categoryId, $permName2);
+        $utilityClass::saveCategoryPermissions($groups3, $categoryId, $permName3);
     }
 
     //  ---  CREATE FOLDERS ---------------
     if (count($configurator['uploadFolders']) > 0) {
         //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
         foreach (array_keys($configurator['uploadFolders']) as $i) {
-            $classUtility::createFolder($configurator['uploadFolders'][$i]);
+            $utilityClass::createFolder($configurator['uploadFolders'][$i]);
         }
     }
 
@@ -125,7 +126,7 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
         $file = __DIR__ . '/../assets/images/blank.png';
         foreach (array_keys($configurator['copyFiles']) as $i) {
             $dest = $configurator['copyFiles'][$i] . '/blank.png';
-            $classUtility::copyFile($file, $dest);
+            $utilityClass::copyFile($file, $dest);
         }
     }
 

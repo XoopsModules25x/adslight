@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 // create form
@@ -30,11 +30,11 @@ $mid         = $xoopsModule->getVar('name');
 // create form elements
 $search_form->addElement(new XoopsFormText(_SR_KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);
 $type_select = new XoopsFormSelect(_SR_TYPE, 'andor', $andor);
-$type_select->addOptionArray(array(
+$type_select->addOptionArray([
                                  'AND'   => _SR_ALL,
                                  'OR'    => _SR_ANY,
                                  'exact' => _SR_EXACT
-                             ));
+                             ]);
 $search_form->addElement($type_select);
 
 if (!empty($mids)) {

@@ -50,7 +50,7 @@ $mid    = Request::getInt('mid', 0);
 $uid    = Request::getInt('uid', 0);
 $start  = Request::getInt('start', 0);
 
-$queries = array();
+$queries = [];
 
 if ($action === 'results') {
     if ($query === '') {
@@ -86,7 +86,7 @@ if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
 $myts = MyTextSanitizer::getInstance();
 if ($action !== 'showallbyuser') {
     if ($andor !== 'exact') {
-        $ignored_queries = array(); // holds keywords that are shorter than allowed mininum length
+        $ignored_queries = []; // holds keywords that are shorter than allowed mininum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
             $q = trim($q);
@@ -104,7 +104,7 @@ if ($action !== 'showallbyuser') {
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
-        $queries = array($myts->addSlashes($query));
+        $queries = [$myts->addSlashes($query)];
     }
 }
 switch ($action) {
@@ -115,7 +115,7 @@ switch ($action) {
         $criteria->add(new Criteria('isactive', 1));
         $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $moduleHandler->getObjects($criteria, true);
-        $mids    = Request::getArray('mids', array());
+        $mids    = Request::getArray('mids', []);
         if (empty($mids) || !is_array($mids)) {
             unset($mids);
             $mids = array_keys($xmid);

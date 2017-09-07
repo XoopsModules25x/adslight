@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 // <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/assets/images/map.png
 
@@ -35,7 +35,7 @@ function adslight_maps_show($options)
 
     $maps_name = $xoopsConfig['language'];
 
-    $block = array();
+    $block = [];
     $myts  = MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));

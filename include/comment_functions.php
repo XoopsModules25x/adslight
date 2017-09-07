@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 // comment callback functions
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $moduleDirName = basename(dirname(__DIR__));
 if (isset($usid)) {

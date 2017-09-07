@@ -60,7 +60,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql    .= ' ORDER BY premium DESC, date DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret    = array();
+    $ret    = [];
     $i      = 0;
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $myts    = MyTextSanitizer::getInstance();

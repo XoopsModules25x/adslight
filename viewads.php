@@ -62,7 +62,7 @@ function viewAds($lid = 0)
     global $xoopsModuleConfig, $xoopsUser;
     $pathIcon16     = \Xmf\Module\Admin::iconUrl('', 16);
     $contact_pm     = $contact = '';
-    $pictures_array = array();
+    $pictures_array = [];
     $cid            = 0;
 
     $tempXoopsLocal                          = new XoopsLocal;

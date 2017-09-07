@@ -22,7 +22,7 @@
 
 //
 
-defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 // Keep Block option values when update (by nobunobu)
 global $xoopsDB;

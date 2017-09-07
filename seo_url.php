@@ -24,7 +24,7 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 define('REAL_MODULE_NAME', 'adslight');
 define('SEO_MODULE_NAME', 'annonces');
@@ -43,14 +43,14 @@ function seo_urls($s)
 
     $module_name = REAL_MODULE_NAME;
 
-    $search = array(
+    $search = [
         // Search URLs of modules' directry.
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(viewcats.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(viewads.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         //    '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})'.$XPS_URL.'\/modules\/'.$module_name.'\/()([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
 
-    );
+    ];
     $s      = preg_replace_callback($search, 'replace_links', $s);
 
     return $s;
@@ -63,7 +63,7 @@ function seo_urls($s)
  */
 function replace_links($matches)
 {
-    $req_string = array();
+    $req_string = [];
     $add_to_url = '';
     switch ($matches[5]) {
         case 'viewcats.php':
@@ -172,7 +172,7 @@ function adslight_seo_title($title = '', $withExt = false)
 
     // Transformation des ponctuations
     //                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .                 +
-    $pattern = array(
+    $pattern = [
         '/%09/', // Tab
         '/%20/', // Space
         '/%21/', // !
@@ -204,8 +204,8 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%2A/',
         '/%2B/',
         '/quot/'
-    );
-    $rep_pat = array(
+    ];
+    $rep_pat = [
         '-',
         '-',
         '',
@@ -237,12 +237,12 @@ function adslight_seo_title($title = '', $withExt = false)
         '',
         '+',
         ''
-    );
+    ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     // Transformation of characters with accents
     //                  °        è        é        ê        ë        ç        à        â        ä        î        ï        ù        ü        û        ô        ö
-    $pattern = array(
+    $pattern = [
         '/%B0/',        // °
         '/%E8/',        // è
         '/%E9/',        // é
@@ -268,8 +268,8 @@ function adslight_seo_title($title = '', $withExt = false)
         '/a%80%9D/',
         '/%E3%A7/',
 
-    );
-    $rep_pat = array(
+    ];
+    $rep_pat = [
         '-',
         'e',
         'e',
@@ -294,7 +294,7 @@ function adslight_seo_title($title = '', $withExt = false)
         '-',
         '-',
         'c'
-    );
+    ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     if (count($title) > 0) {
@@ -331,7 +331,7 @@ function adslight_absolutize($s)
     $d4      = @str_replace('/' . $dir_arr[$m - 3], '', $d3);
     $d5      = @str_replace('/' . $dir_arr[$m - 4], '', $d4);
     $host    = 'http://' . $_SERVER['HTTP_HOST'];
-    $in      = array(
+    $in      = [
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([^\"\' >]+)([^>]*)>/i',
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})\.\.\/\.\.\/\.\.\/([^\"\']*)([\"\']{1})([^>]*)>/i',
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})\.\.\/\.\.\/([^\"\']*)([\"\']{1})([^>]*)>/i',
@@ -343,8 +343,8 @@ function adslight_absolutize($s)
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})(?:\.\/)?([^\"\'\/:]*\/*)?([^\"\'\/:]*\/*)?([^\"\'\/:]*\/*)?([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i',
         '/[^"\'a-zA-Z_0-9](window\.open|url)\(([\"\']{0,1})(?:\.\/)?([^\"\'\/]*)\.([^\"\'\/]+)([\"\']*)([^\)]*)/i',
         '/<meta([^>]*)url=([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i'
-    );
-    $out     = array(
+    ];
+    $out     = [
         '<\\1\\2="\\3"\\4>',
         '<\\1\\2=\\3' . $host . $d3 . '/\\4\\5\\6>',
         '<\\1\\2=\\3' . $host . $d2 . '/\\4\\5\\6>',
@@ -356,7 +356,7 @@ function adslight_absolutize($s)
         '<\\1\\2=\\3' . $host . $req_dir . '/\\4\\5\\6\\7.\\8\\9\\10>',
         '$1($2' . $host . $req_dir . '/$3.$4$5$6',
         '<meta$1url=' . $host . $req_dir . '/$2.$3$4$5>'
-    );
+    ];
     $s       = preg_replace($in, $out, $s);
 
     return $s;

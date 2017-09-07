@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * @param $options
@@ -32,7 +32,7 @@ function adslight_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
     global $xoopsDB, $moduleDirName, $block_lang;
 
-    $block = array();
+    $block = [];
     $myts  = MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
@@ -43,7 +43,7 @@ function adslight_show($options)
     $result = $xoopsDB->query('SELECT lid, cid, title, type, date, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' ORDER BY {$options[0]} DESC", $options[1], 0);
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $a_item = array();
+        $a_item = [];
         $title  = $myts->htmlSpecialChars($myrow['title']);
         $type   = $myts->htmlSpecialChars($myrow['type']);
 

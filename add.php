@@ -81,7 +81,7 @@ if (Request::hasVar('submit', 'POST')) {
     $type      = Request::getString('type', '', 'POST');
     $desctext  = Request::getText('desctext', '', 'POST'); // $myts->displayTarea($_POST['desctext'], 1, 1, 1);
     $tel       = Request::getString('tel', '', 'POST');
-    $price     = str_replace(array(' '), '', Request::getFloat('price', 0, 'POST'));
+    $price     = str_replace([' '], '', Request::getFloat('price', 0, 'POST'));
     $typeprice = Request::getString('typeprice', '', 'POST');
     $typeusure = Request::getString('typeusure', '', 'POST');
     $date      = Request::getInt('date', 0, 'POST');
@@ -96,8 +96,30 @@ if (Request::hasVar('submit', 'POST')) {
     $date      = time();
     $newid     = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
-    $sql     = sprintf("INSERT INTO %s (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                       $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid);
+    $sql     = sprintf(
+        "INSERT INTO %s (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                       $xoopsDB->prefix('adslight_listing'),
+        $newid,
+        $cid,
+        $title,
+        $status,
+        $expire,
+        $type,
+        $desctext,
+        $tel,
+        $price,
+        $typeprice,
+        $typeusure,
+        $date,
+        $email,
+        $submitter,
+        $usid,
+        $town,
+        $country,
+        $contactby,
+        $premium,
+        $valid
+    );
     $success = $xoopsDB->query($sql);
     if (!$success) {
         $moduleHandler = xoops_getHandler('module');
@@ -111,7 +133,7 @@ if (Request::hasVar('submit', 'POST')) {
         /** @var XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         //$lid = $xoopsDB->getInsertId();
-        $tags                    = array();
+        $tags                    = [];
         $tags['TITLE']           = $title;
         $tags['ADDED_TO_CAT']    = _ADSLIGHT_ADDED_TO_CAT;
         $tags['RECIEVING_NOTIF'] = _ADSLIGHT_RECIEVING_NOTIF;
@@ -132,7 +154,7 @@ if (Request::hasVar('submit', 'POST')) {
         $notificationHandler->triggerEvent('category', $cid, 'new_listing', $tags);
         $notificationHandler->triggerEvent('listing', $lid, 'new_listing', $tags);
     } else {
-        $tags                   = array();
+        $tags                   = [];
         $subject                = '' . _ADSLIGHT_NEW_WAITING_SUBJECT . '';
         $tags['TITLE']          = $title;
         $tags['DESCTEXT']       = $desctext;

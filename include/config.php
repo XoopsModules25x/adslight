@@ -75,11 +75,11 @@ return array(
  */
 class AdsligthConfigurator
 {
-    public $uploadFolders   = array();
-    public $blankFiles      = array();
-    public $templateFolders = array();
-    public $oldFiles        = array();
-    public $oldFolders      = array();
+    public $uploadFolders   = [];
+    public $blankFiles      = [];
+    public $templateFolders = [];
+    public $oldFiles        = [];
+    public $oldFolders      = [];
     public $name;
 
     /**
@@ -90,31 +90,31 @@ class AdsligthConfigurator
         $moduleDirName       = basename(dirname(__DIR__));
         $capsDirName         = strtoupper($moduleDirName);
         $this->name          = 'Module Configurator';
-        $this->uploadFolders = array(
+        $this->uploadFolders = [
             constant($capsDirName . '_UPLOAD_PATH'),
             constant($capsDirName . '_UPLOAD_PATH') . '/midsize',
             constant($capsDirName . '_UPLOAD_PATH') . '/thumbs',
-        );
-        $this->blankFiles    = array(
+        ];
+        $this->blankFiles    = [
             constant($capsDirName . '_UPLOAD_PATH'),
             constant($capsDirName . '_UPLOAD_PATH') . '/midsize',
             constant($capsDirName . '_UPLOAD_PATH') . '/thumbs',
-        );
+        ];
 
-        $this->templateFolders = array(
+        $this->templateFolders = [
             '/templates/',
             '/templates/blocks/',
             '/templates/admin/'
 
-        );
-        $this->oldFiles        = array(
+        ];
+        $this->oldFiles        = [
             '/admin/admin.css',
             '/class/utilities.php',
-        );
-        $this->oldFolders      = array(
+        ];
+        $this->oldFolders      = [
             '/images',
             '/style',
-        );
+        ];
     }
 }
 

@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * @param $options
@@ -31,7 +31,7 @@ function adslight_b2_show($options)
 {
     global $xoopsDB, $xoopsModuleConfig, $moduleDirName, $block_lang;
 
-    $block = array();
+    $block = [];
     $myts  = MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
@@ -49,11 +49,14 @@ function adslight_b2_show($options)
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' AND status!='1' {$cat_perms} ORDER BY {$options[0]} DESC", $options[1],
-                              0);
+    $result = $xoopsDB->query(
+        'SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' AND status!='1' {$cat_perms} ORDER BY {$options[0]} DESC",
+        $options[1],
+                              0
+    );
 
     while ($myrow = $xoopsDB->fetchArray($result)) {
-        $a_item = array();
+        $a_item = [];
         $title  = $myts->htmlSpecialChars($myrow['title']);
         //        $status    = $myts->htmlSpecialChars($myrow['status']);
         $status    = (int)$myrow['status'];

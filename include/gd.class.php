@@ -89,7 +89,7 @@ class GD
      */
     public function make_color($color)
     {
-        $rgb = array();
+        $rgb = [];
 
         if (is_array($color) && count($color) == '3') {
             $rgb['r'] = $color['0'];
@@ -103,11 +103,11 @@ class GD
             exit('Unknown color');
         }
 
-        foreach (array(
+        foreach ([
                      'r',
                      'g',
                      'b'
-                 ) as $value) {
+                 ] as $value) {
             if (!array_key_exists($value, $rgb) || $rgb[$value] < 0
                 || $rgb[$value] > 255
                 || !is_numeric($rgb[$value])) {

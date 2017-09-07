@@ -74,7 +74,7 @@ class AdslightUtility
                 $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET remind='1' WHERE lid=$lids");
 
                 if ($email) {
-                    $tags               = array();
+                    $tags               = [];
                     $subject            = '' . _ADSLIGHT_ALMOST . '';
                     $tags['TITLE']      = $title;
                     $tags['HELLO']      = '' . _ADSLIGHT_HELLO . '';
@@ -135,7 +135,7 @@ class AdslightUtility
                 //  Specification for Japan:
                 //  $message = ""._ADS_HELLO." $submitter,\n\n"._ADS_STOP2."\n $type : $title\n $desctext\n"._ADS_STOP3."\n\n"._ADS_VU." $lu "._ADS_VU2."\n\n"._ADS_OTHER." ".XOOPS_URL."/modules/myAds\n\n"._ADS_THANK."\n\n"._ADS_TEAM." ".$meta['title']."\n".XOOPS_URL."";
                 if ($email) {
-                    $tags               = array();
+                    $tags               = [];
                     $subject            = '' . _ADSLIGHT_STOP . '';
                     $tags['TITLE']      = $title;
                     $tags['HELLO']      = '' . _ADSLIGHT_HELLO . '';
@@ -235,7 +235,7 @@ class AdslightUtility
         global $xoopsDB, $mytree, $moduleDirName;
         $categories = AdslightUtility::getMyItemIds('adslight_view');
         $count      = 0;
-        $arr        = array();
+        $arr        = [];
         if (in_array($sel_id, $categories)) {
             $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " AND valid='Yes' AND status!='1'";
 
@@ -266,7 +266,7 @@ class AdslightUtility
     public static function getMyItemIds($permtype)
     {
         global $moduleDirName;
-        static $permissions = array();
+        static $permissions = [];
         if (is_array($permissions)
             && array_key_exists($permtype, $permissions)) {
             return $permissions[$permtype];
@@ -294,7 +294,7 @@ class AdslightUtility
     public static function getModuleOption($option, $repmodule = 'adslight')
     {
         global $xoopsModule;
-        static $tbloptions = array();
+        static $tbloptions = [];
         if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
             return $tbloptions[$option];
         }
@@ -465,7 +465,7 @@ class AdslightUtility
     public static function getEditor($caption, $name, $value = '', $width = '100%', $height = '300px', $supplemental = '')
     {
         global $xoopsModule;
-        $options = array();
+        $options = [];
         $isAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
 
         if (class_exists('XoopsFormEditor')) {
@@ -582,7 +582,7 @@ class AdslightUtility
 
         $cid = Request::getInt('cid', null, 'GET');
 
-        $result = array();
+        $result = [];
 
         $sql = 'SELECT lid, title, price, date, town FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='yes' AND cid=" . $xoopsDB->escape($cid) . ' ORDER BY date DESC';
 
@@ -603,7 +603,7 @@ class AdslightUtility
     {
         global $xoopsDB;
 
-        $result = array();
+        $result = [];
 
         $sql = 'SELECT lid, title, price, desctext, date, town FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='yes' ORDER BY date DESC LIMIT 0,15";
 
@@ -649,13 +649,13 @@ class AdslightUtility
         preg_match_all($regex, $format, $matches, PREG_SET_ORDER);
         foreach ($matches as $fmatch) {
             $value      = (float)$number;
-            $flags      = array(
+            $flags      = [
                 'fillchar'  => preg_match('/\=(.)/', $fmatch[1], $match) ? $match[1] : ' ',
                 'nogroup'   => preg_match('/\^/', $fmatch[1]) > 0,
                 'usesignal' => preg_match('/\+|\(/', $fmatch[1], $match) ? $match[0] : '+',
                 'nosimbol'  => preg_match('/\!/', $fmatch[1]) > 0,
                 'isleft'    => preg_match('/\-/', $fmatch[1]) > 0
-            );
+            ];
             $width      = trim($fmatch[2]) ? (int)$fmatch[2] : 0;
             $left       = trim($fmatch[3]) ? (int)$fmatch[3] : 0;
             $right      = trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
@@ -821,7 +821,7 @@ class AdslightUtility
             }
         }
 
-        if (!$success) {
+        if (false === $success) {
             $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
         }
 

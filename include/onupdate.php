@@ -82,8 +82,9 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
         //        $configurator   = include __DIR__ . '/config.php';
         require_once __DIR__ . '/config.php';
         $configurator = new AdsligthConfigurator();
-        $classUtility = ucfirst($moduleDirName) . 'Utility';
-        if (!class_exists($classUtility)) {
+        /** @var AdslightUtility $utilityClass */
+        $utilityClass = ucfirst($moduleDirName) . 'Utility';
+        if (!class_exists($utilityClass)) {
             xoops_load('utility', $moduleDirName);
         }
         /*
@@ -135,9 +136,9 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
                 while ($myrow = $xoopsDB->fetchArray($result)) {
 
                     $categoryId = (int)($myrow['cid']);
-                    $classUtility::saveCategoryPermissions($groups1, $categoryId, $permName1);
-                    $classUtility::saveCategoryPermissions($groups2, $categoryId, $permName2);
-                    $classUtility::saveCategoryPermissions($groups3, $categoryId, $permName3);
+                    $utilityClass::saveCategoryPermissions($groups1, $categoryId, $permName1);
+                    $utilityClass::saveCategoryPermissions($groups2, $categoryId, $permName2);
+                    $utilityClass::saveCategoryPermissions($groups3, $categoryId, $permName3);
                 }
 
         */
@@ -147,7 +148,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
             foreach ($configurator->templateFolders as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), array('..', '.'));
+                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new SplFileInfo($templateFolder . $v);
                         if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
@@ -187,7 +188,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $classUtility::createFolder($configurator->uploadFolders[$i]);
+                $utilityClass::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
@@ -196,7 +197,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator->blankFiles) as $i) {
                 $dest = $configurator->blankFiles[$i] . '/blank.png';
-                $classUtility::copyFile($file, $dest);
+                $utilityClass::copyFile($file, $dest);
             }
         }
 

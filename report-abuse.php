@@ -121,7 +121,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $town      = $myts->addSlashes($town);
     $country   = $myts->addSlashes($country);
 
-    $tags                       = array();
+    $tags                       = [];
     $tags['YNAME']              = stripslashes($yname);
     $tags['YMAIL']              = $ymail;
     $tags['FNAME']              = stripslashes($fname);

@@ -231,7 +231,7 @@ if ($trows > '0') {
         }
         $no_photo = "<a href='viewads.php?lid=" . $lid . "'><img class=\"thumb\" src=\"assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$title\" ></a>";
 
-        $xoopsTpl->append('items', array(
+        $xoopsTpl->append('items', [
             'id'          => $lid,
             'cid'         => $cid,
             'title'       => $myts->htmlSpecialChars($title),
@@ -266,7 +266,7 @@ if ($trows > '0') {
             'adminlink'   => $adminlink,
             'new'         => $newitem,
             'sold'        => $sold
-        ));
+        ]);
     }
     $usid = Request::getInt('usid', 0, 'GET');
 

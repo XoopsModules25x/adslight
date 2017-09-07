@@ -78,7 +78,7 @@ if (Request::hasVar('submit', 'POST')) {
         $date   = time();
         $r_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
 
-        $tags                = array();
+        $tags                = [];
         $tags['TITLE']       = $title;
         $tags['TYPE']        = AdslightUtility::getNameType($type);
         $tags['PRICE']       = $price;

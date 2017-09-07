@@ -92,11 +92,11 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $usid   = Request::getInt('usid', 0, 'GET');
     $result = $xoopsDB->query('SELECT title, usid, submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid));
     list($title, $usid, $submitter) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign('link', array(
+    $xoopsTpl->assign('link', [
         'usid'      => $usid,
         'title'     => $myts->htmlSpecialChars($title),
         'submitter' => $submitter
-    ));
+    ]);
     $xoopsTpl->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));
     $xoopsTpl->assign('lang_ratingscale', constant('_ADSLIGHT_RATINGSCALE'));
     $xoopsTpl->assign('lang_beobjective', constant('_ADSLIGHT_BEOBJECTIVE'));

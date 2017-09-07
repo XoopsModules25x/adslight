@@ -25,7 +25,7 @@ use Xmf\Request;
 /**
  * Protection against inclusion outside the site
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 /**
  * Includes of form objects and uploader
@@ -96,11 +96,11 @@ class AdslightPictures extends XoopsObject
      * @internal   param string $order
      * @deprecated this should be handled through {@see AdslightPicturesHandler}
      */
-    public function getAllPictures($criteria = array(), $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
+    public function getAllPictures($criteria = [], $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
     {
         global $moduleDirName;
         $db          = XoopsDatabaseFactory::getDatabaseConnection();
-        $ret         = array();
+        $ret         = [];
         $where_query = '';
         if (is_array($criteria) && count($criteria) > 0) {
             $where_query = ' WHERE';
@@ -246,11 +246,11 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         if (empty($cod_img)) {
             $cod_img = $this->db->getInsertId();
         }
-        $adslightPictures->assignVars(array(
+        $adslightPictures->assignVars([
                                           'cod_img' => $cod_img,
                                           'lid'     => $lid,
                                           'url'     => $url
-                                      ));
+                                      ]);
 
         return true;
     }
@@ -293,7 +293,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
     {
         global $moduleDirName;
 
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -470,10 +470,10 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         $hash1 = time();
         $hash  = substr($hash1, 0, 4);
         // mimetypes and settings put this in admin part later
-        $allowed_mimetypes = array(
+        $allowed_mimetypes = [
             'image/jpeg',
             'image/gif'
-        );
+        ];
         $maxfilesize       = $maxfilebytes;
         // create the object to upload
         $uploader = new XoopsMediaUploader($path_upload, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);

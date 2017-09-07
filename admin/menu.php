@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 $moduleDirName = basename(dirname(__DIR__));
 
@@ -27,44 +27,45 @@ if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
 } else {
     $moduleHelper = Xmf\Module\Helper::getHelper('system');
 }
-$adminObject = \Xmf\Module\Admin::getInstance();
+
 
 $pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
 $pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
 
-$moduleHelper->loadLanguage('modinfo');
+//$moduleHelper->loadLanguage('modinfo');
+//xoops_loadLanguage('modinfo', $moduleDirName);
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _AM_MODULEADMIN_HOME,
     'link'  => 'admin/index.php',
     'icon'  => $pathIcon32 . '/home.png'
-);
+];
 
 //global $xoopsModule;
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU0,
     'link'  => 'admin/main.php',
     'icon'  => $pathIcon32 . '/dashboard.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU1,
     'link'  => 'admin/map.php',
     'icon'  => $pathIcon32 . '/category.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU5,
     'link'  => 'admin/options.php',
     'icon'  => $pathModIcon32 . '/preferences.png'
-);
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU2,
     'link'  => 'admin/groupperms.php',
     'icon'  => $pathIcon32 . '/permissions.png'
-);
+];
 
 //$adminmenu[] = array(
 //    'title' => _MI_ADSLIGHT_ADMENU3,
@@ -84,8 +85,8 @@ $adminmenu[] = array(
 //    'icon'  => $pathModIcon32 . '/discussion.png'
 //);
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _AM_MODULEADMIN_ABOUT,
     'link'  => 'admin/about.php',
     'icon'  => $pathIcon32 . '/about.png'
-);
+];

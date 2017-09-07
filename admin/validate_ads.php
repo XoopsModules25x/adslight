@@ -599,7 +599,7 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
     $type      = $myts->htmlSpecialChars($type);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
     $tel       = $myts->htmlSpecialChars($tel);
-    $price     = str_replace(array(' '), '', $price);
+    $price     = str_replace([' '], '', $price);
     $typeprice = $myts->htmlSpecialChars($typeprice);
     $typeusure = $myts->htmlSpecialChars($typeusure);
     $submitter = $myts->htmlSpecialChars($submitter);
@@ -694,7 +694,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     $type      = $myts->htmlSpecialChars($type);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
     $tel       = $myts->htmlSpecialChars($tel);
-    $price     = str_replace(array(' '), '', $price);
+    $price     = str_replace([' '], '', $price);
     $typeprice = $myts->htmlSpecialChars($typeprice);
     $typeusure = $myts->htmlSpecialChars($typeusure);
     $submitter = $myts->htmlSpecialChars($submitter);
@@ -715,7 +715,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     }
 
     if ('' !== $email) {
-        $tags               = array();
+        $tags               = [];
         $tags['TITLE']      = $title;
         $tags['TYPE']       = AdslightUtility::getNameType($type);
         $tags['SUBMITTER']  = $submitter;
@@ -750,7 +750,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
         echo $mail->getErrors();
     }
 
-    $tags                    = array();
+    $tags                    = [];
     $tags['TITLE']           = $title;
     $tags['ADDED_TO_CAT']    = _AM_ADSLIGHT_ADDED_TO_CAT;
     $tags['RECIEVING_NOTIF'] = _AM_ADSLIGHT_RECIEVING_NOTIF;

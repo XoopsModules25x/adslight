@@ -23,7 +23,7 @@ use Xmf\Module\Helper;
 /**
  * Gestion de la currency
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 class currency
 {

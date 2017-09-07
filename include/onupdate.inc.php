@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 // referer check
 $ref = xoops_getenv('HTTP_REFERER');

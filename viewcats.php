@@ -195,14 +195,14 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         $xoopsTpl->assign('bullinfotext', $add_listing);
     }
 
-    $arr = array();
+    $arr = [];
     $arr = $mytree->getFirstChild($cid, 'title');
 
     if (count($arr) > 0) {
         $scount = 1;
         foreach ($arr as $ele) {
             if (in_array($ele['cid'], $categories)) {
-                $sub_arr         = array();
+                $sub_arr         = [];
                 $sub_arr         = $mytree->getFirstChild($ele['cid'], 'title');
                 $space           = 0;
                 $chcount         = 0;
@@ -228,13 +228,13 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                     }
                 }
 
-                $xoopsTpl->append('subcategories', array(
+                $xoopsTpl->append('subcategories', [
                     'title'           => $myts->htmlSpecialChars($ele['title']),
                     'id'              => $ele['cid'],
                     'infercategories' => $infercategories,
                     'totallisting'    => $totallisting,
                     ''
-                ));
+                ]);
 
                 ++$scount;
                 $xoopsTpl->assign('lang_subcat', _ADSLIGHT_AVAILAB);
@@ -290,7 +290,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         }
 
         while (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $contactby, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result1)) {
-            $a_item = array();
+            $a_item = [];
             $title  = $myts->htmlSpecialChars($title);
             $type   = $myts->htmlSpecialChars($type);
             //      $price = number_format($price, 2, ',', ' ');

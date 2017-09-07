@@ -53,7 +53,7 @@ class ClassifiedsTree
      */
     public function getFirstChild($sel_id, $order = '')
     {
-        $arr = array();
+        $arr = [];
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
 
         $categories = AdslightUtility::getMyItemIds('adslight_view');
@@ -84,7 +84,7 @@ class ClassifiedsTree
      */
     public function getFirstChildId($sel_id)
     {
-        $idarray = array();
+        $idarray = [];
         $sel_id  = (int)$sel_id;
         $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id);
 
@@ -111,7 +111,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getAllChildId($sel_id, $order = '', $idarray = array())
+    public function getAllChildId($sel_id, $order = '', $idarray = [])
     {
         $sel_id = (int)$sel_id;
         $sql    = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
@@ -144,7 +144,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getAllParentId($sel_id, $order = '', $idarray = array())
+    public function getAllParentId($sel_id, $order = '', $idarray = [])
     {
         $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
 
@@ -319,7 +319,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getAllChild($sel_id = 0, $order = '', $parray = array())
+    public function getAllChild($sel_id = 0, $order = '', $parray = [])
     {
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 
@@ -353,7 +353,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getChildTreeArray($sel_id = 0, $order = '', $parray = array(), $r_prefix = '')
+    public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
     {
         global $moduleDirName;
 
@@ -446,7 +446,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = array(), $r_prefix = '')
+    public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
     {
         global $xoopsDB;
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
@@ -479,13 +479,13 @@ class ClassifiedsTree
     public function getCategoryList()
     {
         $result = $this->db->query('SELECT SQL_CACHE cid, pid, title FROM ' . $this->table);
-        $ret    = array();
+        $ret    = [];
         $myts   = MyTextSanitizer::getInstance();
         while ($myrow = $this->db->fetchArray($result)) {
-            $ret[$myrow['cid']] = array(
+            $ret[$myrow['cid']] = [
                 'title' => $myts->htmlspecialchars($myrow['title']),
                 'pid'   => $myrow['pid']
-            );
+            ];
         }
 
         return $ret;

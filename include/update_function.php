@@ -38,10 +38,10 @@ function xoops_module_update_adslight(XoopsObject $xoopsModule)
 
     // remove old html template files
     $template_directory = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/templates/';
-    $template_list      = array_diff(scandir($template_directory, SCANDIR_SORT_NONE), array(
+    $template_list      = array_diff(scandir($template_directory, SCANDIR_SORT_NONE), [
         '..',
         '.'
-    ));
+    ]);
     foreach ($template_list as $k => $v) {
         $fileinfo = new SplFileInfo($template_directory . $v);
         if ($fileinfo->getExtension() === 'html'

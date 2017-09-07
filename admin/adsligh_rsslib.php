@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-$RSS_Content = array();
+$RSS_Content = [];
 
 /**
  * @param $item
@@ -30,7 +30,7 @@ $RSS_Content = array();
  */
 function RSS_Tags($item, $type)
 {
-    $y     = array();
+    $y     = [];
     $tnl   = $item->getElementsByTagName('title');
     $tnl   = $tnl->item(0);
     $title = $tnl->firstChild->textContent;
@@ -90,7 +90,7 @@ function RSS_Retrieve($url)
 
     $channels = $doc->getElementsByTagName('channel');
 
-    $RSS_Content = array();
+    $RSS_Content = [];
 
     foreach ($channels as $channel) {
         RSS_Channel($channel);
@@ -109,7 +109,7 @@ function RSS_RetrieveLinks($url)
 
     $channels = $doc->getElementsByTagName('channel');
 
-    $RSS_Content = array();
+    $RSS_Content = [];
 
     foreach ($channels as $channel) {
         $items = $channel->getElementsByTagName('item');
@@ -129,7 +129,7 @@ function RSS_RetrieveLinks($url)
 function RSS_Links($url, $size = 15)
 {
     global $RSS_Content;
-    $recents = array();
+    $recents = [];
     $page    = '<ul>';
 
     RSS_RetrieveLinks($url);
@@ -162,7 +162,7 @@ function RSS_Links($url, $size = 15)
 function RSS_Display($url, $size = 15, $site = 0)
 {
     global $RSS_Content;
-    $recents = array();
+    $recents = [];
     $opened  = false;
     $page    = '';
     $site    = (0 == (int)$site) ? 1 : 0;
@@ -219,7 +219,7 @@ function RSS_Display($url, $size = 15, $site = 0)
 function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
 {
     global $RSS_Content;
-    $recents = array();
+    $recents = [];
     $opened  = false;
     $page    = '';
     $site    = (0 == (int)$site) ? 1 : 0;

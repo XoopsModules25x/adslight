@@ -91,10 +91,10 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $lid    = Request::getInt('lid', 0, 'GET');
     $result = $xoopsDB->query('SELECT lid, title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $title) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign('link', array(
+    $xoopsTpl->assign('link', [
         'lid'   => $lid,
         'title' => $myts->htmlSpecialChars($title)
-    ));
+    ]);
     $xoopsTpl->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));
     $xoopsTpl->assign('lang_ratingscale', constant('_ADSLIGHT_RATINGSCALE'));
     $xoopsTpl->assign('lang_beobjective', constant('_ADSLIGHT_BEOBJECTIVE'));

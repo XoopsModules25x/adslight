@@ -115,13 +115,13 @@ if ($trows > '0') {
         $xoopsTpl->assign('tele_head', _ADSLIGHT_TEL);
         $xoopsTpl->assign('email', "<a href ='mailto:$email'>$email</a>");
         $xoopsTpl->assign('delete_reply', "<a href='modify.php?op=DelReply&amp;r_lid=$r_lid'>" . _ADSLIGHT_DELETE_REPLY . '</a>');
-        $xoopsTpl->append('items', array(
+        $xoopsTpl->append('items', [
             'id'      => $lid,
             'title'   => $myts->htmlSpecialChars($title),
             'date'    => $date,
             'message' => $myts->displayTarea($message),
             'tele'    => $myts->htmlSpecialChars($tele)
-        ));
+        ]);
     }
     $lid = Request::getInt('lid', 0, 'GET');
     //Calculates how many pages exist.  Which page one should be on, etc...
