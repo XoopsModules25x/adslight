@@ -69,7 +69,7 @@ function SendFriend($lid)
       <td class='even'><input class='textbox' type='text' name='fmail' ></td>
     </tr>";
 
-    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
         $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);

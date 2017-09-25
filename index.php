@@ -101,7 +101,7 @@ function index()
     if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
         if ($GLOBALS['xoopsUser']->isAdmin()) {
             $xoopsTpl->assign('admin_block', _ADSLIGHT_ADMINCADRE);
-            if ($propo == 0) {
+            if (0 == $propo) {
                 $xoopsTpl->assign('confirm_ads', _ADSLIGHT_NO_CLA);
             } else {
                 $xoopsTpl->assign('confirm_ads', _ADSLIGHT_THEREIS . ' ' . $propo . '  ' . _ADSLIGHT_WAIT . '<br><a href="' . XOOPS_URL . '/modules/adslight/admin/validate_ads.php">' . _ADSLIGHT_SEEIT . '</a>');
@@ -132,7 +132,7 @@ function index()
     while ($myrow = $xoopsDB->fetchArray($result)) {
         $title = $myts->htmlSpecialChars($myrow['title']);
 
-        if ($myrow['img'] && $myrow['img'] !== 'http://') {
+        if ($myrow['img'] && 'http://' !== $myrow['img']) {
             $cat_img = $myts->htmlSpecialChars($myrow['img']);
             $img     = "<a href=\"viewcats.php?cid={$myrow['cid']}\"><img src=\"" . XOOPS_URL . "/modules/adslight/assets/images/img_cat/{$cat_img}\" align=\"middle\" alt=\"{$title}\"></a>";
         } else {

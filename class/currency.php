@@ -95,14 +95,14 @@ class currency
         $amount = $this->amountInCurrency($originalAmount);
 
         $currencyLeft = $currencyRight = $currencyLeftShort = $currencyRightShort = '';
-        if ($this->currencyPosition == 1) { // To the right
+        if (1 == $this->currencyPosition) { // To the right
             $currencyRight      = '' . $this->moneyFull; // Long version
             $currencyRightShort = '' . $this->moneyShort; // Short version
         } else { // To the left
             $currencyLeft      = $this->moneyFull . ''; // Long version
             $currencyLeftShort = $this->moneyShort . ''; // Short version
         }
-        if ($format !== 's') {
+        if ('s' !== $format) {
             return $currencyLeft . $amount . $currencyRight;
         } else {
             return $currencyLeftShort . $amount . $currencyRightShort;

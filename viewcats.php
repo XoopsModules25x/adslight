@@ -191,7 +191,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
 ';
     }
 
-    if ($GLOBALS['xoopsModuleConfig']['adslight_main_cat'] == 1 || $pid != 0) {
+    if (1 == $GLOBALS['xoopsModuleConfig']['adslight_main_cat'] || 0 != $pid) {
         $xoopsTpl->assign('bullinfotext', $add_listing);
     }
 
@@ -347,7 +347,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             }
 
             $cat = addslashes($cid);
-            if ($status == 2) {
+            if (2 == $status) {
                 $a_item['sold'] = _ADSLIGHT_RESERVEDMEMBER;
             }
 
@@ -386,7 +386,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         $linkpages = ceil($trows / $show);
 
         //Page Numbering
-        if ($linkpages != 1 && $linkpages != 0) {
+        if (1 != $linkpages && 0 != $linkpages) {
             $prev = $min - $show;
             if ($prev >= 0) {
                 $pagenav .= "<a href='viewcats.php?cid=$cid&min=$prev&orderby=$orderby&show=$show'><strong><u>&laquo;</u></strong></a> ";

@@ -139,7 +139,7 @@ function RSS_Links($url, $size = 15)
 
     foreach ($recents as $article) {
         $type = $article['type'];
-        if ($type == 0) {
+        if (0 == $type) {
             continue;
         }
         $title = $article['title'];
@@ -174,14 +174,14 @@ function RSS_Display($url, $size = 15, $site = 0)
 
     foreach ($recents as $article) {
         $type = $article['type'];
-        if ($type == 0) {
-            if ($opened === true) {
+        if (0 == $type) {
+            if (true === $opened) {
                 $page   .= '</ul>';
                 $opened = false;
             }
             $page .= '<b>';
         } else {
-            if ($opened === false) {
+            if (false === $opened) {
                 $page   .= '<ul>';
                 $opened = true;
             }

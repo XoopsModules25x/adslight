@@ -69,8 +69,8 @@ class AdslightUtility
             // give warning that add is about to expire
 
             if ($almost > 0 && ($supprdate - $almost * 86400) < $datenow
-                && $valid === 'Yes'
-                && $remind == 0) {
+                && 'Yes' === $valid
+                && 0 == $remind) {
                 $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET remind='1' WHERE lid=$lids");
 
                 if ($email) {
@@ -111,7 +111,7 @@ class AdslightUtility
             // expire ad
 
             if ($supprdate < $datenow) {
-                if ($photo != 0) {
+                if (0 != $photo) {
                     $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lids));
 
                     while (list($url) = $xoopsDB->fetchRow($result2)) {
@@ -389,28 +389,28 @@ class AdslightUtility
     {
         global $main_lang;
         $orderbyTrans = '';
-        if ($orderby === 'hits ASC') {
+        if ('hits ASC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_POPULARITYLTOM . '';
         }
-        if ($orderby === 'hits DESC') {
+        if ('hits DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_POPULARITYMTOL . '';
         }
-        if ($orderby === 'title ASC') {
+        if ('title ASC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_TITLEATOZ . '';
         }
-        if ($orderby === 'title DESC') {
+        if ('title DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_TITLEZTOA . '';
         }
-        if ($orderby === 'date ASC') {
+        if ('date ASC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_DATEOLD . '';
         }
-        if ($orderby === 'date DESC') {
+        if ('date DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_DATENEW . '';
         }
-        if ($orderby === 'price ASC') {
+        if ('price ASC' === $orderby) {
             $orderbyTrans = _ADSLIGHT_PRICELTOH;
         }
-        if ($orderby === 'price DESC') {
+        if ('price DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_PRICEHTOL . '';
         }
 
@@ -424,28 +424,28 @@ class AdslightUtility
      */
     public static function convertOrderByOut($orderby)
     {
-        if ($orderby === 'title ASC') {
+        if ('title ASC' === $orderby) {
             $orderby = 'titleA';
         }
-        if ($orderby === 'date ASC') {
+        if ('date ASC' === $orderby) {
             $orderby = 'dateA';
         }
-        if ($orderby === 'hits ASC') {
+        if ('hits ASC' === $orderby) {
             $orderby = 'hitsA';
         }
-        if ($orderby === 'price ASC') {
+        if ('price ASC' === $orderby) {
             $orderby = 'priceA';
         }
-        if ($orderby === 'title DESC') {
+        if ('title DESC' === $orderby) {
             $orderby = 'titleD';
         }
-        if ($orderby === 'date DESC') {
+        if ('date DESC' === $orderby) {
             $orderby = 'dateD';
         }
-        if ($orderby === 'hits DESC') {
+        if ('hits DESC' === $orderby) {
             $orderby = 'hitsD';
         }
-        if ($orderby === 'price DESC') {
+        if ('price DESC' === $orderby) {
             $orderby = 'priceD';
         }
 
@@ -587,7 +587,7 @@ class AdslightUtility
         $sql = 'SELECT lid, title, price, date, town FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='yes' AND cid=" . $xoopsDB->escape($cid) . ' ORDER BY date DESC';
 
         $resultValues = $xoopsDB->query($sql);
-        while (($resultTemp = $xoopsDB->fetchBoth($resultValues)) !== false) {
+        while (false !== ($resultTemp = $xoopsDB->fetchBoth($resultValues))) {
             array_push($result, $resultTemp);
         }
 
@@ -608,7 +608,7 @@ class AdslightUtility
         $sql = 'SELECT lid, title, price, desctext, date, town FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='yes' ORDER BY date DESC LIMIT 0,15";
 
         $resultValues = $xoopsDB->query($sql);
-        while (($resultTemp = $xoopsDB->fetchBoth($resultValues)) !== false) {
+        while (false !== ($resultTemp = $xoopsDB->fetchBoth($resultValues))) {
             array_push($result, $resultTemp);
         }
 
@@ -638,7 +638,7 @@ class AdslightUtility
     public static function getMoneyFormat($format, $number)
     {
         $regex = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?' . '(?:#([0-9]+))?(?:\.([0-9]+))?([in%])/';
-        if (setlocale(LC_MONETARY, 0) === 'C') {
+        if ('C' === setlocale(LC_MONETARY, 0)) {
             setlocale(LC_MONETARY, '');
         }
 
@@ -672,30 +672,30 @@ class AdslightUtility
 
             $signal = $positive ? $locale['positive_sign'] : $locale['negative_sign'];
             switch (true) {
-                case $locale["{$letter}_sign_posn"] == 1
-                     && $flags['usesignal'] == '+':
+                case 1 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $prefix = $signal;
                     break;
-                case $locale["{$letter}_sign_posn"] == 2
-                     && $flags['usesignal'] == '+':
+                case 2 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $suffix = $signal;
                     break;
-                case $locale["{$letter}_sign_posn"] == 3
-                     && $flags['usesignal'] == '+':
+                case 3 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $cprefix = $signal;
                     break;
-                case $locale["{$letter}_sign_posn"] == 4
-                     && $flags['usesignal'] == '+':
+                case 4 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $csuffix = $signal;
                     break;
-                case $flags['usesignal'] === '(':
-                case $locale["{$letter}_sign_posn"] == 0:
+                case '(' === $flags['usesignal']:
+                case 0 == $locale["{$letter}_sign_posn"]:
                     $prefix = '(';
                     $suffix = ')';
                     break;
             }
             if (!$flags['nosimbol']) {
-                $currency = $cprefix . ($conversion === 'i' ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
+                $currency = $cprefix . ('i' === $conversion ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
             } else {
                 $currency = '';
             }
@@ -775,7 +775,7 @@ class AdslightUtility
         $dir = opendir($src);
         //    @mkdir($dst);
         while (false !== ($file = readdir($dir))) {
-            if (($file !== '.') && ($file !== '..')) {
+            if (('.' !== $file) && ('..' !== $file)) {
                 if (is_dir($src . '/' . $file)) {
                     self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
                 } else {

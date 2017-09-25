@@ -121,7 +121,7 @@ class ClassifiedsTree
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
 
-        if ($order != '') {
+        if ('' != $order) {
             $sql .= " ORDER BY {$order}";
         }
         $result = $this->db->query($sql);
@@ -212,12 +212,12 @@ class ClassifiedsTree
      */
     public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '')
     {
-        if ($sel_name == '') {
+        if ('' == $sel_name) {
             $sel_name = $this->id;
         }
         $myts = MyTextSanitizer::getInstance();
         echo '<select name="' . $sel_name . '"';
-        if ($onchange != '') {
+        if ('' != $onchange) {
             echo ' onchange="' . $onchange . '"';
         }
         echo '>';
@@ -328,13 +328,13 @@ class ClassifiedsTree
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
 
-        if ($order != '') {
+        if ('' != $order) {
             $sql .= " ORDER BY {$order}";
         }
 
         $result = $this->db->query($sql);
         $count  = $this->db->getRowsNum($result);
-        if ($count == 0) {
+        if (0 == $count) {
             return $parray;
         }
         while ($row = $this->db->fetchArray($result)) {
@@ -364,12 +364,12 @@ class ClassifiedsTree
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
 
-        if ($order != '') {
+        if ('' != $order) {
             $sql .= " ORDER BY {$order}";
         }
         $result = $this->db->query($sql);
         $count  = $this->db->getRowsNum($result);
-        if ($count == 0) {
+        if (0 == $count) {
             return $parray;
         }
         while ($row = $this->db->fetchArray($result)) {

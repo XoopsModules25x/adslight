@@ -117,7 +117,7 @@ function adsNewCat($cat)
          . _AM_ADSLIGHT_NON
          . '</td></tr>';
 
-    if ($GLOBALS['xoopsModuleConfig']['adslight_csortorder'] !== 'title') {
+    if ('title' !== $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
         echo '<tr><td>' . _AM_ADSLIGHT_ORDER . " </td><td><input type=\"text\" name=\"cat_order\" size=\"4\" value=\"0\" ></td><td class=\"foot\"><input type=\"submit\" value=\"" . _AM_ADSLIGHT_ADD . "\" ></td></tr>";
     } else {
         $cat_order = (int)$cat_order;
@@ -195,31 +195,31 @@ function adsModCat($cid)
     echo "</select>&nbsp;&nbsp;<img src=\"" . XOOPS_URL . "/modules/adslight/assets/images/img_cat/{$imgs}\" name=\"avatar\" align=\"absmiddle\"><br><b>" . _AM_ADSLIGHT_REPIMGCAT . '</b><br>../modules/adslight/assets/images/img_cat/..</td></tr>';
 
     echo "<tr><td class=\"even\">" . _AM_ADSLIGHT_DISPLPRICE2 . " </td><td class=\"odd\" colspan=2><input type=\"radio\" name=\"affprice\" value=\"1\"";
-    if ($affprice == '1') {
+    if ('1' == $affprice) {
         echo 'checked';
     }
     echo '>' . _YES . "&nbsp;&nbsp; <input type=\"radio\" name=\"affprice\" value=\"0\"";
-    if ($affprice == '0') {
+    if ('0' == $affprice) {
         echo 'checked';
     }
     echo '>' . _NO . ' (' . _AM_ADSLIGHT_INTHISCAT . ')</td></tr>';
 
     echo "<tr><td class=\"even\">" . _AM_ADSLIGHT_MODERATE_CAT . " </td><td class=\"odd\" colspan=2><input type=\"radio\" name=\"cat_moderate\" value=\"1\"";
-    if ($cat_moderate == '1') {
+    if ('1' == $cat_moderate) {
         echo 'checked';
     }
     echo '>' . _YES . "&nbsp;&nbsp; <input type=\"radio\" name=\"cat_moderate\" value=\"0\"";
-    if ($cat_moderate == '0') {
+    if ('0' == $cat_moderate) {
         echo 'checked';
     }
     echo '>' . _NO . '</td></tr>';
 
     echo "<tr><td class=\"even\">" . _AM_ADSLIGHT_MODERATE_SUBCATS . " </td><td class=\"odd\" colspan=2><input type=\"radio\" name=\"moderate_subcat\" value=\"1\"";
-    if ($moderate_subcat == '1') {
+    if ('1' == $moderate_subcat) {
         echo 'checked';
     }
     echo '>' . _YES . "&nbsp;&nbsp; <input type=\"radio\" name=\"moderate_subcat\" value=\"0\"";
-    if ($moderate_subcat == '0') {
+    if ('0' == $moderate_subcat) {
         echo 'checked';
     }
     echo '>' . _NO . '</td></tr>';

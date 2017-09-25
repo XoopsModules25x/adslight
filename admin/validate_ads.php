@@ -442,16 +442,16 @@ function modifyAds($lid)
             </tr>
             <tr class='head' border='1'>";
 
-        if ($contactby == 1) {
+        if (1 == $contactby) {
             $contactselect = _AM_ADSLIGHT_CONTACT_BY_EMAIL;
         }
-        if ($contactby == 2) {
+        if (2 == $contactby) {
             $contactselect = _AM_ADSLIGHT_CONTACT_BY_PM;
         }
-        if ($contactby == 3) {
+        if (3 == $contactby) {
             $contactselect = _AM_ADSLIGHT_CONTACT_BY_BOTH;
         }
-        if ($contactby == 4) {
+        if (4 == $contactby) {
             $contactselect = _AM_ADSLIGHT_CONTACT_BY_PHONE;
         }
 

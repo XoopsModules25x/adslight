@@ -55,7 +55,7 @@ function listingDel($lid, $ok)
     if ($GLOBALS['xoopsUser']) {
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
         if ($usid == $currentid) {
-            if ($ok == 1) {
+            if (1 == $ok) {
                 while (list($purl) = $xoopsDB->fetchRow($result1)) {
                     if ($purl) {
                         $destination = XOOPS_ROOT_PATH . '/uploads/AdsLight';
@@ -101,7 +101,7 @@ function delReply($r_lid, $ok)
     if ($GLOBALS['xoopsUser']) {
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
         if ($usid == $currentid) {
-            if ($ok == 1) {
+            if (1 == $ok) {
                 $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE r_lid=' . $xoopsDB->escape($r_lid));
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 1, _ADSLIGHT_ANNDEL);
             } else {
@@ -182,7 +182,7 @@ function modAd($lid)
     <td class=\"head\">" . _ADSLIGHT_NUMANNN . " </td><td class=\"head\" border=\"1\">$lid " . _ADSLIGHT_DU . " $dates</td>
     </tr><tr>";
 
-            if ($GLOBALS['xoopsModuleConfig']['adslight_diff_name'] == '1') {
+            if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_diff_name']) {
                 echo "<td class=\"head\">" . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"text\" name=\"submitter\" size=\"50\" value=\"$submitter\" ></td>";
             } else {
                 echo "<td class=\"head\">" . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"hidden\" name=\"submitter\" value=\"$submitter\">$submitter</td>";
@@ -209,7 +209,7 @@ function modAd($lid)
     <option value=\"3\">" . _ADSLIGHT_CONTACT_BY_BOTH . "</option>
     <option value=\"4\">" . _ADSLIGHT_CONTACT_BY_PHONE . '</option></select></td></tr>';
 
-            if ($GLOBALS['xoopsModuleConfig']['adslight_diff_email'] == '1') {
+            if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_diff_email']) {
                 echo "<tr><td class=\"head\">" . _ADSLIGHT_EMAIL . " </td><td class=\"head\"><input type=\"text\" name=\"email\" size=\"50\" value=\"$email\" ></td>";
             } else {
                 echo "<tr><td class=\"head\">" . _ADSLIGHT_EMAIL . " </td><td class=\"head\">$email<input type=\"hidden\" name=\"email\" value=\"$email\" ></td>";
@@ -220,7 +220,7 @@ function modAd($lid)
             echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_TOWN . " </td><td class=\"head\"><input type=\"text\" name=\"town\" size=\"50\" value=\"$town\" ></td>
     </tr>";
-            if ($GLOBALS['xoopsModuleConfig']['adslight_use_country'] == '1') {
+            if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_country']) {
                 echo "<tr>
     <td class=\"head\">" . _ADSLIGHT_COUNTRY . " </td><td class=\"head\"><input type=\"text\" name=\"country\" size=\"50\" value=\"$country\" ></td>
     </tr>";
@@ -327,7 +327,7 @@ function modAd($lid)
             $perm_itemid  = Request::getInt('item_id', 0, 'POST');
             //If no access
             if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-                if ($GLOBALS['xoopsModuleConfig']['adslight_moderated'] == '1') {
+                if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_moderated']) {
                     echo "<input type=\"hidden\" name=\"valid\" value=\"No\" >";
                     echo '<br>' . _ADSLIGHT_MODIFBEFORE . '<br>';
                 } else {

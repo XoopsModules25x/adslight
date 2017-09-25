@@ -37,12 +37,12 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $rating       = Request::getInt('rating', 0, 'POST');
 
     // Check if Rating is Null
-    if ($rating == '--') {
+    if ('--' == $rating) {
         redirect_header('rate-user.php?usid=' . addslashes($usid) . '', 4, constant('_ADSLIGHT_NORATING'));
     }
 
     // Check if Link POSTER is voting (UNLESS Anonymous users allowed to post)
-    if ($ratinguser != 0) {
+    if (0 != $ratinguser) {
         $result = $xoopsDB->query('SELECT submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid));
         while (list($ratinguserDB) = $xoopsDB->fetchRow($result)) {
             if ($ratinguserDB == $ratinguser) {

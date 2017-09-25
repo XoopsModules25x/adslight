@@ -44,8 +44,8 @@ function xoops_module_update_adslight(XoopsObject $xoopsModule)
     ]);
     foreach ($template_list as $k => $v) {
         $fileinfo = new SplFileInfo($template_directory . $v);
-        if ($fileinfo->getExtension() === 'html'
-            && $fileinfo->getFilename() !== 'index.html') {
+        if ('html' === $fileinfo->getExtension()
+            && 'index.html' !== $fileinfo->getFilename()) {
             @unlink($template_directory . $v);
         }
     }

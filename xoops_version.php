@@ -28,8 +28,8 @@ $moduleDirName = basename(__DIR__);
 $path = XOOPS_ROOT_PATH . '/modules/adslight/maps';
 if ($handle = opendir($path)) {
     while (false !== ($file = readdir($handle))) {
-        if (!is_dir($path . '.' . $file) && $file !== '.' && $file !== '..'
-            && $file !== 'index.html') {
+        if (!is_dir($path . '.' . $file) && '.' !== $file && '..' !== $file
+            && 'index.html' !== $file) {
             $maps_name                 = $file;
             $adslight_maps[$maps_name] = $file;
         }

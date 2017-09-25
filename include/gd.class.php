@@ -91,7 +91,7 @@ class GD
     {
         $rgb = [];
 
-        if (is_array($color) && count($color) == '3') {
+        if (is_array($color) && '3' == count($color)) {
             $rgb['r'] = $color['0'];
             $rgb['g'] = $color['1'];
             $rgb['b'] = $color['2'];

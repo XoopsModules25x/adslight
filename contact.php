@@ -56,7 +56,7 @@ if (Request::hasVar('submit', 'POST')) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
-    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -215,7 +215,7 @@ if (Request::hasVar('submit', 'POST')) {
       <td class='head'>" . _ADSLIGHT_YOURMESSAGE . "</td>
       <td class='even'><textarea rows=\"5\" name=\"messtext\" cols=\"40\" ></textarea></td>
     </tr>";
-    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
         $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);

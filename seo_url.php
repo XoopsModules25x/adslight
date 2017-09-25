@@ -96,7 +96,7 @@ function replace_links($matches)
         default:
             break;
     }
-    if ($req_string === '?') {
+    if ('?' === $req_string) {
         $req_string = '';
     }
     $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
@@ -322,7 +322,7 @@ function adslight_absolutize($s)
         $req_dir = dirname($_SERVER['REQUEST_URI']);
         $req_php = preg_replace('/.*(\/[a-zA-Z0-9_\-]+)\.php.*/', '\\1.php', $_SERVER['REQUEST_URI']);
     }
-    $req_dir = ($req_dir === "\\" || $req_dir === '/') ? '' : $req_dir;
+    $req_dir = ("\\" === $req_dir || '/' === $req_dir) ? '' : $req_dir;
     $dir_arr = explode('/', $req_dir);
     $m       = count($dir_arr) - 1;
     $d1      = @str_replace('/' . $dir_arr[$m], '', $req_dir);

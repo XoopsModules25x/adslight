@@ -70,13 +70,13 @@ function viewAds($lid = 0)
     include XOOPS_ROOT_PATH . '/header.php';
     include XOOPS_ROOT_PATH . '/include/comment_view.php';
     $lid  = ((int)$lid > 0) ? (int)$lid : 0;
-    $rate = ($GLOBALS['xoopsModuleConfig']['adslight_rate_item'] == '1') ? '1' : '0';
+    $rate = ('1' == $GLOBALS['xoopsModuleConfig']['adslight_rate_item']) ? '1' : '0';
     $xoopsTpl->assign('rate', $rate);
     $xoopsTpl->assign('xmid', $xoopsModule->getVar('mid'));
     $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
 
     // Hack redirection erreur 404  si lid=null
-    if ($lid == '') {
+    if ('' == $lid) {
         header('Status: 301 Moved Permanently', false, 301);
         //        header('Location: '.XOOPS_URL.'/modules/adslight/404.php');
         //        exit();
@@ -131,7 +131,7 @@ function viewAds($lid = 0)
     $recordexist = $xoopsDB->getRowsNum($result);
 
     // Hack redirection erreur 404  si recordexist=null
-    if ($recordexist == '') {
+    if ('' == $recordexist) {
         header('Status: 301 Moved Permanently', false, 301);
         //        header('Location: '.XOOPS_URL.'/modules/adslight/404.php');
         //        exit();
@@ -180,9 +180,9 @@ function viewAds($lid = 0)
 
         list($nbe) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE valid="Yes" AND cid=' . $xoopsDB->escape($cid) . ' AND status!="1"'));
 
-        if ($pid != 0) {
+        if (0 != $pid) {
             $x = 1;
-            while ($pid != 0) {
+            while (0 != $pid) {
                 $result4 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($pid));
                 list($ccid, $pid, $ctitle) = $xoopsDB->fetchRow($result4);
 
@@ -227,7 +227,7 @@ function viewAds($lid = 0)
         if (true === $viewcount_judge) {
             $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid));
         }
-        if ($item_votes == 1) {
+        if (1 == $item_votes) {
             $votestring = _ADSLIGHT_ONEVOTE;
         } else {
             $votestring = sprintf(_ADSLIGHT_NUMVOTES, $item_votes);
@@ -252,7 +252,7 @@ function viewAds($lid = 0)
         $contactby = $myts->htmlSpecialChars($contactby);
         $premium   = $myts->htmlSpecialChars($premium);
 
-        if ($status == 2) {
+        if (2 == $status) {
             $sold = _ADSLIGHT_RESERVED;
         } else {
             $sold = '';
@@ -329,7 +329,7 @@ function viewAds($lid = 0)
         if ($town) {
             $xoopsTpl->assign('local_town', $town);
         }
-        if ($GLOBALS['xoopsModuleConfig']['adslight_use_country'] == 1) {
+        if (1 == $GLOBALS['xoopsModuleConfig']['adslight_use_country']) {
             if ($country) {
                 $xoopsTpl->assign('local_country', $country);
                 $xoopsTpl->assign('country_head', '<img src="assets/images/world_go.png" border="0" alt="country" >&nbsp;&nbsp;' . _ADSLIGHT_COUNTRY);
@@ -341,16 +341,16 @@ function viewAds($lid = 0)
             $tphon = '<br>' . _ADSLIGHT_ORBY . '&nbsp;<strong>' . _ADSLIGHT_TEL . '</strong> ' . $tel;
         }
 
-        if ($contactby == 1) {
+        if (1 == $contactby) {
             $contact = '<a rel="nofollow" href="contact.php?lid=' . $lid . '">' . _ADSLIGHT_BYMAIL2 . '</a>' . $tphon . '';
         }
-        if ($contactby == 2) {
+        if (2 == $contactby) {
             $contact = $contact_pm . '' . $tphon;
         }
-        if ($contactby == 3) {
+        if (3 == $contactby) {
             $contact = '<a rel="nofollow" href="contact.php?lid=' . $lid . '">' . _ADSLIGHT_BYMAIL2 . '</a>' . $tphon . '<br>' . _ADSLIGHT_ORBY . '' . $contact_pm;
         }
-        if ($contactby == 4) {
+        if (4 == $contactby) {
             $contact = '<br><strong>' . _ADSLIGHT_TEL . '</strong> ' . $tel;
         }
         // $xoopsTpl->assign('contact', $contact);
@@ -371,7 +371,7 @@ function viewAds($lid = 0)
         $user_profile = XoopsUser::getUnameFromId($usid);
         $xoopsTpl->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
 
-        if ($photo != '') {
+        if ('' != $photo) {
             require_once __DIR__ . '/class/pictures.php';
 
             $criteria_lid          = new criteria('lid', $lid);
@@ -379,7 +379,7 @@ function viewAds($lid = 0)
             $album_factory         = new AdslightPicturesHandler($xoopsDB);
             $pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
             $pictures_number       = $album_factory->getCount($criteria_lid, $criteria_uid);
-            if ($pictures_number == 0) {
+            if (0 == $pictures_number) {
                 $nopicturesyet = _ADSLIGHT_NOTHINGYET;
                 $xoopsTpl->assign('lang_nopicyet', $nopicturesyet);
             } else {
@@ -400,7 +400,7 @@ function viewAds($lid = 0)
             }
             $owner      = new XoopsUser();
             $identifier = $owner->getUnameFromId($usid);
-            if ($GLOBALS['xoopsModuleConfig']['adslight_lightbox'] == 1) {
+            if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
                 $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
 <script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="assets/lightbox/js/jquery-ui-1.8.18.custom.min"></script>

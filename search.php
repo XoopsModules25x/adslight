@@ -38,7 +38,7 @@ $xmid = $xoopsModule->getVar('mid');
 $configHandler     = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
-if ($xoopsConfigSearch['enable_search'] != 1) {
+if (1 != $xoopsConfigSearch['enable_search']) {
     //    header("Location: '.XOOPS_URL.'modules/adslight/index.php");
     redirect_header('index.php', 1);
 }
@@ -52,15 +52,15 @@ $start  = Request::getInt('start', 0);
 
 $queries = [];
 
-if ($action === 'results') {
-    if ($query === '') {
+if ('results' === $action) {
+    if ('' === $query) {
         redirect_header('search.php', 1, _SR_PLZENTER);
     }
-} elseif ($action === 'showall') {
-    if ($query === '' || empty($mid)) {
+} elseif ('showall' === $action) {
+    if ('' === $query || empty($mid)) {
         redirect_header('search.php', 1, _SR_PLZENTER);
     }
-} elseif ($action === 'showallbyuser') {
+} elseif ('showallbyuser' === $action) {
     if (empty($mid) || empty($uid)) {
         redirect_header('search.php', 1, _SR_PLZENTER);
     }
@@ -71,7 +71,7 @@ $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() 
 $gpermHandler      = xoops_getHandler('groupperm');
 $available_modules = $gpermHandler->getItemIds('module_read', $groups);
 
-if ($action === 'search') {
+if ('search' === $action) {
     include XOOPS_ROOT_PATH . '/header.php';
     require_once __DIR__ . '/include/searchform.php';
     $search_form->display();
@@ -79,13 +79,13 @@ if ($action === 'search') {
     exit();
 }
 
-if ($andor !== 'OR' && $andor !== 'exact' && $andor !== 'AND') {
+if ('OR' !== $andor && 'exact' !== $andor && 'AND' !== $andor) {
     $andor = 'AND';
 }
 
 $myts = MyTextSanitizer::getInstance();
-if ($action !== 'showallbyuser') {
-    if ($andor !== 'exact') {
+if ('showallbyuser' !== $action) {
+    if ('exact' !== $andor) {
         $ignored_queries = []; // holds keywords that are shorter than allowed mininum length
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
@@ -96,7 +96,7 @@ if ($action !== 'showallbyuser') {
                 $ignored_queries[] = $myts->addSlashes($q);
             }
         }
-        if (count($queries) == 0) {
+        if (0 == count($queries)) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
     } else {
@@ -128,7 +128,7 @@ switch ($action) {
 
         echo '<h3>' . _ADSLIGHT_SEARCHRESULTS . "</h3>\n";
         echo _SR_KEYWORDS . ':';
-        if ($andor !== 'exact') {
+        if ('exact' !== $andor) {
             foreach ($queries as $q) {
                 echo ' <strong>' . htmlspecialchars(stripslashes($q)) . '</strong>';
             }
@@ -149,7 +149,7 @@ switch ($action) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
                 $count   = count($results);
-                if (!is_array($results) || $count == 0) {
+                if (!is_array($results) || 0 == $count) {
                     echo '<p>' . _SR_NOMATCH . '</p>';
                 } else {
                     for ($i = 0; $i < $count; ++$i) {
@@ -158,7 +158,7 @@ switch ($action) {
                         echo '<td width="30%">';
                         echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                         if (isset($results[$i]['photo'])
-                            && $results[$i]['photo'] !== '') {
+                            && '' !== $results[$i]['photo']) {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
@@ -227,13 +227,13 @@ switch ($action) {
             $next_results =& $module->search($queries, $andor, 1, $start + 20, $uid);
             $next_count   = count($next_results);
             $has_next     = false;
-            if (is_array($next_results) && $next_count == 1) {
+            if (is_array($next_results) && 1 == $next_count) {
                 $has_next = true;
             }
             echo '<h4>' . _ADSLIGHT_SEARCHRESULTS . "</h4>\n";
-            if ($action === 'showall') {
+            if ('showall' === $action) {
                 echo _SR_KEYWORDS . ':';
-                if ($andor !== 'exact') {
+                if ('exact' !== $andor) {
                     foreach ($queries as $q) {
                         echo ' <strong>' . htmlspecialchars(stripslashes($q)) . '</strong>';
                     }
@@ -250,7 +250,7 @@ switch ($action) {
                 echo '<td width="30%">';
                 echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                 if (isset($results[$i]['photo'])
-                    && $results[$i]['photo'] !== '') {
+                    && '' !== $results[$i]['photo']) {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 } else {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
@@ -292,7 +292,7 @@ switch ($action) {
         ';
             $search_url = XOOPS_URL . '/modules/adslight/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
             $search_url .= "&mid=$mid&action=$action&andor=$andor";
-            if ($action === 'showallbyuser') {
+            if ('showallbyuser' === $action) {
                 $search_url .= "&uid=$uid";
             }
             if ($start > 0) {

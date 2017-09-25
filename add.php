@@ -219,13 +219,13 @@ if (Request::hasVar('submit', 'POST')) {
 
     //@todo - this 'if' code doesn't do anything, what should happen for premium accounts?
     if ($cat_moderate) {
-        if ($premium != '0') {
+        if ('0' != $premium) {
             echo '';
         } else {
             echo '';
         }
     } else {
-        if ($premium != '0') {
+        if ('0' != $premium) {
             echo '';
         } else {
             echo '';
@@ -280,7 +280,7 @@ if (Request::hasVar('submit', 'POST')) {
             $form->addElement(new XoopsFormHidden('status', '0'), true);
         }
 
-        if ($premium == 1) {
+        if (1 == $premium) {
             $form->addElement(new XoopsFormText(_ADSLIGHT_HOW_LONG, 'expire', 3, 3, $GLOBALS['xoopsModuleConfig']['adslight_howlong']), true);
         } else {
             $form->addElement(new XoopsFormLabel(_ADSLIGHT_WILL_LAST, $GLOBALS['xoopsModuleConfig']['adslight_howlong']));
