@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -110,7 +111,7 @@ function index()
             //            $price     = number_format($price, 2, ',', ' ');
 
             xoops_load('XoopsLocal');
-            $tempXoopsLocal = new XoopsLocal;
+            $tempXoopsLocal = new \XoopsLocal;
             //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
             $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
             //  For other countries uncomment the below line and comment out the above line
@@ -147,7 +148,7 @@ function index()
             /*        $result9 = $xoopsDB->query("select nom_usure from ".$xoopsDB->prefix('adslight_usure')." where id_usure=".(int)$typeusure."");
                 list($nom_usure) = $xoopsDB->fetchRow($result9); */
 
-            echo "<form action=\"validate_ads.php\" method=\"post\">";
+            echo '<form action="validate_ads.php" method="post">';
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
             echo "<tr><th class='left'>" . _AM_ADSLIGHT_LID . ": {$lid}</th><th class='left'>{$photo4} " . _AM_ADSLIGHT_NBR_PHOTO . "</th><th align='left'>" . _AM_ADSLIGHT_TITLE . ":</th><th align='left'>" . _AM_ADSLIGHT_DESC . "</th><th align='left'></th></tr>";
 
@@ -161,13 +162,13 @@ function index()
             echo "<td class='even width35'>{$desctext}</td><td class='even right' width='2%'></td>";
             echo "</tr><tr><td width='5%'></td><td>";
 
-            echo "<select name=\"op\">
-        <option value=\"ListingValid\"> " . _AM_ADSLIGHT_OK . "
-        <option value=\"IndexView\"> " . _AM_ADSLIGHT_MODIF . "
-        <option value=\"ListingDel\"> " . _AM_ADSLIGHT_DEL . "
-        </select><input type=\"submit\" value=\"" . _AM_ADSLIGHT_GO . "\">";
+            echo '<select name="op">
+        <option value="ListingValid"> ' . _AM_ADSLIGHT_OK . '
+        <option value="IndexView"> ' . _AM_ADSLIGHT_MODIF . '
+        <option value="ListingDel"> ' . _AM_ADSLIGHT_DEL . '
+        </select><input type="submit" value="' . _AM_ADSLIGHT_GO . '">';
 
-            echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\">";
+            echo '<input type="hidden" name="valid" value="Yes">';
             echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
             echo "<input type=\"hidden\" name=\"cid\" value=\"{$cid}\">";
             echo "<input type=\"hidden\" name=\"title\" value=\"{$title}\">";
@@ -204,22 +205,22 @@ function index()
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ''));
     if ($numrows > 0) {
         echo "<table class='outer width100 bnone'><tr class='bg4'><td class='top'>";
-        echo "<form method=\"post\" action=\"validate_ads.php\">"
+        echo '<form method="post" action="validate_ads.php">'
              . '<b>'
              . _AM_ADSLIGHT_MODANN
              . '</b><br><br>'
              . _AM_ADSLIGHT_NUMANN
-             . " <input type=\"text\" name=\"lid\" size=\"12\" maxlength=\"11\">&nbsp;&nbsp;"
-             . "<input type=\"hidden\" name=\"op\" value=\"ModifyAds\">"
-             . "<input type=\"submit\" value=\""
+             . ' <input type="text" name="lid" size="12" maxlength="11">&nbsp;&nbsp;'
+             . '<input type="hidden" name="op" value="ModifyAds">'
+             . '<input type="submit" value="'
              . _AM_ADSLIGHT_MODIF
-             . "\">"
+             . '">'
              . '</form><br>';
         echo '</td></tr></table><br>';
     }
 
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td class='top'>";
-    echo "<a href=\"map.php\">" . _AM_ADSLIGHT_GESTCAT . "</a> | <a href=\"../index.php\">" . _AM_ADSLIGHT_ACCESMYANN . '</a>';
+    echo '<a href="map.php">' . _AM_ADSLIGHT_GESTCAT . '</a> | <a href="../index.php">' . _AM_ADSLIGHT_ACCESMYANN . '</a>';
     echo '</td></tr></table><br>';
 
     xoops_cp_footer();
@@ -257,7 +258,7 @@ function indexView($lid)
         $tel      = $myts->htmlSpecialChars($tel);
         //        $price     = number_format($price, 2, ',', ' ');
         xoops_load('XoopsLocal');
-        $tempXoopsLocal = new XoopsLocal;
+        $tempXoopsLocal = new \XoopsLocal;
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
         $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
@@ -271,7 +272,7 @@ function indexView($lid)
         $contactby = $myts->htmlSpecialChars($contactby);
         $premium   = $myts->htmlSpecialChars($premium);
 
-        echo "<form action=\"validate_ads.php\" method=\"post\">";
+        echo '<form action="validate_ads.php" method="post">';
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<table><tr class='head' border='1'>
             <td>" . _AM_ADSLIGHT_NUMANN . " </td><td>{$lid} &nbsp;&nbsp;&nbsp;&nbsp;   " . _AM_ADSLIGHT_ADDED_ON . " &nbsp;&nbsp;&nbsp;&nbsp; {$date2}</td>
@@ -294,11 +295,11 @@ function indexView($lid)
         if ('0' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_ACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"1\"";
+        echo '>' . _AM_ADSLIGHT_ACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="1"';
         if ('1' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_INACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"2\"";
+        echo '>' . _AM_ADSLIGHT_INACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="2"';
         if ('2' == $status) {
             echo 'checked';
         }
@@ -311,7 +312,7 @@ function indexView($lid)
             </tr><tr class='head' border='1'>
         <td>" . _AM_ADSLIGHT_EXPIRE . " </td><td><input type=\"text\" name=\"expire\" size=\"40\" value=\"{$expire}\"></td>
             </tr><tr class='head' border='1'>
-            <td>" . _AM_ADSLIGHT_TYPE . " </td><td><select name=\"type\">";
+            <td>" . _AM_ADSLIGHT_TYPE . ' </td><td><select name="type">';
 
         $result5 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
         while (list($nom_type) = $xoopsDB->fetchRow($result5)) {
@@ -326,7 +327,7 @@ function indexView($lid)
 
         ////// Etat d'usure
         echo "<tr class='head' border='1'>
-            <td>" . _AM_ADSLIGHT_TYPE_USURE . " </td><td><select name=\"typeusure\">";
+            <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
 
         $result6 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
         while (list($nom_usure) = $xoopsDB->fetchRow($result6)) {
@@ -351,7 +352,7 @@ function indexView($lid)
             <td>" . _AM_ADSLIGHT_PHOTO1 . " </td><td><input type=\"text\" name=\"photo\" size=\"40\" value=\"$photo\"></td>
             </tr>";
         echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_DESC . '</td><td>';
-        $wysiwyg_text_area = AdslightUtility::getEditor(_AM_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px', 'small');
+        $wysiwyg_text_area = Adslight\Utility::getEditor(_AM_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px', 'small');
         echo $wysiwyg_text_area->render();
         echo '</td></tr>';
         echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_CAT . ' </td><td>';
@@ -359,11 +360,11 @@ function indexView($lid)
         echo "</td>
         </tr><tr class='head' border='1'>
         <td>&nbsp;</td><td><select name=\"op\">
-        <option value=\"ListingValid\"> " . _AM_ADSLIGHT_OK . "
-        <option value=\"ListingDel\"> " . _AM_ADSLIGHT_DEL . "
-        </select><input type=\"submit\" value=\"" . _AM_ADSLIGHT_GO . "\"></td>
-        </tr></table>";
-        echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\">";
+        <option value=\"ListingValid\"> " . _AM_ADSLIGHT_OK . '
+        <option value="ListingDel"> ' . _AM_ADSLIGHT_DEL . '
+        </select><input type="submit" value="' . _AM_ADSLIGHT_GO . '"></td>
+        </tr></table>';
+        echo '<input type="hidden" name="valid" value="Yes">';
         echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
         echo "<input type=\"hidden\" name=\"date\" value=\"{$date}\">";
         echo "<input type=\"hidden\" name=\"submitter\" value=\"{$submitter}\">
@@ -409,7 +410,7 @@ function modifyAds($lid)
         //        $price     = number_format($price, 2, ',', ' ');
 
         xoops_load('XoopsLocal');
-        $tempXoopsLocal = new XoopsLocal;
+        $tempXoopsLocal = new \XoopsLocal;
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
         $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
@@ -425,7 +426,7 @@ function modifyAds($lid)
 
         $date2 = formatTimestamp($date, 's');
 
-        echo "<form action=\"validate_ads.php\" method=post>";
+        echo '<form action="validate_ads.php" method=post>';
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<table class='bnone'><tr class='head' border='1'>
             <td>" . _AM_ADSLIGHT_NUMANN . " </td><td>{$lid} &nbsp;" . _AM_ADSLIGHT_ADDED_ON . "&nbsp; {$date2}</td>
@@ -456,21 +457,21 @@ function modifyAds($lid)
         }
 
         echo " <td class='head'>" . _AM_ADSLIGHT_CONTACTBY . " </td><td class='head'><select name=\"contactby\">
-           <option value=\"" . $contactby . "\">" . $contactselect . "</option>
-           <option value=\"1\">" . _AM_ADSLIGHT_CONTACT_BY_EMAIL . "</option>
-           <option value=\"2\">" . _AM_ADSLIGHT_CONTACT_BY_PM . "</option>
-           <option value=\"3\">" . _AM_ADSLIGHT_CONTACT_BY_BOTH . "</option>
-           <option value=\"4\">" . _AM_ADSLIGHT_CONTACT_BY_PHONE . '</option></select></td></tr>';
+           <option value=\"" . $contactby . '">' . $contactselect . '</option>
+           <option value="1">' . _AM_ADSLIGHT_CONTACT_BY_EMAIL . '</option>
+           <option value="2">' . _AM_ADSLIGHT_CONTACT_BY_PM . '</option>
+           <option value="3">' . _AM_ADSLIGHT_CONTACT_BY_BOTH . '</option>
+           <option value="4">' . _AM_ADSLIGHT_CONTACT_BY_PHONE . '</option></select></td></tr>';
 
         echo "<tr><td class='head'>" . _AM_ADSLIGHT_STATUS . "</td><td class='head'><input type=\"radio\" name=\"status\" value=\"0\"";
         if ('0' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_ACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"1\"";
+        echo '>' . _AM_ADSLIGHT_ACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="1"';
         if ('1' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_INACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"2\"";
+        echo '>' . _AM_ADSLIGHT_INACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="2"';
         if ('2' == $status) {
             echo 'checked';
         }
@@ -485,7 +486,7 @@ function modifyAds($lid)
             </tr>";
         ////// Type d'annonce
         echo "<tr class='head' border='1'>
-                 <td>" . _AM_ADSLIGHT_TYPE . " </td><td><select name=\"type\">";
+                 <td>" . _AM_ADSLIGHT_TYPE . ' </td><td><select name="type">';
 
         $result5 = $xoopsDB->query('SELECT nom_type, id_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
         while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5)) {
@@ -499,7 +500,7 @@ function modifyAds($lid)
 
         ////// Etat d'usure
         echo "<tr class='head' border='1'>
-                 <td>" . _AM_ADSLIGHT_TYPE_USURE . " </td><td><select name=\"typeusure\">";
+                 <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
 
         $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
         while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6)) {
@@ -536,7 +537,7 @@ function modifyAds($lid)
             </tr><tr class='head' border='1'>
             <td>" . _AM_ADSLIGHT_DESC . ' </td><td>';
 
-        $wysiwyg_text_area = AdslightUtility::getEditor('', 'desctext', $desctext, '100%', '200px', 'small');
+        $wysiwyg_text_area = Adslight\Utility::getEditor('', 'desctext', $desctext, '100%', '200px', 'small');
         echo $wysiwyg_text_area->render();
 
         echo '</td></tr>';
@@ -547,11 +548,11 @@ function modifyAds($lid)
         $time = time();
         echo "</tr><tr class='head' border='1'>
             <td>&nbsp;</td><td><select name=\"op\">
-            <option value=\"ModifyAdsS\"> " . _AM_ADSLIGHT_MODIF . "
-            <option value=\"ListingDel\"> " . _AM_ADSLIGHT_DEL . "
-            </select><input type=\"submit\" value=\"" . _AM_ADSLIGHT_GO . "\"></td>
-            </tr></table>";
-        echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\">";
+            <option value=\"ModifyAdsS\"> " . _AM_ADSLIGHT_MODIF . '
+            <option value="ListingDel"> ' . _AM_ADSLIGHT_DEL . '
+            </select><input type="submit" value="' . _AM_ADSLIGHT_GO . '"></td>
+            </tr></table>';
+        echo '<input type="hidden" name="valid" value="Yes">';
         echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
         echo "<input type=\"hidden\" name=\"date\" value=\"{$time}\">";
         echo "<input type=\"hidden\" name=\"submitter\" value=\"{$submitter}\">
@@ -717,7 +718,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     if ('' !== $email) {
         $tags               = [];
         $tags['TITLE']      = $title;
-        $tags['TYPE']       = AdslightUtility::getNameType($type);
+        $tags['TYPE']       = Adslight\Utility::getNameType($type);
         $tags['SUBMITTER']  = $submitter;
         $tags['DESCTEXT']   = stripslashes($desctext);
         $tags['EMAIL']      = _AM_ADSLIGHT_EMAIL;
@@ -758,7 +759,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     $tags['WEBMASTER']       = _AM_ADSLIGHT_WEBMASTER;
     $tags['HELLO']           = _AM_ADSLIGHT_HELLO;
     $tags['FOLLOW_LINK']     = _AM_ADSLIGHT_FOLLOW_LINK;
-    $tags['TYPE']            = AdslightUtility::getNameType($type);
+    $tags['TYPE']            = Adslight\Utility::getNameType($type);
     $tags['LINK_URL']        = XOOPS_URL . "/modules/adslight/viewads.php?&lid={$lid}";
     $sql                     = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cat}";
     $result                  = $xoopsDB->query($sql);

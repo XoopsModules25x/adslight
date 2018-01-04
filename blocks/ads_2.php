@@ -22,6 +22,8 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
+use XoopsModules\Adslight;
+
 /**
  * @param $options
  *
@@ -32,19 +34,19 @@ function adslight_b2_show($options)
     global $xoopsDB, $xoopsModuleConfig, $moduleDirName, $block_lang;
 
     $block = [];
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
     $block_lang    = '_MB_' . strtoupper($moduleDirName);
-    $helper        = \Xmf\Module\Helper::getHelper($moduleDirName);
+    $helper = \Xmf\Module\Helper::getHelper($moduleDirName);
 
-    require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/utility.php";
+    require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/Utility.php";
 
     $block['title'] = constant("{$block_lang}_TITLE");
 
     $updir      = $helper->getConfig($moduleDirName . '_link_upload', '');
     $cat_perms  = '';
-    $categories = AdslightUtility::getMyItemIds('adslight_view');
+    $categories = Adslight\Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
@@ -76,7 +78,7 @@ function adslight_b2_show($options)
 
         $ad_title            = $myrow['title'];
         $a_item['status']    = $status;
-        $a_item['type']      = AdslightUtility::getNameType($type);
+        $a_item['type']      = Adslight\Utility::getNameType($type);
         $a_item['price']     = $price;
         $a_item['typeprice'] = $typeprice;
         $a_item['town']      = $town;

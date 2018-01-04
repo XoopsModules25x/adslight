@@ -20,6 +20,8 @@
 -------------------------------------------------------------------------
 */
 
+use XoopsModules\Adslight;
+
 /**
  * Class ClassifiedsTree
  */
@@ -56,7 +58,7 @@ class ClassifiedsTree
         $arr = [];
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -88,7 +90,7 @@ class ClassifiedsTree
         $sel_id  = (int)$sel_id;
         $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id);
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $result .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -116,7 +118,7 @@ class ClassifiedsTree
         $sel_id = (int)$sel_id;
         $sql    = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -148,7 +150,7 @@ class ClassifiedsTree
     {
         $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -179,7 +181,7 @@ class ClassifiedsTree
         $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id . '';
         //        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . "'");
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             //            $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
@@ -191,7 +193,7 @@ class ClassifiedsTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
         $path = '/' . $name . $path . '';
         if (0 == $parentid) {
@@ -215,7 +217,7 @@ class ClassifiedsTree
         if ('' == $sel_name) {
             $sel_name = $this->id;
         }
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         echo '<select name="' . $sel_name . '"';
         if ('' != $onchange) {
             echo ' onchange="' . $onchange . '"';
@@ -223,7 +225,7 @@ class ClassifiedsTree
         echo '>';
 
         $sql        = 'SELECT SQL_CACHE cid, title FROM ' . $this->table . ' WHERE pid=0';
-        $categories = AdslightUtility::getMyItemIds('adslight_submit');
+        $categories = Adslight\Utility::getMyItemIds('adslight_submit');
 
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
@@ -274,7 +276,7 @@ class ClassifiedsTree
             return $path;
         }
         list($parentid, $name) = $this->db->fetchRow($result);
-        $myts = MyTextSanitizer::getInstance();
+        $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
 
         $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
@@ -323,7 +325,7 @@ class ClassifiedsTree
     {
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -359,7 +361,7 @@ class ClassifiedsTree
 
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
@@ -411,10 +413,10 @@ class ClassifiedsTree
                 echo "({$cat_order})";
             }
             echo "&nbsp;&nbsp;{$name}&nbsp;&nbsp;</th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsNewCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/add.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_ADDSUBCAT . "\" title=\"" . _AM_ADSLIGHT_ADDSUBCAT . "\"></a></th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsModCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_MODIFSUBCAT . "\" title=\"" . _AM_ADSLIGHT_MODIFSUBCAT . "\"></a></th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsDelCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/delete.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_DELSUBCAT . "\" title=\"" . _AM_ADSLIGHT_DELSUBCAT . "\"></a></th>
-                </tr>";
+                <th class=\"center width10\"><a href=\"category.php?op=AdsNewCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/add.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_ADDSUBCAT . '" title="' . _AM_ADSLIGHT_ADDSUBCAT . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsModCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_MODIFSUBCAT . '" title="' . _AM_ADSLIGHT_MODIFSUBCAT . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsDelCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/delete.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_DELSUBCAT . '" title="' . _AM_ADSLIGHT_DELSUBCAT . '"></a></th>
+                </tr>';
 
             $arr   = $this->getChildTreeMapArray($catid, $order);
             $class = 'odd';
@@ -451,7 +453,7 @@ class ClassifiedsTree
         global $xoopsDB;
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
 
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
             $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
         }
@@ -480,7 +482,7 @@ class ClassifiedsTree
     {
         $result = $this->db->query('SELECT SQL_CACHE cid, pid, title FROM ' . $this->table);
         $ret    = [];
-        $myts   = MyTextSanitizer::getInstance();
+        $myts   = \MyTextSanitizer::getInstance();
         while ($myrow = $this->db->fetchArray($result)) {
             $ret[$myrow['cid']] = [
                 'title' => $myts->htmlspecialchars($myrow['title']),

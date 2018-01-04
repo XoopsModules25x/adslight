@@ -79,7 +79,7 @@ if ('0' == $cat_rows) {
             break;
     }
 
-    $permform = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperms.php');
+    $permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperms.php');
     $cattree  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $allcats  = $cattree->getCategoryList();
     foreach ($allcats as $cid => $category) {

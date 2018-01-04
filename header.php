@@ -28,7 +28,7 @@ use Xmf\Module\Admin;
 
 $moduleDirName = basename(__DIR__);
 require_once __DIR__ . '/../../mainfile.php';
-require_once __DIR__ . '/class/utility.php';
+require_once __DIR__ . '/class/Utility.php';
 
 if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
     require_once __DIR__ . '/seo_url.php';
@@ -36,6 +36,6 @@ if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
 
 $pathIcon16 = Admin::iconUrl('', 16);
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 xoops_loadLanguage('main', $moduleDirName);

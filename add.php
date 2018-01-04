@@ -21,9 +21,10 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-$myts = MyTextSanitizer::getInstance();// MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance();// MyTextSanitizer object
 //require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once __DIR__ . '/include/functions.php';
@@ -41,7 +42,7 @@ if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module
 
 $premium = $gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? 1 : 0;
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
@@ -69,7 +70,7 @@ if (Request::hasVar('submit', 'POST')) {
     }
 
     $cid       = Request::getInt('cid', 0, 'POST');
-    $cat_perms = AdslightUtility::getMyItemIds('adslight_submit');
+    $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
@@ -141,7 +142,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['WEBMASTER']       = _ADSLIGHT_WEBMASTER;
         $tags['HELLO']           = _ADSLIGHT_HELLO;
         $tags['FOLLOW_LINK']     = _ADSLIGHT_FOLLOW_LINK;
-        $tags['TYPE']            = AdslightUtility::getNameType($type);
+        $tags['TYPE']            = Adslight\Utility::getNameType($type);
         $tags['LINK_URL']        = XOOPS_URL . '/modules/adslight/viewads.php?' . '&lid=' . $lid;
         $sql                     = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
         $result2                 = $xoopsDB->query($sql);
@@ -164,7 +165,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['WEBMASTER']      = _ADSLIGHT_WEBMASTER;
         $tags['HELLO']          = _ADSLIGHT_HELLO;
         $tags['FOLLOW_LINK']    = _ADSLIGHT_FOLLOW_LINK;
-        $tags['TYPE']           = AdslightUtility::getNameType($type);
+        $tags['TYPE']           = Adslight\Utility::getNameType($type);
         $tags['NEED_TO_LOGIN']  = _ADSLIGHT_NEED_TO_LOGIN;
         $tags['ADMIN_LINK']     = XOOPS_URL . '/modules/adslight/admin/validate_ads.php';
         $sql                    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
@@ -212,7 +213,7 @@ if (Request::hasVar('submit', 'POST')) {
     $result3 = $xoopsDB->query('SELECT id_usure, nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY id_usure');
 
     ob_start();
-    $form = new XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'add.php', 'post', true);
+    $form = new \XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'add.php', 'post', true);
     $form->setExtra('enctype="multipart/form-data"');
 
     //    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
@@ -254,7 +255,7 @@ if (Request::hasVar('submit', 'POST')) {
 
     // $cat_id = $_GET['cid'];
     $cid       = 1;
-    $cat_perms = AdslightUtility::getMyItemIds('adslight_submit');
+    $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {
         if (!in_array($cid, $cat_perms)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
@@ -271,7 +272,7 @@ if (Request::hasVar('submit', 'POST')) {
         list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
 
         if ('1' == $premium) {
-            $radio        = new XoopsFormRadio(_ADSLIGHT_STATUS, 'status', '');
+            $radio        = new \XoopsFormRadio(_ADSLIGHT_STATUS, 'status', '');
             $options['0'] = _ADSLIGHT_ACTIVE;
             $options['1'] = _ADSLIGHT_INACTIVE;
             $radio->addOptionArray($options);
@@ -288,13 +289,13 @@ if (Request::hasVar('submit', 'POST')) {
         }
 
         // Type
-        $type_form = new XoopsFormSelect(_ADSLIGHT_TYPE, 'type', '', '1');
+        $type_form = new \XoopsFormSelect(_ADSLIGHT_TYPE, 'type', '', '1');
         while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result)) {
             $type_form->addOption($nom_type, $id_type);
         }
 
         // State of Object
-        $usure_form = new XoopsFormSelect(_ADSLIGHT_TYPE_USURE, 'typeusure', '', '1');
+        $usure_form = new \XoopsFormSelect(_ADSLIGHT_TYPE_USURE, 'typeusure', '', '1');
         while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result3)) {
             $usure_form->addOption($nom_usure, $id_usure);
         }
@@ -304,7 +305,7 @@ if (Request::hasVar('submit', 'POST')) {
 
         $form->addElement(new XoopsFormText(_ADSLIGHT_TITLE2, 'title', 40, 50, ''), true);
 
-        $form->addElement(AdslightUtility::getEditor(_ADSLIGHT_DESC, 'desctext', '', '100%', 40), true);
+        $form->addElement(Adslight\Utility::getEditor(_ADSLIGHT_DESC, 'desctext', '', '100%', 40), true);
 
         //        $form->addElement(new XoopsFormEditor(_ADSLIGHT_DESC, $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = FALSE, $onfailure = 'textarea'));
         //        $optionsTrayNote->addElement($bodynote);
@@ -312,14 +313,14 @@ if (Request::hasVar('submit', 'POST')) {
         $form->addElement(new XoopsFormText(_ADSLIGHT_PRICE2, 'price', 40, 50, ''), true);
 
         // Price Type
-        $sel_form = new XoopsFormSelect(_ADSLIGHT_PRICETYPE, 'typeprice', '', '1');
+        $sel_form = new \XoopsFormSelect(_ADSLIGHT_PRICETYPE, 'typeprice', '', '1');
         while (list($nom_price, $id_price) = $xoopsDB->fetchRow($result1)) {
             $sel_form->addOption($nom_price, $id_price);
         }
 
         $form->addElement($sel_form);
 
-        $contactby_form = new XoopsFormSelect(_ADSLIGHT_CONTACTBY, 'contactby', '', '1');
+        $contactby_form = new \XoopsFormSelect(_ADSLIGHT_CONTACTBY, 'contactby', '', '1');
         $contactby_form->addOption(1, _ADSLIGHT_CONTACT_BY_EMAIL);
         $contactby_form->addOption(2, _ADSLIGHT_CONTACT_BY_PM);
         $contactby_form->addOption(3, _ADSLIGHT_CONTACT_BY_BOTH);
@@ -347,7 +348,7 @@ if (Request::hasVar('submit', 'POST')) {
         $form->addElement(new XoopsFormHidden('date', time()), false);
         $form->addElement(new XoopsFormButton('', 'submit', _ADSLIGHT_SUBMIT, 'submit'));
         $form->display();
-        $xoopsTpl->assign('submit_form', ob_get_contents());
+        $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_contents());
         ob_end_clean();
     } else {    // User can't see any category
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);

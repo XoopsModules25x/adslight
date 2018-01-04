@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 
@@ -80,7 +81,7 @@ if (Request::hasVar('submit', 'POST')) {
 
         $tags                = [];
         $tags['TITLE']       = $title;
-        $tags['TYPE']        = AdslightUtility::getNameType($type);
+        $tags['TYPE']        = Adslight\Utility::getNameType($type);
         $tags['PRICE']       = $price;
         $tags['DESCTEXT']    = stripslashes($desctext);
         $tags['MY_SITENAME'] = $xoopsConfig['sitename'];
@@ -218,7 +219,7 @@ if (Request::hasVar('submit', 'POST')) {
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
-        $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
+        $jlm_captcha = new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
     }
 

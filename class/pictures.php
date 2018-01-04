@@ -34,7 +34,7 @@ require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * light_pictures class.
@@ -296,7 +296,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -333,7 +333,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         global $moduleDirName;
 
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
@@ -355,7 +355,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
     {
         global $moduleDirName;
         $sql = 'DELETE FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -381,15 +381,15 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         global $moduleDirName, $main_lang;
         $uid        = (int)$uid;
         $lid        = (int)$lid;
-        $form       = new XoopsThemeForm(_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
-        $field_url  = new XoopsFormFile(_ADSLIGHT_SELECT_PHOTO, 'sel_photo', 2000000);
-        $field_desc = new XoopsFormText(_ADSLIGHT_CAPTION, 'caption', 35, 55);
+        $form       = new \XoopsThemeForm(_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
+        $field_url  = new \XoopsFormFile(_ADSLIGHT_SELECT_PHOTO, 'sel_photo', 2000000);
+        $field_desc = new \XoopsFormText(_ADSLIGHT_CAPTION, 'caption', 35, 55);
 
         $form->setExtra('enctype="multipart/form-data"');
-        $button_send   = new XoopsFormButton('', 'submit_button', _ADSLIGHT_UPLOADPICTURE, 'submit');
-        $field_warning = new XoopsFormLabel(sprintf(_ADSLIGHT_YOUCANUPLOAD, $maxbytes / 1024));
-        $field_lid     = new XoopsFormHidden('lid', $lid);
-        $field_uid     = new XoopsFormHidden('uid', $uid);
+        $button_send   = new \XoopsFormButton('', 'submit_button', _ADSLIGHT_UPLOADPICTURE, 'submit');
+        $field_warning = new \XoopsFormLabel(sprintf(_ADSLIGHT_YOUCANUPLOAD, $maxbytes / 1024));
+        $field_lid     = new \XoopsFormHidden('lid', $lid);
+        $field_uid     = new \XoopsFormHidden('uid', $uid);
 
         $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
 
@@ -423,15 +423,15 @@ class AdslightPicturesHandler extends XoopsObjectHandler
     {
         global $moduleDirName, $main_lang;
 
-        $form       = new XoopsThemeForm(_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
-        $field_desc = new XoopsFormText($caption, 'caption', 35, 55);
+        $form       = new \XoopsThemeForm(_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
+        $field_desc = new \XoopsFormText($caption, 'caption', 35, 55);
         $form->setExtra('enctype="multipart/form-data"');
-        $button_send = new XoopsFormButton(_ADSLIGHT_EDIT, 'submit_button', _SUBMIT, 'submit');
+        $button_send = new \XoopsFormButton(_ADSLIGHT_EDIT, 'submit_button', _SUBMIT, 'submit');
         //@todo - replace alt with language string
-        $field_warning = new XoopsFormLabel("<img src='{$filename}' alt='sssss'>");
-        $field_cod_img = new XoopsFormHidden('cod_img', $cod_img);
-        //    $field_lid = new XoopsFormHidden('lid', $lid);
-        $field_marker = new XoopsFormHidden('marker', 1);
+        $field_warning = new \XoopsFormLabel("<img src='{$filename}' alt='sssss'>");
+        $field_cod_img = new \XoopsFormHidden('cod_img', $cod_img);
+        //    $field_lid = new \XoopsFormHidden('lid', $lid);
+        $field_marker = new \XoopsFormHidden('marker', 1);
 
         $field_token = $GLOBALS['xoopsSecurity']->getTokenHTML();
 
@@ -476,7 +476,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         ];
         $maxfilesize       = $maxfilebytes;
         // create the object to upload
-        $uploader = new XoopsMediaUploader($path_upload, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+        $uploader = new \XoopsMediaUploader($path_upload, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
         // fetch the media
         if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
             //lets create a name for it
@@ -494,7 +494,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
                 $picture->setVar('url', $url);
                 $picture->setVar('title', $title);
                 $uid = $GLOBALS['xoopsUser']->getVar('uid');
-                $lid = (int)$lid;
+                $lid = $lid;
                 $picture->setVar('lid', $lid);
                 $picture->setVar('uid_owner', $uid);
                 $this->insert($picture);

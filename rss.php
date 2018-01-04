@@ -19,12 +19,15 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
+use XoopsModules\Adslight;
+
 header('Content-Type: application/rss+xml; charset=UTF-8');
 
 require_once __DIR__ . '/header.php';
 //require_once __DIR__ . '/include/functions.php';
-
-$allads     = AdslightUtility::returnAllAdsRss();
+$allads = [];
+$allads     = Adslight\Utility::returnAllAdsRss();
 $base_xoops = 'http://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], 'modules'));
 
 echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>

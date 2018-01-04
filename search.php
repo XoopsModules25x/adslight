@@ -83,7 +83,7 @@ if ('OR' !== $andor && 'exact' !== $andor && 'AND' !== $andor) {
     $andor = 'AND';
 }
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 if ('showallbyuser' !== $action) {
     if ('exact' !== $andor) {
         $ignored_queries = []; // holds keywords that are shorter than allowed mininum length
@@ -148,7 +148,10 @@ switch ($action) {
             if (in_array($mid, $available_modules)) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
-                $count   = count($results);
+                $count   = 0;
+                if (is_array($results)) {
+                    $count = count($results);
+                }
                 if (!is_array($results) || 0 == $count) {
                     echo '<p>' . _SR_NOMATCH . '</p>';
                 } else {
@@ -159,16 +162,28 @@ switch ($action) {
                         echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                         if (isset($results[$i]['photo'])
                             && '' !== $results[$i]['photo']) {
-                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
+                            echo "<a href='"
+                                 . $results[$i]['link']
+                                 . "'><img class='thumb' src='"
+                                 . $results[$i]['sphoto']
+                                 . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
-                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
+                            echo "<a href='"
+                                 . $results[$i]['link']
+                                 . "'><img class='thumb' src='"
+                                 . $results[$i]['nophoto']
+                                 . "' alt='' width='100' ></a></td>&nbsp;";
                         }
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = '' . $results[$i]['link'];
                         }
                         echo '<td width="50%">';
 
-                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
+                        echo "<strong><a href='"
+                             . $results[$i]['link']
+                             . "'>"
+                             . $myts->htmlSpecialChars($results[$i]['title'])
+                             . '</a></strong><br><br>';
 
                         if (!XOOPS_USE_MULTIBYTES) {
                             if (strlen($results[$i]['desctext']) >= 14) {
@@ -179,14 +194,28 @@ switch ($action) {
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
                         echo '</td><td width="20%">';
-                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
+                        echo ''
+                             . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']
+                             . ''
+                             . $myts->htmlSpecialChars($results[$i]['price'])
+                             . '</a>&nbsp;'
+                             . $myts->htmlSpecialChars($results[$i]['typeprice'])
+                             . '</a>';
 
                         echo '</td></tr><tr><td>';
                         echo '<small>';
                         $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
                             $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                            echo '&nbsp;&nbsp;' . _ADSLIGHT_FROM . "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . "</a>\n";
+                            echo '&nbsp;&nbsp;'
+                                 . _ADSLIGHT_FROM
+                                 . "<a href='"
+                                 . XOOPS_URL
+                                 . '/userinfo.php?uid='
+                                 . $results[$i]['uid']
+                                 . "'>"
+                                 . $uname
+                                 . "</a>\n";
                         }
                         echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
                         echo '</small>';
@@ -211,22 +240,29 @@ switch ($action) {
         include XOOPS_ROOT_PATH . '/header.php';
 
         // for xoops 2.2.x versions
-        if (file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-            require_once __DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php';
-        } else {
-            require_once __DIR__ . '/language/english/main.php';
-        }
+        //        if (file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php')) {
+        //            require_once __DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php';
+        //        } else {
+        //            require_once __DIR__ . '/language/english/main.php';
+        //        }
+        xoops_loadLanguage('main', basename(__DIR__));
         // end
-        $xoopsTpl->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
+        $GLOBALS['xoopsTpl']->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->get($mid);
         $results       =& $module->search($queries, $andor, 20, $start, $uid);
-        $count         = count($results);
-        if (is_array($results) && $count > 0) {
+        $count         = 0;
+        if (is_array($results)) {
+            $count = count($results);
+        }
+        if ($count > 0) {
             $next_results =& $module->search($queries, $andor, 1, $start + 20, $uid);
-            $next_count   = count($next_results);
-            $has_next     = false;
+            $count        = 0;
+            if (is_array($next_results)) {
+                $count = count($next_results);
+            }
+            $has_next = false;
             if (is_array($next_results) && 1 == $next_count) {
                 $has_next = true;
             }
@@ -251,9 +287,17 @@ switch ($action) {
                 echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                 if (isset($results[$i]['photo'])
                     && '' !== $results[$i]['photo']) {
-                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
+                    echo "<a href='"
+                         . $results[$i]['link']
+                         . "'><img class='thumb' src='"
+                         . $results[$i]['sphoto']
+                         . "' alt='' width='100' ></a></td>&nbsp;";
                 } else {
-                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
+                    echo "<a href='"
+                         . $results[$i]['link']
+                         . "'><img class='thumb' src='"
+                         . $results[$i]['nophoto']
+                         . "' alt='' width='100' ></a></td>&nbsp;";
                 }
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = '' . $results[$i]['link'];
@@ -279,7 +323,15 @@ switch ($action) {
                 $results[$i]['uid'] = @(int)$results[$i]['uid'];
                 if (!empty($results[$i]['uid'])) {
                     $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                    echo '&nbsp;&nbsp;' . _ADSLIGHT_FROM . "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . '</a><br>';
+                    echo '&nbsp;&nbsp;'
+                         . _ADSLIGHT_FROM
+                         . "<a href='"
+                         . XOOPS_URL
+                         . '/userinfo.php?uid='
+                         . $results[$i]['uid']
+                         . "'>"
+                         . $uname
+                         . '</a><br>';
                 }
                 echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
                 echo '</small>';

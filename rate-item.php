@@ -24,8 +24,8 @@ use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
-$myts = MyTextSanitizer::getInstance(); // MyTextSanitizer object
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+$myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 if (!empty($HTTP_POST_VARS['submit'])) {
     //    $erh         = new ErrorHandler; //ErrorHandler object
     $ratinguser = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getVar('uid') : 0;
@@ -66,7 +66,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
             redirect_header('viewads.php?lid=' . $lid . '', 4, constant('_ADSLIGHT_VOTEONCE2'));
         }
     }
-    $rating = ($rating > 10) ? 10 : (int)$rating;
+    $rating = ($rating > 10) ? 10 : $rating;
 
     //All is well.  Add to Line Item Rate to DB.
     $newid    = $xoopsDB->genId($xoopsDB->prefix('adslight_item_votedata') . '_ratingid_seq');
@@ -82,7 +82,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
 
     //All is well.  Calculate Score & Add to Summary (for quick retrieval & sorting) to DB.
     //    updateIrating($lid);
-    AdslightUtility::updateItemRating($lid);
+    Adslight\Utility::updateItemRating($lid);
     $ratemessage = constant('_ADSLIGHT_VOTEAPPRE') . '<br>' . sprintf(constant('_ADSLIGHT_THANKURATEITEM'), $xoopsConfig['sitename']);
     redirect_header('viewads.php?lid=' . $lid . '', 3, $ratemessage);
 } else {
@@ -91,16 +91,16 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     $lid    = Request::getInt('lid', 0, 'GET');
     $result = $xoopsDB->query('SELECT lid, title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $title) = $xoopsDB->fetchRow($result);
-    $xoopsTpl->assign('link', [
+    $GLOBALS['xoopsTpl']->assign('link', [
         'lid'   => $lid,
         'title' => $myts->htmlSpecialChars($title)
     ]);
-    $xoopsTpl->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));
-    $xoopsTpl->assign('lang_ratingscale', constant('_ADSLIGHT_RATINGSCALE'));
-    $xoopsTpl->assign('lang_beobjective', constant('_ADSLIGHT_BEOBJECTIVE'));
-    $xoopsTpl->assign('lang_donotvote', constant('_ADSLIGHT_DONOTVOTE'));
-    $xoopsTpl->assign('lang_rateit', constant('_ADSLIGHT_RATEIT'));
-    $xoopsTpl->assign('lang_cancel', _CANCEL);
-    $xoopsTpl->assign('mydirname', $moduleDirName);
+    $GLOBALS['xoopsTpl']->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));
+    $GLOBALS['xoopsTpl']->assign('lang_ratingscale', constant('_ADSLIGHT_RATINGSCALE'));
+    $GLOBALS['xoopsTpl']->assign('lang_beobjective', constant('_ADSLIGHT_BEOBJECTIVE'));
+    $GLOBALS['xoopsTpl']->assign('lang_donotvote', constant('_ADSLIGHT_DONOTVOTE'));
+    $GLOBALS['xoopsTpl']->assign('lang_rateit', constant('_ADSLIGHT_RATEIT'));
+    $GLOBALS['xoopsTpl']->assign('lang_cancel', _CANCEL);
+    $GLOBALS['xoopsTpl']->assign('mydirname', $moduleDirName);
     include XOOPS_ROOT_PATH . '/footer.php';
 }

@@ -22,6 +22,8 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
+use XoopsModules\Adslight;
+
 /**
  * @param $options
  *
@@ -29,11 +31,11 @@
  */
 function adslight_show($options)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
     global $xoopsDB, $moduleDirName, $block_lang;
 
     $block = [];
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
     $block_lang    = '_MB_' . strtoupper($moduleDirName);
@@ -53,7 +55,7 @@ function adslight_show($options)
             }
         }
 
-        $a_item['type'] = AdslightUtility::getNameType($type);
+        $a_item['type'] = Adslight\Utility::getNameType($type);
         $a_item['id']   = $myrow['lid'];
         $a_item['cid']  = $myrow['cid'];
 

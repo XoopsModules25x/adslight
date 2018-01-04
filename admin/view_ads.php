@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -127,7 +128,7 @@ function index()
             $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
             list($nom_price) = $xoopsDB->fetchRow($result8);
 
-            echo "<form action=\"view_ads.php\" method=\"post\">";
+            echo '<form action="view_ads.php" method="post">';
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
             echo "<tr><th class='left'>" . _AM_ADSLIGHT_LID . ": {$lid}</th><th class='left'>{$photo4} " . _AM_ADSLIGHT_NBR_PHOTO . "</th><th class='left'>" . _AM_ADSLIGHT_TITLE . ":</th><th class='left'>" . _AM_ADSLIGHT_DESC . "</th><th class='left'><!--" . _AM_ADSLIGHT_ACTIONS . '--></th></tr>';
 
@@ -140,12 +141,12 @@ function index()
             echo "<td class='even width='35%'>{$desctext}</td><td class='even right width2'></td>";
             echo "</tr><tr><td width='5%'></td><td>";
 
-            echo "<select name=\"op\">
-        <option value=\"ModifyAds\"> " . _AM_ADSLIGHT_MODIF . "
-        <option value=\"ListingDel\"> " . _AM_ADSLIGHT_DEL . "
-               </select><input type=\"submit\" value=\"" . _AM_ADSLIGHT_GO . "\">";
+            echo '<select name="op">
+        <option value="ModifyAds"> ' . _AM_ADSLIGHT_MODIF . '
+        <option value="ListingDel"> ' . _AM_ADSLIGHT_DEL . '
+               </select><input type="submit" value="' . _AM_ADSLIGHT_GO . '">';
 
-            echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\">";
+            echo '<input type="hidden" name="valid" value="Yes">';
             echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
             echo "<input type=\"hidden\" name=\"cid\" value=\"{$cid}\">";
             echo "<input type=\"hidden\" name=\"title\" value=\"{$title}\">";
@@ -222,7 +223,7 @@ function indexView($lid = null)
         $contactby = $myts->htmlSpecialChars($contactby);
         $premium   = $myts->htmlSpecialChars($premium);
 
-        echo "<form action=\"index.php\" method=\"post\">";
+        echo '<form action="index.php" method="post">';
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<table><tr class='head' border='1'>
             <td>" . _AM_ADSLIGHT_NUMANN . " </td><td>{$lid} &nbsp;&nbsp;&nbsp;&nbsp;   " . _AM_ADSLIGHT_ADDED_ON . " &nbsp;&nbsp;&nbsp;&nbsp; {$date2}</td>
@@ -245,11 +246,11 @@ function indexView($lid = null)
         if ('0' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_ACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"1\"";
+        echo '>' . _AM_ADSLIGHT_ACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="1"';
         if ('1' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_INACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"2\"";
+        echo '>' . _AM_ADSLIGHT_INACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="2"';
         if ('2' == $status) {
             echo 'checked';
         }
@@ -262,7 +263,7 @@ function indexView($lid = null)
             </tr><tr class='head' border='1'>
            <td>" . _AM_ADSLIGHT_EXPIRE . " </td><td><input type=\"text\" name=\"expire\" size=\"40\" value=\"{$expire}\"></td>
             </tr><tr class='head' border='1'>
-            <td>" . _AM_ADSLIGHT_TYPE . " </td><td><select name=\"type\">";
+            <td>" . _AM_ADSLIGHT_TYPE . ' </td><td><select name="type">';
 
         $result5 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
         while (list($nom_type) = $xoopsDB->fetchRow($result5)) {
@@ -277,7 +278,7 @@ function indexView($lid = null)
 
         ////// Etat d'usure
         echo "<tr class='head' border='1'>
-            <td>" . _AM_ADSLIGHT_TYPE_USURE . " </td><td><select name=\"typeusure\">";
+            <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
 
         $result6 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
         while (list($nom_usure) = $xoopsDB->fetchRow($result6)) {
@@ -301,7 +302,7 @@ function indexView($lid = null)
            <td>" . _AM_ADSLIGHT_PHOTO1 . " </td><td><input type=\"text\" name=\"photo\" size=\"40\" value=\"{$photo}\"></td>
             </tr>";
         echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_DESC . '</td><td>';
-        $wysiwyg_text_area = AdslightUtility::getEditor(_AM_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px', 'small');
+        $wysiwyg_text_area = Adslight\Utility::getEditor(_AM_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px', 'small');
         echo $wysiwyg_text_area->render();
         echo '</td></tr>';
         echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_CAT . ' </td><td>';
@@ -309,11 +310,11 @@ function indexView($lid = null)
         echo "</td>
         </tr><tr class='head' border='1'>
         <td>&nbsp;</td><td><select name=\"op\">
-        <option value=\"ListingValid\"> " . _AM_ADSLIGHT_OK . "
-        <option value=\"ListingDel\"> " . _AM_ADSLIGHT_DEL . "
-        </select><input type=\"submit\" value=\"" . _AM_ADSLIGHT_GO . "\"></td>
-        </tr></table>";
-        echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\">";
+        <option value=\"ListingValid\"> " . _AM_ADSLIGHT_OK . '
+        <option value="ListingDel"> ' . _AM_ADSLIGHT_DEL . '
+        </select><input type="submit" value="' . _AM_ADSLIGHT_GO . '"></td>
+        </tr></table>';
+        echo '<input type="hidden" name="valid" value="Yes">';
         echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
         echo "<input type=\"hidden\" name=\"date\" value=\"{$date}\">";
         echo "<input type=\"hidden\" name=\"submitter\" value=\"{$submitter}\">
@@ -369,7 +370,7 @@ function modifyAds($lid)
 
         $date2 = formatTimestamp($date, 's');
 
-        echo "<form action=\"view_ads.php\" method=\"post\">";
+        echo '<form action="view_ads.php" method="post">';
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<table border=0><tr class='head' border='1'>
            <td>" . _AM_ADSLIGHT_NUMANN . " </td><td>{$lid} &nbsp;" . _AM_ADSLIGHT_ADDED_ON . "&nbsp; {$date2}</td>
@@ -413,11 +414,11 @@ function modifyAds($lid)
         if ('0' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_ACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"1\"";
+        echo '>' . _AM_ADSLIGHT_ACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="1"';
         if ('1' == $status) {
             echo 'checked';
         }
-        echo '>' . _AM_ADSLIGHT_INACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"2\"";
+        echo '>' . _AM_ADSLIGHT_INACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="2"';
         if ('2' == $status) {
             echo 'checked';
         }
@@ -432,7 +433,7 @@ function modifyAds($lid)
             </tr>";
         // Type d'annonce
         echo "<tr class='head' border='1'>
-            <td>" . _AM_ADSLIGHT_TYPE . " </td><td><select name=\"type\">";
+            <td>" . _AM_ADSLIGHT_TYPE . ' </td><td><select name="type">';
 
         $result5 = $xoopsDB->query('SELECT nom_type, id_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
         while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5)) {
@@ -446,7 +447,7 @@ function modifyAds($lid)
 
         // Etat d'usure
         echo "<tr class='head' border='1'>
-            <td>" . _AM_ADSLIGHT_TYPE_USURE . " </td><td><select name=\"typeusure\">";
+            <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
 
         $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
         while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6)) {
@@ -483,7 +484,7 @@ function modifyAds($lid)
             </tr><tr class='head' border='1'>
             <td>" . _AM_ADSLIGHT_DESC . ' </td><td>';
 
-        $wysiwyg_text_area = AdslightUtility::getEditor('', 'desctext', $desctext, '100%', '200px', 'small');
+        $wysiwyg_text_area = Adslight\Utility::getEditor('', 'desctext', $desctext, '100%', '200px', 'small');
         echo $wysiwyg_text_area->render();
 
         echo '</td></tr>';
@@ -494,11 +495,11 @@ function modifyAds($lid)
         $time = time();
         echo "</tr><tr class='head' border='1'>
             <td>&nbsp;</td><td><select name=\"op\">
-            <option value=\"ModifyAdsS\"> " . _AM_ADSLIGHT_MODIF . "
-            <option value=\"ListingDel\"> " . _AM_ADSLIGHT_DEL . "
-            </select><input type=\"submit\" value=\"" . _AM_ADSLIGHT_GO . "\"></td>
-            </tr></table>";
-        echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\">";
+            <option value=\"ModifyAdsS\"> " . _AM_ADSLIGHT_MODIF . '
+            <option value="ListingDel"> ' . _AM_ADSLIGHT_DEL . '
+            </select><input type="submit" value="' . _AM_ADSLIGHT_GO . '"></td>
+            </tr></table>';
+        echo '<input type="hidden" name="valid" value="Yes">';
         echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
         echo "<input type=\"hidden\" name=\"date\" value=\"{$time}\">";
         echo "<input type=\"hidden\" name=\"submitter\" value=\"{$submitter}\">
@@ -651,7 +652,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     if ('' != $email) {
         $tags               = [];
         $tags['TITLE']      = $title;
-        $tags['TYPE']       = AdslightUtility::getNameType($type);
+        $tags['TYPE']       = Adslight\Utility::getNameType($type);
         $tags['SUBMITTER']  = $submitter;
         $tags['DESCTEXT']   = stripslashes($desctext);
         $tags['EMAIL']      = _AM_ADSLIGHT_EMAIL;
@@ -692,7 +693,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     $tags['WEBMASTER']       = _AM_ADSLIGHT_WEBMASTER;
     $tags['HELLO']           = _AM_ADSLIGHT_HELLO;
     $tags['FOLLOW_LINK']     = _AM_ADSLIGHT_FOLLOW_LINK;
-    $tags['TYPE']            = AdslightUtility::getNameType($type);
+    $tags['TYPE']            = Adslight\Utility::getNameType($type);
     $tags['LINK_URL']        = XOOPS_URL . "/modules/adslight/viewads.php?&lid={$lid}";
 
     $sql                    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cat}";

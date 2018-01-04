@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-require_once __DIR__ . '/../class/utility.php';
+require_once __DIR__ . '/../class/Utility.php';
 /**
  * @param XoopsObject $xoopsModule
  *

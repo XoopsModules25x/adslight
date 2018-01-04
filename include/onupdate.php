@@ -46,22 +46,15 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_adslight(XoopsModule $module)
 {
+    /** @var Adslight\Helper $helper */
+    /** @var Adslight\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $className     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($className)) {
-        xoops_load('utility', $moduleDirName);
-    }
-    //check for minimum XOOPS version
-    if (!$className::checkXoopsVer($module)) {
-        return false;
-    }
+    $helper       = Adslight\Helper::getInstance();
+    $utility      = new Adslight\Utility();
 
-    // check for minimum PHP version
-    if (!$className::checkPHPVer($module)) {
-        return false;
-    }
-
-    return true;
+    $xoopsSuccess = $utility::checkVerXoops($module);
+    $phpSuccess   = $utility::checkVerPhp($module);
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**
@@ -77,16 +70,17 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
+    $capsDirName   = strtoupper($moduleDirName);
+
+    /** @var Adslight\Helper $helper */
+    /** @var Adslight\Utility $utility */
+    /** @var Adslight\Configurator $configurator */
+    $helper  = Adslight\Helper::getInstance();
+    $utility = new Adslight\Utility();
+    $configurator = new Adslight\Configurator();
 
     if ($previousVersion < 230) {
-        //        $configurator   = include __DIR__ . '/config.php';
-        require_once __DIR__ . '/config.php';
-        $configurator = new AdsligthConfigurator();
-        /** @var AdslightUtility $utilityClass */
-        $utilityClass = ucfirst($moduleDirName) . 'Utility';
-        if (!class_exists($utilityClass)) {
-            xoops_load('utility', $moduleDirName);
-        }
+
         /*
                 //rename column
                 $tables     = new Tables();

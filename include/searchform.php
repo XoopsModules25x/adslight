@@ -23,13 +23,13 @@
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 // create form
-$search_form = new XoopsThemeForm(_SR_SEARCH, 'search', 'search.php', 'get');
+$search_form = new \XoopsThemeForm(_SR_SEARCH, 'search', 'search.php', 'get');
 $mids        = $xoopsModule->getVar('mid');
 $mid         = $xoopsModule->getVar('name');
 
 // create form elements
 $search_form->addElement(new XoopsFormText(_SR_KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);
-$type_select = new XoopsFormSelect(_SR_TYPE, 'andor', $andor);
+$type_select = new \XoopsFormSelect(_SR_TYPE, 'andor', $andor);
 $type_select->addOptionArray([
                                  'AND'   => _SR_ALL,
                                  'OR'    => _SR_ANY,
@@ -38,7 +38,7 @@ $type_select->addOptionArray([
 $search_form->addElement($type_select);
 
 if (!empty($mids)) {
-    $mods_checkbox = new XoopsFormCheckBox(_SR_SEARCHIN, 'mids[]', $mids);
+    $mods_checkbox = new \XoopsFormCheckBox(_SR_SEARCHIN, 'mids[]', $mids);
 }
 if (empty($modules)) {
     $criteria = new CriteriaCompo();

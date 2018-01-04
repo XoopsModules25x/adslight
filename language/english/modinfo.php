@@ -278,3 +278,6 @@ define('_MI_ADSLIGHT_SETTING_4', '1');
 define('_MI_ADSLIGHT_SETTING_5', '[space]');
 define('_MI_ADSLIGHT_SETTING_6', ',');
 define('_MI_ADSLIGHT_SETTING_7', '0');
+
+define('_MI_ADSLIGHT_HOME', 'Home');
+define('_MI_ADSLIGHT_ABOUT', 'About');

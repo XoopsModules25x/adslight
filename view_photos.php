@@ -104,7 +104,7 @@ $pictures_number = $album_factory->getCount($criteria_lid, $criteria_uid);
 
 // Are there pictures in the album?
 if (0 == $pictures_number) {
-    $xoopsTpl->assign('lang_nopicyet', _ADSLIGHT_NOTHINGYET);
+    $GLOBALS['xoopsTpl']->assign('lang_nopicyet', _ADSLIGHT_NOTHINGYET);
 } else {
     // no pictures in the album
     /**
@@ -116,7 +116,7 @@ if (0 == $pictures_number) {
         $pictures_array[$i]['desc']    = $picture->getVar('title', 's');
         $pictures_array[$i]['cod_img'] = $picture->getVar('cod_img', 's');
         $pictures_array[$i]['lid']     = $picture->getVar('lid', 's');
-        $xoopsTpl->assign('pics_array', $pictures_array);
+        $GLOBALS['xoopsTpl']->assign('pics_array', $pictures_array);
 
         ++$i;
     }
@@ -136,7 +136,7 @@ if (!empty($GLOBALS['xoopsUser'])) {
 /**
  * Let's get the user name of the owner of the album
  */
-$owner      = new XoopsUser();
+$owner      = new \XoopsUser();
 $identifier = $owner->getUnameFromId($uid);
 
 /**
@@ -160,35 +160,35 @@ if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
 $sql    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $lid . " AND valid='Yes'";
 $result = $xoopsDB->query($sql);
 while (list($title) = $xoopsDB->fetchRow($result)) {
-    $xoopsTpl->assign('lang_gtitle', "<a href='viewads.php?lid=" . $lid . "'>" . $title . '</a>');
-    $xoopsTpl->assign('lang_showcase', _ADSLIGHT_SHOWCASE);
+    $GLOBALS['xoopsTpl']->assign('lang_gtitle', "<a href='viewads.php?lid=" . $lid . "'>" . $title . '</a>');
+    $GLOBALS['xoopsTpl']->assign('lang_showcase', _ADSLIGHT_SHOWCASE);
 }
 
-$xoopsTpl->assign('lang_not_premium', sprintf(_ADSLIGHT_BMCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_not_premium']));
+$GLOBALS['xoopsTpl']->assign('lang_not_premium', sprintf(_ADSLIGHT_BMCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_not_premium']));
 
-$xoopsTpl->assign('lang_no_prem_nb', sprintf(_ADSLIGHT_PREMYOUHAVE, $pictures_number));
+$GLOBALS['xoopsTpl']->assign('lang_no_prem_nb', sprintf(_ADSLIGHT_PREMYOUHAVE, $pictures_number));
 
 $upgrade = '<a href="premium.php"><strong> ' . _ADSLIGHT_UPGRADE_NOW . '</strong></a>';
-$xoopsTpl->assign('lang_upgrade_now', $upgrade);
+$GLOBALS['xoopsTpl']->assign('lang_upgrade_now', $upgrade);
 
-$xoopsTpl->assign('lang_max_nb_pict', sprintf(_ADSLIGHT_YOUCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_nb_pict']));
-$xoopsTpl->assign('lang_nb_pict', sprintf(_ADSLIGHT_YOUHAVE, $pictures_number));
+$GLOBALS['xoopsTpl']->assign('lang_max_nb_pict', sprintf(_ADSLIGHT_YOUCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_nb_pict']));
+$GLOBALS['xoopsTpl']->assign('lang_nb_pict', sprintf(_ADSLIGHT_YOUHAVE, $pictures_number));
 
-$xoopsTpl->assign('lang_albumtitle', sprintf(_ADSLIGHT_ALBUMTITLE, '<a href=' . XOOPS_URL . '/userinfo.php?uid=' . addslashes($uid) . '>' . $identifier . '</a>'));
+$GLOBALS['xoopsTpl']->assign('lang_albumtitle', sprintf(_ADSLIGHT_ALBUMTITLE, '<a href=' . XOOPS_URL . '/userinfo.php?uid=' . addslashes($uid) . '>' . $identifier . '</a>'));
 
-$xoopsTpl->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
+$GLOBALS['xoopsTpl']->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
 
-$xoopsTpl->assign('xoops_pagetitle', $xoopsModule->getVar('name') . ' - ' . $identifier . "'s album");
+$GLOBALS['xoopsTpl']->assign('xoops_pagetitle', $xoopsModule->getVar('name') . ' - ' . $identifier . "'s album");
 
-$xoopsTpl->assign('nome_modulo', $xoopsModule->getVar('name'));
+$GLOBALS['xoopsTpl']->assign('nome_modulo', $xoopsModule->getVar('name'));
 
-$xoopsTpl->assign('lang_delete', _ADSLIGHT_DELETE);
-$xoopsTpl->assign('lang_editdesc', _ADSLIGHT_EDITDESC);
-$xoopsTpl->assign('isOwner', $isOwner);
-$xoopsTpl->assign('permit', $permit);
-$xoopsTpl->assign('xoops_module_header', $header_lightbox);
+$GLOBALS['xoopsTpl']->assign('lang_delete', _ADSLIGHT_DELETE);
+$GLOBALS['xoopsTpl']->assign('lang_editdesc', _ADSLIGHT_EDITDESC);
+$GLOBALS['xoopsTpl']->assign('isOwner', $isOwner);
+$GLOBALS['xoopsTpl']->assign('permit', $permit);
+$GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
 
-$xoopsTpl->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getTokenHTML());
+$GLOBALS['xoopsTpl']->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getTokenHTML());
 
 /**
  * Adding the comment system

@@ -21,12 +21,13 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
 
-$myts      = MyTextSanitizer::getInstance();
+$myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
 if (is_object($GLOBALS['xoopsUser'])) {
@@ -48,7 +49,7 @@ if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $modul
 }
 
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function viewads
@@ -65,15 +66,15 @@ function viewAds($lid = 0)
     $pictures_array = [];
     $cid            = 0;
 
-    $tempXoopsLocal                          = new XoopsLocal;
+    $tempXoopsLocal                          = new \XoopsLocal;
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
     include XOOPS_ROOT_PATH . '/header.php';
     include XOOPS_ROOT_PATH . '/include/comment_view.php';
     $lid  = ((int)$lid > 0) ? (int)$lid : 0;
     $rate = ('1' == $GLOBALS['xoopsModuleConfig']['adslight_rate_item']) ? '1' : '0';
-    $xoopsTpl->assign('rate', $rate);
-    $xoopsTpl->assign('xmid', $xoopsModule->getVar('mid'));
-    $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
+    $GLOBALS['xoopsTpl']->assign('rate', $rate);
+    $GLOBALS['xoopsTpl']->assign('xmid', $xoopsModule->getVar('mid'));
+    $GLOBALS['xoopsTpl']->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
 
     // Hack redirection erreur 404  si lid=null
     if ('' == $lid) {
@@ -83,31 +84,31 @@ function viewAds($lid = 0)
         redirect_header(XOOPS_URL . '/modules/adslight/404.php', 1);
     }
 
-    $xoopsTpl->assign('adslight_active_bookmark', $GLOBALS['xoopsModuleConfig']['adslight_active_bookmark']);
-    $xoopsTpl->assign('adslight_style_bookmark', $GLOBALS['xoopsModuleConfig']['adslight_style_bookmark']);
-    $xoopsTpl->assign('adslight_active_xpayement', $GLOBALS['xoopsModuleConfig']['adslight_active_xpayment']);
+    $GLOBALS['xoopsTpl']->assign('adslight_active_bookmark', $GLOBALS['xoopsModuleConfig']['adslight_active_bookmark']);
+    $GLOBALS['xoopsTpl']->assign('adslight_style_bookmark', $GLOBALS['xoopsModuleConfig']['adslight_style_bookmark']);
+    $GLOBALS['xoopsTpl']->assign('adslight_active_xpayement', $GLOBALS['xoopsModuleConfig']['adslight_active_xpayment']);
 
     // adslight 2
-    $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
-    $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
+    $GLOBALS['xoopsTpl']->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
+    $GLOBALS['xoopsTpl']->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 
     if ($GLOBALS['xoopsUser']) {
         $member_usid = $GLOBALS['xoopsUser']->getVar('uid');
         if ($usid = $member_usid) {
-            $xoopsTpl->assign('istheirs', true);
+            $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
             if (strlen($GLOBALS['xoopsUser']->getVar('name'))) {
-                $xoopsTpl->assign('user_name', $GLOBALS['xoopsUser']->getVar('name') . ' (' . $GLOBALS['xoopsUser']->getVar('uname') . ')');
+                $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('name') . ' (' . $GLOBALS['xoopsUser']->getVar('uname') . ')');
             } else {
-                $xoopsTpl->assign('user_name', $GLOBALS['xoopsUser']->getVar('uname'));
+                $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('uname'));
             }
 
-            $xoopsTpl->assign('user_email', $GLOBALS['xoopsUser']->getVar('email'));
+            $GLOBALS['xoopsTpl']->assign('user_email', $GLOBALS['xoopsUser']->getVar('email'));
 
             list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
-            $xoopsTpl->assign('show_user', $show_user);
-            $xoopsTpl->assign('show_user_link', 'members.php?usid=' . $member_usid);
+            $GLOBALS['xoopsTpl']->assign('show_user', $show_user);
+            $GLOBALS['xoopsTpl']->assign('show_user_link', 'members.php?usid=' . $member_usid);
         }
     }
 
@@ -116,7 +117,7 @@ function viewAds($lid = 0)
     }
 
     $cat_perms  = '';
-    $categories = AdslightUtility::getMyItemIds('adslight_view');
+    $categories = Adslight\Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
@@ -145,15 +146,15 @@ function viewAds($lid = 0)
         $startdate = (time() - (86400 * $newcount));
         if ($startdate < $date) {
             $newitem = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/newred.gif" alt="new" >';
-            $xoopsTpl->assign('new', $newitem);
+            $GLOBALS['xoopsTpl']->assign('new', $newitem);
         }
 
         $updir = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
-        $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
-        $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM);
-        $xoopsTpl->assign('add_from_sitename', $xoopsConfig['sitename']);
-        $xoopsTpl->assign('ad_exists', $recordexist);
-        $xoopsTpl->assign('mydirname', $moduleDirName);
+        $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
+        $GLOBALS['xoopsTpl']->assign('add_from_title', _ADSLIGHT_ADDFROM);
+        $GLOBALS['xoopsTpl']->assign('add_from_sitename', $xoopsConfig['sitename']);
+        $GLOBALS['xoopsTpl']->assign('ad_exists', $recordexist);
+        $GLOBALS['xoopsTpl']->assign('mydirname', $moduleDirName);
 
         $count = 0;
         $x     = 0;
@@ -162,7 +163,7 @@ function viewAds($lid = 0)
         $result3 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE  cid=' . $xoopsDB->escape($cid));
         list($ccid, $pid, $ctitle) = $xoopsDB->fetchRow($result3);
 
-        $xoopsTpl->assign('category_title', $ctitle);
+        $GLOBALS['xoopsTpl']->assign('category_title', $ctitle);
 
         $module_id = $xoopsModule->getVar('mid');
         if (is_object($GLOBALS['xoopsUser'])) {
@@ -172,7 +173,7 @@ function viewAds($lid = 0)
         }
         /** @var XoopsGroupPermHandler $gpermHandler */
         $gpermHandler = xoops_getHandler('groupperm');
-        $xoopsTpl->assign('purchasable', $gpermHandler->checkRight('adslight_purchase', $cid, $groups, $module_id));
+        $GLOBALS['xoopsTpl']->assign('purchasable', $gpermHandler->checkRight('adslight_purchase', $cid, $groups, $module_id));
 
         $ctitle     = $myts->htmlSpecialChars($ctitle);
         $varid[$x]  = $ccid;
@@ -199,9 +200,9 @@ function viewAds($lid = 0)
             $subcats .= ' ' . $arrow . ' <a href="viewcats.php?cid=' . $varid[$x] . '">' . $varnom[$x] . '</a>';
             --$x;
         }
-        $xoopsTpl->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
-        $xoopsTpl->assign('nav_sub', $subcats);
-        $xoopsTpl->assign('nav_subcount', $nbe);
+        $GLOBALS['xoopsTpl']->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
+        $GLOBALS['xoopsTpl']->assign('nav_sub', $subcats);
+        $GLOBALS['xoopsTpl']->assign('nav_subcount', $nbe);
         $viewcount_judge = true;
         $useroffset      = '';
         if ($GLOBALS['xoopsUser']) {
@@ -258,34 +259,34 @@ function viewAds($lid = 0)
             $sold = '';
         }
 
-        $xoopsTpl->assign('printA', '<a href="print.php?op=PrintAd&amp;lid=' . $lid . '" ><img src="assets/images/print.gif" border=0 alt="' . _ADSLIGHT_PRINT . '" ></a>&nbsp;');
+        $GLOBALS['xoopsTpl']->assign('printA', '<a href="print.php?op=PrintAd&amp;lid=' . $lid . '" ><img src="assets/images/print.gif" border=0 alt="' . _ADSLIGHT_PRINT . '" ></a>&nbsp;');
 
         if ($usid > 0) {
-            $xoopsTpl->assign('submitter', '<img src="assets/images/lesannonces.png" border="0" alt="' . _ADSLIGHT_VIEW_MY_ADS . '" >&nbsp;&nbsp;<a href="members.php?usid=' . addslashes($usid) . '" >' . _ADSLIGHT_VIEW_MY_ADS . ' ' . $submitter . '</a>');
+            $GLOBALS['xoopsTpl']->assign('submitter', '<img src="assets/images/lesannonces.png" border="0" alt="' . _ADSLIGHT_VIEW_MY_ADS . '" >&nbsp;&nbsp;<a href="members.php?usid=' . addslashes($usid) . '" >' . _ADSLIGHT_VIEW_MY_ADS . ' ' . $submitter . '</a>');
         } else {
-            $xoopsTpl->assign('submitter', _ADSLIGHT_VIEW_MY_ADS . ' $submitter');
+            $GLOBALS['xoopsTpl']->assign('submitter', _ADSLIGHT_VIEW_MY_ADS . ' $submitter');
         }
-        $xoopsTpl->assign('lid', $lid);
-        $xoopsTpl->assign('read', "$hits " . _ADSLIGHT_VIEW2);
-        $xoopsTpl->assign('rating', $tempXoopsLocal->number_format($item_rating, 2));
-        $xoopsTpl->assign('votes', $votestring);
-        $xoopsTpl->assign('lang_rating', _ADSLIGHT_RATINGC);
-        $xoopsTpl->assign('lang_ratethisitem', _ADSLIGHT_RATETHISITEM);
-        $xoopsTpl->assign('xoop_user', false);
+        $GLOBALS['xoopsTpl']->assign('lid', $lid);
+        $GLOBALS['xoopsTpl']->assign('read', "$hits " . _ADSLIGHT_VIEW2);
+        $GLOBALS['xoopsTpl']->assign('rating', $tempXoopsLocal->number_format($item_rating, 2));
+        $GLOBALS['xoopsTpl']->assign('votes', $votestring);
+        $GLOBALS['xoopsTpl']->assign('lang_rating', _ADSLIGHT_RATINGC);
+        $GLOBALS['xoopsTpl']->assign('lang_ratethisitem', _ADSLIGHT_RATETHISITEM);
+        $GLOBALS['xoopsTpl']->assign('xoop_user', false);
         $isOwner = '';
         if ($GLOBALS['xoopsUser']) {
-            $xoopsTpl->assign('xoop_user', true);
+            $GLOBALS['xoopsTpl']->assign('xoop_user', true);
             $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
             if ($usid == $currentid) {
-                $xoopsTpl->assign('modifyads', '<img src=' . $pathIcon16 . '/edit.png border="0" alt="' . _ADSLIGHT_MODIFANN . '" >&nbsp;&nbsp;<a href="modify.php?op=ModAd&amp;lid=' . $lid . '">' . _ADSLIGHT_MODIFANN . '</a>');
-                $xoopsTpl->assign('deleteads', '<img src=' . $pathIcon16 . '/delete.png  border="0" alt="' . _ADSLIGHT_SUPPRANN . '" >&nbsp;&nbsp;<a href="modify.php?op=ListingDel&amp;lid=' . $lid . '">' . _ADSLIGHT_SUPPRANN . '</a>');
-                $xoopsTpl->assign('add_photos', '<img src="assets/images/shape_square_add.png" border="0" alt="' . _ADSLIGHT_SUPPRANN . '" >&nbsp;&nbsp;<a href="view_photos.php?lid=' . $lid . '&uid=' . $usid . '">' . _ADSLIGHT_ADD_PHOTOS . '</a>');
+                $GLOBALS['xoopsTpl']->assign('modifyads', '<img src=' . $pathIcon16 . '/edit.png border="0" alt="' . _ADSLIGHT_MODIFANN . '" >&nbsp;&nbsp;<a href="modify.php?op=ModAd&amp;lid=' . $lid . '">' . _ADSLIGHT_MODIFANN . '</a>');
+                $GLOBALS['xoopsTpl']->assign('deleteads', '<img src=' . $pathIcon16 . '/delete.png  border="0" alt="' . _ADSLIGHT_SUPPRANN . '" >&nbsp;&nbsp;<a href="modify.php?op=ListingDel&amp;lid=' . $lid . '">' . _ADSLIGHT_SUPPRANN . '</a>');
+                $GLOBALS['xoopsTpl']->assign('add_photos', '<img src="assets/images/shape_square_add.png" border="0" alt="' . _ADSLIGHT_SUPPRANN . '" >&nbsp;&nbsp;<a href="view_photos.php?lid=' . $lid . '&uid=' . $usid . '">' . _ADSLIGHT_ADD_PHOTOS . '</a>');
 
                 $isOwner = true;
-                $xoopsTpl->assign('isOwner', $isOwner);
+                $GLOBALS['xoopsTpl']->assign('isOwner', $isOwner);
             }
             if ($GLOBALS['xoopsUser']->isAdmin()) {
-                $xoopsTpl->assign('admin', '<a href="' . XOOPS_URL . '/modules/adslight/admin/modify_ads.php?op=ModifyAds&amp;lid=' . $lid . '"><img src=' . $pathIcon16 . '/edit.png  border=0 alt="' . _ADSLIGHT_MODADMIN . '" ></a>');
+                $GLOBALS['xoopsTpl']->assign('admin', '<a href="' . XOOPS_URL . '/modules/adslight/admin/modify_ads.php?op=ModifyAds&amp;lid=' . $lid . '"><img src=' . $pathIcon16 . '/edit.png  border=0 alt="' . _ADSLIGHT_MODADMIN . '" ></a>');
             }
         }
 
@@ -298,41 +299,41 @@ function viewAds($lid = 0)
         $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure='" . $xoopsDB->escape($typeusure) . "'");
         list($nom_usure) = $xoopsDB->fetchRow($result9);
 
-        $xoopsTpl->assign('type', $myts->htmlSpecialChars($nom_type));
-        $xoopsTpl->assign('title', $title);
-        $xoopsTpl->assign('status', $status);
-        $xoopsTpl->assign('desctext', $desctext);
-        $xoopsTpl->assign('xoops_pagetitle', $title . ' - ' . $town . ': ' . $country . ' - ' . $ctitle);
+        $GLOBALS['xoopsTpl']->assign('type', $myts->htmlSpecialChars($nom_type));
+        $GLOBALS['xoopsTpl']->assign('title', $title);
+        $GLOBALS['xoopsTpl']->assign('status', $status);
+        $GLOBALS['xoopsTpl']->assign('desctext', $desctext);
+        $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', $title . ' - ' . $town . ': ' . $country . ' - ' . $ctitle);
 
         // meta description tags for ads
         $desctextclean = strip_tags($desctext, '<font><img><strong><i><u>');
         $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . substr($desctextclean, 0, 150));
 
         if ($price > 0) {
-            $xoopsTpl->assign('price', '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice);
-            $xoopsTpl->assign('price_head', _ADSLIGHT_PRICE2);
-            //      $xoopsTpl->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
+            $GLOBALS['xoopsTpl']->assign('price', '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice);
+            $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE2);
+            //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
 
-            $xoopsTpl->assign('price_price', AdslightUtility::getMoneyFormat('%.2n', $price));
+            $GLOBALS['xoopsTpl']->assign('price_price', Adslight\Utility::getMoneyFormat('%.2n', $price));
 
-            $xoopsTpl->assign('price_typeprice', $myts->htmlSpecialChars($nom_price));
-            $xoopsTpl->assign('price_currency', $GLOBALS['xoopsModuleConfig']['adslight_currency_code']);
-            $xoopsTpl->assign('price_amount', $price);
+            $GLOBALS['xoopsTpl']->assign('price_typeprice', $myts->htmlSpecialChars($nom_price));
+            $GLOBALS['xoopsTpl']->assign('price_currency', $GLOBALS['xoopsModuleConfig']['adslight_currency_code']);
+            $GLOBALS['xoopsTpl']->assign('price_amount', $price);
         }
 
-        $xoopsTpl->assign('usure_typeusure', $nom_usure);
-        $xoopsTpl->assign('premium', $premium);
+        $GLOBALS['xoopsTpl']->assign('usure_typeusure', $nom_usure);
+        $GLOBALS['xoopsTpl']->assign('premium', $premium);
 
-        // $xoopsTpl->assign('mustlogin', _ADSLIGHT_MUSTLOGIN);
-        $xoopsTpl->assign('redirect', '' . '?xoops_redirect=/modules/adslight/index.php');
+        // $GLOBALS['xoopsTpl']->assign('mustlogin', _ADSLIGHT_MUSTLOGIN);
+        $GLOBALS['xoopsTpl']->assign('redirect', '' . '?xoops_redirect=/modules/adslight/index.php');
 
         if ($town) {
-            $xoopsTpl->assign('local_town', $town);
+            $GLOBALS['xoopsTpl']->assign('local_town', $town);
         }
         if (1 == $GLOBALS['xoopsModuleConfig']['adslight_use_country']) {
             if ($country) {
-                $xoopsTpl->assign('local_country', $country);
-                $xoopsTpl->assign('country_head', '<img src="assets/images/world_go.png" border="0" alt="country" >&nbsp;&nbsp;' . _ADSLIGHT_COUNTRY);
+                $GLOBALS['xoopsTpl']->assign('local_country', $country);
+                $GLOBALS['xoopsTpl']->assign('country_head', '<img src="assets/images/world_go.png" border="0" alt="country" >&nbsp;&nbsp;' . _ADSLIGHT_COUNTRY);
             }
         }
 
@@ -353,23 +354,23 @@ function viewAds($lid = 0)
         if (4 == $contactby) {
             $contact = '<br><strong>' . _ADSLIGHT_TEL . '</strong> ' . $tel;
         }
-        // $xoopsTpl->assign('contact', $contact);
-        $xoopsTpl->assign('local_head', '<img src="assets/images/house.png" border="0" alt="local_head" >&nbsp;&nbsp;' . _ADSLIGHT_LOCAL);
+        // $GLOBALS['xoopsTpl']->assign('contact', $contact);
+        $GLOBALS['xoopsTpl']->assign('local_head', '<img src="assets/images/house.png" border="0" alt="local_head" >&nbsp;&nbsp;' . _ADSLIGHT_LOCAL);
 
         if ($lid) {
             if ($sold) {
-                $xoopsTpl->assign('bullinfotext', $sold);
+                $GLOBALS['xoopsTpl']->assign('bullinfotext', $sold);
             } else {
                 if ($GLOBALS['xoopsUser']) {
-                    $xoopsTpl->assign('bullinfotext', _ADSLIGHT_CONTACT_SUBMITTER . ' ' . $submitter . ' ' . _ADSLIGHT_CONTACTBY2 . ' ' . $contact);
+                    $GLOBALS['xoopsTpl']->assign('bullinfotext', _ADSLIGHT_CONTACT_SUBMITTER . ' ' . $submitter . ' ' . _ADSLIGHT_CONTACTBY2 . ' ' . $contact);
                 } else {
-                    $xoopsTpl->assign('bullinfotext', '<span style="color: #de090e;"><b>' . _ADSLIGHT_MUSTLOGIN . '</b></span>');
+                    $GLOBALS['xoopsTpl']->assign('bullinfotext', '<span style="color: #de090e;"><b>' . _ADSLIGHT_MUSTLOGIN . '</b></span>');
                 }
             }
         }
 
         $user_profile = XoopsUser::getUnameFromId($usid);
-        $xoopsTpl->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
+        $GLOBALS['xoopsTpl']->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
 
         if ('' != $photo) {
             require_once __DIR__ . '/class/pictures.php';
@@ -381,7 +382,7 @@ function viewAds($lid = 0)
             $pictures_number       = $album_factory->getCount($criteria_lid, $criteria_uid);
             if (0 == $pictures_number) {
                 $nopicturesyet = _ADSLIGHT_NOTHINGYET;
-                $xoopsTpl->assign('lang_nopicyet', $nopicturesyet);
+                $GLOBALS['xoopsTpl']->assign('lang_nopicyet', $nopicturesyet);
             } else {
 
                 /**
@@ -393,12 +394,12 @@ function viewAds($lid = 0)
                     $pictures_array[$i]['desc']    = $picture->getVar('title', 's');
                     $pictures_array[$i]['cod_img'] = $picture->getVar('cod_img', 's');
                     $pictures_array[$i]['lid']     = $picture->getVar('lid', 's');
-                    $xoopsTpl->assign('pics_array', $pictures_array);
+                    $GLOBALS['xoopsTpl']->assign('pics_array', $pictures_array);
 
                     ++$i;
                 }
             }
-            $owner      = new XoopsUser();
+            $owner      = new \XoopsUser();
             $identifier = $owner->getUnameFromId($usid);
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
                 $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
@@ -413,37 +414,37 @@ function viewAds($lid = 0)
 <link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
             }
 
-            $xoopsTpl->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
+            $GLOBALS['xoopsTpl']->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
 
-            $xoopsTpl->assign('permit', $prem_perm);
+            $GLOBALS['xoopsTpl']->assign('permit', $prem_perm);
 
             if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
                 /*  ici le meta Canonicale pour le Rewrite */
-                $xoopsTpl->assign('xoops_module_header', $header_lightbox);
+                $GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
             } else {
-                $xoopsTpl->assign('xoops_module_header', $header_lightbox);
+                $GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
             }
-            $xoopsTpl->assign('photo', $photo);
-            $xoopsTpl->assign('pic_lid', $pic_lid);
-            $xoopsTpl->assign('pic_owner', $uid_owner);
+            $GLOBALS['xoopsTpl']->assign('photo', $photo);
+            $GLOBALS['xoopsTpl']->assign('pic_lid', $pic_lid);
+            $GLOBALS['xoopsTpl']->assign('pic_owner', $uid_owner);
         } else {
-            $xoopsTpl->assign('photo', '');
+            $GLOBALS['xoopsTpl']->assign('photo', '');
         }
-        $xoopsTpl->assign('date', '<img alt="date" border="0" src="assets/images/date.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DATE2 . ':</strong> ' . $date . '<br><img alt="date_error" border="0" src="assets/images/date_error.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DISPO . ':</strong> ' . $date2);
+        $GLOBALS['xoopsTpl']->assign('date', '<img alt="date" border="0" src="assets/images/date.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DATE2 . ':</strong> ' . $date . '<br><img alt="date_error" border="0" src="assets/images/date_error.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DISPO . ':</strong> ' . $date2);
     } else {
-        $xoopsTpl->assign('no_ad', _ADSLIGHT_NOCLAS);
+        $GLOBALS['xoopsTpl']->assign('no_ad', _ADSLIGHT_NOCLAS);
     }
     $result8 = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid));
 
     list($ctitle) = $xoopsDB->fetchRow($result8);
-    $xoopsTpl->assign('friend', '<img src="assets/images/friend.gif" border="0" alt="' . _ADSLIGHT_SENDFRIENDS . '" >&nbsp;&nbsp;<a rel="nofollow" href="sendfriend.php?op=SendFriend&amp;lid=' . $lid . '">' . _ADSLIGHT_SENDFRIENDS . '</a>');
+    $GLOBALS['xoopsTpl']->assign('friend', '<img src="assets/images/friend.gif" border="0" alt="' . _ADSLIGHT_SENDFRIENDS . '" >&nbsp;&nbsp;<a rel="nofollow" href="sendfriend.php?op=SendFriend&amp;lid=' . $lid . '">' . _ADSLIGHT_SENDFRIENDS . '</a>');
 
-    $xoopsTpl->assign('alerteabus', '<img src="assets/images/error.png" border="0" alt="' . _ADSLIGHT_ALERTEABUS . '" >&nbsp;&nbsp;<a rel="nofollow" href="report-abuse.php?op=ReportAbuse&amp;lid=' . $lid . '">' . _ADSLIGHT_ALERTEABUS . '</a>');
+    $GLOBALS['xoopsTpl']->assign('alerteabus', '<img src="assets/images/error.png" border="0" alt="' . _ADSLIGHT_ALERTEABUS . '" >&nbsp;&nbsp;<a rel="nofollow" href="report-abuse.php?op=ReportAbuse&amp;lid=' . $lid . '">' . _ADSLIGHT_ALERTEABUS . '</a>');
 
-    $xoopsTpl->assign('link_main', '<a href="../adslight/">' . _ADSLIGHT_MAIN . '</a>');
-    $xoopsTpl->assign('link_cat', '<a href="viewcats.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_GORUB . ' ' . $ctitle . '</a>');
+    $GLOBALS['xoopsTpl']->assign('link_main', '<a href="../adslight/">' . _ADSLIGHT_MAIN . '</a>');
+    $GLOBALS['xoopsTpl']->assign('link_cat', '<a href="viewcats.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_GORUB . ' ' . $ctitle . '</a>');
 
-    $xoopsTpl->assign('printA', '<img src="assets/images/print.gif" border="0" alt="' . _ADSLIGHT_PRINT . '" >&nbsp;&nbsp;<a rel="nofollow" href="print.php?op=PrintAd&amp;lid=' . $lid . '">' . _ADSLIGHT_PRINT . '</a>');
+    $GLOBALS['xoopsTpl']->assign('printA', '<img src="assets/images/print.gif" border="0" alt="' . _ADSLIGHT_PRINT . '" >&nbsp;&nbsp;<a rel="nofollow" href="print.php?op=PrintAd&amp;lid=' . $lid . '">' . _ADSLIGHT_PRINT . '</a>');
 }
 
 #  function categorynewgraphic
@@ -458,7 +459,7 @@ function categorynewgraphic($cid)
     global $xoopsDB;
 
     $cat_perms  = '';
-    $categories = AdslightUtility::getMyItemIds('adslight_view');
+    $categories = Adslight\Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }

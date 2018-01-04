@@ -36,7 +36,7 @@ function adslight_maps_show($options)
     $maps_name = $xoopsConfig['language'];
 
     $block = [];
-    $myts  = MyTextSanitizer::getInstance();
+    $myts  = \MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
     $block_lang    = '_MB_' . strtoupper($moduleDirName);

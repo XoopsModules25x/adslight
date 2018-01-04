@@ -21,12 +21,13 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 $moduleDirName = basename(__DIR__);
 $main_lang     = '_' . strtoupper($moduleDirName);
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-$myts      = MyTextSanitizer::getInstance();
+$myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
 $groups = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -81,7 +82,7 @@ function listingDel($lid, $ok)
                 echo '<br><div style="text-align:center">';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
-            echo "[ <a href=\"modify.php?op=ListingDel&amp;lid=" . $lid . "&amp;ok=1\">" . _ADSLIGHT_OUI . "</a> | <a href=\"index.php\">" . _ADSLIGHT_NON . '</a> ]<br><br>';
+            echo '[ <a href="modify.php?op=ListingDel&amp;lid=' . $lid . '&amp;ok=1">' . _ADSLIGHT_OUI . '</a> | <a href="index.php">' . _ADSLIGHT_NON . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }
@@ -109,7 +110,7 @@ function delReply($r_lid, $ok)
                 echo '<br><div style="text-align:center">';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
-            echo "[ <a href=\"modify.php?op=DelReply&amp;r_lid=" . addslashes($r_lid) . "&amp;ok=1\">" . _ADSLIGHT_OUI . "</a> | <a href=\"members.php?usid=" . addslashes($usid) . "\">" . _ADSLIGHT_NON . '</a> ]<br><br>';
+            echo '[ <a href="modify.php?op=DelReply&amp;r_lid=' . addslashes($r_lid) . '&amp;ok=1">' . _ADSLIGHT_OUI . '</a> | <a href="members.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_NON . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }
@@ -123,7 +124,7 @@ function modAd($lid)
     global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
     $contactselect = '';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
 
     require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
@@ -132,7 +133,7 @@ function modAd($lid)
     $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
 
-    $categories = AdslightUtility::getMyItemIds('adslight_submit');
+    $categories = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {
         if (!in_array($cide, $categories)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
@@ -155,7 +156,7 @@ function modAd($lid)
             //            $price      = number_format($price, 2, ',', ' ');
 
             xoops_load('XoopsLocal');
-            $tempXoopsLocal = new XoopsLocal;
+            $tempXoopsLocal = new \XoopsLocal;
             //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
             $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
             //  For other countries uncomment the below line and comment out the above line
@@ -176,16 +177,16 @@ function modAd($lid)
             $dates = ($useroffset * 3600) + $date;
             $dates = formatTimestamp($date, 's');
 
-            echo "<form action=\"modify.php\" method=post enctype=\"multipart/form-data\">";
+            echo '<form action="modify.php" method=post enctype="multipart/form-data">';
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-            echo "<table><tr class=\"head\" border=\"2\">
-    <td class=\"head\">" . _ADSLIGHT_NUMANNN . " </td><td class=\"head\" border=\"1\">$lid " . _ADSLIGHT_DU . " $dates</td>
+            echo '<table><tr class="head" border="2">
+    <td class="head">' . _ADSLIGHT_NUMANNN . " </td><td class=\"head\" border=\"1\">$lid " . _ADSLIGHT_DU . " $dates</td>
     </tr><tr>";
 
             if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_diff_name']) {
-                echo "<td class=\"head\">" . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"text\" name=\"submitter\" size=\"50\" value=\"$submitter\" ></td>";
+                echo '<td class="head">' . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"text\" name=\"submitter\" size=\"50\" value=\"$submitter\" ></td>";
             } else {
-                echo "<td class=\"head\">" . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"hidden\" name=\"submitter\" value=\"$submitter\">$submitter</td>";
+                echo '<td class="head">' . _ADSLIGHT_SENDBY . " </td><td class=\"head\"><input type=\"hidden\" name=\"submitter\" value=\"$submitter\">$submitter</td>";
             }
             echo '</tr><tr>';
 
@@ -203,51 +204,51 @@ function modAd($lid)
             }
 
             echo " <td class='head'>" . _ADSLIGHT_CONTACTBY . " </td><td class='head'><select name=\"contactby\">
-    <option value=\"" . $contactby . "\">" . $contactselect . "</option>
-    <option value=\"1\">" . _ADSLIGHT_CONTACT_BY_EMAIL . "</option>
-    <option value=\"2\">" . _ADSLIGHT_CONTACT_BY_PM . "</option>
-    <option value=\"3\">" . _ADSLIGHT_CONTACT_BY_BOTH . "</option>
-    <option value=\"4\">" . _ADSLIGHT_CONTACT_BY_PHONE . '</option></select></td></tr>';
+    <option value=\"" . $contactby . '">' . $contactselect . '</option>
+    <option value="1">' . _ADSLIGHT_CONTACT_BY_EMAIL . '</option>
+    <option value="2">' . _ADSLIGHT_CONTACT_BY_PM . '</option>
+    <option value="3">' . _ADSLIGHT_CONTACT_BY_BOTH . '</option>
+    <option value="4">' . _ADSLIGHT_CONTACT_BY_PHONE . '</option></select></td></tr>';
 
             if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_diff_email']) {
-                echo "<tr><td class=\"head\">" . _ADSLIGHT_EMAIL . " </td><td class=\"head\"><input type=\"text\" name=\"email\" size=\"50\" value=\"$email\" ></td>";
+                echo '<tr><td class="head">' . _ADSLIGHT_EMAIL . " </td><td class=\"head\"><input type=\"text\" name=\"email\" size=\"50\" value=\"$email\" ></td>";
             } else {
-                echo "<tr><td class=\"head\">" . _ADSLIGHT_EMAIL . " </td><td class=\"head\">$email<input type=\"hidden\" name=\"email\" value=\"$email\" ></td>";
+                echo '<tr><td class="head">' . _ADSLIGHT_EMAIL . " </td><td class=\"head\">$email<input type=\"hidden\" name=\"email\" value=\"$email\" ></td>";
             }
-            echo "</tr><tr>
-    <td class=\"head\">" . _ADSLIGHT_TEL . " </td><td class=\"head\"><input type=\"text\" name=\"tel\" size=\"50\" value=\"$tel\" ></td>
+            echo '</tr><tr>
+    <td class="head">' . _ADSLIGHT_TEL . " </td><td class=\"head\"><input type=\"text\" name=\"tel\" size=\"50\" value=\"$tel\" ></td>
     </tr>";
-            echo "<tr>
-    <td class=\"head\">" . _ADSLIGHT_TOWN . " </td><td class=\"head\"><input type=\"text\" name=\"town\" size=\"50\" value=\"$town\" ></td>
+            echo '<tr>
+    <td class="head">' . _ADSLIGHT_TOWN . " </td><td class=\"head\"><input type=\"text\" name=\"town\" size=\"50\" value=\"$town\" ></td>
     </tr>";
             if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_country']) {
-                echo "<tr>
-    <td class=\"head\">" . _ADSLIGHT_COUNTRY . " </td><td class=\"head\"><input type=\"text\" name=\"country\" size=\"50\" value=\"$country\" ></td>
+                echo '<tr>
+    <td class="head">' . _ADSLIGHT_COUNTRY . " </td><td class=\"head\"><input type=\"text\" name=\"country\" size=\"50\" value=\"$country\" ></td>
     </tr>";
             } else {
-                echo "<input type=\"hidden\" name=\"country\" value=\"\">";
+                echo '<input type="hidden" name="country" value="">';
             }
 
             echo "<tr><td class='head'>" . _ADSLIGHT_STATUS . "</td><td class='head'><input type=\"radio\" name=\"status\" value=\"0\"";
             if ('0' == $status) {
                 echo 'checked';
             }
-            echo '>' . _ADSLIGHT_ACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"1\"";
+            echo '>' . _ADSLIGHT_ACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="1"';
             if ('1' == $status) {
                 echo 'checked';
             }
-            echo '>' . _ADSLIGHT_INACTIVE . "&nbsp;&nbsp; <input type=\"radio\" name=\"status\" value=\"2\"";
+            echo '>' . _ADSLIGHT_INACTIVE . '&nbsp;&nbsp; <input type="radio" name="status" value="2"';
             if ('2' == $status) {
                 echo 'checked';
             }
             echo '>' . _ADSLIGHT_SOLD . '</td></tr>';
-            echo "<tr>
-    <td class=\"head\">" . _ADSLIGHT_TITLE2 . " </td><td class=\"head\"><input type=\"text\" name=\"title\" size=\"50\" value=\"$title\" ></td>
+            echo '<tr>
+    <td class="head">' . _ADSLIGHT_TITLE2 . " </td><td class=\"head\"><input type=\"text\" name=\"title\" size=\"50\" value=\"$title\" ></td>
     </tr>";
-            echo "<tr><td class=\"head\">" . _ADSLIGHT_PRICE2 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" > " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'];
+            echo '<tr><td class="head">' . _ADSLIGHT_PRICE2 . " </td><td class=\"head\"><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\" > " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'];
 
             $result3 = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
-            echo " <select name=\"typeprice\">";
+            echo ' <select name="typeprice">';
             while (list($nom_price, $id_price) = $xoopsDB->fetchRow($result3)) {
                 $sel = '';
                 if ($id_price == $typeprice) {
@@ -276,8 +277,8 @@ function modAd($lid)
             }
 
             /// Type d'annonce
-            echo "<tr>
-    <td class=\"head\">" . _ADSLIGHT_TYPE . " </td><td class=\"head\"><select name=\"type\">";
+            echo '<tr>
+    <td class="head">' . _ADSLIGHT_TYPE . ' </td><td class="head"><select name="type">';
 
             $result5 = $xoopsDB->query('SELECT nom_type, id_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
             while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5)) {
@@ -290,8 +291,8 @@ function modAd($lid)
             echo '</select></td></tr>';
 
             /// Etat de l'objet
-            echo "<tr>
-    <td class=\"head\">" . _ADSLIGHT_TYPE_USURE . " </td><td class=\"head\"><select name=\"typeusure\">";
+            echo '<tr>
+    <td class="head">' . _ADSLIGHT_TYPE_USURE . ' </td><td class="head"><select name="typeusure">';
 
             $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
             while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6)) {
@@ -303,18 +304,18 @@ function modAd($lid)
             }
             echo '</select></td></tr>';
 
-            echo "<tr>
-    <td class=\"head\">" . _ADSLIGHT_CAT . " </td><td class=\"head\">";
+            echo '<tr>
+    <td class="head">' . _ADSLIGHT_CAT . ' </td><td class="head">';
             $mytree->makeMySelBox('title', 'title', $cide, '', 'cid');
-            echo "</td>
+            echo '</td>
     </tr><tr>
-    <td class=\"head\">" . _ADSLIGHT_DESC . " </td><td class=\"head\">";
-            $wysiwyg_text_area = AdslightUtility::getEditor(_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px');
+    <td class="head">' . _ADSLIGHT_DESC . ' </td><td class="head">';
+            $wysiwyg_text_area = Adslight\Utility::getEditor(_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px');
             echo $wysiwyg_text_area->render();
-            echo "</td></tr>
-    <td colspan=2><br><input type=\"submit\" value=\"" . _ADSLIGHT_MODIFANN . "\" ></td>
-    </tr></table>";
-            echo "<input type=\"hidden\" name=\"op\" value=\"ModAdS\" >";
+            echo '</td></tr>
+    <td colspan=2><br><input type="submit" value="' . _ADSLIGHT_MODIFANN . '" ></td>
+    </tr></table>';
+            echo '<input type="hidden" name="op" value="ModAdS" >';
 
             $module_id = $xoopsModule->getVar('mid');
             if (is_object($GLOBALS['xoopsUser'])) {
@@ -328,13 +329,13 @@ function modAd($lid)
             //If no access
             if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_moderated']) {
-                    echo "<input type=\"hidden\" name=\"valid\" value=\"No\" >";
+                    echo '<input type="hidden" name="valid" value="No" >';
                     echo '<br>' . _ADSLIGHT_MODIFBEFORE . '<br>';
                 } else {
-                    echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\" >";
+                    echo '<input type="hidden" name="valid" value="Yes" >';
                 }
             } else {
-                echo "<input type=\"hidden\" name=\"valid\" value=\"Yes\" >";
+                echo '<input type="hidden" name="valid" value="Yes" >';
             }
             echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
             echo "<input type=\"hidden\" name=\"premium\" value=\"$premium\" >";

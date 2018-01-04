@@ -17,11 +17,11 @@
 
 /**
  * Prepares system prior to attempting to install module
- * @param XoopsModule $xoopsModule {@link XoopsModule}
+ * @param XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_adslight(XoopsModule $xoopsModule)
+function xoops_module_pre_install_adslight(XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
     $className     = ucfirst($moduleDirName) . 'Utility';
@@ -29,16 +29,16 @@ function xoops_module_pre_install_adslight(XoopsModule $xoopsModule)
         xoops_load('utility', $moduleDirName);
     }
     //check for minimum XOOPS version
-    if (!$className::checkXoopsVer($xoopsModule)) {
+    if (!$className::checkXoopsVer($module)) {
         return false;
     }
 
     // check for minimum PHP version
-    if (!$className::checkPhpVer($xoopsModule)) {
+    if (!$className::checkPhpVer($module)) {
         return false;
     }
 
-    $mod_tables = $xoopsModule->getInfo('tables');
+    $mod_tables = $module->getInfo('tables');
     foreach ($mod_tables as $table) {
         $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
     }
@@ -49,16 +49,16 @@ function xoops_module_pre_install_adslight(XoopsModule $xoopsModule)
 /**
  *
  * Performs tasks required during installation of the module
- * @param XoopsModule $xoopsModule {@link XoopsModule}
+ * @param XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_adslight(XoopsModule $xoopsModule)
+function xoops_module_install_adslight(XoopsModule $module)
 {
     require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
     global $xoopsDB;
-    //    $moduleDirName = $xoopsModule->getVar('dirname');
+    //    $moduleDirName = $module->getVar('dirname');
     $moduleDirName = basename(dirname(__DIR__));
     xoops_loadLanguage('admin', $moduleDirName);
     xoops_loadLanguage('modinfo', $moduleDirName);
@@ -73,10 +73,10 @@ function xoops_module_install_adslight(XoopsModule $xoopsModule)
     /*
 
     // default Permission Settings ----------------------
-    $moduleId = $xoopsModule->getVar('mid');
-    //    $module_name = $xoopsModule->getVar('name');
-    //    $module_dirname = $xoopsModule->getVar('dirname');
-    //    $module_version = $xoopsModule->getVar('version');
+    $moduleId = $module->getVar('mid');
+    //    $module_name = $module->getVar('name');
+    //    $module_dirname = $module->getVar('dirname');
+    //    $module_version = $module->getVar('version');
     $gpermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
     $gpermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);

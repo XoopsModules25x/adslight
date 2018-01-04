@@ -21,10 +21,11 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 //require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * @param $lid
@@ -72,7 +73,7 @@ function SendFriend($lid)
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
-        $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
+        $jlm_captcha = new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
         echo '</td></tr>';
     }
@@ -125,7 +126,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['LID']                = $lid;
     $tags['LISTING_NUMBER']     = _ADSLIGHT_LISTING_NUMBER;
     $tags['TITLE']              = $title;
-    $tags['TYPE']               = AdslightUtility::getNameType($type);
+    $tags['TYPE']               = Adslight\Utility::getNameType($type);
     $tags['DESCTEXT']           = $desctext;
     $tags['PRICE']              = $price;
     $tags['TYPEPRICE']          = $typeprice;

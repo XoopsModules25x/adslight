@@ -1,6 +1,5 @@
-<?php
+<?php namespace XoopsModules\Adslight;
 
-// namespace Xoopsmodules/adslight;
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -34,19 +33,30 @@
  */
 
 use Xmf\Request;
-use Xmf\Module\Helper;
+use XoopsModules\Adslight;
+use XoopsModules\Adslight\Common;
 
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . strtoupper($moduleDirName);
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
+
 
 /**
- * Class AdslightUtility
+ * Class Utility
  */
-class AdslightUtility
+class Utility
 {
+    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+
+    use common\ServerStats; // getServerStats Trait
+
+    use common\FilesManagement; // Files Management Trait
+
+    //--------------- Custom module methods -----------------------------
+
+
     public static function expireAd()
     {
         global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $main_lang;
@@ -233,7 +243,7 @@ class AdslightUtility
     public static function getTotalItems($sel_id, $status = '')
     {
         global $xoopsDB, $mytree, $moduleDirName;
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = Adslight\Utility::getMyItemIds('adslight_view');
         $count      = 0;
         $arr        = [];
         if (in_array($sel_id, $categories)) {
@@ -315,8 +325,8 @@ class AdslightUtility
             $configHandler = xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
-                if (null !== ($moduleHelper->getConfig($option))) {
-                    $retval = $moduleHelper->getConfig($option);
+                if (null !== ($helper->getConfig($option))) {
+                    $retval = $helper->getConfig($option);
                 }
             }
         }
@@ -476,12 +486,12 @@ class AdslightUtility
             $options['width']  = $width;
             $options['height'] = $height;
             if ($isAdmin) {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new \XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
             } else {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new \XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
             }
         } else {
-            $myEditor = new XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
+            $myEditor = new \XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
         }
 
         //        $form->addElement($descEditor);
@@ -561,10 +571,10 @@ class AdslightUtility
     {
         global $xoopsDB;
 
-        $xt   = new XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+        $xt   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         ob_start();
-        $xt->makeMySelBox('title', 'title', 0, 1, 'pid', "location=\"" . $jump . "\"+this.options[this.selectedIndex].value");
+        $xt->makeMySelBox('title', 'title', 0, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
         $block['selectbox'] = ob_get_contents();
         ob_end_clean();
 
@@ -725,135 +735,6 @@ class AdslightUtility
     }
 
     /**
-     * Function responsible for checking if a directory exists, we can also write in and create an index.html file
-     *
-     * @param string $folder The full path of the directory to check
-     *
-     * @return void
-     */
-    public static function createFolder($folder)
-    {
-        try {
-            if (!file_exists($folder)) {
-                if (!mkdir($folder) && !is_dir($folder)) {
-                    throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-                } else {
-                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-                }
-            }
-        } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        }
-    }
-
-    /**
-     * @param $file
-     * @param $folder
-     * @return bool
-     */
-    public static function copyFile($file, $folder)
-    {
-        return copy($file, $folder);
-        //        try {
-        //            if (!is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to copy file as: %s ', $folder));
-        //            } else {
-        //                return copy($file, $folder);
-        //            }
-        //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
-        //        }
-        //        return false;
-    }
-
-    /**
-     * @param $src
-     * @param $dst
-     */
-    public static function recurseCopy($src, $dst)
-    {
-        $dir = opendir($src);
-        //    @mkdir($dst);
-        while (false !== ($file = readdir($dir))) {
-            if (('.' !== $file) && ('..' !== $file)) {
-                if (is_dir($src . '/' . $file)) {
-                    self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
-                } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
-                }
-            }
-        }
-        closedir($dir);
-    }
-
-    /**
-     *
-     * Verifies XOOPS version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkXoopsVer(XoopsModule $module)
-    {
-        xoops_loadLanguage('admin', $module->dirname());
-        //check for minimum XOOPS version
-        $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray   = explode('.', $currentVer);
-        $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        $reqArray    = explode('.', $requiredVer);
-        $success     = true;
-        foreach ($reqArray as $k => $v) {
-            if (isset($currArray[$k])) {
-                if ($currArray[$k] > $v) {
-                    break;
-                } elseif ($currArray[$k] == $v) {
-                    continue;
-                } else {
-                    $success = false;
-                    break;
-                }
-            } else {
-                if ((int)$v > 0) { // handles versions like x.x.x.0_RC2
-                    $success = false;
-                    break;
-                }
-            }
-        }
-
-        if (false === $success) {
-            $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
-        }
-
-        return $success;
-    }
-
-    /**
-     *
-     * Verifies PHP version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkPhpVer(XoopsModule $module)
-    {
-        xoops_loadLanguage('admin', $module->dirname());
-        // check for minimum PHP version
-        $success = true;
-        $verNum  = PHP_VERSION;
-        $reqVer  = $module->getInfo('min_php');
-        if (false !== $reqVer && '' !== $reqVer) {
-            if (version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_PHP, $reqVer, $verNum));
-                $success = false;
-            }
-        }
-
-        return $success;
-    }
-
-    /**
      * Saves permissions for the selected category
      *
      *   saveCategory_Permissions()
@@ -870,14 +751,14 @@ class AdslightUtility
 
         $moduleDirName = basename(dirname(__DIR__));
 
-        if (false !== ($moduleHelper = Helper::getHelper($moduleDirName))) {
+        if (false !== ($helper = Helper::getHelper($moduleDirName))) {
         } else {
-            $moduleHelper = Helper::getHelper('system');
+            $helper = Helper::getHelper('system');
         }
 
         $result = true;
         //        $xoopsModule = sf_getModuleInfo();
-        $moduleId = $moduleHelper->getModule()->getVar('mid');
+        $moduleId = $helper->getModule()->getVar('mid');
 
         $gpermHandler = xoops_getHandler('groupperm');
         // First, if the permissions are already there, delete them
