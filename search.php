@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 $moduleDirName = basename(__DIR__);
 //@todo replace the following code - use Filters
@@ -111,9 +112,9 @@ switch ($action) {
     case 'results':
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $criteria      = new CriteriaCompo(new Criteria('hassearch', 1));
-        $criteria->add(new Criteria('isactive', 1));
-        $criteria->add(new Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
+        $criteria      = new \CriteriaCompo(new \Criteria('hassearch', 1));
+        $criteria->add(new \Criteria('isactive', 1));
+        $criteria->add(new \Criteria('mid', '(' . implode(',', $available_modules) . ')', 'IN'));
         $modules = $moduleHandler->getObjects($criteria, true);
         $mids    = Request::getArray('mids', []);
         if (empty($mids) || !is_array($mids)) {
@@ -162,28 +163,16 @@ switch ($action) {
                         echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                         if (isset($results[$i]['photo'])
                             && '' !== $results[$i]['photo']) {
-                            echo "<a href='"
-                                 . $results[$i]['link']
-                                 . "'><img class='thumb' src='"
-                                 . $results[$i]['sphoto']
-                                 . "' alt='' width='100' ></a></td>&nbsp;";
+                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
-                            echo "<a href='"
-                                 . $results[$i]['link']
-                                 . "'><img class='thumb' src='"
-                                 . $results[$i]['nophoto']
-                                 . "' alt='' width='100' ></a></td>&nbsp;";
+                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         }
                         if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                             $results[$i]['link'] = '' . $results[$i]['link'];
                         }
                         echo '<td width="50%">';
 
-                        echo "<strong><a href='"
-                             . $results[$i]['link']
-                             . "'>"
-                             . $myts->htmlSpecialChars($results[$i]['title'])
-                             . '</a></strong><br><br>';
+                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
 
                         if (!XOOPS_USE_MULTIBYTES) {
                             if (strlen($results[$i]['desctext']) >= 14) {
@@ -194,28 +183,14 @@ switch ($action) {
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
                         echo '</td><td width="20%">';
-                        echo ''
-                             . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']
-                             . ''
-                             . $myts->htmlSpecialChars($results[$i]['price'])
-                             . '</a>&nbsp;'
-                             . $myts->htmlSpecialChars($results[$i]['typeprice'])
-                             . '</a>';
+                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
 
                         echo '</td></tr><tr><td>';
                         echo '<small>';
                         $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
                             $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                            echo '&nbsp;&nbsp;'
-                                 . _ADSLIGHT_FROM
-                                 . "<a href='"
-                                 . XOOPS_URL
-                                 . '/userinfo.php?uid='
-                                 . $results[$i]['uid']
-                                 . "'>"
-                                 . $uname
-                                 . "</a>\n";
+                            echo '&nbsp;&nbsp;' . _ADSLIGHT_FROM . "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . "</a>\n";
                         }
                         echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
                         echo '</small>';
@@ -239,14 +214,10 @@ switch ($action) {
 
         include XOOPS_ROOT_PATH . '/header.php';
 
-        // for xoops 2.2.x versions
-        //        if (file_exists(__DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php')) {
-        //            require_once __DIR__ . '/language/' . $xoopsConfig['language'] . '/main.php';
-        //        } else {
-        //            require_once __DIR__ . '/language/english/main.php';
-        //        }
-        xoops_loadLanguage('main', basename(__DIR__));
-        // end
+        /** @var Adslight\Helper $helper */
+        $helper = Adslight\Helper::getInstance();
+        $helper->loadLanguage('admin');
+
         $GLOBALS['xoopsTpl']->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
@@ -287,17 +258,9 @@ switch ($action) {
                 echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
                 if (isset($results[$i]['photo'])
                     && '' !== $results[$i]['photo']) {
-                    echo "<a href='"
-                         . $results[$i]['link']
-                         . "'><img class='thumb' src='"
-                         . $results[$i]['sphoto']
-                         . "' alt='' width='100' ></a></td>&nbsp;";
+                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 } else {
-                    echo "<a href='"
-                         . $results[$i]['link']
-                         . "'><img class='thumb' src='"
-                         . $results[$i]['nophoto']
-                         . "' alt='' width='100' ></a></td>&nbsp;";
+                    echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 }
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = '' . $results[$i]['link'];
@@ -323,15 +286,7 @@ switch ($action) {
                 $results[$i]['uid'] = @(int)$results[$i]['uid'];
                 if (!empty($results[$i]['uid'])) {
                     $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                    echo '&nbsp;&nbsp;'
-                         . _ADSLIGHT_FROM
-                         . "<a href='"
-                         . XOOPS_URL
-                         . '/userinfo.php?uid='
-                         . $results[$i]['uid']
-                         . "'>"
-                         . $uname
-                         . '</a><br>';
+                    echo '&nbsp;&nbsp;' . _ADSLIGHT_FROM . "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . '</a><br>';
                 }
                 echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
                 echo '</small>';

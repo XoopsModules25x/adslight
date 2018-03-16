@@ -29,7 +29,7 @@ require_once __DIR__ . '/header.php';
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-$groups = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
@@ -106,7 +106,7 @@ function index()
     if ($propo > 0) {
         $GLOBALS['xoopsTpl']->assign('moderated', true);
     }
-    if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+    if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
         if ($GLOBALS['xoopsUser']->isAdmin()) {
             $GLOBALS['xoopsTpl']->assign('admin_block', _ADSLIGHT_ADMINCADRE);
             if (0 == $propo) {
@@ -137,7 +137,7 @@ function index()
 
     $count   = 1;
     $content = '';
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $title = $myts->htmlSpecialChars($myrow['title']);
 
         if ($myrow['img'] && 'http://' !== $myrow['img']) {
@@ -197,7 +197,7 @@ function index()
 
     $submit_perms = Adslight\Utility::getMyItemIds('adslight_submit');
 
-    if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+    if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
         $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLOK . '<a href="add.php">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>';
     } else {
         $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULL . '<a href="' . XOOPS_URL . '/register.php">' . _ADSLIGHT_ADD_LISTING_SUB . '</a>.';
@@ -242,7 +242,7 @@ function index()
                 }
 
                 $useroffset = '';
-                if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+                if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
                     $timezone   = $GLOBALS['xoopsUser']->timezone();
                     $useroffset = (!empty($timezone)) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
                     if ($xoopsUser->isAdmin()) {

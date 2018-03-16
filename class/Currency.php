@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Adslight;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -18,14 +18,13 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xmf\Module\Helper;
 
 /**
- * Gestion de la currency
+ * Gestion de la Currency
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-class currency
+class Currency
 {
     protected $decimalsCount;
     protected $thousandsSep;

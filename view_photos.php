@@ -41,7 +41,7 @@ if (empty($lid)) {
 }
 
 // Is a member looking ?
-if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
     // If no $_GET['uid'] then redirect to own
     if (Request::hasVar('uid', 'GET')) {
         $uid = Request::getInt('uid', 0, 'GET');
@@ -87,12 +87,12 @@ if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
 /**
  * Filter for search pictures in database
  */
-$criteria_lid = new criteria('lid', $lid);
-$criteria_uid = new criteria('uid', $uid);
+$criteria_lid = new \Criteria('lid', $lid);
+$criteria_uid = new \Criteria('uid', $uid);
 
 // Creating a factory of pictures
 
-$album_factory = new AdslightPicturesHandler($xoopsDB);
+$album_factory = new PicturesHandler($xoopsDB);
 
 /**
  * Fetch pictures from the factory

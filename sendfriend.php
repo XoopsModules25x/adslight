@@ -46,7 +46,7 @@ function SendFriend($lid)
         <form action=\"sendfriend.php\" method=post>
         <input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
 
-    if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+    if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
         $idd  = $GLOBALS['xoopsUser']->getVar('uname', 'E');
         $idde = $GLOBALS['xoopsUser']->getVar('email', 'E');
     }

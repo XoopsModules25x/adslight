@@ -331,7 +331,7 @@ function adsDelCat($cid, $ok = 0)
 
     $cid = (int)$cid;
     if (1 == (int)$ok) {
-        $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+        $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid} OR pid={$cid}");
         $xoopsDB->queryf('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE cid={$cid}");
 

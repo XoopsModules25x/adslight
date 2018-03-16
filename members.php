@@ -52,7 +52,7 @@ $perm_itemid  = Request::getInt('item_id', 0, 'POST');
 $permit = (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
 $GLOBALS['xoopsTpl']->assign('permit', $permit);
-$isadmin = (($GLOBALS['xoopsUser'] instanceof XoopsUser)
+$isadmin = (($GLOBALS['xoopsUser'] instanceof \XoopsUser)
             && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) ? true : false;
 
 $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -170,7 +170,7 @@ if ($trows > '0') {
             $adminlink = '';
         }
         $modify_link = '';
-        if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+        if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
             $member_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
             if ($usid == $member_usid) {
                 $istheirs = true;

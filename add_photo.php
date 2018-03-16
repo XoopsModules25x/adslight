@@ -40,7 +40,7 @@ require_once __DIR__ . '/class/pictures.php';
 /**
  * Factory of pictures created
  */
-$album_factory = new AdslightPicturesHandler($xoopsDB);
+$album_factory = new PicturesHandler($xoopsDB);
 
 /**
  * Getting the title

@@ -69,7 +69,7 @@ function PrintAd($lid)
     <table border=0 width=100% cellpadding=15 cellspacing=1 bgcolor="#FFFFFF"><tr><td>';
 
     $useroffset = 0;
-    if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+    if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
         $timezone   = $GLOBALS['xoopsUser']->timezone();
         $useroffset = (!empty($timezone)) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
     }

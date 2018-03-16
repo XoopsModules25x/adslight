@@ -25,7 +25,7 @@ use Xmf\Request;
 /**
  * Protection against inclusion outside the site
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Includes of form objects and uploader
@@ -36,112 +36,21 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
-/**
- * light_pictures class.
- * $this class is responsible for providing data access mechanisms to the data source
- * of XOOPS user class objects.
- */
-class AdslightPictures extends XoopsObject
-{
-    public $db;
-    // constructor
 
-    /**
-     * @param null       $id
-     * @param null|array $lid
-     */
-    public function __construct($id = null, $lid = null)
-    {
-        $this->db = XoopsDatabaseFactory::getDatabaseConnection();
-        $this->initVar('cod_img', XOBJ_DTYPE_INT, null, false, 10);
-        $this->initVar('title', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('date_added', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('date_modified', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('lid', XOBJ_DTYPE_INT, null, false, 10);
-        $this->initVar('uid_owner', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('url', XOBJ_DTYPE_TXTBOX, null, false);
-        if (!empty($lid)) {
-            if (is_array($lid)) {
-                $this->assignVars($lid);
-            } else {
-                $this->load((int)$lid);
-            }
-        } else {
-            $this->setNew();
-        }
-    }
-
-    /**
-     * @param $id
-     */
-    public function load($id)
-    {
-        global $moduleDirName;
-        $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . '';
-        $myrow = $this->db->fetchArray($this->db->query($sql));
-        $this->assignVars($myrow);
-        if (!$myrow) {
-            $this->setNew();
-        }
-    }
-
-    /**
-     * @param array  $criteria
-     * @param bool   $asobject
-     * @param string $sort
-     * @param string $cat_order
-     * @param int    $limit
-     * @param int    $start
-     * @return array
-     * @internal   param string $order
-     * @deprecated this should be handled through {@see AdslightPicturesHandler}
-     */
-    public function getAllPictures($criteria = [], $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
-    {
-        global $moduleDirName;
-        $db          = XoopsDatabaseFactory::getDatabaseConnection();
-        $ret         = [];
-        $where_query = '';
-        if (is_array($criteria) && count($criteria) > 0) {
-            $where_query = ' WHERE';
-            foreach ($criteria as $c) {
-                $where_query .= " {$c} AND";
-            }
-            $where_query = substr($where_query, 0, -4);
-        } elseif (!is_array($criteria) && $criteria) {
-            $where_query = " WHERE {$criteria}";
-        }
-        if (!$asobject) {
-            $sql    = 'SELECT cod_img FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
-            $result = $db->query($sql, $limit, $start);
-            while ($myrow = $db->fetchArray($result)) {
-                $ret[] = $myrow['cog_img'];
-            }
-        } else {
-            $sql    = 'SELECT * FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
-            $result = $db->query($sql, $limit, $start);
-            while ($myrow = $db->fetchArray($result)) {
-                $ret[] = new AdslightPictures($myrow);
-            }
-        }
-
-        return $ret;
-    }
-}
 
 // -------------------------------------------------------------------------
 // ------------------light_pictures user handler class -------------------
 // -------------------------------------------------------------------------
 
 /**
- * AdslightPicturesHandler class definition
+ * PicturesHandler class definition
  *
- * This class provides simple mechanism to manage {@see AdslightPictures} objects
+ * This class provides simple mechanism to manage {@see Pictures} objects
  * and generate forms for inclusion
  *
  * @todo change this to a XoopsPersistableObjectHandler and remove 'most' method overloads
  */
-class AdslightPicturesHandler extends XoopsObjectHandler
+class PicturesHandler extends XoopsObjectHandler
 {
     /**
      * Class constructor
@@ -150,7 +59,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
 
     public function __construct($db)
     {
-        parent::__construct($db, 'adslight_pictures', 'AdslightPictures', 'cod_img', 'title');
+        parent::__construct($db, 'adslight_pictures', 'Pictures', 'cod_img', 'title');
     }
 
     /**
@@ -161,7 +70,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
      */
     public function create($isNew = true)
     {
-        $adslightPictures = new AdslightPictures();
+        $adslightPictures = new Pictures();
         if ($isNew) {
             $adslightPictures->setNew();
         } else {
@@ -189,7 +98,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         }
         $numrows = $this->db->getRowsNum($result);
         if (1 == $numrows) {
-            $adslightPictures = new AdslightPictures();
+            $adslightPictures = new Pictures();
             $adslightPictures->assignVars($this->db->fetchArray($result));
 
             return $adslightPictures;
@@ -205,10 +114,10 @@ class AdslightPicturesHandler extends XoopsObjectHandler
      * @param bool        $force
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(XoopsObject $adslightPictures, $force = false)
+    public function insert(\XoopsObject $adslightPictures, $force = false)
     {
         global $xoopsConfig, $lid, $moduleDirName;
-        if (!$adslightPictures instanceof AdslightPictures) {
+        if (!$adslightPictures instanceof Pictures) {
             return false;
         }
         if (!$adslightPictures->isDirty()) {
@@ -222,8 +131,8 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         }
         $now = time();
         if ($adslightPictures->isNew()) {
-            // add/modify of AdslightPictures
-            $adslightPictures = new AdslightPictures();
+            // add/modify of Pictures
+            $adslightPictures = new Pictures();
 
             $format = 'INSERT INTO %s (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
@@ -256,17 +165,17 @@ class AdslightPicturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * delete AdslightPictures object from the database
+     * delete Pictures object from the database
      *
-     * @param  XoopsObject $adslightPictures reference to the AdslightPictures to delete
+     * @param  XoopsObject $adslightPictures reference to the Pictures to delete
      * @param  bool        $force
      * @return bool        FALSE if failed.
      */
-    public function delete(XoopsObject $adslightPictures, $force = false)
+    public function delete(\XoopsObject $adslightPictures, $force = false)
     {
         global $moduleDirName;
 
-        if (!$adslightPictures instanceof AdslightPictures) {
+        if (!$adslightPictures instanceof Pictures) {
             return false;
         }
         $sql = sprintf('DELETE FROM %s WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $adslightPictures->getVar('cod_img'));
@@ -283,11 +192,11 @@ class AdslightPicturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * retrieve AdslightPictures object(s) from the database
+     * retrieve Pictures object(s) from the database
      *
      * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param  bool            $id_as_key use the UID as key for the array?
-     * @return array  array of {@link AdslightPictures} objects
+     * @return array  array of {@link Pictures} objects
      */
     public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
     {
@@ -308,8 +217,8 @@ class AdslightPicturesHandler extends XoopsObjectHandler
         if (!$result) {
             return $ret;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
-            $adslightPictures = new AdslightPictures();
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
+            $adslightPictures = new Pictures();
             $adslightPictures->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] = $adslightPictures;
@@ -323,10 +232,10 @@ class AdslightPicturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * count AdslightPictures matching a condition
+     * count Pictures matching a condition
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement} to match
-     * @return int    count of AdslightPictures
+     * @return int    count of Pictures
      */
     public function getCount(CriteriaElement $criteria = null)
     {
@@ -346,7 +255,7 @@ class AdslightPicturesHandler extends XoopsObjectHandler
     }
 
     /**
-     * delete AdslightPictures matching a set of conditions
+     * delete Pictures matching a set of conditions
      *
      * @param  CriteriaElement $criteria {@link CriteriaElement}
      * @return bool   FALSE if deletion failed

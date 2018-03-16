@@ -24,7 +24,7 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 define('REAL_MODULE_NAME', 'adslight');
 define('SEO_MODULE_NAME', 'annonces');
@@ -112,7 +112,7 @@ function replace_links($matches)
 function adslight_seo_cat($cid)
 {
     global $xoopsDB;
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $query  = '
         SELECT
             title
@@ -135,7 +135,7 @@ function adslight_seo_cat($cid)
 function adslight_seo_titre($lid)
 {
     global $xoopsDB;
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $query  = '
         SELECT
             title

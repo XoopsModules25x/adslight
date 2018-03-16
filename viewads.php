@@ -375,9 +375,9 @@ function viewAds($lid = 0)
         if ('' != $photo) {
             require_once __DIR__ . '/class/pictures.php';
 
-            $criteria_lid          = new criteria('lid', $lid);
-            $criteria_uid          = new criteria('uid', $usid);
-            $album_factory         = new AdslightPicturesHandler($xoopsDB);
+            $criteria_lid          = new \Criteria('lid', $lid);
+            $criteria_uid          = new \Criteria('uid', $usid);
+            $album_factory         = new PicturesHandler($xoopsDB);
             $pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
             $pictures_number       = $album_factory->getCount($criteria_lid, $criteria_uid);
             if (0 == $pictures_number) {

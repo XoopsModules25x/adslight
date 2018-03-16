@@ -48,11 +48,11 @@ $myts = \MyTextSanitizer::getInstance();
  */
 class Utility
 {
-    use common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
 
-    use common\ServerStats; // getServerStats Trait
+    use Common\ServerStats; // getServerStats Trait
 
-    use common\FilesManagement; // Files Management Trait
+    use Common\FilesManagement; // Files Management Trait
 
     //--------------- Custom module methods -----------------------------
 
@@ -470,7 +470,7 @@ class Utility
      * @param string $height
      * @param string $supplemental
      *
-     * @return XoopsFormDhtmlTextArea|XoopsFormEditor
+     * @return XoopsFormDhtmlTextArea|\XoopsFormEditor
      */
     public static function getEditor($caption, $name, $value = '', $width = '100%', $height = '300px', $supplemental = '')
     {

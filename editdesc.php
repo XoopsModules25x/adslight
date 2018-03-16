@@ -53,7 +53,7 @@ if (1 == $marker) {
      */
     $title = Request::getString('caption', '', 'POST');
 
-    $picture_factory = new AdslightPicturesHandler($xoopsDB);
+    $picture_factory = new PicturesHandler($xoopsDB);
     $picture         = $picture_factory->create(false);
     $picture->load($cod_img);
     $picture->setVar('title', $title);
@@ -76,11 +76,11 @@ if (1 == $marker) {
  * Creating the factory  and the criteria to edit the desc of the picture
  * The user must be the owner
  */
-$album_factory = new AdslightPicturesHandler($xoopsDB);
-$criteria_img  = new Criteria('cod_img', $cod_img);
+$album_factory = new PicturesHandler($xoopsDB);
+$criteria_img  = new \Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
-$criteria_uid  = new Criteria('uid_owner', $uid);
-$criteria      = new CriteriaCompo($criteria_img);
+$criteria_uid  = new \Criteria('uid_owner', $uid);
+$criteria      = new \CriteriaCompo($criteria_img);
 $criteria->add($criteria_uid);
 
 /**

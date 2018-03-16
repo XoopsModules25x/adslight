@@ -20,13 +20,13 @@
 -------------------------------------------------------------------------
 */
 
-require_once __DIR__ . '/../class/Utility.php';
+// require_once __DIR__ . '/../class/Utility.php';
 /**
  * @param XoopsObject $xoopsModule
  *
  * @return bool
  */
-function xoops_module_update_adslight(XoopsObject $xoopsModule)
+function xoops_module_update_adslight(\XoopsObject $xoopsModule)
 {
     global $xoopsDB;
 
@@ -43,7 +43,7 @@ function xoops_module_update_adslight(XoopsObject $xoopsModule)
         '.'
     ]);
     foreach ($template_list as $k => $v) {
-        $fileinfo = new SplFileInfo($template_directory . $v);
+        $fileinfo = new \SplFileInfo($template_directory . $v);
         if ('html' === $fileinfo->getExtension()
             && 'index.html' !== $fileinfo->getFilename()) {
             @unlink($template_directory . $v);

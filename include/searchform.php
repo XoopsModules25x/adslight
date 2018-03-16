@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 // create form
@@ -28,7 +28,7 @@ $mids        = $xoopsModule->getVar('mid');
 $mid         = $xoopsModule->getVar('name');
 
 // create form elements
-$search_form->addElement(new XoopsFormText(_SR_KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);
+$search_form->addElement(new \XoopsFormText(_SR_KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);
 $type_select = new \XoopsFormSelect(_SR_TYPE, 'andor', $andor);
 $type_select->addOptionArray([
                                  'AND'   => _SR_ALL,
@@ -41,9 +41,9 @@ if (!empty($mids)) {
     $mods_checkbox = new \XoopsFormCheckBox(_SR_SEARCHIN, 'mids[]', $mids);
 }
 if (empty($modules)) {
-    $criteria = new CriteriaCompo();
-    $criteria->add(new Criteria('hassearch', 1));
-    $criteria->add(new Criteria('isactive', 1));
+    $criteria = new \CriteriaCompo();
+    $criteria->add(new \Criteria('hassearch', 1));
+    $criteria->add(new \Criteria('isactive', 1));
 
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
@@ -56,8 +56,8 @@ if (empty($modules)) {
 }
 $search_form->addElement($mods_checkbox);
 if ($xoopsConfigSearch['keyword_min'] > 0) {
-    $search_form->addElement(new XoopsFormLabel(_SR_SEARCHRULE, sprintf(_SR_KEYIGNORE, $xoopsConfigSearch['keyword_min'])));
+    $search_form->addElement(new \XoopsFormLabel(_SR_SEARCHRULE, sprintf(_SR_KEYIGNORE, $xoopsConfigSearch['keyword_min'])));
 }
-$search_form->addElement(new XoopsFormHidden('action', 'results'));
-$search_form->addElement(new XoopsFormHiddenToken('id'));
-$search_form->addElement(new XoopsFormButton('', 'submit', _SR_SEARCH, 'submit'));
+$search_form->addElement(new \XoopsFormHidden('action', 'results'));
+$search_form->addElement(new \XoopsFormHiddenToken('id'));
+$search_form->addElement(new \XoopsFormButton('', 'submit', _SR_SEARCH, 'submit'));

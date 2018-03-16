@@ -42,7 +42,7 @@ if (Request::hasVar('submit', 'POST')) {
     $module_id = $xoopsModule->getVar('mid');
 
     $module_id = $xoopsModule->getVar('mid');
-    $groups    = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups    = ($xoopsUser instanceof \XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var XoopsGroupPermHandler $gpermHandler */
     $gpermHandler = xoops_getHandler('groupperm');
 

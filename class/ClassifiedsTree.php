@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Adslight;
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -41,7 +41,7 @@ class ClassifiedsTree
      */
     public function __construct($table_name, $id_name, $pid_name)
     {
-        $this->db    = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db    = \XoopsDatabaseFactory::getDatabaseConnection();
         $this->table = $table_name;
         $this->id    = $id_name;
         $this->pid   = $pid_name;
@@ -72,7 +72,7 @@ class ClassifiedsTree
         if (0 == $count) {
             return $arr;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             array_push($arr, $myrow);
         }
 
@@ -339,7 +339,7 @@ class ClassifiedsTree
         if (0 == $count) {
             return $parray;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             array_push($parray, $row);
             $parray = $this->getAllChild($row[$this->id], $order, $parray);
         }
@@ -374,7 +374,7 @@ class ClassifiedsTree
         if (0 == $count) {
             return $parray;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
             array_push($parray, $row);
             $parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
@@ -466,7 +466,7 @@ class ClassifiedsTree
         if (0 == $count) {
             return $parray;
         }
-        while ($row = $xoopsDB->fetchArray($result)) {
+        while (false !== ($row = $xoopsDB->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
             array_push($parray, $row);
             $parray = $this->getChildTreeMapArray($row[$this->id], $order, $parray, $row['prefix']);
@@ -483,7 +483,7 @@ class ClassifiedsTree
         $result = $this->db->query('SELECT SQL_CACHE cid, pid, title FROM ' . $this->table);
         $ret    = [];
         $myts   = \MyTextSanitizer::getInstance();
-        while ($myrow = $this->db->fetchArray($result)) {
+       while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['cid']] = [
                 'title' => $myts->htmlspecialchars($myrow['title']),
                 'pid'   => $myrow['pid']

@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 // <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/assets/images/map.png
 
@@ -43,7 +43,7 @@ function adslight_maps_show($options)
 
     $block['title'] = constant("{$block_lang}_TITLE");
     //@todo - move language string to language file
-    $block['imgmapsurl'] = '<a title="Recherche dans votre r&eacute;gion" href="' . XOOPS_URL . '/modules/adslight/maps.php"><img src="' . XOOPS_URL . '/modules/adslight/maps/' . $xoopsConfig['language'] . '/assets/images/map.png" alt="Recherche dans votre r&eacute;gion" border="0"></a><br>';
+    $block['imgmapsurl'] = '<a title="Recherche dans votre region" href="' . XOOPS_URL . '/modules/adslight/maps.php"><img src="' . XOOPS_URL . '/modules/adslight/maps/' . $xoopsConfig['language'] . '/assets/images/map.png" alt="Recherche dans votre region" border="0"></a><br>';
 
     $block['link'] = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ALL_LISTINGS") . '</b></a><br>';
     $block['add']  = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ADDNOW") . '</b></a><br>';

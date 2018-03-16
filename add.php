@@ -31,7 +31,7 @@ include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 // require_once XOOPS_ROOT_PATH . '/class/captcha/xoopscaptcha.php';
 
 $module_id = $xoopsModule->getVar('mid');
-$groups    = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var XoopsGroupPermHandler $gpermHandler */
 $gpermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
@@ -47,7 +47,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-if (!$GLOBALS['xoopsUser'] instanceof XoopsUser) {
+if (!$GLOBALS['xoopsUser'] instanceof \XoopsUser) {
     redirect_header(XOOPS_URL . '/user.php', 2, _MA_ADSLIGHT_MUSTREGFIRST);
 }
 
@@ -234,24 +234,24 @@ if (Request::hasVar('submit', 'POST')) {
     }
 
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_diff_name']) {
-        $form->addElement(new XoopsFormText(_ADSLIGHT_SUBMITTER, 'submitter', 50, 50, $member_uname), true);
+        $form->addElement(new \XoopsFormText(_ADSLIGHT_SUBMITTER, 'submitter', 50, 50, $member_uname), true);
     } else {
-        $form->addElement(new XoopsFormLabel(_ADSLIGHT_SUBMITTER, $member_uname));
-        $form->addElement(new XoopsFormHidden('submitter', $member_uname), true);
+        $form->addElement(new \XoopsFormLabel(_ADSLIGHT_SUBMITTER, $member_uname));
+        $form->addElement(new \XoopsFormHidden('submitter', $member_uname), true);
     }
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_diff_email']) {
-        $form->addElement(new XoopsFormText(_ADSLIGHT_EMAIL, 'email', 50, 50, $member_email), true);
+        $form->addElement(new \XoopsFormText(_ADSLIGHT_EMAIL, 'email', 50, 50, $member_email), true);
     } else {
-        $form->addElement(new XoopsFormLabel(_ADSLIGHT_EMAIL, $member_email));
-        $form->addElement(new XoopsFormHidden('email', $member_email), true);
+        $form->addElement(new \XoopsFormLabel(_ADSLIGHT_EMAIL, $member_email));
+        $form->addElement(new \XoopsFormHidden('email', $member_email), true);
     }
-    $form->addElement(new XoopsFormText(_ADSLIGHT_TOWN, 'town', 50, 50, ''), false);
+    $form->addElement(new \XoopsFormText(_ADSLIGHT_TOWN, 'town', 50, 50, ''), false);
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_country']) {
-        $form->addElement(new XoopsFormText(_ADSLIGHT_COUNTRY, 'country', 50, 50, ''), false);
+        $form->addElement(new \XoopsFormText(_ADSLIGHT_COUNTRY, 'country', 50, 50, ''), false);
     } else {
-        $form->addElement(new XoopsFormHidden('country', ''), false);
+        $form->addElement(new \XoopsFormHidden('country', ''), false);
     }
-    $form->addElement(new XoopsFormText(_ADSLIGHT_TEL, 'tel', 50, 50, ''), false);
+    $form->addElement(new \XoopsFormText(_ADSLIGHT_TEL, 'tel', 50, 50, ''), false);
 
     // $cat_id = $_GET['cid'];
     $cid       = 1;
@@ -264,7 +264,7 @@ if (Request::hasVar('submit', 'POST')) {
         // Category select box
         ob_start();
         $mytree->makeMySelBox('title', 'title', $cid, 'cid');
-        $form->addElement(new XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_contents()), true);
+        $form->addElement(new \XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_contents()), true);
         ob_end_clean();
 
         $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid='" . $xoopsDB->escape($cid) . "'");
@@ -278,14 +278,14 @@ if (Request::hasVar('submit', 'POST')) {
             $radio->addOptionArray($options);
             $form->addElement($radio, true);
         } else {
-            $form->addElement(new XoopsFormHidden('status', '0'), true);
+            $form->addElement(new \XoopsFormHidden('status', '0'), true);
         }
 
         if (1 == $premium) {
-            $form->addElement(new XoopsFormText(_ADSLIGHT_HOW_LONG, 'expire', 3, 3, $GLOBALS['xoopsModuleConfig']['adslight_howlong']), true);
+            $form->addElement(new \XoopsFormText(_ADSLIGHT_HOW_LONG, 'expire', 3, 3, $GLOBALS['xoopsModuleConfig']['adslight_howlong']), true);
         } else {
-            $form->addElement(new XoopsFormLabel(_ADSLIGHT_WILL_LAST, $GLOBALS['xoopsModuleConfig']['adslight_howlong']));
-            $form->addElement(new XoopsFormHidden('expire', $GLOBALS['xoopsModuleConfig']['adslight_howlong']), false);
+            $form->addElement(new \XoopsFormLabel(_ADSLIGHT_WILL_LAST, $GLOBALS['xoopsModuleConfig']['adslight_howlong']));
+            $form->addElement(new \XoopsFormHidden('expire', $GLOBALS['xoopsModuleConfig']['adslight_howlong']), false);
         }
 
         // Type
@@ -303,14 +303,14 @@ if (Request::hasVar('submit', 'POST')) {
         $form->addElement($type_form, true);
         $form->addElement($usure_form, true);
 
-        $form->addElement(new XoopsFormText(_ADSLIGHT_TITLE2, 'title', 40, 50, ''), true);
+        $form->addElement(new \XoopsFormText(_ADSLIGHT_TITLE2, 'title', 40, 50, ''), true);
 
         $form->addElement(Adslight\Utility::getEditor(_ADSLIGHT_DESC, 'desctext', '', '100%', 40), true);
 
-        //        $form->addElement(new XoopsFormEditor(_ADSLIGHT_DESC, $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = FALSE, $onfailure = 'textarea'));
+        //        $form->addElement(new \XoopsFormEditor(_ADSLIGHT_DESC, $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = FALSE, $onfailure = 'textarea'));
         //        $optionsTrayNote->addElement($bodynote);
 
-        $form->addElement(new XoopsFormText(_ADSLIGHT_PRICE2, 'price', 40, 50, ''), true);
+        $form->addElement(new \XoopsFormText(_ADSLIGHT_PRICE2, 'price', 40, 50, ''), true);
 
         // Price Type
         $sel_form = new \XoopsFormSelect(_ADSLIGHT_PRICETYPE, 'typeprice', '', '1');
@@ -326,27 +326,27 @@ if (Request::hasVar('submit', 'POST')) {
         $contactby_form->addOption(3, _ADSLIGHT_CONTACT_BY_BOTH);
         $contactby_form->addOption(4, _ADSLIGHT_CONTACT_BY_PHONE);
         $form->addElement($contactby_form, true);
-        $form->addElement(new XoopsFormRadioYN(_ADSLIGHT_ADD_PHOTO_NOW, 'addphotonow', 1));
+        $form->addElement(new \XoopsFormRadioYN(_ADSLIGHT_ADD_PHOTO_NOW, 'addphotonow', 1));
         /*
                 if ('1' == $GLOBALS['xoopsModuleConfig']["adslight_use_captcha"]) {
-                    $form->addElement(new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, "xoopscaptcha", false), true);
+                    $form->addElement(new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, "xoopscaptcha", false), true);
                 }
         */
         if ('0' != $premium) {
-            $form->addElement(new XoopsFormHidden('premium', 'yes'), false);
+            $form->addElement(new \XoopsFormHidden('premium', 'yes'), false);
         } else {
-            $form->addElement(new XoopsFormHidden('premium', 'no'), false);
+            $form->addElement(new \XoopsFormHidden('premium', 'no'), false);
         }
 
         if ('1' == $cat_moderate) {
-            $form->addElement(new XoopsFormHidden('valid', 'No'), false);
-            $form->addElement(new XoopsFormHidden('cat_moderate', '1'), false);
+            $form->addElement(new \XoopsFormHidden('valid', 'No'), false);
+            $form->addElement(new \XoopsFormHidden('cat_moderate', '1'), false);
         } else {
-            $form->addElement(new XoopsFormHidden('valid', 'Yes'), false);
+            $form->addElement(new \XoopsFormHidden('valid', 'Yes'), false);
         }
-        $form->addElement(new XoopsFormHidden('usid', $member_usid), false);
-        $form->addElement(new XoopsFormHidden('date', time()), false);
-        $form->addElement(new XoopsFormButton('', 'submit', _ADSLIGHT_SUBMIT, 'submit'));
+        $form->addElement(new \XoopsFormHidden('usid', $member_usid), false);
+        $form->addElement(new \XoopsFormHidden('date', time()), false);
+        $form->addElement(new \XoopsFormButton('', 'submit', _ADSLIGHT_SUBMIT, 'submit'));
         $form->display();
         $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_contents());
         ob_end_clean();

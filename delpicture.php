@@ -51,12 +51,12 @@ $cod_img = Request::getString('cod_img', '', 'POST');
  * Creating the factory  and the criteria to delete the picture
  * The user must be the owner
  */
-$album_factory = new AdslightPicturesHandler($xoopsDB);
-$criteria_img  = new Criteria('cod_img', $cod_img);
+$album_factory = new PicturesHandler($xoopsDB);
+$criteria_img  = new \Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
-$criteria_uid  = new Criteria('uid_owner', $uid);
-//$criteria_lid = new Criteria ('lid',$lid);
-$criteria = new CriteriaCompo($criteria_img);
+$criteria_uid  = new \Criteria('uid_owner', $uid);
+//$criteria_lid = new \Criteria ('lid',$lid);
+$criteria = new \CriteriaCompo($criteria_img);
 $criteria->add($criteria_uid);
 
 $objects_array = $album_factory->getObjects($criteria);

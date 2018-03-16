@@ -21,7 +21,7 @@
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_adslight(XoopsModule $module)
+function xoops_module_pre_install_adslight(\XoopsModule $module)
 {
     $moduleDirName = basename(dirname(__DIR__));
     $className     = ucfirst($moduleDirName) . 'Utility';
@@ -53,7 +53,7 @@ function xoops_module_pre_install_adslight(XoopsModule $module)
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_adslight(XoopsModule $module)
+function xoops_module_install_adslight(\XoopsModule $module)
 {
     require_once dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
 
@@ -106,7 +106,7 @@ function xoops_module_install_adslight(XoopsModule $module)
 
     $result = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('adslight_categories'));
 
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $categoryId = (int)$myrow['cid'];
         $utilityClass::saveCategoryPermissions($groups1, $categoryId, $permName1);
         $utilityClass::saveCategoryPermissions($groups2, $categoryId, $permName2);

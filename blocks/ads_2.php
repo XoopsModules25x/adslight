@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use XoopsModules\Adslight;
 
@@ -38,9 +38,7 @@ function adslight_b2_show($options)
 
     $moduleDirName = basename(dirname(__DIR__));
     $block_lang    = '_MB_' . strtoupper($moduleDirName);
-    $helper = \Xmf\Module\Helper::getHelper($moduleDirName);
-
-    require_once XOOPS_ROOT_PATH . "/modules/{$moduleDirName}/class/Utility.php";
+    $helper = Adslight\Helper::getInstance();
 
     $block['title'] = constant("{$block_lang}_TITLE");
 
@@ -57,7 +55,7 @@ function adslight_b2_show($options)
                               0
     );
 
-    while ($myrow = $xoopsDB->fetchArray($result)) {
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $a_item = [];
         $title  = $myts->htmlSpecialChars($myrow['title']);
         //        $status    = $myts->htmlSpecialChars($myrow['status']);
