@@ -66,7 +66,7 @@ class Utility
 
         $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes'");
 
-        while (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5)) {
+        while (false !== (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5))) {
             $title     = $myts->htmlSpecialChars($title);
             $expire    = $myts->htmlSpecialChars($expire);
             $type      = $myts->htmlSpecialChars($type);
@@ -124,7 +124,7 @@ class Utility
                 if (0 != $photo) {
                     $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lids));
 
-                    while (list($url) = $xoopsDB->fetchRow($result2)) {
+                    while (false !== (list($url) = $xoopsDB->fetchRow($result2))) {
                         $destination  = XOOPS_ROOT_PATH . '/uploads/AdsLight';
                         $destination2 = XOOPS_ROOT_PATH . '/uploads/AdsLight/thumbs';
                         $destination3 = XOOPS_ROOT_PATH . '/uploads/AdsLight/midsize';
@@ -198,7 +198,7 @@ class Utility
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
+        while (false !== (list($rating) = $xoopsDB->fetchRow($voteresult))) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -224,7 +224,7 @@ class Utility
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
+        while (false !== (list($rating) = $xoopsDB->fetchRow($voteresult))) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;

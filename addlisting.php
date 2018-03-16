@@ -291,12 +291,12 @@ if (Request::hasVar('submit', 'POST')) {
 
         // Show type select
         $type_form = new \XoopsFormSelect(_ADSLIGHT_TYPE, 'type', '', '1');
-        while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($nom_type, $id_type) = $xoopsDB->fetchRow($result))) {
             $type_form->addOption($nom_type, $id_type);
         }
         // Show object state
         $usure_form = new \XoopsFormSelect(_ADSLIGHT_TYPE_USURE, 'typeusure', '', '1');
-        while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result3)) {
+        while (false !== (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result3))) {
             $usure_form->addOption($nom_usure, $id_usure);
         }
 
@@ -308,7 +308,7 @@ if (Request::hasVar('submit', 'POST')) {
         $form->addElement(new \XoopsFormText(_ADSLIGHT_PRICE2, 'price', 40, 50, ''), true);
         // Show price type
         $sel_form = new \XoopsFormSelect(_ADSLIGHT_PRICETYPE, 'typeprice', '', '1');
-        while (list($nom_price, $id_price) = $xoopsDB->fetchRow($result1)) {
+        while (false !== (list($nom_price, $id_price) = $xoopsDB->fetchRow($result1))) {
             $sel_form->addOption($nom_price, $id_price);
         }
 

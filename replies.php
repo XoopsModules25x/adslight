@@ -92,7 +92,7 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->assign('lang_cursortedby', _ADSLIGHT_CURSORTEDBY . '' . $orderby);
     }
 
-    while (list($r_lid, $lid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($r_lid, $lid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result))) {
         $useroffset = '';
         if ($GLOBALS['xoopsUser']) {
             $timezone = $GLOBALS['xoopsUser']->timezone();

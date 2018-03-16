@@ -99,7 +99,7 @@ class ClassifiedsTree
         if (0 == $count) {
             return $idarray;
         }
-        while (list($id) = $this->db->fetchRow($result)) {
+        while (false !== (list($id) = $this->db->fetchRow($result))) {
             array_push($idarray, $id);
         }
 
@@ -131,7 +131,7 @@ class ClassifiedsTree
         if (0 == $count) {
             return $idarray;
         }
-        while (list($r_id) = $this->db->fetchRow($result)) {
+        while (false !== (list($r_id) = $this->db->fetchRow($result))) {
             array_push($idarray, $r_id);
             $idarray = $this->getAllChildId($r_id, $order, $idarray);
         }
@@ -239,7 +239,7 @@ class ClassifiedsTree
         if ($none) {
             echo '<option value="0">----</option>';
         }
-        while (list($catid, $name) = $this->db->fetchRow($result)) {
+        while (false !== (list($catid, $name) = $this->db->fetchRow($result))) {
             $sel = '';
             if ($catid == $preset_id) {
                 $sel = ' selected';
@@ -406,7 +406,7 @@ class ClassifiedsTree
             $sql .= " ORDER BY {$order}";
         }
         $result = $xoopsDB->query($sql);
-        while (list($catid, $name, $cat_order) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($catid, $name, $cat_order) = $xoopsDB->fetchRow($result))) {
             echo '<table class="width100 bnone outer"><tr>
                 <th class="left">';
             if ('cat_order' === $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {

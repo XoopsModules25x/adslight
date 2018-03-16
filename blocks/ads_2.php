@@ -104,7 +104,7 @@ function adslight_b2_show($options)
             //                       . ' ORDER BY date_added ASC limit 1';
             //            }
             $resultp = $xoopsDB->query($sql);
-            while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
+            while (false !== (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp))) {
                 $a_item['photo'] = '<a href="' . XOOPS_URL . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/thumbs/thumb_{$url}\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
             }
         } else {

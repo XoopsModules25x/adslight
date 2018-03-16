@@ -127,7 +127,7 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
 
                 $result = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('adslight_categories'));
 
-                while ($myrow = $xoopsDB->fetchArray($result)) {
+                while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
 
                     $categoryId = (int)($myrow['cid']);
                     $utilityClass::saveCategoryPermissions($groups1, $categoryId, $permName1);

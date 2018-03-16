@@ -45,7 +45,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
     // Check if Link POSTER is voting (UNLESS Anonymous users allowed to post)
     if (0 != $ratinguser) {
         $result = $xoopsDB->query('SELECT submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid));
-        while (list($ratinguserDB) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ratinguserDB) = $xoopsDB->fetchRow($result))) {
             if ($ratinguserDB == $ratinguser) {
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 4, constant('_ADSLIGHT_CANTVOTEOWN'));
             }
@@ -53,7 +53,7 @@ if (!empty($HTTP_POST_VARS['submit'])) {
 
         // Check if REG user is trying to vote twice.
         $result = $xoopsDB->query('SELECT ratinguser FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($usid));
-        while (list($ratinguserDB) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($ratinguserDB) = $xoopsDB->fetchRow($result))) {
             if ($ratinguserDB == $ratinguser) {
                 redirect_header('members.php?usid=' . addslashes($usid) . '', 4, constant('_ADSLIGHT_VOTEONCE2'));
             }

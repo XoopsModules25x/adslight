@@ -290,7 +290,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             $GLOBALS['xoopsTpl']->assign('lang_cursortedby', sprintf(_ADSLIGHT_CURSORTEDBY, Adslight\Utility::convertOrderByTrans($orderby)));
         }
 
-        while (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $contactby, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result1)) {
+        while (false !== (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $contactby, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result1))) {
             $a_item = [];
             $title  = $myts->htmlSpecialChars($title);
             $type   = $myts->htmlSpecialChars($type);
@@ -359,7 +359,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                 $sql     = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE  uid_owner=' . $xoopsDB->escape($usid) . ' AND lid=' . $xoopsDB->escape($lid) . ' ORDER BY date_added ASC LIMIT 1';
                 $resultp = $xoopsDB->query($sql);
 
-                while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
+                while (false !== (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp))) {
                     if ($photo) {
                         $a_item['photo'] = '<a href="' . XOOPS_URL . '/modules/adslight/viewads.php?lid=' . $lid . '"><img class="thumb" src="' . $updir . '/thumbs/thumb_' . $url . '" align="left" width="100px" alt="' . $title . '" ></a>';
                     }
@@ -369,7 +369,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                 $updir              = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
                 $sql                = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE  uid_owner=' . $xoopsDB->escape($usid) . ' AND lid=' . $xoopsDB->escape($lid) . ' ORDER BY date_added ASC LIMIT 1';
                 $resultp            = $xoopsDB->query($sql);
-                while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
+                while (false !== (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp))) {
                     if ($photo) {
                         $a_item['photo'] = '<p><img src="' . XOOPS_URL . '/modules/adslight/assets/images/camera_photo.png" align="left" width="24" alt="' . $title . '" ></p>';
                     }

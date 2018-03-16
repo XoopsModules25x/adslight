@@ -55,7 +55,7 @@ function index()
         $result2 = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
         echo '' . _AM_ADSLIGHT_TYPE . ' <select name="id_type">';
 
-        while (list($id_type, $nom_type) = $xoopsDB->fetchRow($result2)) {
+        while (false !== (list($id_type, $nom_type) = $xoopsDB->fetchRow($result2))) {
             $nom_type = $myts->htmlSpecialChars($nom_type);
             echo "<option value=\"$id_type\">$nom_type</option>";
         }
@@ -85,7 +85,7 @@ function index()
         $result3 = $xoopsDB->query('SELECT id_price, nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY nom_price');
         echo '' . _AM_ADSLIGHT_TYPE . ' <select name="id_price">';
 
-        while (list($id_price, $nom_price) = $xoopsDB->fetchRow($result3)) {
+        while (false !== (list($id_price, $nom_price) = $xoopsDB->fetchRow($result3))) {
             $nom_price = $myts->htmlSpecialChars($nom_price);
             echo "<option value=\"$id_price\">$nom_price</option>";
         }
@@ -115,7 +115,7 @@ function index()
         $result8 = $xoopsDB->query('SELECT id_usure, nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
         echo _AM_ADSLIGHT_TYPE . ' <select name="id_usure">';
 
-        while (list($id_usure, $nom_usure) = $xoopsDB->fetchRow($result8)) {
+        while (false !== (list($id_usure, $nom_usure) = $xoopsDB->fetchRow($result8))) {
             $nom_usure = $myts->htmlSpecialChars($nom_usure);
             echo "<option value=\"$id_usure\">$nom_usure</option>";
         }

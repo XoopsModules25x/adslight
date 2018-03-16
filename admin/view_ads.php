@@ -84,7 +84,7 @@ function index()
         echo "<table class='outer width100 bnone'>";
         $rank = 1;
 
-        while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo, $usid) = $xoopsDB->fetchRow($result)) {
+        while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo, $usid) = $xoopsDB->fetchRow($result))) {
             $title    = $myts->htmlSpecialChars($title);
             $desctext = $myts->displayTarea($desctext, 1, 0, 1, 1, 1);
 
@@ -111,7 +111,7 @@ function index()
             $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
             $sql     = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE  uid_owner={$usid} AND lid={$lid} ORDER BY date_added ASC LIMIT 1";
             $resultp = $xoopsDB->query($sql);
-            while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
+            while (false !== (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp))) {
                 if ($photo) {
                     $photo3 = "<a href='" . XOOPS_URL . "/modules/adslight/viewads.php?lid={$lid}'><img class=\"thumb\" src=\"{$updir}/thumbs/thumb_{$url}\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
                 }
@@ -266,7 +266,7 @@ function indexView($lid = null)
             <td>" . _AM_ADSLIGHT_TYPE . ' </td><td><select name="type">';
 
         $result5 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
-        while (list($nom_type) = $xoopsDB->fetchRow($result5)) {
+        while (false !== (list($nom_type) = $xoopsDB->fetchRow($result5))) {
             $sel = '';
             if ($nom_type == $type) {
                 $sel = 'selected';
@@ -281,7 +281,7 @@ function indexView($lid = null)
             <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
 
         $result6 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
-        while (list($nom_usure) = $xoopsDB->fetchRow($result6)) {
+        while (false !== (list($nom_usure) = $xoopsDB->fetchRow($result6))) {
             $sel = '';
             if ($nom_usure == $typeusure) {
                 $sel = 'selected';
@@ -293,7 +293,7 @@ function indexView($lid = null)
         echo "<tr class='head' border='1'><td>" . _AM_ADSLIGHT_PRICE2 . " </td><td><input type=\"text\" name=\"price\" size=\"20\" value=\"$price\"> " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '';
         $result3 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
         echo " <select name=\"typeprice\"><option value=\"{$typeprice}\">{$typeprice}</option>";
-        while (list($nom_price) = $xoopsDB->fetchRow($result3)) {
+        while (false !== (list($nom_price) = $xoopsDB->fetchRow($result3))) {
             echo "<option value=\"${nom_price}\">${nom_price}</option>";
         }
         echo '</select></td></tr>';
@@ -351,7 +351,7 @@ function modifyAds($lid)
 
     $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
 
-    while (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result))) {
         $title = $myts->htmlSpecialChars($title);
         //        $status    = $myts->htmlSpecialChars($status);
         $status   = (int)$status;
@@ -436,7 +436,7 @@ function modifyAds($lid)
             <td>" . _AM_ADSLIGHT_TYPE . ' </td><td><select name="type">';
 
         $result5 = $xoopsDB->query('SELECT nom_type, id_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
-        while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5)) {
+        while (false !== (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5))) {
             $sel = '';
             if ($id_type == $type) {
                 $sel = 'selected';
@@ -450,7 +450,7 @@ function modifyAds($lid)
             <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
 
         $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
-        while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6)) {
+        while (false !== (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6))) {
             $sel = '';
             if ($id_usure == $typeusure) {
                 $sel = 'selected';
@@ -466,7 +466,7 @@ function modifyAds($lid)
         $resultx = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY nom_price');
 
         echo " <select name=\"typeprice\"><option value=\"{$id_price}\">{$nom_price}</option>";
-        while (list($nom_price, $id_price) = $xoopsDB->fetchRow($resultx)) {
+        while (false !== (list($nom_price, $id_price) = $xoopsDB->fetchRow($resultx))) {
             $sel = '';
             if ($id_price == $typeprice) {
                 $sel = 'selected';
@@ -576,7 +576,7 @@ function listingDel($lid, $photo)
     $lid     = (int)$lid;
     $result2 = $xoopsDB->query('SELECT p.url FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_pictures') . " p  ON l.lid=p.lid WHERE l.lid={$lid}");
 
-    while (list($purl) = $xoopsDB->fetchRow($result2)) {
+    while (false !== (list($purl) = $xoopsDB->fetchRow($result2))) {
         if ($purl) {
             $destination = XOOPS_ROOT_PATH . '/uploads/AdsLight';
             if (file_exists("$destination/$purl")) {

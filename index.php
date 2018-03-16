@@ -225,7 +225,7 @@ function index()
             $GLOBALS['xoopsTpl']->assign('last_head_photo', _ADSLIGHT_PHOTO);
             $rank = 1;
 
-            while (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result)) {
+            while (false !== (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result))) {
                 $title = $myts->htmlSpecialChars($title);
                 $type  = $myts->htmlSpecialChars($type);
                 //                $price     = number_format($price, 2, ',', ' ');
@@ -286,7 +286,7 @@ function index()
 
                     $resultp = $xoopsDB->query($sql);
 
-                    while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
+                    while (false !== (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp))) {
                         if ($photo) {
                             $a_item['photo'] = '<a href="' . XOOPS_URL . "/modules/adslight/viewads.php?lid={$lid}\"><img class=\"thumb\" src=\"{$updir}/thumbs/thumb_{$url}\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
                         }
@@ -297,7 +297,7 @@ function index()
                     $sql                = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE uid_owner=' . (int)$usid . " AND lid={$lid} ORDER BY date_added ASC LIMIT 1";
                     $resultp            = $xoopsDB->query($sql);
 
-                    while (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp)) {
+                    while (false !== (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp))) {
                         if ($photo) {
                             $a_item['photo'] = '<img src="' . XOOPS_URL . "/modules/adslight/assets/images/camera_photo.png\" align=\"left\" width=\"24\" alt=\"{$title}\">";
                         }

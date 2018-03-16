@@ -159,7 +159,7 @@ if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
 
 $sql    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $lid . " AND valid='Yes'";
 $result = $xoopsDB->query($sql);
-while (list($title) = $xoopsDB->fetchRow($result)) {
+while (false !== (list($title) = $xoopsDB->fetchRow($result))) {
     $GLOBALS['xoopsTpl']->assign('lang_gtitle', "<a href='viewads.php?lid=" . $lid . "'>" . $title . '</a>');
     $GLOBALS['xoopsTpl']->assign('lang_showcase', _ADSLIGHT_SHOWCASE);
 }

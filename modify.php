@@ -57,7 +57,7 @@ function listingDel($lid, $ok)
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
         if ($usid == $currentid) {
             if (1 == $ok) {
-                while (list($purl) = $xoopsDB->fetchRow($result1)) {
+                while (false !== (list($purl) = $xoopsDB->fetchRow($result1))) {
                     if ($purl) {
                         $destination = XOOPS_ROOT_PATH . '/uploads/AdsLight';
                         if (file_exists("$destination/$purl")) {
@@ -249,7 +249,7 @@ function modAd($lid)
 
             $result3 = $xoopsDB->query('SELECT nom_price, id_price FROM ' . $xoopsDB->prefix('adslight_price') . ' ORDER BY id_price');
             echo ' <select name="typeprice">';
-            while (list($nom_price, $id_price) = $xoopsDB->fetchRow($result3)) {
+            while (false !== (list($nom_price, $id_price) = $xoopsDB->fetchRow($result3))) {
                 $sel = '';
                 if ($id_price == $typeprice) {
                     $sel = 'selected';
@@ -281,7 +281,7 @@ function modAd($lid)
     <td class="head">' . _ADSLIGHT_TYPE . ' </td><td class="head"><select name="type">';
 
             $result5 = $xoopsDB->query('SELECT nom_type, id_type FROM ' . $xoopsDB->prefix('adslight_type') . ' ORDER BY nom_type');
-            while (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5)) {
+            while (false !== (list($nom_type, $id_type) = $xoopsDB->fetchRow($result5))) {
                 $sel = '';
                 if ($id_type == $type) {
                     $sel = 'selected';
@@ -295,7 +295,7 @@ function modAd($lid)
     <td class="head">' . _ADSLIGHT_TYPE_USURE . ' </td><td class="head"><select name="typeusure">';
 
             $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
-            while (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6)) {
+            while (false !== (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6))) {
                 $sel = '';
                 if ($id_usure == $typeusure) {
                     $sel = 'selected';

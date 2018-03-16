@@ -67,7 +67,7 @@ if (Request::hasVar('submit', 'POST')) {
     $lid    = Request::getInt('id', 0, 'POST');
     $result = $xoopsDB->query('SELECT email, submitter, title, type, desctext, price, typeprice FROM  ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $xoopsDB->escape($id));
 
-    while (list($email, $submitter, $title, $type, $desctext, $price, $typeprice) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($email, $submitter, $title, $type, $desctext, $price, $typeprice) = $xoopsDB->fetchRow($result))) {
         $teles = Request::getString('tele', '', 'POST');
 
         if ($price) {
