@@ -37,7 +37,7 @@ if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $modul
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
 }
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 $lid                                     = Request::getInt('lid', 0, 'GET');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_replies.tpl';

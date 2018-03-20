@@ -37,7 +37,7 @@ function adsNewCat($cat)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName;
 
-    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/header.php';
 
@@ -139,7 +139,7 @@ function adsModCat($cid)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName;
 
-    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/admin_header.php';
 

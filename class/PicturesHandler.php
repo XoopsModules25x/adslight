@@ -217,7 +217,7 @@ class PicturesHandler extends XoopsObjectHandler
         if (!$result) {
             return $ret;
         }
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $adslightPictures = new Pictures();
             $adslightPictures->assignVars($myrow);
             if (!$id_as_key) {

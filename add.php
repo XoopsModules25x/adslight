@@ -45,7 +45,7 @@ $premium = $gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, 
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 if (!$GLOBALS['xoopsUser'] instanceof \XoopsUser) {
     redirect_header(XOOPS_URL . '/user.php', 2, _MA_ADSLIGHT_MUSTREGFIRST);

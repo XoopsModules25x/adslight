@@ -1,4 +1,5 @@
 <?php namespace XoopsModules\Adslight;
+
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -72,7 +73,7 @@ class ClassifiedsTree
         if (0 == $count) {
             return $arr;
         }
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             array_push($arr, $myrow);
         }
 
@@ -483,7 +484,7 @@ class ClassifiedsTree
         $result = $this->db->query('SELECT SQL_CACHE cid, pid, title FROM ' . $this->table);
         $ret    = [];
         $myts   = \MyTextSanitizer::getInstance();
-       while (false !== ($myrow = $this->db->fetchArray($result))) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['cid']] = [
                 'title' => $myts->htmlspecialchars($myrow['title']),
                 'pid'   => $myrow['pid']

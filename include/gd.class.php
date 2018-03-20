@@ -68,7 +68,7 @@ class GD
 
         if ($new > $org) {
             $sizex = round($this->width / ($this->height / $sizey), 0);
-            //            $sizey = $sizey;
+        //            $sizey = $sizey;
         } else {
             //            $sizex = $sizex;
             $sizey = round($this->height / ($this->width / $sizex), 0);

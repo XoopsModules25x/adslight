@@ -53,7 +53,7 @@ if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $modul
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 //@todo - seems this should let users through if they have group rights instead of
 //        kicking out all Anon users
@@ -105,9 +105,11 @@ if (Request::hasVar('submit', 'POST')) {
 
     $sql = sprintf(
         "INSERT INTO %s (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                   $xoopsDB->prefix('adslight_listing'), $newid,
+                   $xoopsDB->prefix('adslight_listing'),
+        $newid,
         $cid,
-        $title, $status,
+        $title,
+        $status,
         $expire,
         $type,
         $desctext,

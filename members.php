@@ -31,7 +31,7 @@ $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 xoops_load('XoopsLocal');
 
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-$mytree                                  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree                                  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_members.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 include XOOPS_ROOT_PATH . '/include/comment_view.php';

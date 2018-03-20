@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 //require_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
@@ -80,7 +81,7 @@ if ('0' == $cat_rows) {
     }
 
     $permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperms.php');
-    $cattree  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $cattree  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $allcats  = $cattree->getCategoryList();
     foreach ($allcats as $cid => $category) {
         $permform->addItem($cid, $category['title'], $category['pid']);

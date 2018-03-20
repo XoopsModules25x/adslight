@@ -44,7 +44,7 @@ $prem_perm = (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $grou
 
 include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
-$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 
 #  function index
