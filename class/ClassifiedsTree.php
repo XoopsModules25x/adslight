@@ -427,7 +427,7 @@ class ClassifiedsTree
                 $option['prefix'] = str_replace('.', ' &nbsp;&nbsp;-&nbsp;', $option['prefix']);
                 $catpath          = $option['prefix'] . '&nbsp;&nbsp;' . $myts->htmlSpecialChars($option[$title]);
                 $cat_orderS       = $option['cat_order'];
-                if ('cat_order' == $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
+                if ('cat_order' === $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
                     echo "({$cat_orderS})";
                 }
                 echo '' . $catpath . '</a></td>
@@ -435,7 +435,7 @@ class ClassifiedsTree
                     <td align="center"><a href="category.php?op=AdsModCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/edit.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_MODIFSUBCAT . '" title ="' . _AM_ADSLIGHT_MODIFSUBCAT . '"></a></td>
                     <td align="center"><a href="category.php?op=AdsDelCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/delete.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_DELSUBCAT . '" title="' . _AM_ADSLIGHT_DELSUBCAT . '"></a></td>';
 
-                $class = ('even' == $class) ? 'odd' : 'even';
+                $class = ('even' === $class) ? 'odd' : 'even';
             }
             echo '</td></tr></table><br>';
         }

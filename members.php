@@ -196,8 +196,8 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE);
         $GLOBALS['xoopsTpl']->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']);
         $GLOBALS['xoopsTpl']->assign('price_typeprice', $typeprice);
-        $GLOBALS['xoopsTpl']->assign('local_town', "$town");
-        $GLOBALS['xoopsTpl']->assign('local_country', "$country");
+        $GLOBALS['xoopsTpl']->assign('local_town', (string)$town);
+        $GLOBALS['xoopsTpl']->assign('local_country', (string)$country);
         $GLOBALS['xoopsTpl']->assign('local_head', _ADSLIGHT_LOCAL2);
         $GLOBALS['xoopsTpl']->assign('edit_ad', _ADSLIGHT_EDIT);
 

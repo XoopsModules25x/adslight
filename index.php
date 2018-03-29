@@ -54,6 +54,8 @@ function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+    /** @var Adslight\Helper $helper */
+    $helper = Adslight\Helper::getInstance();
 
     if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
         require_once $GLOBALS['xoops']->path('class/template.php');
@@ -131,7 +133,7 @@ function index()
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
-    $sql .= ('cat_order' == $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) ? 'ORDER BY cat_order' : 'ORDER BY title';
+    $sql .= ('cat_order' === $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) ? 'ORDER BY cat_order' : 'ORDER BY title';
 
     $result = $xoopsDB->query($sql);
 
@@ -278,7 +280,7 @@ function index()
                     $a_item['sold'] = _ADSLIGHT_RESERVEDMEMBER;
                 }
 
-                if ($xoopsModuleConfig['active_thumbsindex'] > 0) {
+                if ($helper->getConfig('active_thumbsindex') > 0) {
                     $a_item['no_photo'] = '<a href="' . XOOPS_URL . "/modules/adslight/viewads.php?lid={$lid}\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/modules/adslight/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
 
                     $updir = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];

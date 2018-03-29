@@ -36,7 +36,7 @@ function adslight_notify_iteminfo($category, $item_id)
     $moduleDirName = basename(dirname(__DIR__));
     /** @var XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
-    $module        = $moduleHandler->getByDirname("$moduleDirName");
+    $module        = $moduleHandler->getByDirname($moduleDirName);
 
     if ('global' === $category) {
         $item['name'] = '';

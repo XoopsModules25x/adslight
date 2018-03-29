@@ -119,7 +119,7 @@ function index()
             if ($photo <= 0) {
                 $photo3 = "<a href=\"index.php?op=IndexView&lid=$lid\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/modules/adslight/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"$title\"></a>";
             } else {
-                $photo4 = "$photo";
+                $photo4 = (string)$photo;
             }
 
             $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);

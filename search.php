@@ -131,17 +131,17 @@ switch ($action) {
         echo _SR_KEYWORDS . ':';
         if ('exact' !== $andor) {
             foreach ($queries as $q) {
-                echo ' <strong>' . htmlspecialchars(stripslashes($q)) . '</strong>';
+                echo ' <strong>' . htmlspecialchars(stripslashes($q), ENT_QUOTES | ENT_HTML5) . '</strong>';
             }
             if (!empty($ignored_queries)) {
                 echo '<br>';
                 printf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']);
                 foreach ($ignored_queries as $q) {
-                    echo ' <strong>' . htmlspecialchars(stripslashes($q)) . '</strong>';
+                    echo ' <strong>' . htmlspecialchars(stripslashes($q), ENT_QUOTES | ENT_HTML5) . '</strong>';
                 }
             }
         } else {
-            echo ' "<strong>' . htmlspecialchars(stripslashes($queries[0])) . '</strong>"';
+            echo ' "<strong>' . htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES | ENT_HTML5) . '</strong>"';
         }
         echo '<br>';
         foreach ($mids as $mid) {
@@ -199,7 +199,7 @@ switch ($action) {
                     if ($count >= 5) {
                         $search_url = XOOPS_URL . '/modules/adslight/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
                         $search_url .= "&mid=$mid&action=showall&andor=$andor";
-                        echo '<br><a href="' . htmlspecialchars($search_url) . '">' . _SR_SHOWALLR . '</a>';
+                        echo '<br><a href="' . htmlspecialchars($search_url, ENT_QUOTES | ENT_HTML5) . '">' . _SR_SHOWALLR . '</a>';
                     }
                     echo '<table>';
                 }
@@ -242,10 +242,10 @@ switch ($action) {
                 echo _SR_KEYWORDS . ':';
                 if ('exact' !== $andor) {
                     foreach ($queries as $q) {
-                        echo ' <strong>' . htmlspecialchars(stripslashes($q)) . '</strong>';
+                        echo ' <strong>' . htmlspecialchars(stripslashes($q), ENT_QUOTES | ENT_HTML5) . '</strong>';
                     }
                 } else {
-                    echo ' "<strong>' . htmlspecialchars(stripslashes($queries[0])) . '</strong>"';
+                    echo ' "<strong>' . htmlspecialchars(stripslashes($queries[0]), ENT_QUOTES | ENT_HTML5) . '</strong>"';
                 }
                 echo '<br><br>';
             }
@@ -307,7 +307,7 @@ switch ($action) {
                 echo '<td align="left">
             ';
                 $search_url_prev = $search_url . "&start=$prev";
-                echo '<a href="' . htmlspecialchars($search_url_prev) . '">' . _SR_PREVIOUS . '</a></td>
+                echo '<a href="' . htmlspecialchars($search_url_prev, ENT_QUOTES | ENT_HTML5) . '">' . _SR_PREVIOUS . '</a></td>
             ';
             }
             echo '<td>&nbsp;&nbsp;</td>
@@ -315,7 +315,7 @@ switch ($action) {
             if (false !== $has_next) {
                 $next            = $start + 20;
                 $search_url_next = $search_url . "&start=$next";
-                echo '<td align="right"><a href="' . htmlspecialchars($search_url_next) . '">' . _SR_NEXT . '</a></td>
+                echo '<td align="right"><a href="' . htmlspecialchars($search_url_next, ENT_QUOTES | ENT_HTML5) . '">' . _SR_NEXT . '</a></td>
             ';
             }
             echo '

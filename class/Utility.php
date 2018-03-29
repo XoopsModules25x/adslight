@@ -243,7 +243,7 @@ class Utility
     public static function getTotalItems($sel_id, $status = '')
     {
         global $xoopsDB, $mytree, $moduleDirName;
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = self::getMyItemIds('adslight_view');
         $count      = 0;
         $arr        = [];
         if (in_array($sel_id, $categories)) {

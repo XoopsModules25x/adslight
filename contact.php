@@ -160,7 +160,7 @@ if (Request::hasVar('submit', 'POST')) {
     include XOOPS_ROOT_PATH . '/header.php';
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     $time     = time();
-    $ipnumber = "$_SERVER[REMOTE_ADDR]";
+    $ipnumber = (string)$_SERVER[REMOTE_ADDR];
     echo '<script type="text/javascript">
           function verify()
           {

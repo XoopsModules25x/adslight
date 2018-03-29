@@ -196,7 +196,7 @@ function viewAds($lid = 0)
         }
         $subcats = '';
         $arrow   = '&nbsp;<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
-        while ($x != -1) {
+        while (-1 != $x) {
             $subcats .= ' ' . $arrow . ' <a href="viewcats.php?cid=' . $varid[$x] . '">' . $varnom[$x] . '</a>';
             --$x;
         }

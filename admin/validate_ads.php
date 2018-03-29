@@ -137,7 +137,7 @@ function index()
                 $photo3 = "<a href=\"index.php?op=IndexView&lid={$lid}\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/modules/adslight/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"{$title}\"></a>";
             }
 
-            $photo4 = ($photo > 0) ? "$photo" : '0';
+            $photo4 = ($photo > 0) ? (string)$photo : '0';
 
             $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
             list($nom_type) = $xoopsDB->fetchRow($result7);
