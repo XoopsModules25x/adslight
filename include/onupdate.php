@@ -104,14 +104,14 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
                 //    $module_name = $xoopsModule->getVar('name');
                 //    $module_dirname = $xoopsModule->getVar('dirname');
                 //    $module_version = $xoopsModule->getVar('version');
-                $gpermHandler = xoops_getHandler('groupperm');
+                $grouppermHandler = xoops_getHandler('groupperm');
                 // access rights ------------------------------------------
-                $gpermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_USERS, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_USERS, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
         */
 
         /*
@@ -130,9 +130,9 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
                 while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
 
                     $categoryId = (int)($myrow['cid']);
-                    $utilityClass::saveCategoryPermissions($groups1, $categoryId, $permName1);
-                    $utilityClass::saveCategoryPermissions($groups2, $categoryId, $permName2);
-                    $utilityClass::saveCategoryPermissions($groups3, $categoryId, $permName3);
+                    $utility::saveCategoryPermissions($groups1, $categoryId, $permName1);
+                    $utility::saveCategoryPermissions($groups2, $categoryId, $permName2);
+                    $utility::saveCategoryPermissions($groups3, $categoryId, $permName3);
                 }
 
         */
@@ -182,7 +182,7 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $utilityClass::createFolder($configurator->uploadFolders[$i]);
+                $utility::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
@@ -191,13 +191,13 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
             $file = __DIR__ . '/../assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
-                $utilityClass::copyFile($file, $dest);
+                $utility::copyFile($file, $dest);
             }
         }
 
-        /** @var XoopsGroupPermHandler $gpermHandler */
-        $gpermHandler = xoops_getHandler('groupperm');
+        /** @var XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler = xoops_getHandler('groupperm');
 
-        return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
+        return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
 }

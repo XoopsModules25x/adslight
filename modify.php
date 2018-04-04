@@ -31,12 +31,12 @@ $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
 $groups = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $gpermHandler */
-$gpermHandler = xoops_getHandler('groupperm');
+/** @var XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
 
 //If no access
-if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
 }
 
@@ -260,12 +260,12 @@ function modAd($lid)
             $module_id = $xoopsModule->getVar('mid');
             $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
-            /** @var XoopsGroupPermHandler $gpermHandler */
-            $gpermHandler = xoops_getHandler('groupperm');
+            /** @var XoopsGroupPermHandler $grouppermHandler */
+            $grouppermHandler = xoops_getHandler('groupperm');
             $perm_itemid  = Request::getInt('item_id', 0, 'GET');
 
             //If no access
-            if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+            if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 echo "<tr>
     <td width='30%' class='head'>" . _ADSLIGHT_WILL_LAST . " </td><td class='head'>$expire  " . _ADSLIGHT_DAY . '</td>
     </tr>';
@@ -323,11 +323,11 @@ function modAd($lid)
             } else {
                 $groups = XOOPS_GROUP_ANONYMOUS;
             }
-            /** @var XoopsGroupPermHandler $gpermHandler */
-            $gpermHandler = xoops_getHandler('groupperm');
+            /** @var XoopsGroupPermHandler $grouppermHandler */
+            $grouppermHandler = xoops_getHandler('groupperm');
             $perm_itemid  = Request::getInt('item_id', 0, 'POST');
             //If no access
-            if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+            if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_moderated']) {
                     echo '<input type="hidden" name="valid" value="No" >';
                     echo '<br>' . _ADSLIGHT_MODIFBEFORE . '<br>';

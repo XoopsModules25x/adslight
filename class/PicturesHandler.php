@@ -178,7 +178,7 @@ class PicturesHandler extends XoopsObjectHandler
         if (!$adslightPictures instanceof Pictures) {
             return false;
         }
-        $sql = sprintf('DELETE FROM %s WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $adslightPictures->getVar('cod_img'));
+        $sql = sprintf('DELETE FROM `%s` WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $adslightPictures->getVar('cod_img'));
         if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
@@ -423,12 +423,12 @@ class PicturesHandler extends XoopsObjectHandler
      * Resize a picture and save it to $path_upload
      *
      * @param  string $img         the path to the file
-     * @param  string $path_upload The path to where the files should be saved after resizing
      * @param  int    $thumbwidth  the width in pixels that the thumbnail will have
      * @param  int    $thumbheight the height in pixels that the thumbnail will have
      * @param  int    $pictwidth   the width in pixels that the pic will have
      * @param  int    $pictheight  the height in pixels that the pic will have
-     * @return nothing
+     * @param  string $path_upload The path to where the files should be saved after resizing
+     * @return void
      */
     public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload)
     {

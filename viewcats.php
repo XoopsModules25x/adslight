@@ -35,15 +35,15 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-/** @var XoopsGroupPermHandler $gpermHandler */
-$gpermHandler = xoops_getHandler('groupperm');
+/** @var XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
 
 $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
-if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     $prem_perm = '0';
 } else {
     $prem_perm = '1';

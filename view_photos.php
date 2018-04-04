@@ -59,13 +59,13 @@ if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
 
     $groups =& $GLOBALS['xoopsUser']->getGroups();
 
-    /** @var XoopsGroupPermHandler $gpermHandler */
-    $gpermHandler = xoops_getHandler('groupperm');
+    /** @var XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
 
     $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
     //If no access
-    if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+    if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
         $permit = '0';
     } else {
         $permit = '1';

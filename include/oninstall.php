@@ -64,9 +64,9 @@ function xoops_module_install_adslight(\XoopsModule $module)
     xoops_loadLanguage('modinfo', $moduleDirName);
 
     $configurator = include __DIR__ . '/config.php';
-    /** @var AdslightUtility $utilityClass */
-    $utilityClass = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utilityClass)) {
+    /** @var AdslightUtility $utility */
+    $utility = ucfirst($moduleDirName) . 'Utility';
+    if (!class_exists($utility)) {
         xoops_load('utility', $moduleDirName);
     }
 
@@ -77,21 +77,21 @@ function xoops_module_install_adslight(\XoopsModule $module)
     //    $module_name = $module->getVar('name');
     //    $module_dirname = $module->getVar('dirname');
     //    $module_version = $module->getVar('version');
-    $gpermHandler = xoops_getHandler('groupperm');
+    $grouppermHandler = xoops_getHandler('groupperm');
     // access rights ------------------------------------------
-    $gpermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_USERS, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
-    $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_USERS, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
+    $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
 
     $result8 = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories'));
     $rowsCount = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ''));
 
 
 
-    $utilityClass::saveCategoryPermissions($groups, $categoryId, $permName);
+    $utility::saveCategoryPermissions($groups, $categoryId, $permName);
 */
 
     $groups1 = [XOOPS_GROUP_ADMIN];
@@ -108,16 +108,16 @@ function xoops_module_install_adslight(\XoopsModule $module)
 
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $categoryId = (int)$myrow['cid'];
-        $utilityClass::saveCategoryPermissions($groups1, $categoryId, $permName1);
-        $utilityClass::saveCategoryPermissions($groups2, $categoryId, $permName2);
-        $utilityClass::saveCategoryPermissions($groups3, $categoryId, $permName3);
+        $utility::saveCategoryPermissions($groups1, $categoryId, $permName1);
+        $utility::saveCategoryPermissions($groups2, $categoryId, $permName2);
+        $utility::saveCategoryPermissions($groups3, $categoryId, $permName3);
     }
 
     //  ---  CREATE FOLDERS ---------------
     if (count($configurator['uploadFolders']) > 0) {
         //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
         foreach (array_keys($configurator['uploadFolders']) as $i) {
-            $utilityClass::createFolder($configurator['uploadFolders'][$i]);
+            $utility::createFolder($configurator['uploadFolders'][$i]);
         }
     }
 
@@ -126,7 +126,7 @@ function xoops_module_install_adslight(\XoopsModule $module)
         $file = __DIR__ . '/../assets/images/blank.png';
         foreach (array_keys($configurator['copyFiles']) as $i) {
             $dest = $configurator['copyFiles'][$i] . '/blank.png';
-            $utilityClass::copyFile($file, $dest);
+            $utility::copyFile($file, $dest);
         }
     }
 

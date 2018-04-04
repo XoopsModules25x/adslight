@@ -38,13 +38,13 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-/** @var XoopsGroupPermHandler $gpermHandler */
-$gpermHandler = xoops_getHandler('groupperm');
+/** @var XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
-if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     $premium = 1; // user has premium content rights
 } else {
     $premium = 0; // set for access to non-premium content only

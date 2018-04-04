@@ -28,12 +28,12 @@ require_once __DIR__ . '/header.php';
 $myts      = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 $module_id = $xoopsModule->getVar('mid');
 $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $gpermHandler */
-$gpermHandler = xoops_getHandler('groupperm');
+/** @var XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
 
 //If no access
-if (!$gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
 }
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';

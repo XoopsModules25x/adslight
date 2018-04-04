@@ -68,9 +68,9 @@ if ('results' === $action) {
 }
 
 $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $gpermHandler */
-$gpermHandler      = xoops_getHandler('groupperm');
-$available_modules = $gpermHandler->getItemIds('module_read', $groups);
+/** @var XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler      = xoops_getHandler('groupperm');
+$available_modules = $grouppermHandler->getItemIds('module_read', $groups);
 
 if ('search' === $action) {
     include XOOPS_ROOT_PATH . '/header.php';

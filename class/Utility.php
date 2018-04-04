@@ -286,9 +286,9 @@ class Utility
         $moduleHandler = xoops_getHandler('module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        /** @var XoopsGroupPermHandler $gpermHandler */
-        $gpermHandler           = xoops_getHandler('groupperm');
-        $categories             = $gpermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
+        /** @var XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler           = xoops_getHandler('groupperm');
+        $categories             = $grouppermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
         $permissions[$permtype] = $categories;
 
         return $categories;
@@ -299,7 +299,7 @@ class Utility
      * @param        $option module option's name
      * @param string $repmodule
      *
-     * @return option's value
+     * @return bool|mixed option's value
      */
     public static function getModuleOption($option, $repmodule = 'adslight')
     {
@@ -739,9 +739,9 @@ class Utility
      *
      *   saveCategory_Permissions()
      *
-     * @param  array   $groups     : group with granted permission
-     * @param  integer $categoryid : categoryid on which we are setting permissions
-     * @param  string  $perm_name  : name of the permission
+     * @param  array $groups : group with granted permission
+     * @param        $categoryId
+     * @param        $permName
      * @return boolean : TRUE if the no errors occured
      */
 
@@ -760,13 +760,13 @@ class Utility
         //        $xoopsModule = sf_getModuleInfo();
         $moduleId = $helper->getModule()->getVar('mid');
 
-        $gpermHandler = xoops_getHandler('groupperm');
+        $grouppermHandler = xoops_getHandler('groupperm');
         // First, if the permissions are already there, delete them
-        $gpermHandler->deleteByModule($moduleId, $permName, $categoryId);
+        $grouppermHandler->deleteByModule($moduleId, $permName, $categoryId);
         // Save the new permissions
         if (count($groups) > 0) {
             foreach ($groups as $groupId) {
-                $gpermHandler->addRight($permName, $categoryId, $groupId, $moduleId);
+                $grouppermHandler->addRight($permName, $categoryId, $groupId, $moduleId);
             }
         }
 

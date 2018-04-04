@@ -32,15 +32,15 @@ include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 
 $module_id = $xoopsModule->getVar('mid');
 $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $gpermHandler */
-$gpermHandler = xoops_getHandler('groupperm');
+/** @var XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
 $perm_itemid  = Request::getInt('item_id', 0, 'POST');
 
-if (!$gpermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
 
-$premium = $gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? 1 : 0;
+$premium = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? 1 : 0;
 
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

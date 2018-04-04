@@ -43,13 +43,13 @@ if (Request::hasVar('submit', 'POST')) {
 
     $module_id = $xoopsModule->getVar('mid');
     $groups    = ($xoopsUser instanceof \XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    /** @var XoopsGroupPermHandler $gpermHandler */
-    $gpermHandler = xoops_getHandler('groupperm');
+    /** @var XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
 
     $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
     //If no access
-    if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+    if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
     global $xoopsConfig, $xoopsDB, $myts, $meta;
@@ -146,11 +146,11 @@ if (Request::hasVar('submit', 'POST')) {
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;
     }
-    /** @var XoopsGroupPermHandler $gpermHandler */
-    $gpermHandler = xoops_getHandler('groupperm');
+    /** @var XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
     $perm_itemid  = Request::getInt('item_id', 0, 'POST');
     //If no access
-    if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+    if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 

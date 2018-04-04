@@ -260,7 +260,7 @@ function adsModCat($cid)
  * @param $title
  * @param $cat_desc
  * @param $cat_keywords
- * @param $cat_order
+ * @param $order
  * @param $affprice
  * @param $cat_moderate
  * @param $moderate_subcat
