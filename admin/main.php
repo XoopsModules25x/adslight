@@ -167,7 +167,7 @@ function index()
 
     /// Statistiques
     $Num1 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_listing') . "  WHERE (valid='Yes' AND status!='1')"));
-    $Num2 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ''));
+    $Num2 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ' '));
     $Num3 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('users') . "  WHERE (level = '1')"));
     $Num4 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('xoopscomments') . "  WHERE (com_status = '2')"));
 

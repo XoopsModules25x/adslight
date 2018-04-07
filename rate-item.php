@@ -71,7 +71,7 @@ if (!empty($_POST['submit'])) {
     //All is well.  Add to Line Item Rate to DB.
     $newid    = $xoopsDB->genId($xoopsDB->prefix('adslight_item_votedata') . '_ratingid_seq');
     $datetime = time();
-    $sql      = sprintf("INSERT INTO %s (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp) VALUES (%u, %u, %u, %u, '%s', %u)", $xoopsDB->prefix('adslight_item_votedata'), $newid, $lid, $ratinguser, $rating, $ip, $datetime);
+    $sql      = sprintf("INSERT INTO `%s` (ratingid, lid, ratinguser, rating, ratinghostname, ratingtimestamp) VALUES (%u, %u, %u, %u, '%s', %u)", $xoopsDB->prefix('adslight_item_votedata'), $newid, $lid, $ratinguser, $rating, $ip, $datetime);
     // $xoopsDB->query($sql) || $eh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {

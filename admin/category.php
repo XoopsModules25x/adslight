@@ -341,7 +341,7 @@ function adsDelCat($cid, $ok = 0)
         //        loadModuleAdminMenu(1, '');
 
         OpenTable();
-        echo '<br><center><b>' . _AM_ADSLIGHT_SURDELCAT . '</b><br><br>';
+        echo '<br><div style="text-align: center;"><strong>' . _AM_ADSLIGHT_SURDELCAT . '</strong></div><br><br>';
         echo "[ <a href=\"category.php?op=AdsDelCat&cid={$cid}&ok=1\">" . _YES . '</a> | <a href="map.php">' . _NO . '</a> ]<br><br>';
         CloseTable();
         xoops_cp_footer();

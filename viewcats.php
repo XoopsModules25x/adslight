@@ -118,7 +118,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         if ($usid = $member_usid) {
             $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
-            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $member_usid . ''));
+            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $member_usid . ' '));
 
             $GLOBALS['xoopsTpl']->assign('show_user', $show_user);
             $GLOBALS['xoopsTpl']->assign('show_user_link', 'members.php?usid=' . $member_usid);

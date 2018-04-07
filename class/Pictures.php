@@ -77,7 +77,7 @@ class Pictures extends XoopsObject
     public function load($id)
     {
         global $moduleDirName;
-        $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . '';
+        $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' ';
         $myrow = $this->db->fetchArray($this->db->query($sql));
         $this->assignVars($myrow);
         if (!$myrow) {

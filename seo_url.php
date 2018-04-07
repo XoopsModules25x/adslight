@@ -119,7 +119,7 @@ function adslight_seo_cat($cid)
         FROM
             ' . $xoopsDB->prefix('adslight_categories') . '
         WHERE
-            cid = ' . $cid . '';
+            cid = ' . $cid . ' ';
     $result = $db->query($query);
     $res    = $db->fetchArray($result);
     $ret    = adslight_seo_title($res['title']);
@@ -142,7 +142,7 @@ function adslight_seo_titre($lid)
         FROM
             ' . $xoopsDB->prefix('adslight_listing') . '
         WHERE
-            lid = ' . $lid . '';
+            lid = ' . $lid . ' ';
     $result = $db->query($query);
     $res    = $db->fetchArray($result);
     $ret    = adslight_seo_title($res['title']);

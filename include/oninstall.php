@@ -102,7 +102,7 @@ function xoops_module_install_adslight(\XoopsModule $module)
     $permName2 = $moduleDirName . '_submit';
     $permName3 = $moduleDirName . '_view';
 
-    $rowsCount = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ''));
+    $rowsCount = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ' '));
 
     $result = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('adslight_categories'));
 

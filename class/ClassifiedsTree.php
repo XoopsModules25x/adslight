@@ -57,7 +57,7 @@ class ClassifiedsTree
     public function getFirstChild($sel_id, $order = '')
     {
         $arr = [];
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . ' ';
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {
@@ -452,7 +452,7 @@ class ClassifiedsTree
     public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
     {
         global $xoopsDB;
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . '';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . ' ';
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
         if (is_array($categories) && count($categories) > 0) {

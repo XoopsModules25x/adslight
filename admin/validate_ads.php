@@ -202,7 +202,7 @@ function index()
     }
 
     // Modify Annonces
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ''));
+    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' '));
     if ($numrows > 0) {
         echo "<table class='outer width100 bnone'><tr class='bg4'><td class='top'>";
         echo '<form method="post" action="validate_ads.php">'

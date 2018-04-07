@@ -92,7 +92,7 @@ class PicturesHandler extends XoopsObjectHandler
     {
         global $moduleDirName;
 
-        $sql = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' AND lid=' . $lid . '';
+        $sql = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' AND lid=' . $lid . ' ';
         if (!$result = $this->db->query($sql)) {
             return false;
         }
@@ -134,12 +134,12 @@ class PicturesHandler extends XoopsObjectHandler
             // add/modify of Pictures
             $adslightPictures = new Pictures();
 
-            $format = 'INSERT INTO %s (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
+            $format = 'INSERT INTO `%s` (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
             $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url));
             $force  = true;
         } else {
-            $format = 'UPDATE %s SET ';
+            $format = 'UPDATE `%s` SET ';
             $format .= 'cod_img=%u, title=%s, date_added=%s, date_modified=%s, lid=%s, uid_owner=%s, url=%s';
             $format .= ' WHERE cod_img = %u';
             $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url), $cod_img);
