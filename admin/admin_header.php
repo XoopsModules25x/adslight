@@ -17,23 +17,23 @@
  * @author       XOOPS Development Team
  */
 
-require_once __DIR__ . '/../../../include/cp_header.php';
-require_once __DIR__ . '/../../../class/xoopsformloader.php';
-// require_once __DIR__ . '/../class/Utility.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-//require_once __DIR__ . '/../include/gtickets.php';
-// require_once __DIR__ . '/../class/Utility.php';
-// require_once __DIR__ . '/../class/classifiedstree.php';
-// require_once __DIR__ . '/../class/grouppermform.php';
-require_once __DIR__ . '/../../../class/xoopsform/grouppermform.php';
-// require_once __DIR__ . '/../class/classifiedstree.php';
+//require_once  dirname(__DIR__) . '/include/gtickets.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+// require_once  dirname(__DIR__) . '/class/classifiedstree.php';
+// require_once  dirname(__DIR__) . '/class/grouppermform.php';
+require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
+// require_once  dirname(__DIR__) . '/class/classifiedstree.php';
 
-// require_once __DIR__ . '/../class/Utility.php';
-//require_once __DIR__ . '/../include/common.php';
+// require_once  dirname(__DIR__) . '/class/Utility.php';
+//require_once  dirname(__DIR__) . '/include/common.php';
 
-$helper = Xmf\Module\Helper::getHelper($moduleDirName);
+$helper = \XoopsModules\AboutHelper::getInstance();
 
 $adminObject = \Xmf\Module\Admin::getInstance();
 

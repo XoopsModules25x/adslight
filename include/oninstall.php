@@ -15,6 +15,9 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Adslight;
+use XoopsModules\Adslight\Common;
+
 /**
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}
@@ -23,28 +26,25 @@
  */
 function xoops_module_pre_install_adslight(\XoopsModule $module)
 {
-    $moduleDirName = basename(dirname(__DIR__));
-    $className     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($className)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    include __DIR__ . '/common.php';
+    /** @var \XoopsModules\Adslight\Utility $utility */
+    $utility = new \XoopsModules\Adslight\Utility();
     //check for minimum XOOPS version
-    if (!$className::checkXoopsVer($module)) {
-        return false;
-    }
+    $xoopsSuccess = $utility::checkVerXoops($module);
 
     // check for minimum PHP version
-    if (!$className::checkPhpVer($module)) {
-        return false;
+    $phpSuccess   = $utility::checkVerPhp($module);
+
+    if (false !== $xoopsSuccess && false !==  $phpSuccess) {
+        $moduleTables =& $module->getInfo('tables');
+        foreach ($moduleTables as $table) {
+            $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
+        }
     }
 
-    $mod_tables = $module->getInfo('tables');
-    foreach ($mod_tables as $table) {
-        $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
+    return $xoopsSuccess && $phpSuccess;
     }
 
-    return true;
-}
 
 /**
  *
@@ -64,11 +64,9 @@ function xoops_module_install_adslight(\XoopsModule $module)
     xoops_loadLanguage('modinfo', $moduleDirName);
 
     $configurator = include __DIR__ . '/config.php';
-    /** @var AdslightUtility $utility */
-    $utility = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($utility)) {
-        xoops_load('utility', $moduleDirName);
-    }
+    /** @var \XoopsModules\Adslight\Utility $utility */
+    $utility = new \XoopsModules\Adslight\Utility();
+
 
     /*
 
@@ -123,7 +121,7 @@ function xoops_module_install_adslight(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator['copyFiles']) > 0) {
-        $file = __DIR__ . '/../assets/images/blank.png';
+        $file =  dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator['copyFiles']) as $i) {
             $dest = $configurator['copyFiles'][$i] . '/blank.png';
             $utility::copyFile($file, $dest);

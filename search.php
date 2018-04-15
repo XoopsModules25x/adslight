@@ -189,7 +189,7 @@ switch ($action) {
                         echo '<small>';
                         $results[$i]['uid'] = @(int)$results[$i]['uid'];
                         if (!empty($results[$i]['uid'])) {
-                            $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+                            $uname = \XoopsUser::getUnameFromId($results[$i]['uid']);
                             echo '&nbsp;&nbsp;' . _ADSLIGHT_FROM . "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . "</a>\n";
                         }
                         echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';
@@ -285,7 +285,7 @@ switch ($action) {
                 echo '<small>';
                 $results[$i]['uid'] = @(int)$results[$i]['uid'];
                 if (!empty($results[$i]['uid'])) {
-                    $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+                    $uname = \XoopsUser::getUnameFromId($results[$i]['uid']);
                     echo '&nbsp;&nbsp;' . _ADSLIGHT_FROM . "<a href='" . XOOPS_URL . '/userinfo.php?uid=' . $results[$i]['uid'] . "'>" . $uname . '</a><br>';
                 }
                 echo !empty($results[$i]['time']) ? ' (' . formatTimestamp((int)$results[$i]['time']) . ')' : '';

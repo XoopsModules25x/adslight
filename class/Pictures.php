@@ -41,7 +41,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
  * $this class is responsible for providing data access mechanisms to the data source
  * of XOOPS user class objects.
  */
-class Pictures extends XoopsObject
+class Pictures extends \XoopsObject
 {
     public $db;
     // constructor

@@ -20,7 +20,7 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 /**
  * Class AdslightCorePreload
  */
-class AdslightCorePreload extends XoopsPreloadItem
+class AdslightCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

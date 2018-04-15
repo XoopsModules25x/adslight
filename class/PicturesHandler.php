@@ -50,7 +50,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
  *
  * @todo change this to a XoopsPersistableObjectHandler and remove 'most' method overloads
  */
-class PicturesHandler extends XoopsObjectHandler
+class PicturesHandler extends \XoopsObjectHandler
 {
     /**
      * Class constructor

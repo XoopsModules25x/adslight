@@ -23,7 +23,7 @@
 if (file_exists(__DIR__ . '/mainfile.php')) {
     include __DIR__ . '/mainfile.php';
 } elseif (file_exists(__DIR__ . '/../mainfile.php')) {
-    include __DIR__ . '/../mainfile.php';
+    include  dirname(__DIR__) . '/mainfile.php';
 } else {
     include dirname(dirname(__DIR__)) . '/mainfile.php';
 }

@@ -340,7 +340,7 @@ function modAd($lid)
             echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
             echo "<input type=\"hidden\" name=\"premium\" value=\"$premium\" >";
             echo "<input type=\"hidden\" name=\"date\" value=\"$date\" >
-    " . $GLOBALS['xoopsSecurity']->getTokenHTML('token') . '';
+    " . $GLOBALS['xoopsSecurity']->getTokenHTML() . '';
             echo '</form><br></fieldset><br>';
         }
     }

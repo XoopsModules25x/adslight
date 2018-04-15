@@ -369,7 +369,7 @@ function viewAds($lid = 0)
             }
         }
 
-        $user_profile = XoopsUser::getUnameFromId($usid);
+        $user_profile = \XoopsUser::getUnameFromId($usid);
         $GLOBALS['xoopsTpl']->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
 
         if ('' != $photo) {

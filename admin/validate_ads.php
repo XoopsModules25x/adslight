@@ -766,7 +766,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     $row                     = $xoopsDB->fetchArray($result);
     $tags['CATEGORY_TITLE']  = $row['title'];
     $tags['CATEGORY_URL']    = XOOPS_URL . "/modules/adslight/viewcats.php?cid={$cat}";
-
+    /** @var \XoopsNotificationHandler $notificationHandler */
     $notificationHandler = xoops_getHandler('notification');
     $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
     $notificationHandler->triggerEvent('category', $cat, 'new_listing', $tags);
