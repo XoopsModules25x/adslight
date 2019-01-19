@@ -33,7 +33,7 @@ $type_select = new \XoopsFormSelect(_SR_TYPE, 'andor', $andor);
 $type_select->addOptionArray([
                                  'AND'   => _SR_ALL,
                                  'OR'    => _SR_ANY,
-                                 'exact' => _SR_EXACT
+                                 'exact' => _SR_EXACT,
                              ]);
 $search_form->addElement($type_select);
 
@@ -45,7 +45,7 @@ if (empty($modules)) {
     $criteria->add(new \Criteria('hassearch', 1));
     $criteria->add(new \Criteria('isactive', 1));
 
-    /** @var XoopsModuleHandler $moduleHandler */
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $mods_checkbox->addOptionArray($moduleHandler->getList($criteria));
 } else {

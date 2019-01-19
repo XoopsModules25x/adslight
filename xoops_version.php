@@ -21,7 +21,7 @@
 */
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-include __DIR__ . '/preloads/autoloader.php';
+require_once __DIR__ . '/preloads/autoloader.php';
 
 $moduleDirName = basename(__DIR__);
 
@@ -103,68 +103,68 @@ $modversion['adminmenu']   = 'admin/menu.php';
 $modversion['templates'] = [
     [
         'file'        => 'adslight_index.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_category.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_item.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_rate_item.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_rate_user.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_view_photos.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_addlisting.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_members.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_replies.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_tips_writing_ad.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_search.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_search_result.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_maps.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_menu.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_bookmark.tpl',
-        'description' => ''
+        'description' => '',
     ],
     [
         'file'        => 'adslight_xpayment_form.tpl',
-        'description' => ''
-    ]
+        'description' => '',
+    ],
 ];
 
 // Blocks
@@ -314,7 +314,7 @@ $modversion['config'][] = [
         '30' => 30,
         '35' => 35,
         '40' => 40,
-        '50' => 50
+        '50' => 50,
     ],
 ];
 
@@ -506,7 +506,7 @@ $modversion['config'][] = [
     'default'     => 'title',
     'options'     => [
         '_MI_ADSLIGHT_ORDERALPHA' => 'title',
-        '_MI_ADSLIGHT_ORDERPERSO' => 'order'
+        '_MI_ADSLIGHT_ORDERPERSO' => 'order',
     ],
 ];
 
@@ -521,7 +521,7 @@ $modversion['config'][] = [
         '_MI_ADSLIGHT_ORDER_DATE'  => 'date DESC',
         '_MI_ADSLIGHT_ORDER_PRICE' => 'price ASC',
         '_MI_ADSLIGHT_ORDER_TITLE' => 'title ASC',
-        '_MI_ADSLIGHT_ORDER_POP'   => 'hits DESC'
+        '_MI_ADSLIGHT_ORDER_POP'   => 'hits DESC',
     ],
 ];
 
@@ -776,7 +776,7 @@ $modversion['config'][] = [
     'options'     => [
         'Twitter'  => 1,
         'Facebook' => 2,
-        'Google'   => 3
+        'Google'   => 3,
     ],
 ];
 

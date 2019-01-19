@@ -23,12 +23,12 @@
 use Xmf\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
 
 /**
  * Xoops header ...
  */
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
@@ -50,7 +50,6 @@ $lid   = Request::getInt('lid', 0, 'POST');
 /**
  * Getting parameters defined in admin side
  */
-
 $path_upload   = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
 $pictwidth     = $GLOBALS['xoopsModuleConfig']['adslight_resized_width'];
 $pictheight    = $GLOBALS['xoopsModuleConfig']['adslight_resized_height'];

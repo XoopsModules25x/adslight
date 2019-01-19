@@ -33,9 +33,9 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 //If no access
 if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -54,7 +54,7 @@ function adslightMaps()
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
 
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
 
     $GLOBALS['xoopsTpl']->assign('xmid', $xoopsModule->getVar('mid'));
     $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -114,4 +114,4 @@ switch ($pa) {
         adslightMaps();
         break;
 }
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

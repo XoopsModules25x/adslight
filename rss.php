@@ -26,9 +26,9 @@ header('Content-Type: application/rss+xml; charset=UTF-8');
 
 require_once __DIR__ . '/header.php';
 //require_once __DIR__ . '/include/functions.php';
-$allads = [];
+$allads     = [];
 $allads     = Adslight\Utility::returnAllAdsRss();
-$base_xoops = 'http://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['REQUEST_URI'], 'modules'));
+$base_xoops = 'http://' . $_SERVER['SERVER_NAME'] . mb_substr($_SERVER['REQUEST_URI'], 0, mb_strpos($_SERVER['REQUEST_URI'], 'modules'));
 
 echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -38,7 +38,7 @@ echo '<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <description>' . $xoopsConfig['slogan'] . '</description>
 <language>fr</language>';
 
-$adslink = 'http://' . $_SERVER['SERVER_NAME'] . substr($_SERVER['REQUEST_URI'], 0, strrpos($_SERVER['REQUEST_URI'], '/'));
+$adslink = 'http://' . $_SERVER['SERVER_NAME'] . mb_substr($_SERVER['REQUEST_URI'], 0, mb_strrpos($_SERVER['REQUEST_URI'], '/'));
 
 for ($i = 0, $iMax = count($allads); $i < $iMax; ++$i) {
     echo '<item>

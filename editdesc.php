@@ -23,12 +23,12 @@
 use Xmf\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
 
 /**
  * Xoops Header
  */
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
@@ -97,4 +97,4 @@ $album_factory->renderFormEdit($caption, $cod_img, $url);
 /**
  * Close page
  */
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

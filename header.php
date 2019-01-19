@@ -27,7 +27,7 @@
 use Xmf\Module\Admin;
 
 $moduleDirName = basename(__DIR__);
-require_once  dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once __DIR__ . '/class/Utility.php';
 
 if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {

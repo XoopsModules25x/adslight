@@ -43,7 +43,7 @@ if (Request::hasVar('submit', 'POST')) {
 
     $module_id = $xoopsModule->getVar('mid');
     $groups    = ($xoopsUser instanceof \XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    /** @var XoopsGroupPermHandler $grouppermHandler */
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
 
     $perm_itemid = Request::getInt('item_id', 0, 'POST');
@@ -146,9 +146,9 @@ if (Request::hasVar('submit', 'POST')) {
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;
     }
-    /** @var XoopsGroupPermHandler $grouppermHandler */
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
-    $perm_itemid  = Request::getInt('item_id', 0, 'POST');
+    $perm_itemid      = Request::getInt('item_id', 0, 'POST');
     //If no access
     if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -157,35 +157,35 @@ if (Request::hasVar('submit', 'POST')) {
     //    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     $time     = time();
     $ipnumber = (string)$_SERVER[REMOTE_ADDR];
     echo '<script type="text/javascript">
           function verify()
           {
-                var msg = "' . _ADSLIGHT_VALIDERORMSG . "\\n__________________________________________________\\n\\n\";
-                var errors = \"FALSE\";
-                if (window.document.cont.namep.value == \"\") {
-                        errors = \"TRUE\";
-                        msg += \"" . _ADSLIGHT_VALIDSUBMITTER . "\\n\";
+                var msg = "' . _ADSLIGHT_VALIDERORMSG . '\\n__________________________________________________\\n\\n";
+                var errors = "FALSE";
+                if (window.document.cont.namep.value == "") {
+                        errors = "TRUE";
+                        msg += "' . _ADSLIGHT_VALIDSUBMITTER . '\\n";
                 }
-                if (window.document.cont.post.value == \"\") {
-                        errors = \"TRUE\";
-                        msg += \"" . _ADSLIGHT_VALIDEMAIL . "\\n\";
+                if (window.document.cont.post.value == "") {
+                        errors = "TRUE";
+                        msg += "' . _ADSLIGHT_VALIDEMAIL . '\\n";
                 }
-                if (window.document.cont.messtext.value == \"\") {
-                        errors = \"TRUE\";
-                        msg += \"" . _ADSLIGHT_VALIDMESS . "\\n\";
+                if (window.document.cont.messtext.value == "") {
+                        errors = "TRUE";
+                        msg += "' . _ADSLIGHT_VALIDMESS . '\\n";
                 }
-                if (errors == \"TRUE\") {
-                        msg += \"__________________________________________________\\n\\n" . _ADSLIGHT_VALIDMSG . "\\n\";
+                if (errors == "TRUE") {
+                        msg += "__________________________________________________\\n\\n' . _ADSLIGHT_VALIDMSG . '\\n";
                         alert(msg);
 
                         return false;
                 }
           }
-          </script>";
+          </script>';
 
     echo '<b>' . _ADSLIGHT_CONTACTAUTOR . '</b><br><br>';
     echo '' . _ADSLIGHT_TEXTAUTO . '<br>';
@@ -237,4 +237,4 @@ if (Request::hasVar('submit', 'POST')) {
     </form>';
 }
 echo '</td></tr></table>';
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

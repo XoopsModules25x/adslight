@@ -29,8 +29,6 @@ $op = Request::getString('op', 'liste');
 
 /**
  * Main Ad Display
- *
- * @return void
  */
 function index()
 {
@@ -76,7 +74,6 @@ function index()
     $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid");
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
-
         ///////// Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer bnone' cellspacing=5 cellpadding=0><tr><td width=40>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 ></td><td>";
@@ -146,7 +143,7 @@ function modifyAds($lid)
         //        $price     = number_format($price, 2, ',', ' ');
 
         xoops_load('XoopsLocal');
-        $tempXoopsLocal = new \XoopsLocal;
+        $tempXoopsLocal = new \XoopsLocal();
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
         $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
@@ -364,7 +361,6 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
  *
  * @param  int    $lid
  * @param  string $photo
- * @return void
  */
 function listingDel($lid, $photo)
 {
@@ -411,19 +407,15 @@ switch ($op) {
     case 'IndexView':
         indexView($lid);
         break;
-
     case 'ListingDel':
         listingDel($lid, $photo);
         break;
-
     case 'ModifyAds':
         modifyAds($lid);
         break;
-
     case 'ModifyAdsS':
         modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
-
     default:
         index();
         break;

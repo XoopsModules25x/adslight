@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Adslight;
+<?php
+
+namespace XoopsModules\Adslight;
 
 /*
 -------------------------------------------------------------------------
@@ -396,7 +398,7 @@ class ClassifiedsTree
     {
         global $myts, $xoopsDB;
         $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
-        //        require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+        //        require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
         if ('' == $sel_name) {
             $sel_name = $this->id;
@@ -486,8 +488,8 @@ class ClassifiedsTree
         $myts   = \MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['cid']] = [
-                'title' => $myts->htmlspecialchars($myrow['title']),
-                'pid'   => $myrow['pid']
+                'title' => $myts->htmlSpecialChars($myrow['title']),
+                'pid'   => $myrow['pid'],
             ];
         }
 

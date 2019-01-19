@@ -37,8 +37,9 @@ function adslight_b2_show($options)
     $myts  = \MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
-    $helper = Adslight\Helper::getInstance();
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
+    /** @var \XoopsModules\Adslight\Helper $helper */
+    $helper = \XoopsModules\Adslight\Helper::getInstance();
 
     $block['title'] = constant("{$block_lang}_TITLE");
 
@@ -49,11 +50,8 @@ function adslight_b2_show($options)
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
 
-    $result = $xoopsDB->query(
-        'SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' AND status!='1' {$cat_perms} ORDER BY {$options[0]} DESC",
-        $options[1],
-                              0
-    );
+    $result = $xoopsDB->query('SELECT lid, cid, title, status, type, price, typeprice, date, town, country, contactby, usid, premium, valid, photo, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' AND status!='1' {$cat_perms} ORDER BY {$options[0]} DESC", $options[1],
+                              0);
 
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $a_item = [];
@@ -69,8 +67,8 @@ function adslight_b2_show($options)
         $hits      = $myts->htmlSpecialChars($myrow['hits']);
 
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $options[2] - 1)) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
             }
         }
 
@@ -137,7 +135,7 @@ function adslight_b2_edit($options)
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $form = constant("{$block_lang}_ORDER") . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";

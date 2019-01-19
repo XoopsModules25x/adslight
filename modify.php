@@ -25,15 +25,15 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 $moduleDirName = basename(__DIR__);
-$main_lang     = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
 $groups = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 
 //If no access
 if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
@@ -135,7 +135,7 @@ function modAd($lid)
 
     $categories = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {
-        if (!in_array($cide, $categories)) {
+        if (!in_array($cide, $categories, true)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
     } else {    // User can't see any category
@@ -156,7 +156,7 @@ function modAd($lid)
             //            $price      = number_format($price, 2, ',', ' ');
 
             xoops_load('XoopsLocal');
-            $tempXoopsLocal = new \XoopsLocal;
+            $tempXoopsLocal = new \XoopsLocal();
             //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
             $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
             //  For other countries uncomment the below line and comment out the above line
@@ -172,7 +172,7 @@ function modAd($lid)
             $useroffset = '';
             if ($GLOBALS['xoopsUser']) {
                 $timezone   = $GLOBALS['xoopsUser']->timezone();
-                $useroffset = (!empty($timezone)) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
+                $useroffset = !empty($timezone) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
             }
             $dates = ($useroffset * 3600) + $date;
             $dates = formatTimestamp($date, 's');
@@ -260,9 +260,9 @@ function modAd($lid)
             $module_id = $xoopsModule->getVar('mid');
             $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
-            /** @var XoopsGroupPermHandler $grouppermHandler */
+            /** @var \XoopsGroupPermHandler $grouppermHandler */
             $grouppermHandler = xoops_getHandler('groupperm');
-            $perm_itemid  = Request::getInt('item_id', 0, 'GET');
+            $perm_itemid      = Request::getInt('item_id', 0, 'GET');
 
             //If no access
             if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
@@ -319,13 +319,13 @@ function modAd($lid)
 
             $module_id = $xoopsModule->getVar('mid');
             if (is_object($GLOBALS['xoopsUser'])) {
-                $groups =& $GLOBALS['xoopsUser']->getGroups();
+                $groups = &$GLOBALS['xoopsUser']->getGroups();
             } else {
                 $groups = XOOPS_GROUP_ANONYMOUS;
             }
-            /** @var XoopsGroupPermHandler $grouppermHandler */
+            /** @var \XoopsGroupPermHandler $grouppermHandler */
             $grouppermHandler = xoops_getHandler('groupperm');
-            $perm_itemid  = Request::getInt('item_id', 0, 'POST');
+            $perm_itemid      = Request::getInt('item_id', 0, 'POST');
             //If no access
             if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_moderated']) {
@@ -412,29 +412,24 @@ if (!Request::hasVar('op', 'POST') && Request::hasVar('op', 'GET')) {
     $op = Request::getString('op', '', 'GET');
 }
 switch ($op) {
-
     case 'ModAd':
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
         modAd($lid);
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     case 'ModAdS':
         modAdS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid);
         break;
-
     case 'ListingDel':
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
         listingDel($lid, $ok);
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     case 'DelReply':
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
         delReply($r_lid, $ok);
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     default:
         redirect_header('index.php', 1, '' . _RETURNANN);
         break;

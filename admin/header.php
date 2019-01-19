@@ -27,7 +27,7 @@ if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
     $xoopsTpl = new \XoopsTpl();
 }
 $adminObject = \Xmf\Module\Admin::getInstance();
-if (!@ require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
+if (!@require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
 
     /**
      * @param        $currentoption

@@ -20,8 +20,6 @@
 -------------------------------------------------------------------------
 */
 
-use Xmf\Request;
-
 /**
  * Protection against inclusion outside the site
  */
@@ -107,7 +105,7 @@ class Pictures extends \XoopsObject
             foreach ($criteria as $c) {
                 $where_query .= " {$c} AND";
             }
-            $where_query = substr($where_query, 0, -4);
+            $where_query = mb_substr($where_query, 0, -4);
         } elseif (!is_array($criteria) && $criteria) {
             $where_query = " WHERE {$criteria}";
         }
@@ -121,7 +119,7 @@ class Pictures extends \XoopsObject
             $sql    = 'SELECT * FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
             $result = $db->query($sql, $limit, $start);
             while (false !== ($myrow = $db->fetchArray($result))) {
-                $ret[] = new Pictures($myrow);
+                $ret[] = new self($myrow);
             }
         }
 

@@ -43,15 +43,12 @@ class GD
             case '1':
                 $this->image = imagecreatefromgif($location);
                 break;
-
             case '2':
                 $this->image = imagecreatefromjpeg($location);
                 break;
-
             case '3':
                 $this->image = imagecreatefrompng($location);
                 break;
-
             default:
                 exit('Unknown file format');
         }
@@ -68,7 +65,7 @@ class GD
 
         if ($new > $org) {
             $sizex = round($this->width / ($this->height / $sizey), 0);
-        //            $sizey = $sizey;
+            //            $sizey = $sizey;
         } else {
             //            $sizex = $sizex;
             $sizey = round($this->height / ($this->width / $sizex), 0);
@@ -106,7 +103,7 @@ class GD
         foreach ([
                      'r',
                      'g',
-                     'b'
+                     'b',
                  ] as $value) {
             if (!array_key_exists($value, $rgb) || $rgb[$value] < 0
                 || $rgb[$value] > 255
@@ -158,7 +155,7 @@ class GD
 
         $rgb         = $this->make_color($color);
         $allocate    = imagecolorallocate($this->image, $rgb['r'], $rgb['g'], $rgb['b']);
-        $text_width  = imagefontwidth($font) * strlen($text);
+        $text_width  = imagefontwidth($font) * mb_strlen($text);
         $text_height = imagefontheight($font);
 
         //Dokoncaj

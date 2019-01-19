@@ -19,21 +19,24 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use XoopsModules\Adslight;
 
-// require_once  dirname(__DIR__) . '/class/Helper.php';
 //require_once  dirname(__DIR__) . '/include/common.php';
-$helper = Adslight\Helper::getInstance();
+/** @var \XoopsModules\Adslight\Helper $helper */
+$helper = \XoopsModules\Adslight\Helper::getInstance();
 
 $pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
+}
 
 $adminmenu[] = [
     'title' => _MI_ADSLIGHT_HOME,
     'link'  => 'admin/index.php',
-    'icon'  => $pathIcon32 . '/home.png'
+    'icon'  => $pathIcon32 . '/home.png',
 ];
 
 //global $xoopsModule;
@@ -41,25 +44,25 @@ $adminmenu[] = [
 $adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU0,
     'link'  => 'admin/main.php',
-    'icon'  => $pathIcon32 . '/dashboard.png'
+    'icon'  => $pathIcon32 . '/dashboard.png',
 ];
 
 $adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU1,
     'link'  => 'admin/map.php',
-    'icon'  => $pathIcon32 . '/category.png'
+    'icon'  => $pathIcon32 . '/category.png',
 ];
 
 $adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU5,
     'link'  => 'admin/options.php',
-    'icon'  => $pathModIcon32 . '/preferences.png'
+    'icon'  => $pathModIcon32 . '/preferences.png',
 ];
 
 $adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU2,
     'link'  => 'admin/groupperms.php',
-    'icon'  => $pathIcon32 . '/permissions.png'
+    'icon'  => $pathIcon32 . '/permissions.png',
 ];
 
 //$adminmenu[] = array(
@@ -83,5 +86,5 @@ $adminmenu[] = [
 $adminmenu[] = [
     'title' => _MI_ADSLIGHT_ABOUT,
     'link'  => 'admin/about.php',
-    'icon'  => $pathIcon32 . '/about.png'
+    'icon'  => $pathIcon32 . '/about.png',
 ];

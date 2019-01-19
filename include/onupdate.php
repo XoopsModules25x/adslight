@@ -16,8 +16,9 @@
  * @author       XOOPS Development Team
  */
 
-use Xmf\Database\Tables;
 use Xmf\Database\Migrate;
+use Xmf\Database\Tables;
+use XoopsModules\Adslight;
 
 if ((!defined('XOOPS_ROOT_PATH'))
     || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
@@ -38,7 +39,6 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -46,41 +46,39 @@ function tableExists($tablename)
  */
 function xoops_module_pre_update_adslight(\XoopsModule $module)
 {
-    /** @var Adslight\Helper $helper */
-    /** @var Adslight\Utility $utility */
+    /** @var \XoopsModules\Adslight\Helper $helper */
+    /** @var \XoopsModules\Adslight\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $helper       = Adslight\Helper::getInstance();
-    $utility      = new Adslight\Utility();
+    $helper        = \XoopsModules\Adslight\Helper::getInstance();
+    $utility       = new \XoopsModules\Adslight\Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
     return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during update of the module
  * @param XoopsModule $module {@link XoopsModule}
  * @param null        $previousVersion
  *
  * @return bool true if update successful, false if not
  */
-
 function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
-    $moduleDirName = basename(dirname(__DIR__));
-    $capsDirName   = strtoupper($moduleDirName);
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-    /** @var Adslight\Helper $helper */
-    /** @var Adslight\Utility $utility */
-    /** @var Adslight\Configurator $configurator */
-    $helper  = Adslight\Helper::getInstance();
-    $utility = new Adslight\Utility();
-    $configurator = new Adslight\Configurator();
+    /** @var \XoopsModules\Adslight\Helper $helper */
+    /** @var \XoopsModules\Adslight\Utility $utility */
+    /** @var \XoopsModules\Adslight\Common\Configurator $configurator */
+    $helper       = \XoopsModules\Adslight\Helper::getInstance();
+    $utility      = new \XoopsModules\Adslight\Utility();
+    $configurator = new \XoopsModules\Adslight\Common\Configurator();
 
     if ($previousVersion < 230) {
-
         /*
                 //rename column
                 $tables     = new Tables();
@@ -188,14 +186,14 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file =  dirname(__DIR__) . '/assets/images/blank.png';
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
             }
         }
 
-        /** @var XoopsGroupPermHandler $grouppermHandler */
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
 
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');

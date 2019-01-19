@@ -44,7 +44,7 @@ if ('0' == $cat_rows) {
     $selected                 = [
         '',
         '',
-        ''
+        '',
     ];
     $selected[$permtoset - 1] = ' selected';
     echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='document.jselperm.submit()'><option value='1'"

@@ -35,7 +35,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
  */
 function adslight_search($queryarray, $andor, $limit, $offset, $userid)
 {
-    if (strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php')) {
+    if (mb_strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php')) {
         $visible = true;
     } else {
         $visible = false;

@@ -24,7 +24,7 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
 $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
@@ -33,8 +33,8 @@ xoops_load('XoopsLocal');
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree                                  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_members.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
-include XOOPS_ROOT_PATH . '/include/comment_view.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 
 $lid       = Request::getInt('lid', 0, 'GET');
 $usid      = Request::getInt('usid', 0, 'GET');
@@ -44,9 +44,9 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 
 //If no access
 $permit = (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
@@ -137,7 +137,8 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->assign('lang_popularityleast', _ADSLIGHT_POPULARITYLTOM);
         $GLOBALS['xoopsTpl']->assign('lang_popularitymost', _ADSLIGHT_POPULARITYMTOL);
     }
-    while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits, $item_rating, $item_votes, $user_rating, $user_votes, $comments) = $xoopsDB->fetchRow($result))) {
+    while (false
+           !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits, $item_rating, $item_votes, $user_rating, $user_votes, $comments) = $xoopsDB->fetchRow($result))) {
         $newitem   = '';
         $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
         $startdate = (time() - (86400 * $newcount));
@@ -187,7 +188,7 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->assign('read', "$hits " . _ADSLIGHT_VIEW2);
         $GLOBALS['xoopsTpl']->assign('rating', number_format($user_rating, 2));
         $GLOBALS['xoopsTpl']->assign('status_head', _ADSLIGHT_STATUS);
-        $tempXoopsLocal = new \XoopsLocal;
+        $tempXoopsLocal = new \XoopsLocal();
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
         $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
@@ -209,7 +210,7 @@ if ($trows > '0') {
         $date  = formatTimestamp($date, 's');
         $date2 = formatTimestamp($date2, 's');
         $path  = $mytree->getPathFromId($cid, 'title');
-        $path  = substr($path, 1);
+        $path  = mb_substr($path, 1);
         $path  = str_replace('/', ' - ', $path);
         if ($rrows >= 1) {
             $view_now = "<a href='replies.php?lid=" . $lid . "'>" . _ADSLIGHT_VIEWNOW . '</a>';
@@ -266,7 +267,7 @@ if ($trows > '0') {
             'no_photo'    => $no_photo,
             'adminlink'   => $adminlink,
             'new'         => $newitem,
-            'sold'        => $sold
+            'sold'        => $sold,
         ]);
     }
     $usid = Request::getInt('usid', 0, 'GET');
@@ -298,4 +299,4 @@ if ($trows > '0') {
     }
 }
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

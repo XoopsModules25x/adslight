@@ -36,8 +36,6 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
-
-
 // -------------------------------------------------------------------------
 // ------------------light_pictures user handler class -------------------
 // -------------------------------------------------------------------------
@@ -54,9 +52,8 @@ class PicturesHandler extends \XoopsObjectHandler
 {
     /**
      * Class constructor
-     * @param XoopsDatabase $db
+     * @param \XoopsDatabase|null $db
      */
-
     public function __construct($db)
     {
         parent::__construct($db, 'adslight_pictures', 'Pictures', 'cod_img', 'title');
@@ -158,7 +155,7 @@ class PicturesHandler extends \XoopsObjectHandler
         $adslightPictures->assignVars([
                                           'cod_img' => $cod_img,
                                           'lid'     => $lid,
-                                          'url'     => $url
+                                          'url'     => $url,
                                       ]);
 
         return true;
@@ -377,11 +374,11 @@ class PicturesHandler extends \XoopsObjectHandler
         $lid = Request::getInt('lid', 0, 'POST');
         //create a hash so it does not erase another file
         $hash1 = time();
-        $hash  = substr($hash1, 0, 4);
+        $hash  = mb_substr($hash1, 0, 4);
         // mimetypes and settings put this in admin part later
         $allowed_mimetypes = [
             'image/jpeg',
-            'image/gif'
+            'image/gif',
         ];
         $maxfilesize       = $maxfilebytes;
         // create the object to upload
@@ -396,20 +393,19 @@ class PicturesHandler extends \XoopsObjectHandler
                 echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>' . $uploader->getErrors() . '</p></div>';
 
                 return false;
-            } else {
-                // now let s create a new object picture and set its variables
-                $picture = $this->create();
-                $url     = $uploader->getSavedFileName();
-                $picture->setVar('url', $url);
-                $picture->setVar('title', $title);
-                $uid = $GLOBALS['xoopsUser']->getVar('uid');
-                $lid = $lid;
-                $picture->setVar('lid', $lid);
-                $picture->setVar('uid_owner', $uid);
-                $this->insert($picture);
-                $saved_destination = $uploader->getSavedDestination();
-                $this->resizeImage($saved_destination, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload);
             }
+            // now let s create a new object picture and set its variables
+            $picture = $this->create();
+            $url     = $uploader->getSavedFileName();
+            $picture->setVar('url', $url);
+            $picture->setVar('title', $title);
+            $uid = $GLOBALS['xoopsUser']->getVar('uid');
+            $lid = $lid;
+            $picture->setVar('lid', $lid);
+            $picture->setVar('uid_owner', $uid);
+            $this->insert($picture);
+            $saved_destination = $uploader->getSavedDestination();
+            $this->resizeImage($saved_destination, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload);
         } else {
             echo '<div style="color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick; border-style:solid; text-align:center;"><p>' . $uploader->getErrors() . '</p></div>';
 
@@ -428,7 +424,6 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param  int    $pictwidth   the width in pixels that the pic will have
      * @param  int    $pictheight  the height in pixels that the pic will have
      * @param  string $path_upload The path to where the files should be saved after resizing
-     * @return void
      */
     public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload)
     {

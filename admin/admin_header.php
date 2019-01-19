@@ -16,9 +16,8 @@
  * @since
  * @author       XOOPS Development Team
  */
-
-require_once  dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
 // require_once  dirname(__DIR__) . '/class/Utility.php';
 
 $moduleDirName = basename(dirname(__DIR__));
@@ -27,7 +26,7 @@ $moduleDirName = basename(dirname(__DIR__));
 // require_once  dirname(__DIR__) . '/class/Utility.php';
 // require_once  dirname(__DIR__) . '/class/classifiedstree.php';
 // require_once  dirname(__DIR__) . '/class/grouppermform.php';
-require_once  dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
 // require_once  dirname(__DIR__) . '/class/classifiedstree.php';
 
 // require_once  dirname(__DIR__) . '/class/Utility.php';

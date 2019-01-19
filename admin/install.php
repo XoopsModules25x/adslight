@@ -39,7 +39,7 @@ if (!empty($action)) {
 }
 /*
 $action = '';
-if (isset($_POST['action'])) {
+if (\Xmf\Request::hasVar('action', 'POST')) {
     $action = $_POST['action'];
     $file   = $_POST['file'];
 }
@@ -47,10 +47,10 @@ if (isset($_POST['action'])) {
 $sql = 'SELECT conf_id FROM ' . $xoopsDB->prefix('config') . ' WHERE conf_name = "theme_set"';
 $res = $xoopsDB->query($sql);
 list($conf_id) = $xoopsDB->fetchRow($res);
-/** @var XoopsModuleHandler $moduleHandler */
+/** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname('system');
-/** @var XoopsModuleHandler $moduleHandler */
+/** @var \XoopsModuleHandler $moduleHandler */
 $configHandler = xoops_getHandler('config');
 $config_theme  = $configHandler->getConfig($conf_id, true);
 

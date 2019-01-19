@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Adslight;
+<?php
+
+namespace XoopsModules\Adslight;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -17,7 +19,6 @@
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
-
 
 /**
  * Gestion de la Currency
@@ -60,7 +61,6 @@ class Currency
      * @static
      * @staticvar   object
      */
-
     public static function getInstance()
     {
         static $instance;
@@ -103,8 +103,8 @@ class Currency
         }
         if ('s' !== $format) {
             return $currencyLeft . $amount . $currencyRight;
-        } else {
-            return $currencyLeftShort . $amount . $currencyRightShort;
         }
+
+        return $currencyLeftShort . $amount . $currencyRightShort;
     }
 }

@@ -30,7 +30,7 @@ xoops_cp_header();
 //    require_once XOOPS_ROOT_PATH.'/Frameworks/art/functions.admin.php';
 //    loadModuleAdminMenu (7, "");
 //}
-/** @var XoopsModuleHandler $moduleHandler */
+/** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $versioninfo   = $moduleHandler->get($xoopsModule->getVar('mid'));
 echo '

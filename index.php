@@ -24,14 +24,14 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-//require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
 $groups = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
 
 $perm_itemid = Request::getInt('item_id', 0, 'POST');
@@ -42,10 +42,9 @@ if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $modu
 
 $prem_perm = (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
-include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
-
 
 #  function index
 #####################################################
@@ -54,8 +53,8 @@ function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
-    /** @var Adslight\Helper $helper */
-    $helper = Adslight\Helper::getInstance();
+    /** @var \XoopsModules\Adslight\Helper $helper */
+    $helper = \XoopsModules\Adslight\Helper::getInstance();
 
     if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
         require_once $GLOBALS['xoops']->path('class/template.php');
@@ -64,7 +63,7 @@ function index()
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 
-    //    include XOOPS_ROOT_PATH . '/header.php';
+    //    require_once XOOPS_ROOT_PATH . '/header.php';
 
     $GLOBALS['xoopsTpl']->assign('xmid', $xoopsModule->getVar('mid'));
     $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -153,14 +152,14 @@ function index()
         $content      .= $title . ' ';
 
         $arr = [];
-        if (in_array($myrow['cid'], $categories)) {
+        if (in_array($myrow['cid'], $categories, true)) {
             $arr           = $mytree->getFirstChild($myrow['cid'], 'title');
             $space         = 0;
             $chcount       = 1;
             $subcategories = '';
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_souscat']) {
                 foreach ($arr as $ele) {
-                    if (in_array($ele['cid'], $categories)) {
+                    if (in_array($ele['cid'], $categories, true)) {
                         $chtitle = $myts->htmlSpecialChars($ele['title']);
                         if ($chcount > $GLOBALS['xoopsModuleConfig']['adslight_nbsouscat']) {
                             $subcategories .= "<a href=\"viewcats.php?cid={$myrow['cid']}\">" . _ADSLIGHT_CATPLUS . '</a>';
@@ -183,7 +182,7 @@ function index()
                 'new'           => categorynewgraphic($myrow['cid']),
                 'subcategories' => $subcategories,
                 'totallisting'  => $totallisting,
-                'count'         => $count
+                'count'         => $count,
             ]);
             ++$count;
         }
@@ -246,7 +245,7 @@ function index()
                 $useroffset = '';
                 if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
                     $timezone   = $GLOBALS['xoopsUser']->timezone();
-                    $useroffset = (!empty($timezone)) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
+                    $useroffset = !empty($timezone) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
                     if ($xoopsUser->isAdmin()) {
                         $a_item['admin'] = '<a href="' . XOOPS_URL . "/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid={$lid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" alt=\"" . _ADSLIGHT_MODADMIN . '"></a>';
                     }
@@ -348,4 +347,4 @@ switch ($pa) {
         break;
 }
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

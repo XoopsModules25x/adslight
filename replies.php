@@ -23,14 +23,14 @@
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 $myts      = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 $module_id = $xoopsModule->getVar('mid');
 $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 
 //If no access
 if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
@@ -41,7 +41,7 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
 
 $lid                                     = Request::getInt('lid', 0, 'GET');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_replies.tpl';
-include XOOPS_ROOT_PATH . '/header.php';
+require_once XOOPS_ROOT_PATH . '/header.php';
 
 $GLOBALS['xoopsTpl']->assign('nav_main', '<a href="index.php">' . _ADSLIGHT_MAIN . '</a>');
 $show = 1;
@@ -120,7 +120,7 @@ if ($trows > '0') {
             'title'   => $myts->htmlSpecialChars($title),
             'date'    => $date,
             'message' => $myts->displayTarea($message),
-            'tele'    => $myts->htmlSpecialChars($tele)
+            'tele'    => $myts->htmlSpecialChars($tele),
         ]);
     }
     $lid = Request::getInt('lid', 0, 'GET');
@@ -151,4 +151,4 @@ if ($trows > '0') {
     }
 }
 
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

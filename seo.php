@@ -37,9 +37,8 @@ if (!empty($seoOther)) {
 
 $seoMap = [
     'c' => 'viewcats.php',
-    'p' => 'viewads.php'
+    'p' => 'viewads.php',
     //  'addlisting' => 'addlisting.php'
-
 ];
 
 if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
@@ -63,10 +62,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
             $_SERVER['REQUEST_URI'] = $newUrl . '?lid=' . $seoArg;
             $_GET['lid']            = $seoArg;
             break;
-
     }
 
-    include $seoMap[$seoOp];
+    require_once $seoMap[$seoOp];
 }
 
 exit;

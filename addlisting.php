@@ -24,7 +24,7 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-$myts = \MyTextSanitizer::getInstance();// MyTextSanitizer object
+$myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
@@ -38,9 +38,9 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
@@ -70,14 +70,14 @@ if (Request::hasVar('submit', 'POST')) {
 
     if ('' == Request::getString('title', '', 'POST')) {
         //        $eh->show('1001'); //'0001' => 'Could not connect to the forums database.',
-        $moduleHandler = xoops_getModuleHandler('module');
+        $moduleHandler = $helper->getHandler('Module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
     $cid = Request::getInt('cid', 0, 'POST');
 
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if (!in_array($cid, $cat_perms)) {
+    if (!in_array($cid, $cat_perms, true)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
 
@@ -103,34 +103,12 @@ if (Request::hasVar('submit', 'POST')) {
     $date  = time();
     $newid = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
-    $sql = sprintf(
-        "INSERT INTO `%s` (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                   $xoopsDB->prefix('adslight_listing'),
-        $newid,
-        $cid,
-        $title,
-        $status,
-        $expire,
-        $type,
-        $desctext,
-        $tel,
-        $price,
-        $typeprice,
-        $typeusure,
-        $date,
-        $email,
-        $submitter,
-        (int)$usid,
-        $town,
-        $country,
-        $contactby,
-        $premium,
-        $valid
-    );
+    $sql = sprintf("INSERT INTO `%s` (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                   $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, (int)$usid, $town, $country, $contactby, $premium, $valid);
     // $xoopsDB->query($sql) || $eh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
-        $moduleHandler = xoops_getModuleHandler('module');
+        $moduleHandler = $helper->getHandler('Module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
@@ -138,7 +116,7 @@ if (Request::hasVar('submit', 'POST')) {
     $lid = $xoopsDB->getInsertId();
 
     if ('Yes' === $valid) {
-        /** @var XoopsNotificationHandler $notificationHandler */
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         //$lid = $xoopsDB->getInsertId();
         $tags                    = [];
@@ -156,7 +134,7 @@ if (Request::hasVar('submit', 'POST')) {
         $row                     = $xoopsDB->fetchArray($result2);
         $tags['CATEGORY_TITLE']  = $row['title'];
         $tags['CATEGORY_URL']    = XOOPS_URL . "/modules/adslight/viewcats.php?cid={$cid}";
-        /** @var XoopsNotificationHandler $notificationHandler */
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
         $notificationHandler->triggerEvent('category', $cid, 'new_listing', $tags);
@@ -207,7 +185,7 @@ if (Request::hasVar('submit', 'POST')) {
     }
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $cid          = Request::getInt('cid', 0, 'POST');
@@ -267,7 +245,7 @@ if (Request::hasVar('submit', 'POST')) {
     $cid       = Request::getInt('cid', 0, 'GET');
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if ((is_array($cat_perms) && count($cat_perms) > 0) && $cid > 0) {
-        if (!in_array($cid, $cat_perms)) {
+        if (!in_array($cid, $cat_perms, true)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
 
@@ -348,5 +326,5 @@ if (Request::hasVar('submit', 'POST')) {
     } else {    // User can't see any category
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require_once XOOPS_ROOT_PATH . '/footer.php';
 }

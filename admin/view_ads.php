@@ -73,7 +73,6 @@ function index()
     $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes' ORDER BY lid");
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
-
         // Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer bnone' cellspacing=5 cellpadding=0><tr><td width=40>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 ></td><td>";
@@ -88,8 +87,8 @@ function index()
             $title    = $myts->htmlSpecialChars($title);
             $desctext = $myts->displayTarea($desctext, 1, 0, 1, 1, 1);
 
-            if (strlen($desctext) >= 200) {
-                $desctext = substr($desctext, 0, 199) . '...';
+            if (mb_strlen($desctext) >= 200) {
+                $desctext = mb_substr($desctext, 0, 199) . '...';
             } else {
                 $desctext = $myts->displayTarea($desctext, 1, 1, 1);
             }
@@ -671,7 +670,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
         $tags['APPROVED']   = _AM_ADSLIGHT_APPROVED;
 
         $subject = _AM_ADSLIGHT_ANNACCEPT;
-        $mail    =& getMailer();
+        $mail    = &getMailer();
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . "/language/{$xoopsConfig['language']}/mail_template/");
         $mail->setTemplate('listing_approve.tpl');
         $mail->useMail();
@@ -701,7 +700,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     $row                    = $xoopsDB->fetchArray($result);
     $tags['CATEGORY_TITLE'] = $row['title'];
     $tags['CATEGORY_URL']   = XOOPS_URL . "/modules/adslight/viewcats.php?cid={$cat}";
-    /** @var XoopsNotificationHandler $notificationHandler */
+    /** @var \XoopsNotificationHandler $notificationHandler */
     $notificationHandler = xoops_getHandler('notification');
     $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
     $notificationHandler->triggerEvent('category', $cat, 'new_listing', $tags);
@@ -736,29 +735,22 @@ if (!isset($op)) {
 }
 
 switch ($op) {
-
     case 'IndexView':
         indexView($lid);
         break;
-
     case 'ListingDel':
         listingDel($lid, $photo);
         break;
-
     case 'ListingValid':
         listingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
-
     case 'ModifyAds':
         modifyAds($lid);
         break;
-
     case 'ModifyAdsS':
         modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
-
     default:
         index();
         break;
-
 }

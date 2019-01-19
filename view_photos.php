@@ -27,7 +27,7 @@ require_once __DIR__ . '/header.php';
 /**
  * Xoops header
  */
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_view_photos.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
@@ -57,9 +57,9 @@ if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
 
     $module_id = $xoopsModule->getVar('mid');
 
-    $groups =& $GLOBALS['xoopsUser']->getGroups();
+    $groups = &$GLOBALS['xoopsUser']->getGroups();
 
-    /** @var XoopsGroupPermHandler $grouppermHandler */
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
 
     $perm_itemid = Request::getInt('item_id', 0, 'POST');
@@ -142,7 +142,6 @@ $identifier = $owner->getUnameFromId($uid);
 /**
  * Adding to the module js and css of the lightbox and new ones
  */
-
 if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
     $header_lightbox = '<script type="text/javascript" src="lightbox/js/prototype.js"></script>
 <script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
@@ -156,7 +155,6 @@ if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
 /**
  * Assigning smarty variables
  */
-
 $sql    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $lid . " AND valid='Yes'";
 $result = $xoopsDB->query($sql);
 while (false !== (list($title) = $xoopsDB->fetchRow($result))) {
@@ -193,9 +191,9 @@ $GLOBALS['xoopsTpl']->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getToke
 /**
  * Adding the comment system
  */
-include XOOPS_ROOT_PATH . '/include/comment_view.php';
+require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
 
 /**
  * Closing the page
  */
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

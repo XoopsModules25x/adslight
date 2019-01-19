@@ -76,7 +76,6 @@ function index()
     $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid");
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
-
         ///////// Il y a [..] Annonces en attente d'être approuvées //////
         echo "<table class='outer bnone' cellspacing=5 cellpadding=0><tr><td class='width40'>";
         echo "<img src='../assets/images/admin/error_button.png' border=0 ></td><td>";
@@ -91,8 +90,8 @@ function index()
             $title    = $myts->htmlSpecialChars($title);
             $desctext = $myts->displayTarea($desctext, 1, 0, 1, 1, 1);
 
-            if (strlen($desctext) >= 200) {
-                $desctext = substr($desctext, 0, 199) . '...';
+            if (mb_strlen($desctext) >= 200) {
+                $desctext = mb_substr($desctext, 0, 199) . '...';
             } else {
                 $desctext = $myts->displayTarea($desctext, 1, 1, 1);
             }
@@ -111,7 +110,7 @@ function index()
             //            $price     = number_format($price, 2, ',', ' ');
 
             xoops_load('XoopsLocal');
-            $tempXoopsLocal = new \XoopsLocal;
+            $tempXoopsLocal = new \XoopsLocal();
             //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
             $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
             //  For other countries uncomment the below line and comment out the above line
@@ -258,7 +257,7 @@ function indexView($lid)
         $tel      = $myts->htmlSpecialChars($tel);
         //        $price     = number_format($price, 2, ',', ' ');
         xoops_load('XoopsLocal');
-        $tempXoopsLocal = new \XoopsLocal;
+        $tempXoopsLocal = new \XoopsLocal();
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
         $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
@@ -410,7 +409,7 @@ function modifyAds($lid)
         //        $price     = number_format($price, 2, ',', ' ');
 
         xoops_load('XoopsLocal');
-        $tempXoopsLocal = new \XoopsLocal;
+        $tempXoopsLocal = new \XoopsLocal();
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
         $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
@@ -737,7 +736,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
         $tags['APPROVED']   = _AM_ADSLIGHT_APPROVED;
 
         $subject = '' . _AM_ADSLIGHT_ANNACCEPT . '';
-        $mail    =& getMailer();
+        $mail    = &getMailer();
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . "/language/{$xoopsConfig['language']}/mail_template/");
         $mail->setTemplate('listing_approve.tpl');
         $mail->useMail();
@@ -797,29 +796,22 @@ if (!isset($op)) {
 }
 
 switch ($op) {
-
     case 'IndexView':
         indexView($lid);
         break;
-
     case 'ListingDel':
         listingDel($lid, $photo);
         break;
-
     case 'ListingValid':
         listingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
-
     case 'ModifyAds':
         modifyAds($lid);
         break;
-
     case 'ModifyAdsS':
         modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
-
     default:
         index();
         break;
-
 }

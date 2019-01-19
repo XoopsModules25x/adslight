@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Adslight\Common;
+<?php
+
+namespace XoopsModules\Adslight\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -31,15 +33,12 @@ defined('XOOPS_ROOT_PATH') || die('XOOPS Root Path not defined');
  */
 class Breadcrumb
 {
-    public $dirname;
+    public  $dirname;
     private $bread = [];
 
-    /**
-     *
-     */
     public function __construct()
     {
-        $this->dirname = basename(dirname(__DIR__));
+        $this->dirname = basename(dirname(dirname(__DIR__)));
     }
 
     /**
@@ -52,13 +51,12 @@ class Breadcrumb
     {
         $this->bread[] = [
             'link'  => $link,
-            'title' => $title
+            'title' => $title,
         ];
     }
 
     /**
      * Render Pedigree BreadCrumb
-     *
      */
     public function render()
     {

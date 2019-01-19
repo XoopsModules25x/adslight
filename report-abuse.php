@@ -25,19 +25,17 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * @param $lid
- *
- * @return void
  */
 function ReportAbuse($lid)
 {
     global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
-    include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
 
     $lid    = (int)$lid;
     $idd    = $idde = $iddee = '';
@@ -179,15 +177,13 @@ $op  = Request::getString('op', '');
 
 switch ($op) {
     case 'ReportAbuse':
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
         ReportAbuse($lid);
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     case 'MailAd':
         MailAd($lid, $yname, $ymail, $fname, $fmail);
         break;
-
     default:
         redirect_header('index.php', 1, _RETURNANN);
         break;

@@ -32,10 +32,10 @@ foreach ($_REQUEST as $key => $val) {
 
 $xoopsOption['pagetype'] = 'search';
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $xmid = $xoopsModule->getVar('mid');
-/** @var XoopsConfigHandler $configHandler */
+/** @var \XoopsConfigHandler $configHandler */
 $configHandler     = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
@@ -68,15 +68,15 @@ if ('results' === $action) {
 }
 
 $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $grouppermHandler */
-$grouppermHandler      = xoops_getHandler('groupperm');
+/** @var \XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler  = xoops_getHandler('groupperm');
 $available_modules = $grouppermHandler->getItemIds('module_read', $groups);
 
 if ('search' === $action) {
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
     require_once __DIR__ . '/include/searchform.php';
     $search_form->display();
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require_once XOOPS_ROOT_PATH . '/footer.php';
     exit();
 }
 
@@ -91,7 +91,7 @@ if ('showallbyuser' !== $action) {
         $temp_queries    = preg_split('/[\s,]+/', $query);
         foreach ($temp_queries as $q) {
             $q = trim($q);
-            if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
+            if (mb_strlen($q) >= $xoopsConfigSearch['keyword_min']) {
                 $queries[] = $myts->addSlashes($q);
             } else {
                 $ignored_queries[] = $myts->addSlashes($q);
@@ -102,7 +102,7 @@ if ('showallbyuser' !== $action) {
         }
     } else {
         $query = trim($query);
-        if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
+        if (mb_strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
         $queries = [$myts->addSlashes($query)];
@@ -110,7 +110,7 @@ if ('showallbyuser' !== $action) {
 }
 switch ($action) {
     case 'results':
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $criteria      = new \CriteriaCompo(new \Criteria('hassearch', 1));
         $criteria->add(new \Criteria('isactive', 1));
@@ -121,7 +121,7 @@ switch ($action) {
             unset($mids);
             $mids = array_keys($xmid);
         }
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
 
         // for xoops 2.2.x versions
         xoops_loadLanguage('main', $moduleDirName);
@@ -146,7 +146,7 @@ switch ($action) {
         echo '<br>';
         foreach ($mids as $mid) {
             $mid = (int)$mid;
-            if (in_array($mid, $available_modules)) {
+            if (in_array($mid, $available_modules, true)) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
                 $count   = 0;
@@ -175,8 +175,8 @@ switch ($action) {
                         echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
 
                         if (!XOOPS_USE_MULTIBYTES) {
-                            if (strlen($results[$i]['desctext']) >= 14) {
-                                $results[$i]['desctext'] = $myts->displayTarea(substr($results[$i]['desctext'], 0, 90), 1, 1, 1, 1, 1) . '';
+                            if (mb_strlen($results[$i]['desctext']) >= 14) {
+                                $results[$i]['desctext'] = $myts->displayTarea(mb_substr($results[$i]['desctext'], 0, 90), 1, 1, 1, 1, 1) . '';
                             }
                         }
 
@@ -212,23 +212,23 @@ switch ($action) {
     case 'showall':
     case 'showallbyuser':
 
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
 
-        /** @var Adslight\Helper $helper */
-        $helper = Adslight\Helper::getInstance();
+        /** @var \XoopsModules\Adslight\Helper $helper */
+        $helper = \XoopsModules\Adslight\Helper::getInstance();
         $helper->loadLanguage('admin');
 
         $GLOBALS['xoopsTpl']->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->get($mid);
-        $results       =& $module->search($queries, $andor, 20, $start, $uid);
+        $results       = &$module->search($queries, $andor, 20, $start, $uid);
         $count         = 0;
         if (is_array($results)) {
             $count = count($results);
         }
         if ($count > 0) {
-            $next_results =& $module->search($queries, $andor, 1, $start + 20, $uid);
+            $next_results = &$module->search($queries, $andor, 1, $start + 20, $uid);
             $count        = 0;
             if (is_array($next_results)) {
                 $count = count($next_results);
@@ -270,8 +270,8 @@ switch ($action) {
                 echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
 
                 if (!XOOPS_USE_MULTIBYTES) {
-                    if (strlen($results[$i]['desctext']) >= 14) {
-                        $results[$i]['desctext'] = substr($results[$i]['desctext'], 0, 90) . '...';
+                    if (mb_strlen($results[$i]['desctext']) >= 14) {
+                        $results[$i]['desctext'] = mb_substr($results[$i]['desctext'], 0, 90) . '...';
                     }
                 }
 
@@ -332,4 +332,4 @@ switch ($action) {
     ';
         break;
 }
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

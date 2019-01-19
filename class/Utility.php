@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Adslight;
+<?php
+
+namespace XoopsModules\Adslight;
 
 /*
 -------------------------------------------------------------------------
@@ -29,19 +31,16 @@
  * @author      XOOPS Development Team
  * @package     AdsLight
  * @since       1.03
- *
  */
 
 use Xmf\Request;
 use XoopsModules\Adslight;
-use XoopsModules\Adslight\Common;
 
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 $myts = \MyTextSanitizer::getInstance();
-
 
 /**
  * Class Utility
@@ -56,7 +55,6 @@ class Utility
 
     //--------------- Custom module methods -----------------------------
 
-
     public static function expireAd()
     {
         global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $main_lang;
@@ -70,7 +68,7 @@ class Utility
             $title     = $myts->htmlSpecialChars($title);
             $expire    = $myts->htmlSpecialChars($expire);
             $type      = $myts->htmlSpecialChars($type);
-            $desctext  =& $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
+            $desctext  = &$myts->displayTarea($desctext, 1, 1, 1, 1, 1);
             $submitter = $myts->htmlSpecialChars($submitter);
             $remind    = $myts->htmlSpecialChars($remind);
             $supprdate = $dateann + ($expire * 86400);
@@ -103,7 +101,7 @@ class Utility
                     $tags['SUBMITTER']  = $submitter;
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail               =& getMailer();
+                    $mail               = &getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expires.tpl');
                     $mail->useMail();
@@ -165,7 +163,7 @@ class Utility
                     $tags['TEAM']       = '' . _ADSLIGHT_TEAM . '';
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail               =& getMailer();
+                    $mail               = &getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expired.tpl');
                     $mail->useMail();
@@ -246,7 +244,7 @@ class Utility
         $categories = self::getMyItemIds('adslight_view');
         $count      = 0;
         $arr        = [];
-        if (in_array($sel_id, $categories)) {
+        if (in_array($sel_id, $categories, true)) {
             $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " AND valid='Yes' AND status!='1'";
 
             $result = $xoopsDB->query($query);
@@ -255,7 +253,7 @@ class Utility
             $arr   = $mytree->getAllChildId($sel_id);
             $size  = count($arr);
             for ($i = 0; $i < $size; ++$i) {
-                if (in_array($arr[$i], $categories)) {
+                if (in_array($arr[$i], $categories, true)) {
                     $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$arr[$i] . " AND valid='Yes' AND status!='1'";
 
                     $result2 = $xoopsDB->query($query2);
@@ -282,12 +280,12 @@ class Utility
             return $permissions[$permtype];
         }
 
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        /** @var XoopsGroupPermHandler $grouppermHandler */
-        $grouppermHandler           = xoops_getHandler('groupperm');
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler       = xoops_getHandler('groupperm');
         $categories             = $grouppermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
         $permissions[$permtype] = $categories;
 
@@ -318,14 +316,14 @@ class Utility
                 $retval = $GLOBALS['xoopsModuleConfig'][$option];
             }
         } else {
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $configHandler = xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
-                if (null !== ($helper->getConfig($option))) {
+                if (null !== $helper->getConfig($option)) {
                     $retval = $helper->getConfig($option);
                 }
             }
@@ -583,6 +581,7 @@ class Utility
 
     // ADSLIGHT Version 2 //
     // Fonction rss.php RSS par categories
+
     /**
      * @return array
      */
@@ -664,7 +663,7 @@ class Utility
                 'nogroup'   => preg_match('/\^/', $fmatch[1]) > 0,
                 'usesignal' => preg_match('/\+|\(/', $fmatch[1], $match) ? $match[0] : '+',
                 'nosimbol'  => preg_match('/\!/', $fmatch[1]) > 0,
-                'isleft'    => preg_match('/\-/', $fmatch[1]) > 0
+                'isleft'    => preg_match('/\-/', $fmatch[1]) > 0,
             ];
             $width      = trim($fmatch[2]) ? (int)$fmatch[2] : 0;
             $left       = trim($fmatch[3]) ? (int)$fmatch[3] : 0;
@@ -714,7 +713,7 @@ class Utility
             $value = number_format($value, $right, $locale['mon_decimal_point'], $flags['nogroup'] ? '' : $locale['mon_thousands_sep']);
             $value = @explode($locale['mon_decimal_point'], $value);
 
-            $n = strlen($prefix) + strlen($currency) + strlen($value[0]);
+            $n = mb_strlen($prefix) + mb_strlen($currency) + mb_strlen($value[0]);
             if ($left > 0 && $left > $n) {
                 $value[0] = str_repeat($flags['fillchar'], $left - $n) . $value[0];
             }
@@ -742,9 +741,8 @@ class Utility
      * @param  array $groups : group with granted permission
      * @param        $categoryId
      * @param        $permName
-     * @return boolean : TRUE if the no errors occured
+     * @return bool : TRUE if the no errors occured
      */
-
     public static function saveCategoryPermissions($groups, $categoryId, $permName)
     {
         global $xoopsModule;
@@ -753,7 +751,7 @@ class Utility
 
         if (false !== ($helper = Helper::getHelper($moduleDirName))) {
         } else {
-            $helper = Helper::getHelper('system');
+            $helper = \Xmf\Module\Helper::getHelper('system');
         }
 
         $result = true;

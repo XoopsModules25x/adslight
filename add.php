@@ -24,17 +24,17 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-$myts = \MyTextSanitizer::getInstance();// MyTextSanitizer object
-//require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+$myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once __DIR__ . '/include/functions.php';
 // require_once XOOPS_ROOT_PATH . '/class/captcha/xoopscaptcha.php';
 
 $module_id = $xoopsModule->getVar('mid');
 $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 
 if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -71,7 +71,7 @@ if (Request::hasVar('submit', 'POST')) {
 
     $cid       = Request::getInt('cid', 0, 'POST');
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if (!in_array($cid, $cat_perms)) {
+    if (!in_array($cid, $cat_perms, true)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
 
@@ -97,30 +97,8 @@ if (Request::hasVar('submit', 'POST')) {
     $date      = time();
     $newid     = $xoopsDB->genId($xoopsDB->prefix('adslight_listing') . '_lid_seq');
 
-    $sql     = sprintf(
-        "INSERT INTO `%s` (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
-                       $xoopsDB->prefix('adslight_listing'),
-        $newid,
-        $cid,
-        $title,
-        $status,
-        $expire,
-        $type,
-        $desctext,
-        $tel,
-        $price,
-        $typeprice,
-        $typeusure,
-        $date,
-        $email,
-        $submitter,
-        $usid,
-        $town,
-        $country,
-        $contactby,
-        $premium,
-        $valid
-    );
+    $sql     = sprintf("INSERT INTO `%s` (lid, cid, title, STATUS, EXPIRE, type, desctext, tel, price, typeprice, typeusure, DATE, email, submitter, usid, town, country, contactby, premium, valid) VALUES (%u, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                       $xoopsDB->prefix('adslight_listing'), $newid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid);
     $success = $xoopsDB->query($sql);
     if (!$success) {
         $moduleHandler = xoops_getHandler('module');
@@ -131,7 +109,7 @@ if (Request::hasVar('submit', 'POST')) {
     $lid = $xoopsDB->getInsertId();
 
     if ('Yes' === $valid) {
-        /** @var XoopsNotificationHandler $notificationHandler */
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         //$lid = $xoopsDB->getInsertId();
         $tags                    = [];
@@ -149,7 +127,7 @@ if (Request::hasVar('submit', 'POST')) {
         $row                     = $xoopsDB->fetchArray($result2);
         $tags['CATEGORY_TITLE']  = $row['title'];
         $tags['CATEGORY_URL']    = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cid);
-        /** @var XoopsNotificationHandler $notificationHandler */
+        /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
         $notificationHandler->triggerEvent('category', $cid, 'new_listing', $tags);
@@ -198,7 +176,7 @@ if (Request::hasVar('submit', 'POST')) {
     }
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $cid          = Request::getInt('cide', 0, 'GET');
@@ -257,7 +235,7 @@ if (Request::hasVar('submit', 'POST')) {
     $cid       = 1;
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {
-        if (!in_array($cid, $cat_perms)) {
+        if (!in_array($cid, $cat_perms, true)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
 
@@ -353,5 +331,5 @@ if (Request::hasVar('submit', 'POST')) {
     } else {    // User can't see any category
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require_once XOOPS_ROOT_PATH . '/footer.php';
 }

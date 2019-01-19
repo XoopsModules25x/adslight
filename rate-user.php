@@ -59,7 +59,6 @@ if (!empty($_POST['submit'])) {
             }
         }
     } else {
-
         // Check if ANONYMOUS user is trying to vote more than once per day.
         $yesterday = (time() - (86400 * $anonwaitdays));
         $result    = $xoopsDB->query('SELECT count(*) FROM ' . $xoopsDB->prefix('adslight_user_votedata') . ' WHERE usid=' . $xoopsDB->escape($usid) . " AND ratinguser=0 AND ratinghostname = '$ip' AND ratingtimestamp > $yesterday");
@@ -77,7 +76,7 @@ if (!empty($_POST['submit'])) {
     // $xoopsDB->query($sql) || $eh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
-        $moduleHandler = xoops_getModuleHandler('module');
+        $moduleHandler = $helper->getHandler('Module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
@@ -89,14 +88,14 @@ if (!empty($_POST['submit'])) {
     redirect_header('members.php?usid=' . addslashes($usid) . '', 3, $ratemessage);
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_rate_user.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
     $usid   = Request::getInt('usid', 0, 'GET');
     $result = $xoopsDB->query('SELECT title, usid, submitter FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid));
     list($title, $usid, $submitter) = $xoopsDB->fetchRow($result);
     $GLOBALS['xoopsTpl']->assign('link', [
         'usid'      => $usid,
         'title'     => $myts->htmlSpecialChars($title),
-        'submitter' => $submitter
+        'submitter' => $submitter,
     ]);
     $GLOBALS['xoopsTpl']->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));
     $GLOBALS['xoopsTpl']->assign('lang_ratingscale', constant('_ADSLIGHT_RATINGSCALE'));
@@ -105,5 +104,5 @@ if (!empty($_POST['submit'])) {
     $GLOBALS['xoopsTpl']->assign('lang_rateit', constant('_ADSLIGHT_RATEIT'));
     $GLOBALS['xoopsTpl']->assign('lang_cancel', _CANCEL);
     $GLOBALS['xoopsTpl']->assign('mydirname', $moduleDirName);
-    include XOOPS_ROOT_PATH . '/footer.php';
+    require_once XOOPS_ROOT_PATH . '/footer.php';
 }

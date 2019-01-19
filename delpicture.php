@@ -23,7 +23,7 @@
 use Xmf\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
 
 /**
  * Xoops Header
@@ -35,8 +35,7 @@ require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 /**
  * Module classes
  */
-
-include __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/pictures.php';
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 3, _ADSLIGHT_TOKENEXPIRED);

@@ -35,9 +35,9 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 //If no access
 if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -48,8 +48,8 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $prem_perm = '1';
 }
 
-include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function viewads
@@ -66,10 +66,10 @@ function viewAds($lid = 0)
     $pictures_array = [];
     $cid            = 0;
 
-    $tempXoopsLocal                          = new \XoopsLocal;
+    $tempXoopsLocal                          = new \XoopsLocal();
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
-    include XOOPS_ROOT_PATH . '/include/comment_view.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
     $lid  = ((int)$lid > 0) ? (int)$lid : 0;
     $rate = ('1' == $GLOBALS['xoopsModuleConfig']['adslight_rate_item']) ? '1' : '0';
     $GLOBALS['xoopsTpl']->assign('rate', $rate);
@@ -97,7 +97,7 @@ function viewAds($lid = 0)
         if ($usid = $member_usid) {
             $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
-            if (strlen($GLOBALS['xoopsUser']->getVar('name'))) {
+            if (mb_strlen($GLOBALS['xoopsUser']->getVar('name'))) {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('name') . ' (' . $GLOBALS['xoopsUser']->getVar('uname') . ')');
             } else {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('uname'));
@@ -171,7 +171,7 @@ function viewAds($lid = 0)
         } else {
             $groups = XOOPS_GROUP_ANONYMOUS;
         }
-        /** @var XoopsGroupPermHandler $grouppermHandler */
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
         $GLOBALS['xoopsTpl']->assign('purchasable', $grouppermHandler->checkRight('adslight_purchase', $cid, $groups, $module_id));
 
@@ -307,7 +307,7 @@ function viewAds($lid = 0)
 
         // meta description tags for ads
         $desctextclean = strip_tags($desctext, '<font><img><strong><i><u>');
-        $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . substr($desctextclean, 0, 150));
+        $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . mb_substr($desctextclean, 0, 150));
 
         if ($price > 0) {
             $GLOBALS['xoopsTpl']->assign('price', '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice);
@@ -384,7 +384,6 @@ function viewAds($lid = 0)
                 $nopicturesyet = _ADSLIGHT_NOTHINGYET;
                 $GLOBALS['xoopsTpl']->assign('lang_nopicyet', $nopicturesyet);
             } else {
-
                 /**
                  * Lets populate an array with the data from the pictures
                  */
@@ -430,7 +429,14 @@ function viewAds($lid = 0)
         } else {
             $GLOBALS['xoopsTpl']->assign('photo', '');
         }
-        $GLOBALS['xoopsTpl']->assign('date', '<img alt="date" border="0" src="assets/images/date.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DATE2 . ':</strong> ' . $date . '<br><img alt="date_error" border="0" src="assets/images/date_error.png" >&nbsp;&nbsp;<strong>' . _ADSLIGHT_DISPO . ':</strong> ' . $date2);
+        $GLOBALS['xoopsTpl']->assign('date', '<img alt="date" border="0" src="assets/images/date.png" >&nbsp;&nbsp;<strong>'
+                                             . _ADSLIGHT_DATE2
+                                             . ':</strong> '
+                                             . $date
+                                             . '<br><img alt="date_error" border="0" src="assets/images/date_error.png" >&nbsp;&nbsp;<strong>'
+                                             . _ADSLIGHT_DISPO
+                                             . ':</strong> '
+                                             . $date2);
     } else {
         $GLOBALS['xoopsTpl']->assign('no_ad', _ADSLIGHT_NOCLAS);
     }
@@ -485,11 +491,10 @@ $show    = Request::getInt('show', null, 'GET');
 $orderby = Request::getInt('orderby', null, 'GET');
 
 switch ($pa) {
-
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
 
         viewAds($lid);
         break;
 }
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

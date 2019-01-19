@@ -16,7 +16,6 @@
  */
 
 use XoopsModules\Adslight;
-use XoopsModules\Adslight\Common;
 
 /**
  * Prepares system prior to attempting to install module
@@ -26,28 +25,26 @@ use XoopsModules\Adslight\Common;
  */
 function xoops_module_pre_install_adslight(\XoopsModule $module)
 {
-    include __DIR__ . '/common.php';
+    require_once __DIR__ . '/common.php';
     /** @var \XoopsModules\Adslight\Utility $utility */
     $utility = new \XoopsModules\Adslight\Utility();
     //check for minimum XOOPS version
     $xoopsSuccess = $utility::checkVerXoops($module);
 
     // check for minimum PHP version
-    $phpSuccess   = $utility::checkVerPhp($module);
+    $phpSuccess = $utility::checkVerPhp($module);
 
-    if (false !== $xoopsSuccess && false !==  $phpSuccess) {
-        $moduleTables =& $module->getInfo('tables');
+    if (false !== $xoopsSuccess && false !== $phpSuccess) {
+        $moduleTables = &$module->getInfo('tables');
         foreach ($moduleTables as $table) {
             $GLOBALS['xoopsDB']->queryF('DROP TABLE IF EXISTS ' . $GLOBALS['xoopsDB']->prefix($table) . ';');
         }
     }
 
     return $xoopsSuccess && $phpSuccess;
-    }
-
+}
 
 /**
- *
  * Performs tasks required during installation of the module
  * @param XoopsModule $module {@link XoopsModule}
  *
@@ -63,10 +60,10 @@ function xoops_module_install_adslight(\XoopsModule $module)
     xoops_loadLanguage('admin', $moduleDirName);
     xoops_loadLanguage('modinfo', $moduleDirName);
 
-    $configurator = include __DIR__ . '/config.php';
+    //    $configurator = require_once __DIR__   . '/config.php';
+    $configurator = new Adslight\Common\Configurator();
     /** @var \XoopsModules\Adslight\Utility $utility */
     $utility = new \XoopsModules\Adslight\Utility();
-
 
     /*
 
@@ -121,7 +118,7 @@ function xoops_module_install_adslight(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator['copyFiles']) > 0) {
-        $file =  dirname(__DIR__) . '/assets/images/blank.png';
+        $file = dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator['copyFiles']) as $i) {
             $dest = $configurator['copyFiles'][$i] . '/blank.png';
             $utility::copyFile($file, $dest);

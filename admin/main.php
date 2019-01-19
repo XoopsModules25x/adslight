@@ -36,7 +36,7 @@ function index()
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/admin_header.php';
-    //  require_once("adsligh_rsslib.php");
+    //  require("adsligh_rsslib.php");
 
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");

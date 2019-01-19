@@ -49,7 +49,6 @@ function seo_urls($s)
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(viewads.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         //    '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})'.$XPS_URL.'\/modules\/'.$module_name.'\/()([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
-
     ];
     $s      = preg_replace_callback($search, 'replace_links', $s);
 
@@ -92,7 +91,6 @@ function replace_links($matches)
                 }
             }
             break;
-
         default:
             break;
     }
@@ -168,7 +166,7 @@ function adslight_seo_title($title = '', $withExt = false)
 
     // Transformation de la chaine en minuscule
     // Codage de la chaine afin d'�viter les erreurs 500 en cas de caract�res impr�vus
-    $title = rawurlencode(strtolower($title));
+    $title = rawurlencode(mb_strtolower($title));
 
     // Transformation des ponctuations
     //                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .                 +
@@ -184,7 +182,7 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%28/', // (
         '/%29/', // )
         '/%2C/', // ,
-        '/%2F/',// /
+        '/%2F/', // /
         '/%3A/', // :
         '/%3B/', // ;
         '/%3C/', // <
@@ -203,7 +201,7 @@ function adslight_seo_title($title = '', $withExt = false)
         "/\./", // .
         '/%2A/',
         '/%2B/',
-        '/quot/'
+        '/quot/',
     ];
     $rep_pat = [
         '-',
@@ -236,7 +234,7 @@ function adslight_seo_title($title = '', $withExt = false)
         '',
         '',
         '+',
-        ''
+        '',
     ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
@@ -267,7 +265,6 @@ function adslight_seo_title($title = '', $withExt = false)
         '/a%80%9C/',
         '/a%80%9D/',
         '/%E3%A7/',
-
     ];
     $rep_pat = [
         '-',
@@ -293,7 +290,7 @@ function adslight_seo_title($title = '', $withExt = false)
         'a',
         '-',
         '-',
-        'c'
+        'c',
     ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
@@ -303,9 +300,9 @@ function adslight_seo_title($title = '', $withExt = false)
         }
 
         return $title;
-    } else {
-        return '';
     }
+
+    return '';
 }
 
 /**
@@ -322,7 +319,7 @@ function adslight_absolutize($s)
         $req_dir = dirname($_SERVER['REQUEST_URI']);
         $req_php = preg_replace('/.*(\/[a-zA-Z0-9_\-]+)\.php.*/', '\\1.php', $_SERVER['REQUEST_URI']);
     }
-    $req_dir = ("\\" === $req_dir || '/' === $req_dir) ? '' : $req_dir;
+    $req_dir = ('\\' === $req_dir || '/' === $req_dir) ? '' : $req_dir;
     $dir_arr = explode('/', $req_dir);
     $m       = count($dir_arr) - 1;
     $d1      = @str_replace('/' . $dir_arr[$m], '', $req_dir);
@@ -342,7 +339,7 @@ function adslight_absolutize($s)
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})([^#]{1}[^\/\"\'>]*)([\"\']{1})([^>]*)>/i',
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})(?:\.\/)?([^\"\'\/:]*\/*)?([^\"\'\/:]*\/*)?([^\"\'\/:]*\/*)?([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i',
         '/[^"\'a-zA-Z_0-9](window\.open|url)\(([\"\']{0,1})(?:\.\/)?([^\"\'\/]*)\.([^\"\'\/]+)([\"\']*)([^\)]*)/i',
-        '/<meta([^>]*)url=([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i'
+        '/<meta([^>]*)url=([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i',
     ];
     $out     = [
         '<\\1\\2="\\3"\\4>',
@@ -355,7 +352,7 @@ function adslight_absolutize($s)
         '<\\1\\2=\\3' . $host . $req_dir . '/\\4\\5\\6\\7>',
         '<\\1\\2=\\3' . $host . $req_dir . '/\\4\\5\\6\\7.\\8\\9\\10>',
         '$1($2' . $host . $req_dir . '/$3.$4$5$6',
-        '<meta$1url=' . $host . $req_dir . '/$2.$3$4$5>'
+        '<meta$1url=' . $host . $req_dir . '/$2.$3$4$5>',
     ];
     $s       = preg_replace($in, $out, $s);
 

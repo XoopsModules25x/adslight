@@ -40,7 +40,7 @@ function xoops_module_update_adslight(\XoopsObject $xoopsModule)
     $template_directory = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname', 'n') . '/templates/';
     $template_list      = array_diff(scandir($template_directory, SCANDIR_SORT_NONE), [
         '..',
-        '.'
+        '.',
     ]);
     foreach ($template_list as $k => $v) {
         $fileinfo = new \SplFileInfo($template_directory . $v);
@@ -58,8 +58,8 @@ function xoops_module_update_adslight(\XoopsObject $xoopsModule)
     $folderHandler->delete($imagesDirectory);
 
     //delete .html entries from the tpl table
-    $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
-    $xoopsDB->queryF($sql);
+    $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+    $GLOBALS['xoopsDB']->queryF($sql);
 
     return true;
 }

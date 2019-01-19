@@ -1,4 +1,6 @@
-<?php namespace XoopsModules\Adslight\Common;
+<?php
+
+namespace XoopsModules\Adslight\Common;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -17,10 +19,9 @@
  * @author      XOOPS Development Team
  * @package     Publisher
  * @since       1.05
- *
  */
 
-require_once  dirname(dirname(__DIR__)) . '/include/common.php';
+// require_once dirname(dirname(__DIR__)) . '/include/common.php';
 
 /**
  * Class Configurator
@@ -35,6 +36,7 @@ class Configurator
     public $templateFolders = [];
     public $oldFiles        = [];
     public $oldFolders      = [];
+    public $renameTables    = [];
     public $modCopyright;
 
     /**
@@ -42,10 +44,10 @@ class Configurator
      */
     public function __construct()
     {
-        $moduleDirName = basename(dirname(__DIR__));
-        $capsDirName   = strtoupper($moduleDirName);
+        $moduleDirName      = basename(dirname(dirname(__DIR__)));
+        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-        require_once  dirname(dirname(__DIR__)) . '/include/config.php';
+        require_once dirname(dirname(__DIR__)) . '/include/config.php';
         $config = getConfig();
 
         $this->name            = $config->name;
@@ -56,6 +58,7 @@ class Configurator
         $this->templateFolders = $config->templateFolders;
         $this->oldFiles        = $config->oldFiles;
         $this->oldFolders      = $config->oldFolders;
+        $this->renameTables    = $config->renameTables;
         $this->modCopyright    = $config->modCopyright;
     }
 }

@@ -24,9 +24,9 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-//require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 xoops_load('XoopsLocal');
-$tempXoopsLocal = new \XoopsLocal;
+$tempXoopsLocal = new \XoopsLocal();
 $myts           = \MyTextSanitizer::getInstance();
 $module_id      = $xoopsModule->getVar('mid');
 
@@ -35,7 +35,7 @@ if (is_object($GLOBALS['xoopsUser'])) {
 } else {
     $groups = XOOPS_GROUP_ANONYMOUS;
 }
-/** @var XoopsGroupPermHandler $grouppermHandler */
+/** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
 
 $perm_itemid = Request::getInt('item_id', 0, 'POST');
@@ -49,8 +49,8 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $prem_perm = '1';
 }
 
-include XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function view (categories)
@@ -61,13 +61,13 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
  * @param     $orderby
  * @param int $show
  */
-function adsView($cid = 0, $min = 0, $orderby, $show = 0)
+function adsView($cid, $min, $orderby, $show = 0)
 {
     global $xoopsDB, $xoopsTpl, $xoopsConfig, $myts, $mytree, $imagecat, $meta, $moduleDirName, $main_lang, $mid, $prem_perm, $xoopsModule;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
 
     $GLOBALS['xoopsTpl']->assign('xmid', $xoopsModule->getVar('mid'));
     $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -141,7 +141,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
 
     $categories = Adslight\Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
-        if (!in_array($cid, $categories)) {
+        if (!in_array($cid, $categories, true)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
     } else {    // User can't see any category
@@ -178,8 +178,8 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
         $cat_desc_clean     = strip_tags($cat_desc, '<font><img><strong><i><u>');
         $cat_keywords_clean = strip_tags($cat_keywords, '<font><img><strong><i><u><br><li>');
 
-        $GLOBALS['xoTheme']->addMeta('meta', 'description', '' . substr($cat_desc_clean, 0, 200));
-        $GLOBALS['xoTheme']->addMeta('meta', 'keywords', '' . substr($cat_keywords_clean, 0, 1000));
+        $GLOBALS['xoTheme']->addMeta('meta', 'description', '' . mb_substr($cat_desc_clean, 0, 200));
+        $GLOBALS['xoTheme']->addMeta('meta', 'keywords', '' . mb_substr($cat_keywords_clean, 0, 1000));
     }
 
     $submit_perms = Adslight\Utility::getMyItemIds('adslight_submit');
@@ -202,7 +202,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
     if (count($arr) > 0) {
         $scount = 1;
         foreach ($arr as $ele) {
-            if (in_array($ele['cid'], $categories)) {
+            if (in_array($ele['cid'], $categories, true)) {
                 $sub_arr         = [];
                 $sub_arr         = $mytree->getFirstChild($ele['cid'], 'title');
                 $space           = 0;
@@ -210,7 +210,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                 $infercategories = '';
                 $totallisting    = Adslight\Utility::getTotalItems($ele['cid'], 1);
                 foreach ($sub_arr as $sub_ele) {
-                    if (in_array($sub_ele['cid'], $categories)) {
+                    if (in_array($sub_ele['cid'], $categories, true)) {
                         $chtitle = $myts->htmlSpecialChars($sub_ele['title']);
 
                         if ($chcount > 5) {
@@ -234,7 +234,7 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
                     'id'              => $ele['cid'],
                     'infercategories' => $infercategories,
                     'totallisting'    => $totallisting,
-                    ''
+                    '',
                 ]);
 
                 ++$scount;
@@ -332,7 +332,6 @@ function adsView($cid = 0, $min = 0, $orderby, $show = 0)
             $a_item['title']  = '<a href="viewads.php?lid=' . $lid . '"><strong>' . $title . '</strong></a>';
             $a_item['status'] = $status;
             if ($price > 0) {
-
                 //          $a_item['price'] = $price. ' '. $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].'';
                 $a_item['price']           = Adslight\Utility::getMoneyFormat('%.2n', $price);
                 $a_item['price_typeprice'] = $myts->htmlSpecialChars($nom_price);
@@ -451,4 +450,4 @@ switch ($pa) {
         adsView($cid, $min, $orderby, $show);
         break;
 }
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

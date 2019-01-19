@@ -20,8 +20,8 @@
 -------------------------------------------------------------------------
 */
 
-use Xmf\Request;
 use Xmf\Module\Admin;
+use Xmf\Request;
 
 require_once __DIR__ . '/admin_header.php';
 

@@ -110,13 +110,7 @@ function adsNewCat($cat)
 
     echo '<tr><td class="even">' . _AM_ADSLIGHT_MODERATE_CAT . ' </td><td class="odd" colspan=2><input type="radio" name="cat_moderate" value="1"checked>' . _AM_ADSLIGHT_OUI . '&nbsp;&nbsp; <input type="radio" name="cat_moderate" value="0">' . _AM_ADSLIGHT_NON . '</td></tr>';
 
-    echo '<tr><td class="even">'
-         . _AM_ADSLIGHT_MODERATE_SUBCATS
-         . ' </td><td class="odd" colspan=2><input type="radio" name="moderate_subcat" value="1"checked>'
-         . _AM_ADSLIGHT_OUI
-         . '&nbsp;&nbsp; <input type="radio" name="moderate_subcat" value="0">'
-         . _AM_ADSLIGHT_NON
-         . '</td></tr>';
+    echo '<tr><td class="even">' . _AM_ADSLIGHT_MODERATE_SUBCATS . ' </td><td class="odd" colspan=2><input type="radio" name="moderate_subcat" value="1"checked>' . _AM_ADSLIGHT_OUI . '&nbsp;&nbsp; <input type="radio" name="moderate_subcat" value="0">' . _AM_ADSLIGHT_NON . '</td></tr>';
 
     if ('title' !== $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
         echo '<tr><td>' . _AM_ADSLIGHT_ORDER . ' </td><td><input type="text" name="cat_order" size="4" value="0" ></td><td class="foot"><input type="submit" value="' . _AM_ADSLIGHT_ADD . '" ></td></tr>';
@@ -362,25 +356,19 @@ switch ($op) {
     case 'AdsNewCat':
         adsNewCat($cid);
         break;
-
     case 'AdsAddCat':
         adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $affprice, $cat_moderate, $moderate_subcat);
         break;
-
     case 'AdsDelCat':
         adsDelCat($cid, $ok);
         break;
-
     case 'AdsModCat':
         adsModCat($cid);
         break;
-
     case 'AdsModCatS':
         AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_order, $affprice, $cat_moderate, $moderate_subcat);
         break;
-
     default:
         //        index();
         break;
-
 }

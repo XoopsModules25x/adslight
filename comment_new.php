@@ -22,7 +22,7 @@
 
 use Xmf\Request;
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $moduleDirName = basename(__DIR__);
 
@@ -34,5 +34,5 @@ if ($com_itemid > 0) {
     $result         = $xoopsDB->query($sql);
     $row            = $xoopsDB->fetchArray($result);
     $com_replytitle = $row['title'];
-    include XOOPS_ROOT_PATH . '/include/comment_new.php';
+    require_once XOOPS_ROOT_PATH . '/include/comment_new.php';
 }

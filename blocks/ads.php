@@ -38,7 +38,7 @@ function adslight_show($options)
     $myts  = \MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $block['title'] = constant("{$block_lang}_TITLE");
 
@@ -50,8 +50,8 @@ function adslight_show($options)
         $type   = $myts->htmlSpecialChars($myrow['type']);
 
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $options[2] - 1)) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
             }
         }
 
@@ -85,7 +85,7 @@ function adslight_edit($options)
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $form = constant("{$block_lang}_ORDER") . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";

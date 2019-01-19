@@ -205,7 +205,7 @@ function RSS_Display($url, $size = 15, $site = 0)
         $page .= '</ul>';
     }
 
-    return ($page);
+    return $page;
 }
 
 /**
@@ -258,5 +258,5 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
         $page .= '</ul>';
     }
 
-    return ($page);
+    return $page;
 }

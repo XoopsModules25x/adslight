@@ -24,8 +24,8 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-//require XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * @param $lid
@@ -34,8 +34,8 @@ function SendFriend($lid)
 {
     global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
     $idd = $idde = $iddee = '';
-    include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
     $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
@@ -167,19 +167,15 @@ $lid = Request::getInt('lid', 0);
 $op  = Request::getString('op', '');
 
 switch ($op) {
-
     case 'SendFriend':
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
         SendFriend($lid);
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     case 'MailAd':
         MailAd($lid, $yname, $ymail, $fname, $fmail);
         break;
-
     default:
         redirect_header('index.php', 1, ' ' . _RETURNANN . ' ');
         break;
-
 }
