@@ -49,7 +49,7 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $prem_perm = '1';
 }
 
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 

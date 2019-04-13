@@ -127,7 +127,7 @@ function modAd($lid)
     require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
 
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+    //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
@@ -371,7 +371,7 @@ function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $p
 {
     global $xoopsDB, $xoopsConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
 
-    if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
+    if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
     $title     = $myts->addSlashes($title);

@@ -48,7 +48,7 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $prem_perm = '1';
 }
 
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -373,7 +373,8 @@ function viewAds($lid = 0)
         $GLOBALS['xoopsTpl']->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
 
         if ('' != $photo) {
-            require_once __DIR__ . '/class/pictures.php';
+            require_once __DIR__ . '/class/Pictures.php';
+            require_once __DIR__ . '/class/PicturesHandler.php';
 
             $criteria_lid          = new \Criteria('lid', $lid);
             $criteria_uid          = new \Criteria('uid', $usid);

@@ -35,7 +35,8 @@ require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 /**
  * Include modules classes
  */
-require_once __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/Pictures.php';
+require_once __DIR__ . '/class/PicturesHandler.php';
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 3, _ADSLIGHT_TOKENEXPIRED);

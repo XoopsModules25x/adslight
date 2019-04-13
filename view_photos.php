@@ -34,7 +34,8 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 /**
  * Module classes
  */
-require_once __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/Pictures.php';
+require_once __DIR__ . '/class/PicturesHandler.php';
 $lid = Request::getInt('lid', 0, 'GET');
 if (empty($lid)) {
     header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');

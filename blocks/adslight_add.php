@@ -19,7 +19,7 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-require_once dirname(__DIR__) . '/class/classifiedstree.php';
+//require_once dirname(__DIR__) . '/class/classifiedstree.php';
 //require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 /**
  * @return mixed

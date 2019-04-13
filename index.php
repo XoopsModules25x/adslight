@@ -42,7 +42,7 @@ if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $modu
 
 $prem_perm = (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -245,8 +245,8 @@ function index()
                 $useroffset = '';
                 if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
                     $timezone   = $GLOBALS['xoopsUser']->timezone();
-                    $useroffset = !empty($timezone) ? $xoopsUser->timezone() : $xoopsConfig['default_TZ'];
-                    if ($xoopsUser->isAdmin()) {
+                    $useroffset = !empty($timezone) ? $timezone : $xoopsConfig['default_TZ'];
+                    if ($GLOBALS['xoopsUser']->isAdmin()) {
                         $a_item['admin'] = '<a href="' . XOOPS_URL . "/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid={$lid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" alt=\"" . _ADSLIGHT_MODADMIN . '"></a>';
                     }
                 }
@@ -272,7 +272,7 @@ function index()
                 }
                 $a_item['premium'] = $premium;
                 $a_item['date']    = $date;
-                $a_item['local']   .= $town ?: '';
+                $a_item['local']   = $town ?: '';
                 $a_item['country'] = $country ?: '';
 
                 if (2 == $status) {
