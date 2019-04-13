@@ -284,7 +284,7 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
     {
-        global $moduleDirName, $main_lang;
+        global $moduleDirName, $main_lang, $xoopsUser;
         $uid        = (int)$uid;
         $lid        = (int)$lid;
         $form       = new \XoopsThemeForm(_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
