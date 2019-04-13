@@ -23,12 +23,12 @@
 use Xmf\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
 
 /**
  * Xoops Header
  */
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
@@ -37,30 +37,8 @@ require_once XOOPS_ROOT_PATH . '/class/criteria.php';
  */
 require_once __DIR__ . '/class/pictures.php';
 
-/**
- * Check if using XoopsCube (by jlm69)
- * Needed because of a difference in the way Xoops and XoopsCube handle tokens
- */
-// XOOPS Cube 2.1x
-$xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
-
-/**
- * Verify Ticket for Xoops Cube (by jlm69)
- * If your site is XoopsCube it uses $xoopsGTicket for the token.
- */
-
-if ($xCube) {
-    if (!$xoopsGTicket->check(true, 'token')) {
-        redirect_header($_SERVER['HTTP_REFERER'], 3, $xoopsGTicket->getErrors());
-    }
-} else {
-    /**
-     * Verify TOKEN for Xoops
-     * If your site is Xoops it uses xoopsSecurity for the token.
-     */
-    if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
-    }
+if (!$GLOBALS['xoopsSecurity']->check()) {
+    redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 3, _ADSLIGHT_TOKENEXPIRED);
 }
 
 /**
@@ -75,7 +53,7 @@ if (1 == $marker) {
      */
     $title = Request::getString('caption', '', 'POST');
 
-    $picture_factory = new AdslightPicturesHandler($xoopsDB);
+    $picture_factory = new PicturesHandler($xoopsDB);
     $picture         = $picture_factory->create(false);
     $picture->load($cod_img);
     $picture->setVar('title', $title);
@@ -98,11 +76,11 @@ if (1 == $marker) {
  * Creating the factory  and the criteria to edit the desc of the picture
  * The user must be the owner
  */
-$album_factory = new AdslightPicturesHandler($xoopsDB);
-$criteria_img  = new Criteria('cod_img', $cod_img);
+$album_factory = new PicturesHandler($xoopsDB);
+$criteria_img  = new \Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
-$criteria_uid  = new Criteria('uid_owner', $uid);
-$criteria      = new CriteriaCompo($criteria_img);
+$criteria_uid  = new \Criteria('uid_owner', $uid);
+$criteria      = new \CriteriaCompo($criteria_img);
 $criteria->add($criteria_uid);
 
 /**
@@ -119,4 +97,4 @@ $album_factory->renderFormEdit($caption, $cod_img, $url);
 /**
  * Close page
  */
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

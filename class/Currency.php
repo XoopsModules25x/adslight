@@ -1,5 +1,7 @@
 <?php
 
+namespace XoopsModules\Adslight;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -18,14 +20,12 @@
  * @author      Hervé Thouzard (http://www.herve-thouzard.com/)
  */
 
-use Xmf\Module\Helper;
-
 /**
- * Gestion de la currency
+ * Gestion de la Currency
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-class currency
+class Currency
 {
     protected $decimalsCount;
     protected $thousandsSep;
@@ -61,7 +61,6 @@ class currency
      * @static
      * @staticvar   object
      */
-
     public static function getInstance()
     {
         static $instance;
@@ -95,17 +94,17 @@ class currency
         $amount = $this->amountInCurrency($originalAmount);
 
         $currencyLeft = $currencyRight = $currencyLeftShort = $currencyRightShort = '';
-        if ($this->currencyPosition == 1) { // To the right
+        if (1 == $this->currencyPosition) { // To the right
             $currencyRight      = '' . $this->moneyFull; // Long version
             $currencyRightShort = '' . $this->moneyShort; // Short version
         } else { // To the left
             $currencyLeft      = $this->moneyFull . ''; // Long version
             $currencyLeftShort = $this->moneyShort . ''; // Short version
         }
-        if ($format !== 's') {
+        if ('s' !== $format) {
             return $currencyLeft . $amount . $currencyRight;
-        } else {
-            return $currencyLeftShort . $amount . $currencyRightShort;
         }
+
+        return $currencyLeftShort . $amount . $currencyRightShort;
     }
 }

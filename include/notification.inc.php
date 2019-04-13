@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 $moduleDirName = basename(dirname(__DIR__));
 
@@ -34,9 +34,9 @@ function adslight_notify_iteminfo($category, $item_id)
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
-    /** @var XoopsModuleHandler $moduleHandler */
+    /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
-    $module        = $moduleHandler->getByDirname("$moduleDirName");
+    $module        = $moduleHandler->getByDirname($moduleDirName);
 
     if ('global' === $category) {
         $item['name'] = '';
@@ -47,14 +47,13 @@ function adslight_notify_iteminfo($category, $item_id)
 
     $item_id = (int)$item_id;
     if ('category' === $category) {
-
         // Assume we have a valid topid id
         $sql = 'SELECT SQL_CACHE title  FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid ={$item_id} LIMIT 1";
 
         $result = $xoopsDB->query($sql);
         if (!$result) {
-            $moduleHandler = xoops_getModuleHandler('module');
-            $myModule   = $moduleHandler->getByDirname('adslight');
+            $moduleHandler = $helper->getHandler('Module');
+            $myModule      = $moduleHandler->getByDirname('adslight');
             $myModule->setErrors('Could not query the database.');
         } else {
             $result_array = $xoopsDB->fetchArray($result);

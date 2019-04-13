@@ -24,10 +24,10 @@ require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
     require_once XOOPS_ROOT_PATH . '/class/template.php';
-    $xoopsTpl = new XoopsTpl();
+    $xoopsTpl = new \XoopsTpl();
 }
 $adminObject = \Xmf\Module\Admin::getInstance();
-if (!@ require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
+if (!@require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
 
     /**
      * @param        $currentoption
@@ -80,21 +80,9 @@ if (!@ require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
      <ul>
     ';
         foreach (array_keys($adminObject) as $key) {
-            $adminMenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>')
-                               . '<a href="'
-                               . $module_link
-                               . $adminmenu[$key]['link']
-                               . '"><span>'
-                               . $adminmenu[$key]['title']
-                               . '</span></a></li>';
+            $adminMenu_text .= (($currentoption == $key) ? '<li class="current">' : '<li>') . '<a href="' . $module_link . $adminmenu[$key]['link'] . '"><span>' . $adminmenu[$key]['title'] . '</span></a></li>';
         }
-        $adminMenu_text .= '<li><a href="'
-                           . XOOPS_URL
-                           . '/modules/system/admin.php?fct=preferences&op=showmod&mod='
-                           . $GLOBALS['xoopsModule']->getVar('mid')
-                           . '"><span>'
-                           . _PREFERENCES
-                           . '</span></a></li>';
+        $adminMenu_text .= '<li><a href="' . XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $GLOBALS['xoopsModule']->getVar('mid') . '"><span>' . _PREFERENCES . '</span></a></li>';
         $adminMenu_text .= '
      </ul>
     </div>

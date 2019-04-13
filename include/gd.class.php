@@ -43,15 +43,12 @@ class GD
             case '1':
                 $this->image = imagecreatefromgif($location);
                 break;
-
             case '2':
                 $this->image = imagecreatefromjpeg($location);
                 break;
-
             case '3':
                 $this->image = imagecreatefrompng($location);
                 break;
-
             default:
                 exit('Unknown file format');
         }
@@ -89,9 +86,9 @@ class GD
      */
     public function make_color($color)
     {
-        $rgb = array();
+        $rgb = [];
 
-        if (is_array($color) && count($color) == '3') {
+        if (is_array($color) && '3' == count($color)) {
             $rgb['r'] = $color['0'];
             $rgb['g'] = $color['1'];
             $rgb['b'] = $color['2'];
@@ -103,15 +100,14 @@ class GD
             exit('Unknown color');
         }
 
-        foreach (array(
+        foreach ([
                      'r',
                      'g',
-                     'b'
-                 ) as $value) {
+                     'b',
+                 ] as $value) {
             if (!array_key_exists($value, $rgb) || $rgb[$value] < 0
                 || $rgb[$value] > 255
-                || !is_numeric($rgb[$value])
-            ) {
+                || !is_numeric($rgb[$value])) {
                 exit('Wrong color');
             }
         }
@@ -159,7 +155,7 @@ class GD
 
         $rgb         = $this->make_color($color);
         $allocate    = imagecolorallocate($this->image, $rgb['r'], $rgb['g'], $rgb['b']);
-        $text_width  = imagefontwidth($font) * strlen($text);
+        $text_width  = imagefontwidth($font) * mb_strlen($text);
         $text_height = imagefontheight($font);
 
         //Dokoncaj

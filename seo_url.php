@@ -24,7 +24,7 @@
 // http://www.aideordi.com         //
 /////////////////////////////////////
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 define('REAL_MODULE_NAME', 'adslight');
 define('SEO_MODULE_NAME', 'annonces');
@@ -43,14 +43,13 @@ function seo_urls($s)
 
     $module_name = REAL_MODULE_NAME;
 
-    $search = array(
+    $search = [
         // Search URLs of modules' directry.
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(viewcats.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(viewads.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         //    '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})'.$XPS_URL.'\/modules\/'.$module_name.'\/()([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
-
-    );
+    ];
     $s      = preg_replace_callback($search, 'replace_links', $s);
 
     return $s;
@@ -63,7 +62,7 @@ function seo_urls($s)
  */
 function replace_links($matches)
 {
-    $req_string = array();
+    $req_string = [];
     $add_to_url = '';
     switch ($matches[5]) {
         case 'viewcats.php':
@@ -92,11 +91,10 @@ function replace_links($matches)
                 }
             }
             break;
-
         default:
             break;
     }
-    if ($req_string === '?') {
+    if ('?' === $req_string) {
         $req_string = '';
     }
     $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
@@ -112,14 +110,14 @@ function replace_links($matches)
 function adslight_seo_cat($cid)
 {
     global $xoopsDB;
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $query  = '
         SELECT
             title
         FROM
             ' . $xoopsDB->prefix('adslight_categories') . '
         WHERE
-            cid = ' . $cid . '';
+            cid = ' . $cid . ' ';
     $result = $db->query($query);
     $res    = $db->fetchArray($result);
     $ret    = adslight_seo_title($res['title']);
@@ -135,14 +133,14 @@ function adslight_seo_cat($cid)
 function adslight_seo_titre($lid)
 {
     global $xoopsDB;
-    $db     = XoopsDatabaseFactory::getDatabaseConnection();
+    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
     $query  = '
         SELECT
             title
         FROM
             ' . $xoopsDB->prefix('adslight_listing') . '
         WHERE
-            lid = ' . $lid . '';
+            lid = ' . $lid . ' ';
     $result = $db->query($query);
     $res    = $db->fetchArray($result);
     $ret    = adslight_seo_title($res['title']);
@@ -161,18 +159,18 @@ function adslight_seo_title($title = '', $withExt = false)
     /**
      * if XOOPS ML is present, let's sanitize the title with the current language
      */
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     if (method_exists($myts, 'formatForML')) {
         $title = $myts->formatForML($title);
     }
 
     // Transformation de la chaine en minuscule
     // Codage de la chaine afin d'�viter les erreurs 500 en cas de caract�res impr�vus
-    $title = rawurlencode(strtolower($title));
+    $title = rawurlencode(mb_strtolower($title));
 
     // Transformation des ponctuations
     //                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .                 +
-    $pattern = array(
+    $pattern = [
         '/%09/', // Tab
         '/%20/', // Space
         '/%21/', // !
@@ -184,7 +182,7 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%28/', // (
         '/%29/', // )
         '/%2C/', // ,
-        '/%2F/',// /
+        '/%2F/', // /
         '/%3A/', // :
         '/%3B/', // ;
         '/%3C/', // <
@@ -201,11 +199,11 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%7D/', // }
         '/%7E/', // ~
         "/\./", // .
-        '/%2A/', 
+        '/%2A/',
         '/%2B/',
-        '/quot/'
-);
-    $rep_pat = array(
+        '/quot/',
+    ];
+    $rep_pat = [
         '-',
         '-',
         '',
@@ -236,13 +234,13 @@ function adslight_seo_title($title = '', $withExt = false)
         '',
         '',
         '+',
-        ''
-    );
+        '',
+    ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     // Transformation of characters with accents
     //                  °        è        é        ê        ë        ç        à        â        ä        î        ï        ù        ü        û        ô        ö
-    $pattern = array(
+    $pattern = [
         '/%B0/',        // °
         '/%E8/',        // è
         '/%E9/',        // é
@@ -267,9 +265,8 @@ function adslight_seo_title($title = '', $withExt = false)
         '/a%80%9C/',
         '/a%80%9D/',
         '/%E3%A7/',
-
-    );
-    $rep_pat = array(
+    ];
+    $rep_pat = [
         '-',
         'e',
         'e',
@@ -293,8 +290,8 @@ function adslight_seo_title($title = '', $withExt = false)
         'a',
         '-',
         '-',
-        'c'
-    );
+        'c',
+    ];
     $title   = preg_replace($pattern, $rep_pat, $title);
 
     if (count($title) > 0) {
@@ -303,9 +300,9 @@ function adslight_seo_title($title = '', $withExt = false)
         }
 
         return $title;
-    } else {
-        return '';
     }
+
+    return '';
 }
 
 /**
@@ -322,7 +319,7 @@ function adslight_absolutize($s)
         $req_dir = dirname($_SERVER['REQUEST_URI']);
         $req_php = preg_replace('/.*(\/[a-zA-Z0-9_\-]+)\.php.*/', '\\1.php', $_SERVER['REQUEST_URI']);
     }
-    $req_dir = ($req_dir === "\\" || $req_dir === '/') ? '' : $req_dir;
+    $req_dir = ('\\' === $req_dir || '/' === $req_dir) ? '' : $req_dir;
     $dir_arr = explode('/', $req_dir);
     $m       = count($dir_arr) - 1;
     $d1      = @str_replace('/' . $dir_arr[$m], '', $req_dir);
@@ -331,7 +328,7 @@ function adslight_absolutize($s)
     $d4      = @str_replace('/' . $dir_arr[$m - 3], '', $d3);
     $d5      = @str_replace('/' . $dir_arr[$m - 4], '', $d4);
     $host    = 'http://' . $_SERVER['HTTP_HOST'];
-    $in      = array(
+    $in      = [
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([^\"\' >]+)([^>]*)>/i',
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})\.\.\/\.\.\/\.\.\/([^\"\']*)([\"\']{1})([^>]*)>/i',
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})\.\.\/\.\.\/([^\"\']*)([\"\']{1})([^>]*)>/i',
@@ -342,9 +339,9 @@ function adslight_absolutize($s)
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})([^#]{1}[^\/\"\'>]*)([\"\']{1})([^>]*)>/i',
         '/<([^>\?\&]*)(href|src|action|background|window\.location)=([\"\']{1})(?:\.\/)?([^\"\'\/:]*\/*)?([^\"\'\/:]*\/*)?([^\"\'\/:]*\/*)?([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i',
         '/[^"\'a-zA-Z_0-9](window\.open|url)\(([\"\']{0,1})(?:\.\/)?([^\"\'\/]*)\.([^\"\'\/]+)([\"\']*)([^\)]*)/i',
-        '/<meta([^>]*)url=([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i'
-    );
-    $out     = array(
+        '/<meta([^>]*)url=([a-zA-Z0-9_\-]+)\.([^\"\'>]*)([\"\']{1})([^>]*)>/i',
+    ];
+    $out     = [
         '<\\1\\2="\\3"\\4>',
         '<\\1\\2=\\3' . $host . $d3 . '/\\4\\5\\6>',
         '<\\1\\2=\\3' . $host . $d2 . '/\\4\\5\\6>',
@@ -355,8 +352,8 @@ function adslight_absolutize($s)
         '<\\1\\2=\\3' . $host . $req_dir . '/\\4\\5\\6\\7>',
         '<\\1\\2=\\3' . $host . $req_dir . '/\\4\\5\\6\\7.\\8\\9\\10>',
         '$1($2' . $host . $req_dir . '/$3.$4$5$6',
-        '<meta$1url=' . $host . $req_dir . '/$2.$3$4$5>'
-    );
+        '<meta$1url=' . $host . $req_dir . '/$2.$3$4$5>',
+    ];
     $s       = preg_replace($in, $out, $s);
 
     return $s;

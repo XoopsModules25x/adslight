@@ -21,10 +21,11 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * @param $lid
@@ -46,7 +47,7 @@ function PrintAd($lid)
 
     $title     = $myts->htmlSpecialChars($title);
     $expire    = $myts->htmlSpecialChars($expire);
-    $type      = AdslightUtility::getNameType($myts->htmlSpecialChars($type));
+    $type      = Adslight\Utility::getNameType($myts->htmlSpecialChars($type));
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
     $tel       = $myts->htmlSpecialChars($tel);
     $price     = $myts->htmlSpecialChars($price);
@@ -60,17 +61,17 @@ function PrintAd($lid)
     <head><title>' . $xoopsConfig['sitename'] . "</title>
     <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" >
     <meta http-equiv=\”robots\” content=\"noindex, nofollow, noarchive\" >
-    <link rel=\"StyleSheet\" href=\"../../themes/" . $currenttheme . "/style/style.css\" type=\"text/css\">
+    <link rel=\"StyleSheet\" href=\"../../themes/" . $currenttheme . '/style/style.css" type="text/css">
     </head>
-    <body bgcolor=\"#FFFFFF\" text=\"#000000\">
+    <body bgcolor="#FFFFFF" text="#000000">
     <table border=0><tr><td>
-    <table border=0 width=100% cellpadding=0 cellspacing=1 bgcolor=\"#000000\"><tr><td>
-    <table border=0 width=100% cellpadding=15 cellspacing=1 bgcolor=\"#FFFFFF\"><tr><td>";
+    <table border=0 width=100% cellpadding=0 cellspacing=1 bgcolor="#000000"><tr><td>
+    <table border=0 width=100% cellpadding=15 cellspacing=1 bgcolor="#FFFFFF"><tr><td>';
 
     $useroffset = 0;
-    if ($GLOBALS['xoopsUser'] instanceof XoopsUser) {
+    if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
         $timezone   = $GLOBALS['xoopsUser']->timezone();
-        $useroffset = (!empty($timezone)) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
+        $useroffset = !empty($timezone) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
     }
     $date  = ($useroffset * 3600) + $date;
     $date2 = $date + ($expire * 86400);
@@ -109,8 +110,8 @@ function PrintAd($lid)
     </table>';
     echo '<br><br></td></tr></table></td></tr></table>
     <br><br><div style="text-align:center">
-    ' . _ADSLIGHT_EXTRANN . ' <strong>' . $xoopsConfig['sitename'] . "</strong></div><br>
-    <a href=\"" . XOOPS_URL . "/modules/adslight/\">" . XOOPS_URL . '/modules/adslight/</a>
+    ' . _ADSLIGHT_EXTRANN . ' <strong>' . $xoopsConfig['sitename'] . '</strong></div><br>
+    <a href="' . XOOPS_URL . '/modules/adslight/">' . XOOPS_URL . '/modules/adslight/</a>
     </td></tr></table>
     </body>
     </html>';
@@ -122,13 +123,10 @@ $lid = Request::getInt('lid', 0);
 $op  = Request::getString('op', '');
 
 switch ($op) {
-
     case 'PrintAd':
         PrintAd($lid);
         break;
-
     default:
         redirect_header('index.php', 3, ' ' . _RETURNANN . ' ');
         break;
-
 }

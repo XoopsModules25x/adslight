@@ -19,53 +19,51 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
 
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-$moduleDirName = basename(dirname(__DIR__));
+use XoopsModules\Adslight;
 
-if (false !== ($moduleHelper = Xmf\Module\Helper::getHelper($moduleDirName))) {
-} else {
-    $moduleHelper = Xmf\Module\Helper::getHelper('system');
+//require_once  dirname(__DIR__) . '/include/common.php';
+/** @var \XoopsModules\Adslight\Helper $helper */
+$helper = \XoopsModules\Adslight\Helper::getInstance();
+
+$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+if (is_object($helper->getModule())) {
+    $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }
-$adminObject = \Xmf\Module\Admin::getInstance();
 
-$pathIcon32    = \Xmf\Module\Admin::menuIconPath('');
-$pathModIcon32 = $moduleHelper->getModule()->getInfo('modicons32');
-
-$moduleHelper->loadLanguage('modinfo');
-
-$adminmenu[] = array(
-    'title' => _AM_MODULEADMIN_HOME,
+$adminmenu[] = [
+    'title' => _MI_ADSLIGHT_HOME,
     'link'  => 'admin/index.php',
-    'icon'  => $pathIcon32 . '/home.png'
-);
+    'icon'  => $pathIcon32 . '/home.png',
+];
 
 //global $xoopsModule;
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU0,
     'link'  => 'admin/main.php',
-    'icon'  => $pathIcon32 . '/dashboard.png'
-);
+    'icon'  => $pathIcon32 . '/dashboard.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU1,
     'link'  => 'admin/map.php',
-    'icon'  => $pathIcon32 . '/category.png'
-);
+    'icon'  => $pathIcon32 . '/category.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU5,
     'link'  => 'admin/options.php',
-    'icon'  => $pathModIcon32 . '/preferences.png'
-);
+    'icon'  => $pathModIcon32 . '/preferences.png',
+];
 
-$adminmenu[] = array(
+$adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU2,
     'link'  => 'admin/groupperms.php',
-    'icon'  => $pathIcon32 . '/permissions.png'
-);
+    'icon'  => $pathIcon32 . '/permissions.png',
+];
 
 //$adminmenu[] = array(
 //    'title' => _MI_ADSLIGHT_ADMENU3,
@@ -85,8 +83,8 @@ $adminmenu[] = array(
 //    'icon'  => $pathModIcon32 . '/discussion.png'
 //);
 
-$adminmenu[] = array(
-    'title' => _AM_MODULEADMIN_ABOUT,
+$adminmenu[] = [
+    'title' => _MI_ADSLIGHT_ABOUT,
     'link'  => 'admin/about.php',
-    'icon'  => $pathIcon32 . '/about.png'
-);
+    'icon'  => $pathIcon32 . '/about.png',
+];

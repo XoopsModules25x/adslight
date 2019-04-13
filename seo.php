@@ -35,12 +35,11 @@ if (!empty($seoOther)) {
     $seoOther = explode('/', $seoOther);
 }
 
-$seoMap = array(
+$seoMap = [
     'c' => 'viewcats.php',
-    'p' => 'viewads.php'
+    'p' => 'viewads.php',
     //  'addlisting' => 'addlisting.php'
-
-);
+];
 
 if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
     // module specific dispatching logic, other module must implement as
@@ -63,10 +62,9 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
             $_SERVER['REQUEST_URI'] = $newUrl . '?lid=' . $seoArg;
             $_GET['lid']            = $seoArg;
             break;
-
     }
 
-    include $seoMap[$seoOp];
+    require_once $seoMap[$seoOp];
 }
 
 exit;

@@ -1,6 +1,7 @@
 <?php
 
-// namespace Xoopsmodules/adslight;
+namespace XoopsModules\Adslight;
+
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -30,23 +31,30 @@
  * @author      XOOPS Development Team
  * @package     AdsLight
  * @since       1.03
- *
  */
 
 use Xmf\Request;
-use Xmf\Module\Helper;
+use XoopsModules\Adslight;
 
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . strtoupper($moduleDirName);
-require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 /**
- * Class AdslightUtility
+ * Class Utility
  */
-class AdslightUtility
+class Utility
 {
+    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
+
+    use Common\ServerStats; // getServerStats Trait
+
+    use Common\FilesManagement; // Files Management Trait
+
+    //--------------- Custom module methods -----------------------------
+
     public static function expireAd()
     {
         global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $main_lang;
@@ -54,15 +62,13 @@ class AdslightUtility
         $datenow = time();
         $message = '';
 
-        $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM '
-                                   . $xoopsDB->prefix('adslight_listing')
-                                   . " WHERE valid='Yes'");
+        $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes'");
 
-        while (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5)) {
+        while (false !== (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5))) {
             $title     = $myts->htmlSpecialChars($title);
             $expire    = $myts->htmlSpecialChars($expire);
             $type      = $myts->htmlSpecialChars($type);
-            $desctext  =& $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
+            $desctext  = &$myts->displayTarea($desctext, 1, 1, 1, 1, 1);
             $submitter = $myts->htmlSpecialChars($submitter);
             $remind    = $myts->htmlSpecialChars($remind);
             $supprdate = $dateann + ($expire * 86400);
@@ -71,13 +77,12 @@ class AdslightUtility
             // give warning that add is about to expire
 
             if ($almost > 0 && ($supprdate - $almost * 86400) < $datenow
-                && $valid === 'Yes'
-                && $remind == 0
-            ) {
+                && 'Yes' === $valid
+                && 0 == $remind) {
                 $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET remind='1' WHERE lid=$lids");
 
                 if ($email) {
-                    $tags               = array();
+                    $tags               = [];
                     $subject            = '' . _ADSLIGHT_ALMOST . '';
                     $tags['TITLE']      = $title;
                     $tags['HELLO']      = '' . _ADSLIGHT_HELLO . '';
@@ -96,7 +101,7 @@ class AdslightUtility
                     $tags['SUBMITTER']  = $submitter;
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail               =& getMailer();
+                    $mail               = &getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expires.tpl');
                     $mail->useMail();
@@ -114,10 +119,10 @@ class AdslightUtility
             // expire ad
 
             if ($supprdate < $datenow) {
-                if ($photo != 0) {
+                if (0 != $photo) {
                     $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lids));
 
-                    while (list($url) = $xoopsDB->fetchRow($result2)) {
+                    while (false !== (list($url) = $xoopsDB->fetchRow($result2))) {
                         $destination  = XOOPS_ROOT_PATH . '/uploads/AdsLight';
                         $destination2 = XOOPS_ROOT_PATH . '/uploads/AdsLight/thumbs';
                         $destination3 = XOOPS_ROOT_PATH . '/uploads/AdsLight/midsize';
@@ -138,7 +143,7 @@ class AdslightUtility
                 //  Specification for Japan:
                 //  $message = ""._ADS_HELLO." $submitter,\n\n"._ADS_STOP2."\n $type : $title\n $desctext\n"._ADS_STOP3."\n\n"._ADS_VU." $lu "._ADS_VU2."\n\n"._ADS_OTHER." ".XOOPS_URL."/modules/myAds\n\n"._ADS_THANK."\n\n"._ADS_TEAM." ".$meta['title']."\n".XOOPS_URL."";
                 if ($email) {
-                    $tags               = array();
+                    $tags               = [];
                     $subject            = '' . _ADSLIGHT_STOP . '';
                     $tags['TITLE']      = $title;
                     $tags['HELLO']      = '' . _ADSLIGHT_HELLO . '';
@@ -158,7 +163,7 @@ class AdslightUtility
                     $tags['TEAM']       = '' . _ADSLIGHT_TEAM . '';
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail               =& getMailer();
+                    $mail               = &getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expired.tpl');
                     $mail->useMail();
@@ -191,7 +196,7 @@ class AdslightUtility
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
+        while (false !== (list($rating) = $xoopsDB->fetchRow($voteresult))) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -212,12 +217,12 @@ class AdslightUtility
 
         $lid = Request::getInt('lid', 0, 'GET');
 
-        $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . '';
+        $query = 'SELECT rating FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($sel_id) . ' ';
         //echo $query;
         $voteresult  = $xoopsDB->query($query);
         $votesDB     = $xoopsDB->getRowsNum($voteresult);
         $totalrating = 0;
-        while (list($rating) = $xoopsDB->fetchRow($voteresult)) {
+        while (false !== (list($rating) = $xoopsDB->fetchRow($voteresult))) {
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
@@ -236,10 +241,10 @@ class AdslightUtility
     public static function getTotalItems($sel_id, $status = '')
     {
         global $xoopsDB, $mytree, $moduleDirName;
-        $categories = AdslightUtility::getMyItemIds('adslight_view');
+        $categories = self::getMyItemIds('adslight_view');
         $count      = 0;
-        $arr        = array();
-        if (in_array($sel_id, $categories)) {
+        $arr        = [];
+        if (in_array($sel_id, $categories, true)) {
             $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " AND valid='Yes' AND status!='1'";
 
             $result = $xoopsDB->query($query);
@@ -248,7 +253,7 @@ class AdslightUtility
             $arr   = $mytree->getAllChildId($sel_id);
             $size  = count($arr);
             for ($i = 0; $i < $size; ++$i) {
-                if (in_array($arr[$i], $categories)) {
+                if (in_array($arr[$i], $categories, true)) {
                     $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$arr[$i] . " AND valid='Yes' AND status!='1'";
 
                     $result2 = $xoopsDB->query($query2);
@@ -269,20 +274,19 @@ class AdslightUtility
     public static function getMyItemIds($permtype)
     {
         global $moduleDirName;
-        static $permissions = array();
+        static $permissions = [];
         if (is_array($permissions)
-            && array_key_exists($permtype, $permissions)
-        ) {
+            && array_key_exists($permtype, $permissions)) {
             return $permissions[$permtype];
         }
 
-        /** @var XoopsModuleHandler $moduleHandler */
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-        /** @var XoopsGroupPermHandler $gpermHandler */
-        $gpermHandler           = xoops_getHandler('groupperm');
-        $categories             = $gpermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler       = xoops_getHandler('groupperm');
+        $categories             = $grouppermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
         $permissions[$permtype] = $categories;
 
         return $categories;
@@ -293,12 +297,12 @@ class AdslightUtility
      * @param        $option module option's name
      * @param string $repmodule
      *
-     * @return option's value
+     * @return bool|mixed option's value
      */
     public static function getModuleOption($option, $repmodule = 'adslight')
     {
         global $xoopsModule;
-        static $tbloptions = array();
+        static $tbloptions = [];
         if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
             return $tbloptions[$option];
         }
@@ -307,21 +311,20 @@ class AdslightUtility
         if (isset($GLOBALS['xoopsModuleConfig'])
             && (is_object($xoopsModule)
                 && $xoopsModule->getVar('dirname') == $repmodule
-                && $xoopsModule->getVar('isactive'))
-        ) {
+                && $xoopsModule->getVar('isactive'))) {
             if (isset($GLOBALS['xoopsModuleConfig'][$option])) {
                 $retval = $GLOBALS['xoopsModuleConfig'][$option];
             }
         } else {
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
-            /** @var XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsModuleHandler $moduleHandler */
             $configHandler = xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
-                if (null !== ($moduleHelper->getConfig($option))) {
-                    $retval = $moduleHelper->getConfig($option);
+                if (null !== $helper->getConfig($option)) {
+                    $retval = $helper->getConfig($option);
                 }
             }
         }
@@ -394,28 +397,28 @@ class AdslightUtility
     {
         global $main_lang;
         $orderbyTrans = '';
-        if ($orderby === 'hits ASC') {
+        if ('hits ASC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_POPULARITYLTOM . '';
         }
-        if ($orderby === 'hits DESC') {
+        if ('hits DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_POPULARITYMTOL . '';
         }
-        if ($orderby === 'title ASC') {
+        if ('title ASC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_TITLEATOZ . '';
         }
-        if ($orderby === 'title DESC') {
+        if ('title DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_TITLEZTOA . '';
         }
-        if ($orderby === 'date ASC') {
+        if ('date ASC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_DATEOLD . '';
         }
-        if ($orderby === 'date DESC') {
+        if ('date DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_DATENEW . '';
         }
-        if ($orderby === 'price ASC') {
+        if ('price ASC' === $orderby) {
             $orderbyTrans = _ADSLIGHT_PRICELTOH;
         }
-        if ($orderby === 'price DESC') {
+        if ('price DESC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_PRICEHTOL . '';
         }
 
@@ -429,28 +432,28 @@ class AdslightUtility
      */
     public static function convertOrderByOut($orderby)
     {
-        if ($orderby === 'title ASC') {
+        if ('title ASC' === $orderby) {
             $orderby = 'titleA';
         }
-        if ($orderby === 'date ASC') {
+        if ('date ASC' === $orderby) {
             $orderby = 'dateA';
         }
-        if ($orderby === 'hits ASC') {
+        if ('hits ASC' === $orderby) {
             $orderby = 'hitsA';
         }
-        if ($orderby === 'price ASC') {
+        if ('price ASC' === $orderby) {
             $orderby = 'priceA';
         }
-        if ($orderby === 'title DESC') {
+        if ('title DESC' === $orderby) {
             $orderby = 'titleD';
         }
-        if ($orderby === 'date DESC') {
+        if ('date DESC' === $orderby) {
             $orderby = 'dateD';
         }
-        if ($orderby === 'hits DESC') {
+        if ('hits DESC' === $orderby) {
             $orderby = 'hitsD';
         }
-        if ($orderby === 'price DESC') {
+        if ('price DESC' === $orderby) {
             $orderby = 'priceD';
         }
 
@@ -465,12 +468,12 @@ class AdslightUtility
      * @param string $height
      * @param string $supplemental
      *
-     * @return XoopsFormDhtmlTextArea|XoopsFormEditor
+     * @return XoopsFormDhtmlTextArea|\XoopsFormEditor
      */
     public static function getEditor($caption, $name, $value = '', $width = '100%', $height = '300px', $supplemental = '')
     {
         global $xoopsModule;
-        $options = array();
+        $options = [];
         $isAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
 
         if (class_exists('XoopsFormEditor')) {
@@ -481,12 +484,12 @@ class AdslightUtility
             $options['width']  = $width;
             $options['height'] = $height;
             if ($isAdmin) {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new \XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
             } else {
-                $myEditor = new XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new \XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
             }
         } else {
-            $myEditor = new XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
+            $myEditor = new \XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
         }
 
         //        $form->addElement($descEditor);
@@ -566,10 +569,10 @@ class AdslightUtility
     {
         global $xoopsDB;
 
-        $xt   = new XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+        $xt   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         ob_start();
-        $xt->makeMySelBox('title', 'title', 0, 1, 'pid', "location=\"" . $jump . "\"+this.options[this.selectedIndex].value");
+        $xt->makeMySelBox('title', 'title', 0, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
         $block['selectbox'] = ob_get_contents();
         ob_end_clean();
 
@@ -578,6 +581,7 @@ class AdslightUtility
 
     // ADSLIGHT Version 2 //
     // Fonction rss.php RSS par categories
+
     /**
      * @return array
      */
@@ -587,12 +591,12 @@ class AdslightUtility
 
         $cid = Request::getInt('cid', null, 'GET');
 
-        $result = array();
+        $result = [];
 
         $sql = 'SELECT lid, title, price, date, town FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='yes' AND cid=" . $xoopsDB->escape($cid) . ' ORDER BY date DESC';
 
         $resultValues = $xoopsDB->query($sql);
-        while (($resultTemp = $xoopsDB->fetchBoth($resultValues)) !== false) {
+        while (false !== ($resultTemp = $xoopsDB->fetchBoth($resultValues))) {
             array_push($result, $resultTemp);
         }
 
@@ -608,12 +612,12 @@ class AdslightUtility
     {
         global $xoopsDB;
 
-        $result = array();
+        $result = [];
 
         $sql = 'SELECT lid, title, price, desctext, date, town FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='yes' ORDER BY date DESC LIMIT 0,15";
 
         $resultValues = $xoopsDB->query($sql);
-        while (($resultTemp = $xoopsDB->fetchBoth($resultValues)) !== false) {
+        while (false !== ($resultTemp = $xoopsDB->fetchBoth($resultValues))) {
             array_push($result, $resultTemp);
         }
 
@@ -643,7 +647,7 @@ class AdslightUtility
     public static function getMoneyFormat($format, $number)
     {
         $regex = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?' . '(?:#([0-9]+))?(?:\.([0-9]+))?([in%])/';
-        if (setlocale(LC_MONETARY, 0) === 'C') {
+        if ('C' === setlocale(LC_MONETARY, 0)) {
             setlocale(LC_MONETARY, '');
         }
 
@@ -654,13 +658,13 @@ class AdslightUtility
         preg_match_all($regex, $format, $matches, PREG_SET_ORDER);
         foreach ($matches as $fmatch) {
             $value      = (float)$number;
-            $flags      = array(
+            $flags      = [
                 'fillchar'  => preg_match('/\=(.)/', $fmatch[1], $match) ? $match[1] : ' ',
                 'nogroup'   => preg_match('/\^/', $fmatch[1]) > 0,
                 'usesignal' => preg_match('/\+|\(/', $fmatch[1], $match) ? $match[0] : '+',
                 'nosimbol'  => preg_match('/\!/', $fmatch[1]) > 0,
-                'isleft'    => preg_match('/\-/', $fmatch[1]) > 0
-            );
+                'isleft'    => preg_match('/\-/', $fmatch[1]) > 0,
+            ];
             $width      = trim($fmatch[2]) ? (int)$fmatch[2] : 0;
             $left       = trim($fmatch[3]) ? (int)$fmatch[3] : 0;
             $right      = trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
@@ -677,30 +681,30 @@ class AdslightUtility
 
             $signal = $positive ? $locale['positive_sign'] : $locale['negative_sign'];
             switch (true) {
-                case $locale["{$letter}_sign_posn"] == 1
-                     && $flags['usesignal'] == '+':
+                case 1 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $prefix = $signal;
                     break;
-                case $locale["{$letter}_sign_posn"] == 2
-                     && $flags['usesignal'] == '+':
+                case 2 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $suffix = $signal;
                     break;
-                case $locale["{$letter}_sign_posn"] == 3
-                     && $flags['usesignal'] == '+':
+                case 3 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $cprefix = $signal;
                     break;
-                case $locale["{$letter}_sign_posn"] == 4
-                     && $flags['usesignal'] == '+':
+                case 4 == $locale["{$letter}_sign_posn"]
+                     && '+' == $flags['usesignal']:
                     $csuffix = $signal;
                     break;
-                case $flags['usesignal'] === '(':
-                case $locale["{$letter}_sign_posn"] == 0:
+                case '(' === $flags['usesignal']:
+                case 0 == $locale["{$letter}_sign_posn"]:
                     $prefix = '(';
                     $suffix = ')';
                     break;
             }
             if (!$flags['nosimbol']) {
-                $currency = $cprefix . ($conversion === 'i' ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
+                $currency = $cprefix . ('i' === $conversion ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
             } else {
                 $currency = '';
             }
@@ -709,7 +713,7 @@ class AdslightUtility
             $value = number_format($value, $right, $locale['mon_decimal_point'], $flags['nogroup'] ? '' : $locale['mon_thousands_sep']);
             $value = @explode($locale['mon_decimal_point'], $value);
 
-            $n = strlen($prefix) + strlen($currency) + strlen($value[0]);
+            $n = mb_strlen($prefix) + mb_strlen($currency) + mb_strlen($value[0]);
             if ($left > 0 && $left > $n) {
                 $value[0] = str_repeat($flags['fillchar'], $left - $n) . $value[0];
             }
@@ -730,167 +734,37 @@ class AdslightUtility
     }
 
     /**
-     * Function responsible for checking if a directory exists, we can also write in and create an index.html file
-     *
-     * @param string $folder The full path of the directory to check
-     *
-     * @return void
-     */
-    public static function createFolder($folder)
-    {
-        try {
-            if (!file_exists($folder)) {
-                if (!mkdir($folder) && !is_dir($folder)) {
-                    throw new \RuntimeException(sprintf('Unable to create the %s directory', $folder));
-                } else {
-                    file_put_contents($folder . '/index.html', '<script>history.go(-1);</script>');
-                }
-            }
-        } catch (Exception $e) {
-            echo 'Caught exception: ', $e->getMessage(), "\n", '<br>';
-        }
-    }
-
-    /**
-     * @param $file
-     * @param $folder
-     * @return bool
-     */
-    public static function copyFile($file, $folder)
-    {
-        return copy($file, $folder);
-        //        try {
-        //            if (!is_dir($folder)) {
-        //                throw new \RuntimeException(sprintf('Unable to copy file as: %s ', $folder));
-        //            } else {
-        //                return copy($file, $folder);
-        //            }
-        //        } catch (Exception $e) {
-        //            echo 'Caught exception: ', $e->getMessage(), "\n", "<br>";
-        //        }
-        //        return false;
-    }
-
-    /**
-     * @param $src
-     * @param $dst
-     */
-    public static function recurseCopy($src, $dst)
-    {
-        $dir = opendir($src);
-        //    @mkdir($dst);
-        while (false !== ($file = readdir($dir))) {
-            if (($file !== '.') && ($file !== '..')) {
-                if (is_dir($src . '/' . $file)) {
-                    self::recurseCopy($src . '/' . $file, $dst . '/' . $file);
-                } else {
-                    copy($src . '/' . $file, $dst . '/' . $file);
-                }
-            }
-        }
-        closedir($dir);
-    }
-
-    /**
-     *
-     * Verifies XOOPS version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkXoopsVer(XoopsModule $module)
-    {
-        xoops_loadLanguage('admin', $module->dirname());
-        //check for minimum XOOPS version
-        $currentVer  = substr(XOOPS_VERSION, 6); // get the numeric part of string
-        $currArray   = explode('.', $currentVer);
-        $requiredVer = '' . $module->getInfo('min_xoops'); //making sure it's a string
-        $reqArray    = explode('.', $requiredVer);
-        $success     = true;
-        foreach ($reqArray as $k => $v) {
-            if (isset($currArray[$k])) {
-                if ($currArray[$k] > $v) {
-                    break;
-                } elseif ($currArray[$k] == $v) {
-                    continue;
-                } else {
-                    $success = false;
-                    break;
-                }
-            } else {
-                if ((int)$v > 0) { // handles things like x.x.x.0_RC2
-                    $success = false;
-                    break;
-                }
-            }
-        }
-
-        if (!$success) {
-            $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_XOOPS, $requiredVer, $currentVer));
-        }
-
-        return $success;
-    }
-
-    /**
-     *
-     * Verifies PHP version meets minimum requirements for this module
-     * @static
-     * @param XoopsModule $module
-     *
-     * @return bool true if meets requirements, false if not
-     */
-    public static function checkPhpVer(XoopsModule $module)
-    {
-        xoops_loadLanguage('admin', $module->dirname());
-        // check for minimum PHP version
-        $success = true;
-        $verNum  = PHP_VERSION;
-        $reqVer  = $module->getInfo('min_php');
-        if (false !== $reqVer && '' !== $reqVer) {
-            if (version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(sprintf(_AM_ADSLIGHT_ERROR_BAD_PHP, $reqVer, $verNum));
-                $success = false;
-            }
-        }
-
-        return $success;
-    }
-
-    /**
      * Saves permissions for the selected category
      *
      *   saveCategory_Permissions()
      *
-     * @param  array   $groups     : group with granted permission
-     * @param  integer $categoryid : categoryid on which we are setting permissions
-     * @param  string  $perm_name  : name of the permission
-     * @return boolean : TRUE if the no errors occured
+     * @param  array $groups : group with granted permission
+     * @param        $categoryId
+     * @param        $permName
+     * @return bool : TRUE if the no errors occured
      */
-
     public static function saveCategoryPermissions($groups, $categoryId, $permName)
     {
         global $xoopsModule;
 
         $moduleDirName = basename(dirname(__DIR__));
 
-        if (false !== ($moduleHelper = Helper::getHelper($moduleDirName))) {
+        if (false !== ($helper = Helper::getHelper($moduleDirName))) {
         } else {
-            $moduleHelper = Helper::getHelper('system');
+            $helper = \Xmf\Module\Helper::getHelper('system');
         }
 
         $result = true;
         //        $xoopsModule = sf_getModuleInfo();
-        $moduleId = $moduleHelper->getModule()->getVar('mid');
+        $moduleId = $helper->getModule()->getVar('mid');
 
-        $gpermHandler = xoops_getHandler('groupperm');
+        $grouppermHandler = xoops_getHandler('groupperm');
         // First, if the permissions are already there, delete them
-        $gpermHandler->deleteByModule($moduleId, $permName, $categoryId);
+        $grouppermHandler->deleteByModule($moduleId, $permName, $categoryId);
         // Save the new permissions
         if (count($groups) > 0) {
             foreach ($groups as $groupId) {
-                $gpermHandler->addRight($permName, $categoryId, $groupId, $moduleId);
+                $grouppermHandler->addRight($permName, $categoryId, $groupId, $moduleId);
             }
         }
 

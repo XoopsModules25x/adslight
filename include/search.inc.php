@@ -20,7 +20,9 @@
 -------------------------------------------------------------------------
 */
 
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+use XoopsModules\Adslight;
+
+require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * @param $queryarray
@@ -33,7 +35,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
  */
 function adslight_search($queryarray, $andor, $limit, $offset, $userid)
 {
-    if (strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php')) {
+    if (mb_strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php')) {
         $visible = true;
     } else {
         $visible = false;
@@ -41,11 +43,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
 
     global $xoopsDB, $moduleDirName;
 
-    $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM '
-           . $xoopsDB->prefix('adslight_listing')
-           . " WHERE valid='Yes' AND status!='1' AND date<="
-           . time()
-           . '';
+    $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes' AND status!='1' AND date<=" . time() . ' ';
 
     if (0 != $userid) {
         $sql .= " AND usid={$userid} ";
@@ -64,10 +62,10 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
     }
     $sql    .= ' ORDER BY premium DESC, date DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
-    $ret    = array();
+    $ret    = [];
     $i      = 0;
-    while ($myrow = $xoopsDB->fetchArray($result)) {
-        $myts    = MyTextSanitizer::getInstance();
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
+        $myts    = \MyTextSanitizer::getInstance();
         $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE lid={$myrow['lid']} ORDER BY date_added LIMIT 1 ");
         list($url) = $xoopsDB->fetchRow($result2);
         $url = $myts->htmlSpecialChars($url);
@@ -75,7 +73,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
         $ret[$i]['image']     = 'assets/images/deco/icon.png';
         $ret[$i]['link']      = 'viewads.php?lid=' . $myrow['lid'] . '';
         $ret[$i]['title']     = $myrow['title'];
-        $ret[$i]['type']      = AdslightUtility::getNameType($myrow['type']);
+        $ret[$i]['type']      = Adslight\Utility::getNameType($myrow['type']);
         $ret[$i]['price']     = number_format($myrow['price'], 2, '.', ',');
         $ret[$i]['typeprice'] = $myrow['typeprice'];
         $ret[$i]['town']      = $myrow['town'];
