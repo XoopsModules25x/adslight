@@ -35,7 +35,8 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 /**
  * Modules class includes
  */
-require_once __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/Pictures.php';
+require_once __DIR__ . '/class/PicturesHandler.php';
 
 /**
  * Factory of pictures created
@@ -56,8 +57,8 @@ $pictheight    = $GLOBALS['xoopsModuleConfig']['adslight_resized_height'];
 $thumbwidth    = $GLOBALS['xoopsModuleConfig']['adslight_thumb_width'];
 $thumbheight   = $GLOBALS['xoopsModuleConfig']['adslight_thumb_height'];
 $maxfilebytes  = $GLOBALS['xoopsModuleConfig']['adslight_maxfilesize'];
-$maxfileheight = $GLOBALS['xoopsModuleConfig']['adslight_max_original_height'];
-$maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_original_width'];
+$maxfileheight = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_height'];
+$maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_width'];
 
 /**
  * If we are receiving a file

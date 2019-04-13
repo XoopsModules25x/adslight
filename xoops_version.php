@@ -441,7 +441,7 @@ $modversion['config'][] = [
 ];
 
 $modversion['config'][] = [
-    'name'        => 'adslight_max_original_width',
+    'name'        => 'adslight_max_orig_width',
     'title'       => '_MI_ADSLIGHT_ORIGW_TITLE',
     'description' => '_MI_ADSLIGHT_ORIGW_DESC',
     'formtype'    => 'textbox',
@@ -450,7 +450,7 @@ $modversion['config'][] = [
 ];
 
 $modversion['config'][] = [
-    'name'        => 'adslight_max_original_height',
+    'name'        => 'adslight_max_orig_height',
     'title'       => '_MI_ADSLIGHT_ORIGH_TITLE',
     'description' => '_MI_ADSLIGHT_ORIGH_DESC',
     'formtype'    => 'textbox',
