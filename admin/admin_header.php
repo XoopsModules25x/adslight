@@ -32,7 +32,7 @@ require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermfor
 // require_once  dirname(__DIR__) . '/class/Utility.php';
 //require_once  dirname(__DIR__) . '/include/common.php';
 
-$helper = \XoopsModules\AboutHelper::getInstance();
+$helper = \XoopsModules\Adslight\Helper::getInstance();
 
 $adminObject = \Xmf\Module\Admin::getInstance();
 
