@@ -24,6 +24,8 @@ use XoopsModules\Adslight;
 
 header('Content-Type: application/rss+xml; charset=UTF-8');
 require_once __DIR__ . '/header.php';
+$xoopsLogger->activated = false;
+
 //require_once __DIR__ . '/include/functions.php';
 
 // var_dump($GLOBALS['xoopsModuleConfig']);die();
