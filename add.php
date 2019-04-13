@@ -26,7 +26,7 @@ use XoopsModules\Adslight;
 require_once __DIR__ . '/header.php';
 $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 //require_once __DIR__ . '/include/functions.php';
 // require_once XOOPS_ROOT_PATH . '/class/captcha/xoopscaptcha.php';
 
@@ -44,7 +44,7 @@ $premium = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $grou
 
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 if (!$GLOBALS['xoopsUser'] instanceof \XoopsUser) {
@@ -54,7 +54,7 @@ if (!$GLOBALS['xoopsUser'] instanceof \XoopsUser) {
 if (Request::hasVar('submit', 'POST')) {
     $howlong = $GLOBALS['xoopsModuleConfig']['adslight_howlong'];
 
-    if (!$GLOBALS['xoopsSecurity']->check(true, $_REQUEST['token'])) {
+    if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
 
