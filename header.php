@@ -39,3 +39,6 @@ $pathIcon16 = Admin::iconUrl('', 16);
 $myts = \MyTextSanitizer::getInstance();
 
 xoops_loadLanguage('main', $moduleDirName);
+
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
