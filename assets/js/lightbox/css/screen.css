@@ -107,8 +107,8 @@ body {
 
 /* line 36, ../sass/screen.sass */
 body, input, textarea {
-    color: white;
-    text-shadow: 0 -1px 0 black;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 #000000;
     font-size: 16px;
     line-height: 1.625em;
     font-family: "Open Sans", "lucida grande", tahoma, sans-serif;
@@ -203,18 +203,18 @@ pre {
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
     border-radius: 4px;
-    -webkit-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
-    -moz-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
-    box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
+    -webkit-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px #000000;
+    -moz-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px #000000;
+    box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px #000000;
 }
 
 /* line 107, ../sass/screen.sass */
 code, kbd {
     font: 14px Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
     background: #000000;
-    -webkit-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
-    -moz-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
-    box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px black;
+    -webkit-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px #000000;
+    -moz-box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px #000000;
+    box-shadow: 0 1px 0 0 #ffffff, inset 0 2px 6px 2px #000000;
     padding: 5px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -250,7 +250,7 @@ a:hover {
 ::-moz-selection,
 ::selection {
     background: #e7931a;
-    color: white;
+    color: #ffffff;
 }
 
 /* sidebar
@@ -274,7 +274,7 @@ a:hover {
 
 /* line 142, ../sass/screen.sass */
 #sidebar a {
-    color: white;
+    color: #ffffff;
 }
 
 /* line 144, ../sass/screen.sass */
@@ -304,7 +304,7 @@ a:hover {
 
 /* line 154, ../sass/screen.sass */
 #sidebar .author a:hover {
-    text-shadow: 0 0 10px white;
+    text-shadow: 0 0 10px #ffffff;
 }
 
 /* line 156, ../sass/screen.sass */
@@ -428,7 +428,7 @@ a:hover {
     font-size: 36px;
     font-family: "Fredoka One", "lucida grande", tahoma, sans-serif;
     font-weight: 400;
-    color: white;
+    color: #ffffff;
     line-height: 1.1em;
 }
 
@@ -482,7 +482,7 @@ a:hover {
 
 /* line 244, ../sass/screen.sass */
 .changelog li .date {
-    color: white;
+    color: #ffffff;
 }
 
 /* line 246, ../sass/screen.sass */
@@ -532,7 +532,7 @@ a:hover {
     font-size: 36px;
     font-family: "Fredoka One", "lucida grande", tahoma, sans-serif;
     font-weight: 400;
-    color: white;
+    color: #ffffff;
     line-height: 1.1em;
 }
 
@@ -562,7 +562,7 @@ a:hover {
     -ms-transition: all 0.2s ease-out;
     -o-transition: all 0.2s ease-out;
     transition: all 0.2s ease-out;
-    color: white;
+    color: #ffffff;
 }
 
 /* line 291, ../sass/screen.sass */
