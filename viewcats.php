@@ -175,8 +175,8 @@ function adsView($cid, $min, $orderby, $show = 0)
 
     if ($cat_desc > '0') {
         // meta description & keywords tags for categories
-        $cat_desc_clean     = strip_tags($cat_desc, '<font><img><strong><i><u>');
-        $cat_keywords_clean = strip_tags($cat_keywords, '<font><img><strong><i><u><br><li>');
+        $cat_desc_clean     = strip_tags($cat_desc, '<span><img><strong><i><u>');
+        $cat_keywords_clean = strip_tags($cat_keywords, '<span><img><strong><i><u><br><li>');
 
         $GLOBALS['xoTheme']->addMeta('meta', 'description', '' . mb_substr($cat_desc_clean, 0, 200));
         $GLOBALS['xoTheme']->addMeta('meta', 'keywords', '' . mb_substr($cat_keywords_clean, 0, 1000));

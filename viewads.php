@@ -306,7 +306,7 @@ function viewAds($lid = 0)
         $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', $title . ' - ' . $town . ': ' . $country . ' - ' . $ctitle);
 
         // meta description tags for ads
-        $desctextclean = strip_tags($desctext, '<font><img><strong><i><u>');
+        $desctextclean = strip_tags($desctext, '<span><img><strong><i><u>');
         $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . mb_substr($desctextclean, 0, 150));
 
         if ($price > 0) {
