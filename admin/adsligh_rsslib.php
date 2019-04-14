@@ -67,14 +67,14 @@ function RSS_Channel($channel)
 
     // Processing channel
 
-    $y = RSS_Tags($channel, 0);        // get description of channel, type 0
-    array_push($RSS_Content, $y);
+    $y             = RSS_Tags($channel, 0);        // get description of channel, type 0
+    $RSS_Content[] = $y;
 
     // Processing articles
 
     foreach ($items as $item) {
-        $y = RSS_Tags($item, 1);    // get description of article, type 1
-        array_push($RSS_Content, $y);
+        $y             = RSS_Tags($item, 1);    // get description of article, type 1
+        $RSS_Content[] = $y;
     }
 }
 
@@ -114,8 +114,8 @@ function RSS_RetrieveLinks($url)
     foreach ($channels as $channel) {
         $items = $channel->getElementsByTagName('item');
         foreach ($items as $item) {
-            $y = RSS_Tags($item, 1);    // get description of article, type 1
-            array_push($RSS_Content, $y);
+            $y             = RSS_Tags($item, 1);    // get description of article, type 1
+            $RSS_Content[] = $y;
         }
     }
 }

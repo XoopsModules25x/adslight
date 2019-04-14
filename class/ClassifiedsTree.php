@@ -76,7 +76,7 @@ class ClassifiedsTree
             return $arr;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            array_push($arr, $myrow);
+            $arr[] = $myrow;
         }
 
         return $arr;
@@ -103,7 +103,7 @@ class ClassifiedsTree
             return $idarray;
         }
         while (false !== (list($id) = $this->db->fetchRow($result))) {
-            array_push($idarray, $id);
+            $idarray[] = $id;
         }
 
         return $idarray;
@@ -135,8 +135,8 @@ class ClassifiedsTree
             return $idarray;
         }
         while (false !== (list($r_id) = $this->db->fetchRow($result))) {
-            array_push($idarray, $r_id);
-            $idarray = $this->getAllChildId($r_id, $order, $idarray);
+            $idarray[] = $r_id;
+            $idarray   = $this->getAllChildId($r_id, $order, $idarray);
         }
 
         return $idarray;
@@ -166,8 +166,8 @@ class ClassifiedsTree
         if (0 == $r_id) {
             return $idarray;
         }
-        array_push($idarray, $r_id);
-        $idarray = $this->getAllParentId($r_id, $order, $idarray);
+        $idarray[] = $r_id;
+        $idarray   = $this->getAllParentId($r_id, $order, $idarray);
 
         return $idarray;
     }
@@ -343,8 +343,8 @@ class ClassifiedsTree
             return $parray;
         }
         while (false !== ($row = $this->db->fetchArray($result))) {
-            array_push($parray, $row);
-            $parray = $this->getAllChild($row[$this->id], $order, $parray);
+            $parray[] = $row;
+            $parray   = $this->getAllChild($row[$this->id], $order, $parray);
         }
 
         return $parray;
@@ -379,8 +379,8 @@ class ClassifiedsTree
         }
         while (false !== ($row = $this->db->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
-            array_push($parray, $row);
-            $parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
+            $parray[]      = $row;
+            $parray        = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);
         }
 
         return $parray;
@@ -471,8 +471,8 @@ class ClassifiedsTree
         }
         while (false !== ($row = $xoopsDB->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
-            array_push($parray, $row);
-            $parray = $this->getChildTreeMapArray($row[$this->id], $order, $parray, $row['prefix']);
+            $parray[]      = $row;
+            $parray        = $this->getChildTreeMapArray($row[$this->id], $order, $parray, $row['prefix']);
         }
 
         return $parray;

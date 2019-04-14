@@ -597,7 +597,7 @@ class Utility
 
         $resultValues = $xoopsDB->query($sql);
         while (false !== ($resultTemp = $xoopsDB->fetchBoth($resultValues))) {
-            array_push($result, $resultTemp);
+            $result[] = $resultTemp;
         }
 
         return $result;
@@ -618,7 +618,7 @@ class Utility
 
         $resultValues = $xoopsDB->query($sql);
         while (false !== ($resultTemp = $xoopsDB->fetchBoth($resultValues))) {
-            array_push($result, $resultTemp);
+            $result[] = $resultTemp;
         }
 
         return $result;
