@@ -206,7 +206,7 @@ class PicturesHandler extends \XoopsObjectHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -243,7 +243,7 @@ class PicturesHandler extends \XoopsObjectHandler
         global $moduleDirName;
 
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
@@ -265,7 +265,7 @@ class PicturesHandler extends \XoopsObjectHandler
     {
         global $moduleDirName;
         $sql = 'DELETE FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
