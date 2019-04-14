@@ -258,10 +258,10 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * delete Pictures matching a set of conditions
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement}
+     * @param  \CriteriaElement $criteria {@link \CriteriaElement}
      * @return bool   FALSE if deletion failed
      */
-    public function deleteAll(CriteriaElement $criteria = null)
+    public function deleteAll(\CriteriaElement $criteria = null)
     {
         global $moduleDirName;
         $sql = 'DELETE FROM ' . $this->db->prefix('adslight_pictures');
@@ -281,7 +281,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param int      $uid
      * @param int      $lid
      * @param int      $maxbytes the maximum size of a picture
-     * @param XoopsTpl $xoopsTpl the one in which the form will be rendered
+     * @param \XoopsTpl $xoopsTpl the one in which the form will be rendered
      * @return bool   TRUE
      *
      * obs: Some functions wont work on php 4 so edit lines down under acording to your version
@@ -326,7 +326,7 @@ class PicturesHandler extends \XoopsObjectHandler
      *
      * @param  string $caption  The description of the picture
      * @param  int    $cod_img  the id of the image in database
-     * @param  text   $filename the url to the thumb of the image so it can be displayed
+     * @param  string   $filename the url to the thumb of the image so it can be displayed
      * @return bool   TRUE
      */
     public function renderFormEdit($caption, $cod_img, $filename)
@@ -359,8 +359,8 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Upload the file and Save into database
      *
-     * @param  text $title         A litle description of the file
-     * @param  text $path_upload   The path to where the file should be uploaded
+     * @param  string $title         A litle description of the file
+     * @param  string $path_upload   The path to where the file should be uploaded
      * @param  int  $thumbwidth    the width in pixels that the thumbnail will have
      * @param  int  $thumbheight   the height in pixels that the thumbnail will have
      * @param  int  $pictwidth     the width in pixels that the pic will have

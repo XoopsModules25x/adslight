@@ -468,7 +468,7 @@ class Utility
      * @param string $height
      * @param string $supplemental
      *
-     * @return XoopsFormDhtmlTextArea|\XoopsFormEditor
+     * @return \XoopsFormDhtmlTextArea|\XoopsFormEditor
      */
     public static function getEditor($caption, $name, $value = '', $width = '100%', $height = '300px', $supplemental = '')
     {
