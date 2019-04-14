@@ -44,6 +44,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
  */
 class Pictures extends \XoopsObject
 {
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
     // constructor
 
@@ -100,6 +101,7 @@ class Pictures extends \XoopsObject
     public function getAllPictures($criteria = [], $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
     {
         global $moduleDirName;
+        /** @var \XoopsMySQLDatabase $db */
         $db          = \XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = [];
         $where_query = '';

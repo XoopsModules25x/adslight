@@ -35,6 +35,7 @@ class ClassifiedsTree
     public $pid;
     public $order;
     public $title;
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
 
     /**

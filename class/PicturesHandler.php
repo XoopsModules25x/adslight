@@ -195,7 +195,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * retrieve Pictures object(s) from the database
      *
-     * @param  \CriteriaElement $criteria  {@link \CriteriaElement} conditions to be met
+     * @param  \CriteriaElement|\CriteriaCompo $criteria  {@link \CriteriaElement} conditions to be met
      * @param  bool            $id_as_key use the UID as key for the array?
      * @return array  array of {@link Pictures} objects
      */
@@ -235,7 +235,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * count Pictures matching a condition
      *
-     * @param  \CriteriaElement $criteria {@link \CriteriaElement} to match
+     * @param  \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement} to match
      * @return int    count of Pictures
      */
     public function getCount(\CriteriaElement $criteria = null)
