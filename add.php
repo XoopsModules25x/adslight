@@ -42,9 +42,8 @@ if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $mo
 
 $premium = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? 1 : 0;
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 if (!$GLOBALS['xoopsUser'] instanceof \XoopsUser) {

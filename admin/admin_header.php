@@ -21,7 +21,6 @@ use XoopsModules\Adslight;
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
-// require_once  dirname(__DIR__) . '/class/Utility.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 

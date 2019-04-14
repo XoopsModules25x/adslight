@@ -124,10 +124,9 @@ function modAd($lid)
     global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
     $contactselect = '';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
 
-    //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
@@ -135,7 +134,7 @@ function modAd($lid)
 
     $categories = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {
-        if (!in_array($cide, $categories, true)) {
+        if (!in_array((int)$cide, $categories, true)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
     } else {    // User can't see any category

@@ -50,9 +50,8 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $premium = 0; // set for access to non-premium content only
 }
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 //@todo - seems this should let users through if they have group rights instead of

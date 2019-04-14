@@ -22,8 +22,6 @@
 
 use XoopsModules\Adslight;
 
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
-
 /**
  * @param $queryarray
  * @param $andor

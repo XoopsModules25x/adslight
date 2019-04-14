@@ -35,7 +35,6 @@ require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * light_pictures class.

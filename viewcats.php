@@ -49,8 +49,6 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $prem_perm = '1';
 }
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function view (categories)
@@ -141,7 +139,7 @@ function adsView($cid, $min, $orderby, $show = 0)
 
     $categories = Adslight\Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
-        if (!in_array($cid, $categories, true)) {
+        if (!in_array((int)$cid, $categories, true)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
     } else {    // User can't see any category
