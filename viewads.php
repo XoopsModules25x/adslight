@@ -97,7 +97,7 @@ function viewAds($lid = 0)
         if ($usid = $member_usid) {
             $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
-            if (mb_strlen($GLOBALS['xoopsUser']->getVar('name'))) {
+            if ('' != $GLOBALS['xoopsUser']->getVar('name')) {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('name') . ' (' . $GLOBALS['xoopsUser']->getVar('uname') . ')');
             } else {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('uname'));
