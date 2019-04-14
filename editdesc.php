@@ -23,15 +23,15 @@
 use Xmf\Request;
 use XoopsModules\Adslight;
 
+require_once __DIR__ . '/header.php';
+
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . mb_strtoupper($moduleDirName);
 
 /**
  * Xoops Header
  */
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
-//require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**
  * Include modules classes
