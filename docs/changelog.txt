@@ -1,5 +1,14 @@
-2.2 Beta 4        2016-10-02
-=================================
+<h5>2.2 RC 2  [2017-07-20]</h5>
+<hr>
+
+- started transition to XMF (mamba)
+- adjusted help links to operations manual (mamba)
+- removed XCube support (geekwright, mamba)
+- converted XoopsGTicket to XoopsSecurity (geekwright, mamba)
+
+<h5>2.2 Beta 4        [2016-10-02]</h5>
+<hr>
+
 - filter user input using XoopsRequest (zyspec)
 - changed jlm_pictures class to AdslightPictures class (zyspec)
 - changed from using HTTP_GET_VARS to _GET in ./rate-item.php on form submission (zyspec)
@@ -16,16 +25,12 @@
 - fixed bug in ./admin/category $moderate_subcat was set instead of compared in 'if' statement (zyspec)
 - fixed bug where contact select box did not recall contact method properly (zyspec)
 - general code cleanup (mamba & zyspec)
-- started transition to XMF (mamba)
-- adjusted help links to operations manual (mamba)
 
-
-TODO:
+<h5>TODO:</h5>
 - remove flash maps support - find alternative
 - eliminate all 'extract' type code (i.e. foreach ($_POST as $k => $v)) in code for security reasons
 - refactor code to significantly reduce need for globals (change functions w/ switch statements)
 - refactor upgrade script(s) to include movement of assets to ./assets directory
-- remove XCube support - it's current implementation will fail (now using more modern "XOOPS" functions
 - change tree manipulation to XoopsObjectTree instead of using ClassifiedsTree class
 - change AdslightPicturesHandler to be a XoopsPersistableObjectHandler class
 - implement new error handling methods - XOOPS ErrorHandler has been deprecated
@@ -42,8 +47,9 @@ TODO:
 
 
 
-2.2 Beta 3        2016-10-01
-=================================
+<h5>2.2 Beta 3        [2016-10-01]</h5>
+<hr>
+
 - updated currency to use locale
 - moved all images, CSS, and JS files to /assets (mamba)
 - renamed .html Smarty templates to .tpl (mamba)
@@ -63,27 +69,29 @@ TODO:
 - changed _handler to Handler (mamba)
 - replace $xoopsOption['template_main'] with $GLOBALS['xoopsOption']['template_main'] (mamba)
 
-2.2 Beta 2          2013-05-10
-=================================
+<h5>2.2 Beta 2          [2013-05-10]</h5>
+<hr>
+
 - phone number will show only when selected by the user as the way to contact (chefry/mamba)
 - moved hard-coded 404 error text to language file (mamba)
 - fixed: ad owner cannot edit his ad, when set to "inactive" (surfinsaxman/mamba)
 - removed encoded footer (mamba)
 
-TODO:
+<h5>TODO:</h5>
 - You can select 'contact by telephone' and leave the field telephone blank, or enter letters.
 - When I try to upgrade to a premium member, the premium.php is missing
 
 
-2.2 Beta 1          2013-03-13
-=================================
+<h5>2.2 Beta 1          [2013-03-13]</h5>
+<hr>
+
 - Converted to XOOPS 2.5.5 Admin GUI (mamba)
 - fixed minor bugs (cesagonchu/mamba)
 - add: dynamic configuration of Text Editors in Preferences (mamba)
 
 
-2.1 beta                25.05.2011
-=================================
+<h5>2.1 beta                [25.05.2011]</h5>
+<hr>
 - Activation / désactivation du menu
 - Activation des liens Bookmark
 ( choix possible entre plusieurs style de Bookmark )
@@ -103,29 +111,33 @@ TODO:
 pour gagner encore un peu en temps d'affichage
 
 
-1.06                09.05.2010
-=================================
+<h5>1.06                [09.05.2010]</h5>
+<hr>
+
 - La partie Admin a été revue.
 - Certaines parties du code a était améliorer
 + traduction Néerlandais
 
 
-1.055               01.05.2010
-=================================
+<h5>1.055               [01.05.2010]</h5>
+<hr>
+
 - Traduction "bosanski" ( by Saba xoopsba.org )
 - Correction Bugs
 
 
-1.054               03.04.2010
-=================================
+<h5>1.054               [03.04.2010]</h5>
+<hr>
+
 - Cache requête sql
 - Changement des images catŽgories
 - Traduction Allemand UTF-8
 + Divers corrections
 
 
-1.053               07.03.2010
-=================================
+<h5>1.053               [07.03.2010]</h5>
+<hr>
+
 - intégration Maps, carte de France ( avec possibilité de rajouter d'autres cartes facilement )
 - Meta Keywords + Meta description (catégories)
 - intégration de Pub, entre les annonces, et dans les catégories.
@@ -133,21 +145,24 @@ pour gagner encore un peu en temps d'affichage
 + Diverses corrections
 
 
-1.05                03.02.2010
-=================================
+<h5>1.05                [03.02.2010]</h5>
+<hr>
+
 - Code all&eacute;ger + rapide
 + Divers corrections...
 
 
-1.04                03.02.2010
-=================================
+<h5>1.04                [03.02.2010]</h5>
+<hr>
+
 - Am&eacute;lioration de la page cat&eacute;gories ( Admin )
 - Am&eacute;lioration de la page index ( Admin )
 + Divers corrections...
 
 
-1.0.3 Beta             01.02.2010
-=================================
+<h5>1.0.3 Beta             [01.02.2010]</h5>
+<hr>
+
 - Pr&eacute;sentation cat&eacute;gories sur la page d'accueil
 - Images cat&eacute;gories page d'accueil
 - Annonce Google entre les annonces en page d'accueil
@@ -155,8 +170,9 @@ pour gagner encore un peu en temps d'affichage
 + Divers corrections...
 
 
-1.0.2 Beta             30.01.2010
-=================================
+<h5>1.0.2 Beta             [30.01.2010]</h5>
+<hr>
+
 - Notifications dans les cat&eacute;gories
 - Affichage des sous-cat&eacute;gories en page index
 - Option d'affichage des miniatures en page d'index

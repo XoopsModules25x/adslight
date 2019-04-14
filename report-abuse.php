@@ -21,22 +21,21 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//include XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * @param $lid
- *
- * @return void
  */
 function ReportAbuse($lid)
 {
     global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
 
-    include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
 
     $lid    = (int)$lid;
     $idd    = $idde = $iddee = '';
@@ -75,7 +74,7 @@ function ReportAbuse($lid)
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
-        $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
+        $jlm_captcha = new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
         echo '</td></tr>';
     }
@@ -107,10 +106,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     }
 
     $lid    = (int)$lid;
-    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM '
-                              . $xoopsDB->prefix('adslight_listing')
-                              . ' WHERE lid='
-                              . $xoopsDB->escape($lid));
+    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
@@ -124,7 +120,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $town      = $myts->addSlashes($town);
     $country   = $myts->addSlashes($country);
 
-    $tags                       = array();
+    $tags                       = [];
     $tags['YNAME']              = stripslashes($yname);
     $tags['YMAIL']              = $ymail;
     $tags['FNAME']              = stripslashes($fname);
@@ -133,7 +129,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['LID']                = $lid;
     $tags['LISTING_NUMBER']     = _ADSLIGHT_LISTING_NUMBER;
     $tags['TITLE']              = $title;
-    $tags['TYPE']               = AdslightUtility::getNameType($type);
+    $tags['TYPE']               = Adslight\Utility::getNameType($type);
     $tags['DESCTEXT']           = $desctext;
     $tags['PRICE']              = $price;
     $tags['TYPEPRICE']          = $typeprice;
@@ -181,15 +177,13 @@ $op  = Request::getString('op', '');
 
 switch ($op) {
     case 'ReportAbuse':
-        include XOOPS_ROOT_PATH . '/header.php';
+        require_once XOOPS_ROOT_PATH . '/header.php';
         ReportAbuse($lid);
-        include XOOPS_ROOT_PATH . '/footer.php';
+        require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
-
     case 'MailAd':
         MailAd($lid, $yname, $ymail, $fname, $fmail);
         break;
-
     default:
         redirect_header('index.php', 1, _RETURNANN);
         break;

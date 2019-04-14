@@ -23,20 +23,20 @@
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
-$myts      = MyTextSanitizer::getInstance();
+$myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-$groups = ($GLOBALS['xoopsUser'] instanceof XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
-/** @var XoopsGroupPermHandler $gpermHandler */
-$gpermHandler = xoops_getHandler('groupperm');
-$perm_itemid  = Request::getInt('item_id', 0, 'POST');
+$groups = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+/** @var \XoopsGroupPermHandler $grouppermHandler */
+$grouppermHandler = xoops_getHandler('groupperm');
+$perm_itemid      = Request::getInt('item_id', 0, 'POST');
 //If no access
-if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-$prem_perm = $gpermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? '1' : '0';
+$prem_perm = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? '1' : '0';
 
 #  function tips_writing
 #####################################################
@@ -45,36 +45,36 @@ function tips_writing()
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm;
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_tips_writing_ad.tpl';
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
 
-    $xoopsTpl->assign('xmid', $xoopsModule->getVar('mid'));
-    $xoopsTpl->assign('permit', $prem_perm);
-    $xoopsTpl->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
-    $xoopsTpl->assign('add_from_title', _ADSLIGHT_ADDFROM);
-    $xoopsTpl->assign('add_from_sitename', $xoopsConfig['sitename']);
-    $xoopsTpl->assign('only_pix', _ADSLIGHT_ONLYPIX);
-    $xoopsTpl->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
-    $xoopsTpl->assign('bullinfotext', _ADSLIGHT_TIPSWRITE);
-    $xoopsTpl->assign('adslight_writetexte', $GLOBALS['xoopsModuleConfig']['adslight_tips_writetxt']);
-    $xoopsTpl->assign('adslight_writetitle', $GLOBALS['xoopsModuleConfig']['adslight_tips_writetitle']);
-    $xoopsTpl->assign('ads_use_tipswrite', $GLOBALS['xoopsModuleConfig']['adslight_use_tipswrite']);
+    $GLOBALS['xoopsTpl']->assign('xmid', $xoopsModule->getVar('mid'));
+    $GLOBALS['xoopsTpl']->assign('permit', $prem_perm);
+    $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
+    $GLOBALS['xoopsTpl']->assign('add_from_title', _ADSLIGHT_ADDFROM);
+    $GLOBALS['xoopsTpl']->assign('add_from_sitename', $xoopsConfig['sitename']);
+    $GLOBALS['xoopsTpl']->assign('only_pix', _ADSLIGHT_ONLYPIX);
+    $GLOBALS['xoopsTpl']->assign('adslight_logolink', _ADSLIGHT_LOGOLINK);
+    $GLOBALS['xoopsTpl']->assign('bullinfotext', _ADSLIGHT_TIPSWRITE);
+    $GLOBALS['xoopsTpl']->assign('adslight_writetexte', $GLOBALS['xoopsModuleConfig']['adslight_tips_writetxt']);
+    $GLOBALS['xoopsTpl']->assign('adslight_writetitle', $GLOBALS['xoopsModuleConfig']['adslight_tips_writetitle']);
+    $GLOBALS['xoopsTpl']->assign('ads_use_tipswrite', $GLOBALS['xoopsModuleConfig']['adslight_use_tipswrite']);
 
-    $xoopsTpl->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >');
+    $GLOBALS['xoopsTpl']->assign('xoops_module_header', '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >');
     $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     // adslight 2
-    $xoopsTpl->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
-    $xoopsTpl->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
+    $GLOBALS['xoopsTpl']->assign('adslight_active_menu', $GLOBALS['xoopsModuleConfig']['adslight_active_menu']);
+    $GLOBALS['xoopsTpl']->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 
     if ($GLOBALS['xoopsUser']) {
         $member_usid = $GLOBALS['xoopsUser']->getVar('uid');
         if ($usid = $member_usid) {
-            $xoopsTpl->assign('istheirs', true);
+            $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
             list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
-            $xoopsTpl->assign('show_user', $show_user);
-            $xoopsTpl->assign('show_user_link', "members.php?usid=$member_usid");
+            $GLOBALS['xoopsTpl']->assign('show_user', $show_user);
+            $GLOBALS['xoopsTpl']->assign('show_user_link', "members.php?usid=$member_usid");
         }
     }
 }
@@ -89,4 +89,4 @@ switch ($pa) {
         tips_writing();
         break;
 }
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

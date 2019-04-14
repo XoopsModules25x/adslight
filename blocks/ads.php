@@ -20,7 +20,9 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+use XoopsModules\Adslight;
 
 /**
  * @param $options
@@ -29,31 +31,31 @@
  */
 function adslight_show($options)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/utility.php';
+    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
     global $xoopsDB, $moduleDirName, $block_lang;
 
-    $block = array();
-    $myts  = MyTextSanitizer::getInstance();
+    $block = [];
+    $myts  = \MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $block['title'] = constant("{$block_lang}_TITLE");
 
     $result = $xoopsDB->query('SELECT lid, cid, title, type, date, hits FROM ' . $xoopsDB->prefix("{$moduleDirName}_listing") . " WHERE valid='Yes' ORDER BY {$options[0]} DESC", $options[1], 0);
 
-    while ($myrow = $xoopsDB->fetchArray($result)) {
-        $a_item = array();
+    while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
+        $a_item = [];
         $title  = $myts->htmlSpecialChars($myrow['title']);
         $type   = $myts->htmlSpecialChars($myrow['type']);
 
         if (!XOOPS_USE_MULTIBYTES) {
-            if (strlen($myrow['title']) >= $options[2]) {
-                $title = $myts->htmlSpecialChars(substr($myrow['title'], 0, $options[2] - 1)) . '...';
+            if (mb_strlen($myrow['title']) >= $options[2]) {
+                $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
             }
         }
 
-        $a_item['type'] = AdslightUtility::getNameType($type);
+        $a_item['type'] = Adslight\Utility::getNameType($type);
         $a_item['id']   = $myrow['lid'];
         $a_item['cid']  = $myrow['cid'];
 
@@ -83,7 +85,7 @@ function adslight_edit($options)
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $form = constant("{$block_lang}_ORDER") . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";

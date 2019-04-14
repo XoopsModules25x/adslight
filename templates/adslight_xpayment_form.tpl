@@ -1,4 +1,5 @@
 <form action="<{$xoops_url}>/modules/xpayment/" method="post">
+    <{securityToken}><{*//mb*}>
     <!-- This is the header of the invoice -->
     <input type="hidden" name="op" value="createinvoice">
     <input type="hidden" name="plugin" value="adslight">

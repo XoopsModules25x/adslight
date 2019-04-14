@@ -19,7 +19,9 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 
@@ -40,23 +42,22 @@ if (Request::hasVar('submit', 'POST')) {
     $module_id = $xoopsModule->getVar('mid');
 
     $module_id = $xoopsModule->getVar('mid');
-    $groups    = ($xoopsUser instanceof XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    /** @var XoopsGroupPermHandler $gpermHandler */
-    $gpermHandler = xoops_getHandler('groupperm');
+    $groups    = ($xoopsUser instanceof \XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
 
     $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
     //If no access
-    if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+    if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
     global $xoopsConfig, $xoopsDB, $myts, $meta;
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
-    if (!$xoopsGTicket->check(true, 'token')) {
-        redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $xoopsGTicket->getErrors());
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
-    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
@@ -66,7 +67,7 @@ if (Request::hasVar('submit', 'POST')) {
     $lid    = Request::getInt('id', 0, 'POST');
     $result = $xoopsDB->query('SELECT email, submitter, title, type, desctext, price, typeprice FROM  ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $xoopsDB->escape($id));
 
-    while (list($email, $submitter, $title, $type, $desctext, $price, $typeprice) = $xoopsDB->fetchRow($result)) {
+    while (false !== (list($email, $submitter, $title, $type, $desctext, $price, $typeprice) = $xoopsDB->fetchRow($result))) {
         $teles = Request::getString('tele', '', 'POST');
 
         if ($price) {
@@ -78,9 +79,9 @@ if (Request::hasVar('submit', 'POST')) {
         $date   = time();
         $r_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
 
-        $tags                = array();
+        $tags                = [];
         $tags['TITLE']       = $title;
-        $tags['TYPE']        = AdslightUtility::getNameType($type);
+        $tags['TYPE']        = Adslight\Utility::getNameType($type);
         $tags['PRICE']       = $price;
         $tags['DESCTEXT']    = stripslashes($desctext);
         $tags['MY_SITENAME'] = $xoopsConfig['sitename'];
@@ -107,19 +108,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['WEBMASTER']   = _ADSLIGHT_WEBMASTER;
         $tags['SITE_URL']    = '<a href="' . XOOPS_URL . '">' . XOOPS_URL . '</a>';
         $tags['AT']          = _ADSLIGHT_AT;
-        $tags['LINK_URL']    = '<a href="'
-                               . XOOPS_URL
-                               . '/modules/'
-                               . $xoopsModule->getVar('dirname')
-                               . '/viewads.php?lid='
-                               . addslashes($id)
-                               . '">'
-                               . XOOPS_URL
-                               . '/modules/'
-                               . $xoopsModule->getVar('dirname')
-                               . '/viewads.php?lid='
-                               . addslashes($id)
-                               . '</a>';
+        $tags['LINK_URL']    = '<a href="' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?lid=' . addslashes($id) . '">' . XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?lid=' . addslashes($id) . '</a>';
         $tags['VIEW_AD']     = _ADSLIGHT_VIEW_AD;
 
         $subject = '' . _ADSLIGHT_CONTACTAFTERANN . '';
@@ -140,11 +129,7 @@ if (Request::hasVar('submit', 'POST')) {
 
         $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date', '$namep', '$ipnumber', '" . Request::getString('post', '', 'POST') . "')");
 
-        $xoopsDB->query('INSERT INTO '
-                        . $xoopsDB->prefix('adslight_replies')
-                        . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '"
-                        . Request::getString('post', '', 'POST')
-                        . "', '$r_usid')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '" . Request::getString('post', '', 'POST') . "', '$r_usid')");
 
         redirect_header('index.php', 3, _ADSLIGHT_MESSEND);
     }
@@ -161,46 +146,46 @@ if (Request::hasVar('submit', 'POST')) {
     } else {
         $groups = XOOPS_GROUP_ANONYMOUS;
     }
-    /** @var XoopsGroupPermHandler $gpermHandler */
-    $gpermHandler = xoops_getHandler('groupperm');
-    $perm_itemid  = Request::getInt('item_id', 0, 'POST');
+    /** @var \XoopsGroupPermHandler $grouppermHandler */
+    $grouppermHandler = xoops_getHandler('groupperm');
+    $perm_itemid      = Request::getInt('item_id', 0, 'POST');
     //If no access
-    if (!$gpermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
+    if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }
 
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+    //    require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    include XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     $time     = time();
-    $ipnumber = "$_SERVER[REMOTE_ADDR]";
+    $ipnumber = (string)$_SERVER[REMOTE_ADDR];
     echo '<script type="text/javascript">
           function verify()
           {
-                var msg = "' . _ADSLIGHT_VALIDERORMSG . "\\n__________________________________________________\\n\\n\";
-                var errors = \"FALSE\";
-                if (window.document.cont.namep.value == \"\") {
-                        errors = \"TRUE\";
-                        msg += \"" . _ADSLIGHT_VALIDSUBMITTER . "\\n\";
+                var msg = "' . _ADSLIGHT_VALIDERORMSG . '\\n__________________________________________________\\n\\n";
+                var errors = "FALSE";
+                if (window.document.cont.namep.value == "") {
+                        errors = "TRUE";
+                        msg += "' . _ADSLIGHT_VALIDSUBMITTER . '\\n";
                 }
-                if (window.document.cont.post.value == \"\") {
-                        errors = \"TRUE\";
-                        msg += \"" . _ADSLIGHT_VALIDEMAIL . "\\n\";
+                if (window.document.cont.post.value == "") {
+                        errors = "TRUE";
+                        msg += "' . _ADSLIGHT_VALIDEMAIL . '\\n";
                 }
-                if (window.document.cont.messtext.value == \"\") {
-                        errors = \"TRUE\";
-                        msg += \"" . _ADSLIGHT_VALIDMESS . "\\n\";
+                if (window.document.cont.messtext.value == "") {
+                        errors = "TRUE";
+                        msg += "' . _ADSLIGHT_VALIDMESS . '\\n";
                 }
-                if (errors == \"TRUE\") {
-                        msg += \"__________________________________________________\\n\\n" . _ADSLIGHT_VALIDMSG . "\\n\";
+                if (errors == "TRUE") {
+                        msg += "__________________________________________________\\n\\n' . _ADSLIGHT_VALIDMSG . '\\n";
                         alert(msg);
 
                         return false;
                 }
           }
-          </script>";
+          </script>';
 
     echo '<b>' . _ADSLIGHT_CONTACTAUTOR . '</b><br><br>';
     echo '' . _ADSLIGHT_TEXTAUTO . '<br>';
@@ -231,10 +216,10 @@ if (Request::hasVar('submit', 'POST')) {
       <td class='head'>" . _ADSLIGHT_YOURMESSAGE . "</td>
       <td class='even'><textarea rows=\"5\" name=\"messtext\" cols=\"40\" ></textarea></td>
     </tr>";
-    if ($GLOBALS['xoopsModuleConfig']['adslight_use_captcha'] == '1') {
+    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
         $jlm_captcha = '';
-        $jlm_captcha = new XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
+        $jlm_captcha = new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
     }
 
@@ -248,8 +233,8 @@ if (Request::hasVar('submit', 'POST')) {
     echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" >";
     echo "<input type=\"hidden\" name=\"date\" value=\"$time\" >";
     echo '<p><input type="submit" name="submit" value="' . _ADSLIGHT_SENDFR . '" ></p>
-' . $GLOBALS['xoopsGTicket']->getTicketHtml(__LINE__, 1800, 'token') . '
+' . $GLOBALS['xoopsSecurity']->getTokenHTML() . '
     </form>';
 }
 echo '</td></tr></table>';
-include XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -22,17 +22,17 @@
 
 use Xmf\Request;
 
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
 $moduleDirName = basename(__DIR__);
 
 $com_itemid = Request::getInt('com_itemid', 0, 'GET');
-$com_itemid = (int)$com_itemid;
+$com_itemid = $com_itemid;
 if ($com_itemid > 0) {
     // Get link title
     $sql            = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid={$com_itemid}";
     $result         = $xoopsDB->query($sql);
     $row            = $xoopsDB->fetchArray($result);
     $com_replytitle = $row['title'];
-    include XOOPS_ROOT_PATH . '/include/comment_new.php';
+    require_once XOOPS_ROOT_PATH . '/include/comment_new.php';
 }

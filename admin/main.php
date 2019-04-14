@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 
@@ -32,10 +33,10 @@ function index()
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName;
     //    require_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
-    $mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/admin_header.php';
-    //  require_once("adsligh_rsslib.php");
+    //  require("adsligh_rsslib.php");
 
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
@@ -166,7 +167,7 @@ function index()
 
     /// Statistiques
     $Num1 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_listing') . "  WHERE (valid='Yes' AND status!='1')"));
-    $Num2 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ''));
+    $Num2 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ' '));
     $Num3 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('users') . "  WHERE (level = '1')"));
     $Num4 = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('xoopscomments') . "  WHERE (com_status = '2')"));
 
@@ -274,9 +275,9 @@ function index()
                  '._AM_ADSLIGHT_DONATE.'
                  </td></tr>
 
-                 <tr class="even"><td><center>
+                 <tr class="even"><td><div class='center;'>
                  '._AM_ADSLIGHT_DONATE_LOGO.'
-                 </center></td></tr>
+                 </div></td></tr>
 
                   </table><br>';  */
 

@@ -19,27 +19,29 @@
  Licence Type   : GPL
 -------------------------------------------------------------------------
 */
+
 use Xmf\Request;
 
 $moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . strtoupper($moduleDirName);
+$main_lang     = '_' . mb_strtoupper($moduleDirName);
 
 /**
  * Xoops header ...
  */
-include dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
 /**
  * Modules class includes
  */
-require_once __DIR__ . '/class/pictures.php';
+require_once __DIR__ . '/class/Pictures.php';
+require_once __DIR__ . '/class/PicturesHandler.php';
 
 /**
  * Factory of pictures created
  */
-$album_factory = new AdslightPicturesHandler($xoopsDB);
+$album_factory = new PicturesHandler($xoopsDB);
 
 /**
  * Getting the title
@@ -49,40 +51,23 @@ $lid   = Request::getInt('lid', 0, 'POST');
 /**
  * Getting parameters defined in admin side
  */
-
 $path_upload   = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
 $pictwidth     = $GLOBALS['xoopsModuleConfig']['adslight_resized_width'];
 $pictheight    = $GLOBALS['xoopsModuleConfig']['adslight_resized_height'];
 $thumbwidth    = $GLOBALS['xoopsModuleConfig']['adslight_thumb_width'];
 $thumbheight   = $GLOBALS['xoopsModuleConfig']['adslight_thumb_height'];
 $maxfilebytes  = $GLOBALS['xoopsModuleConfig']['adslight_maxfilesize'];
-$maxfileheight = $GLOBALS['xoopsModuleConfig']['adslight_max_original_height'];
-$maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_original_width'];
+$maxfileheight = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_height'];
+$maxfilewidth  = $GLOBALS['xoopsModuleConfig']['adslight_max_orig_width'];
 
 /**
  * If we are receiving a file
  */
 if ('sel_photo' === Request::getArray('xoops_upload_file', '', 'POST')[0]) {
-
-    /**
-     * Check if using Xoops or XoopsCube (by jlm69)
-     * Right now Xoops does not have a directory called preload, Xoops Cube does.
-     * If this finds a diectory called preload in the Xoops Root folder $xCube=true.
-     * This could change if Xoops adds a Directory called preload
-     */
-
-    // XOOPS Cube 2.1x
-    $xCube = preg_match('/^XOOPS Cube/', XOOPS_VERSION) ? true : false;
-
-    if ($xCube) {
-        if (!$xoopsGTicket->check(true, 'token')) {
-            redirect_header(XOOPS_URL . '/', 3, $xoopsGTicket->getErrors());
-        }
-    } else {
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header($_SERVER['HTTP_REFERER'], 3, _ADSLIGHT_TOKENEXPIRED);
-        }
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 3, _ADSLIGHT_TOKENEXPIRED);
     }
+
     /**
      * Try to upload picture resize it insert in database and then redirect to index
      */

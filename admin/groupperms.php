@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 //require_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
@@ -40,11 +41,11 @@ if ('0' == $cat_rows) {
 } else {
     //$permtoset= isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
     $permtoset                = Request::getInt('permtoset', 1, 'POST');
-    $selected                 = array(
+    $selected                 = [
         '',
         '',
-        ''
-    );
+        '',
+    ];
     $selected[$permtoset - 1] = ' selected';
     echo "<form method='post' name='jselperm' action='groupperms.php'><table border=0><tr><td><select name='permtoset' onChange='document.jselperm.submit()'><option value='1'"
          . $selected[0]
@@ -79,8 +80,8 @@ if ('0' == $cat_rows) {
             break;
     }
 
-    $permform = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperms.php');
-    $cattree  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperms.php');
+    $cattree  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $allcats  = $cattree->getCategoryList();
     foreach ($allcats as $cid => $category) {
         $permform->addItem($cid, $category['title'], $category['pid']);

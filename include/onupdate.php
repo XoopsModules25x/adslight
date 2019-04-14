@@ -16,13 +16,13 @@
  * @author       XOOPS Development Team
  */
 
-use Xmf\Database\Tables;
 use Xmf\Database\Migrate;
+use Xmf\Database\Tables;
+use XoopsModules\Adslight;
 
 if ((!defined('XOOPS_ROOT_PATH'))
-    || !($GLOBALS['xoopsUser'] instanceof XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()
-) {
+    || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
+    || !$GLOBALS['xoopsUser']->IsAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
@@ -39,54 +39,46 @@ function tableExists($tablename)
 }
 
 /**
- *
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_adslight(XoopsModule $module)
+function xoops_module_pre_update_adslight(\XoopsModule $module)
 {
+    /** @var \XoopsModules\Adslight\Helper $helper */
+    /** @var \XoopsModules\Adslight\Utility $utility */
     $moduleDirName = basename(dirname(__DIR__));
-    $className     = ucfirst($moduleDirName) . 'Utility';
-    if (!class_exists($className)) {
-        xoops_load('utility', $moduleDirName);
-    }
-    //check for minimum XOOPS version
-    if (!$className::checkXoopsVer($module)) {
-        return false;
-    }
+    $helper        = \XoopsModules\Adslight\Helper::getInstance();
+    $utility       = new \XoopsModules\Adslight\Utility();
 
-    // check for minimum PHP version
-    if (!$className::checkPHPVer($module)) {
-        return false;
-    }
+    $xoopsSuccess = $utility::checkVerXoops($module);
+    $phpSuccess   = $utility::checkVerPhp($module);
 
-    return true;
+    return $xoopsSuccess && $phpSuccess;
 }
 
 /**
- *
  * Performs tasks required during update of the module
  * @param XoopsModule $module {@link XoopsModule}
  * @param null        $previousVersion
  *
  * @return bool true if update successful, false if not
  */
-
-function xoops_module_update_adslight(XoopsModule $module, $previousVersion = null)
+function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = null)
 {
     global $xoopsDB;
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
+    /** @var \XoopsModules\Adslight\Helper $helper */
+    /** @var \XoopsModules\Adslight\Utility $utility */
+    /** @var \XoopsModules\Adslight\Common\Configurator $configurator */
+    $helper       = \XoopsModules\Adslight\Helper::getInstance();
+    $utility      = new \XoopsModules\Adslight\Utility();
+    $configurator = new \XoopsModules\Adslight\Common\Configurator();
 
     if ($previousVersion < 230) {
-        //        $configurator   = include __DIR__ . '/config.php';
-        require_once __DIR__ . '/config.php';
-        $configurator = new AdsligthConfigurator();
-        $classUtility     = ucfirst($moduleDirName) . 'Utility';
-        if (!class_exists($classUtility)) {
-            xoops_load('utility', $moduleDirName);
-        }
         /*
                 //rename column
                 $tables     = new Tables();
@@ -98,7 +90,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
                 if ($tables->useTable($table)) {
                     $tables->alterColumn($table, $column, $attributes, $newName);
                     if (!$tables->executeQueue()) {
-                        echo '<br >' . _AM_ADSLIGHT_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
+                        echo '<br>' . _AM_ADSLIGHT_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
                     }
                 }
 
@@ -110,14 +102,14 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
                 //    $module_name = $xoopsModule->getVar('name');
                 //    $module_dirname = $xoopsModule->getVar('dirname');
                 //    $module_version = $xoopsModule->getVar('version');
-                $gpermHandler = xoops_getHandler('groupperm');
+                $grouppermHandler = xoops_getHandler('groupperm');
                 // access rights ------------------------------------------
-                $gpermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_USERS, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
-                $gpermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_USERS, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
+                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
         */
 
         /*
@@ -133,12 +125,12 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
 
                 $result = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('adslight_categories'));
 
-                while ($myrow = $xoopsDB->fetchArray($result)) {
+                while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
 
                     $categoryId = (int)($myrow['cid']);
-                    $classUtility::saveCategoryPermissions($groups1, $categoryId, $permName1);
-                    $classUtility::saveCategoryPermissions($groups2, $categoryId, $permName2);
-                    $classUtility::saveCategoryPermissions($groups3, $categoryId, $permName3);
+                    $utility::saveCategoryPermissions($groups1, $categoryId, $permName1);
+                    $utility::saveCategoryPermissions($groups2, $categoryId, $permName2);
+                    $utility::saveCategoryPermissions($groups3, $categoryId, $permName3);
                 }
 
         */
@@ -148,10 +140,10 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
             foreach ($configurator->templateFolders as $folder) {
                 $templateFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $folder);
                 if (is_dir($templateFolder)) {
-                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), array('..', '.'));
+                    $templateList = array_diff(scandir($templateFolder, SCANDIR_SORT_NONE), ['..', '.']);
                     foreach ($templateList as $k => $v) {
-                        $fileInfo = new SplFileInfo($templateFolder . $v);
-                        if ($fileInfo->getExtension() === 'html' && $fileInfo->getFilename() !== 'index.html') {
+                        $fileInfo = new \SplFileInfo($templateFolder . $v);
+                        if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
                             if (file_exists($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
                             }
@@ -178,7 +170,7 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->oldFolders) as $i) {
                 $tempFolder = $GLOBALS['xoops']->path('modules/' . $moduleDirName . $configurator->oldFolders[$i]);
-                /** @var XoopsObjectHandler $folderHandler */
+                /** @var \XoopsObjectHandler $folderHandler */
                 $folderHandler = XoopsFile::getHandler('folder', $tempFolder);
                 $folderHandler->delete($tempFolder);
             }
@@ -188,22 +180,22 @@ function xoops_module_update_adslight(XoopsModule $module, $previousVersion = nu
         if (count($configurator->uploadFolders) > 0) {
             //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
             foreach (array_keys($configurator->uploadFolders) as $i) {
-                $classUtility::createFolder($configurator->uploadFolders[$i]);
+                $utility::createFolder($configurator->uploadFolders[$i]);
             }
         }
 
         //  ---  COPY blank.png FILES ---------------
-        if (count($configurator->blankFiles) > 0) {
-            $file = __DIR__ . '/../assets/images/blank.png';
-            foreach (array_keys($configurator->blankFiles) as $i) {
-                $dest = $configurator->blankFiles[$i] . '/blank.png';
-                $classUtility::copyFile($file, $dest);
+        if (count($configurator->copyBlankFiles) > 0) {
+            $file = dirname(__DIR__) . '/assets/images/blank.png';
+            foreach (array_keys($configurator->copyBlankFiles) as $i) {
+                $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
+                $utility::copyFile($file, $dest);
             }
         }
 
-        /** @var XoopsGroupPermHandler $gpermHandler */
-        $gpermHandler = xoops_getHandler('groupperm');
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
+        $grouppermHandler = xoops_getHandler('groupperm');
 
-        return $gpermHandler->deleteByModule($module->getVar('mid'), 'item_read');
+        return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
 }

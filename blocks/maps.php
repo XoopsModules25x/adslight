@@ -20,7 +20,7 @@
 -------------------------------------------------------------------------
 */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS Root Path not defined');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 // <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/assets/images/map.png
 
@@ -35,21 +35,15 @@ function adslight_maps_show($options)
 
     $maps_name = $xoopsConfig['language'];
 
-    $block = array();
-    $myts  = MyTextSanitizer::getInstance();
+    $block = [];
+    $myts  = \MyTextSanitizer::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $block['title'] = constant("{$block_lang}_TITLE");
     //@todo - move language string to language file
-    $block['imgmapsurl'] = '<a title="Recherche dans votre r&eacute;gion" href="'
-                           . XOOPS_URL
-                           . '/modules/adslight/maps.php"><img src="'
-                           . XOOPS_URL
-                           . '/modules/adslight/maps/'
-                           . $xoopsConfig['language']
-                           . '/assets/images/map.png" alt="Recherche dans votre r&eacute;gion" border="0"></a><br>';
+    $block['imgmapsurl'] = '<a title="Recherche dans votre region" href="' . XOOPS_URL . '/modules/adslight/maps.php"><img src="' . XOOPS_URL . '/modules/adslight/maps/' . $xoopsConfig['language'] . '/assets/images/map.png" alt="Recherche dans votre region" border="0"></a><br>';
 
     $block['link'] = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ALL_LISTINGS") . '</b></a><br>';
     $block['add']  = '<a href="' . XOOPS_URL . "/modules/{$moduleDirName}/\"><b>" . constant("{$block_lang}_ADDNOW") . '</b></a><br>';
@@ -66,7 +60,7 @@ function adslight_maps_edit($options)
 {
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
-    $block_lang    = '_MB_' . strtoupper($moduleDirName);
+    $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $form = constant("{$block_lang}_ORDER") . "&nbsp;<select name='options[]'>";
     $form .= "<option value='date'";

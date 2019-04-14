@@ -35,6 +35,7 @@
                         <td width="5">
                             <div align="right">
                                 <form action="<{$xoops_url}>/modules/adslight/delpicture.php" method="post" id="deleteform" class="lado">
+                                    <{securityToken}><{*//mb*}>
                                     <input type="hidden" value="<{$pics_array[i].cod_img}>" name="cod_img">
                                     <input type="hidden" value="<{$pics_array[i].lid}>" name="lid">
                                     <input name="submit2" type="image" alt="<{$lang_delete}>" src="<{xoModuleIcons16 delete.png}>">
@@ -43,6 +44,7 @@
                         </td>
                         <td width="5">
                             <form action="<{$xoops_url}>/modules/adslight/editdesc.php" method="post" id="editform" class="lado">
+                                <{securityToken}><{*//mb*}>
                                 <input type="hidden" value="<{$pics_array[i].cod_img}>" name="cod_img">
                                 <input type="hidden" value="<{$pics_array[i].lid}>" name="lid">
                                 <input name="submit" type="image" alt="<{$lang_editdesc}>" src="<{xoModuleIcons16 edit.png}>">
@@ -67,11 +69,7 @@
     </table>
 <form name="<{$form_picture.name}>" action="<{$form_picture.action}>"
       method="<{$form_picture.method}>" <{$form_picture.extra}> id="submitpicture">
-    <{if $xcube}>
-        <{$form_picture.elements.XOOPS_G_TICKET.body}>
-    <{else}>
-        <{$form_picture.elements.XOOPS_TOKEN_REQUEST.body}>
-    <{/if}>
+    <{securityToken}><{*//mb*}>
     <p><strong><{$form_picture.elements.1.caption}></strong></p>
     <p><strong><{$form_picture.elements.sel_photo.caption}></strong>
         <{$form_picture.elements.sel_photo.body}></p>
