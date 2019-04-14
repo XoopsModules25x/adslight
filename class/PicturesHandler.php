@@ -67,7 +67,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * create a new light_pictures
      *
      * @param  bool $isNew flag the new objects as "new"?
-     * @return XoopsObject light_pictures
+     * @return \XoopsObject light_pictures
      */
     public function create($isNew = true)
     {
@@ -111,7 +111,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * insert a new AdslightPicture object into the database
      *
-     * @param XoopsObject $adslightPictures
+     * @param \XoopsObject $adslightPictures
      * @param bool        $force
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
@@ -168,7 +168,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * delete Pictures object from the database
      *
-     * @param  XoopsObject $adslightPictures reference to the Pictures to delete
+     * @param  \XoopsObject $adslightPictures reference to the Pictures to delete
      * @param  bool        $force
      * @return bool        FALSE if failed.
      */

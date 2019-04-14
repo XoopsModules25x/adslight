@@ -294,7 +294,7 @@ class Utility
 
     /**
      * Returns a module's option
-     * @param        $option module option's name
+     * @param string $option module option's name
      * @param string $repmodule
      *
      * @return bool|mixed option's value
