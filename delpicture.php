@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . mb_strtoupper($moduleDirName);
@@ -30,13 +31,11 @@ $main_lang     = '_' . mb_strtoupper($moduleDirName);
  */
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/header.php';
-require_once XOOPS_ROOT_PATH . '/class/criteria.php';
+//require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**
  * Module classes
  */
-require_once __DIR__ . '/class/Pictures.php';
-require_once __DIR__ . '/class/PicturesHandler.php';
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 3, _ADSLIGHT_TOKENEXPIRED);
@@ -51,7 +50,7 @@ $cod_img = Request::getString('cod_img', '', 'POST');
  * Creating the factory  and the criteria to delete the picture
  * The user must be the owner
  */
-$album_factory = new PicturesHandler($xoopsDB);
+$album_factory = new \Adslight\PicturesHandler($xoopsDB);
 $criteria_img  = new \Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new \Criteria('uid_owner', $uid);

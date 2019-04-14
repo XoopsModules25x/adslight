@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Adslight;
+
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -21,6 +24,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 /**
  * Protection against inclusion outside the site
@@ -67,7 +71,7 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function create($isNew = true)
     {
-        $adslightPictures = new Pictures();
+        $adslightPictures = new Adslight\Pictures();
         if ($isNew) {
             $adslightPictures->setNew();
         } else {
@@ -95,7 +99,7 @@ class PicturesHandler extends \XoopsObjectHandler
         }
         $numrows = $this->db->getRowsNum($result);
         if (1 == $numrows) {
-            $adslightPictures = new Pictures();
+            $adslightPictures = new Adslight\Pictures();
             $adslightPictures->assignVars($this->db->fetchArray($result));
 
             return $adslightPictures;
@@ -129,7 +133,7 @@ class PicturesHandler extends \XoopsObjectHandler
         $now = time();
         if ($adslightPictures->isNew()) {
             // add/modify of Pictures
-            $adslightPictures = new Pictures();
+            $adslightPictures = new Adslight\Pictures();
 
             $format = 'INSERT INTO `%s` (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
@@ -191,11 +195,11 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * retrieve Pictures object(s) from the database
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
+     * @param  \CriteriaElement $criteria  {@link \CriteriaElement} conditions to be met
      * @param  bool            $id_as_key use the UID as key for the array?
      * @return array  array of {@link Pictures} objects
      */
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function &getObjects(\CriteriaElement $criteria = null, $id_as_key = false)
     {
         global $moduleDirName;
 
@@ -215,7 +219,7 @@ class PicturesHandler extends \XoopsObjectHandler
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $adslightPictures = new Pictures();
+            $adslightPictures = new Adslight\Pictures();
             $adslightPictures->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] = $adslightPictures;
@@ -231,10 +235,10 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * count Pictures matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param  \CriteriaElement $criteria {@link \CriteriaElement} to match
      * @return int    count of Pictures
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(\CriteriaElement $criteria = null)
     {
         global $moduleDirName;
 

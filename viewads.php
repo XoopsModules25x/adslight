@@ -373,12 +373,11 @@ function viewAds($lid = 0)
         $GLOBALS['xoopsTpl']->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
 
         if ('' != $photo) {
-            require_once __DIR__ . '/class/Pictures.php';
-            require_once __DIR__ . '/class/PicturesHandler.php';
+
 
             $criteria_lid          = new \Criteria('lid', $lid);
             $criteria_uid          = new \Criteria('uid', $usid);
-            $album_factory         = new PicturesHandler($xoopsDB);
+            $album_factory         = new Adslight\PicturesHandler($xoopsDB);
             $pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
             $pictures_number       = $album_factory->getCount($criteria_lid, $criteria_uid);
             if (0 == $pictures_number) {

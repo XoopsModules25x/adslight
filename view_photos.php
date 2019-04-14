@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 
@@ -34,8 +35,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 /**
  * Module classes
  */
-require_once __DIR__ . '/class/Pictures.php';
-require_once __DIR__ . '/class/PicturesHandler.php';
+
 $lid = Request::getInt('lid', 0, 'GET');
 if (empty($lid)) {
     header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
@@ -93,7 +93,7 @@ $criteria_uid = new \Criteria('uid', $uid);
 
 // Creating a factory of pictures
 
-$album_factory = new PicturesHandler($xoopsDB);
+$album_factory = new Adslight\PicturesHandler($xoopsDB);
 
 /**
  * Fetch pictures from the factory

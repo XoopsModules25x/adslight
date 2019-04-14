@@ -21,6 +21,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 $moduleDirName = basename(dirname(__DIR__));
 $main_lang     = '_' . mb_strtoupper($moduleDirName);
@@ -35,13 +36,11 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 /**
  * Modules class includes
  */
-require_once __DIR__ . '/class/Pictures.php';
-require_once __DIR__ . '/class/PicturesHandler.php';
 
 /**
  * Factory of pictures created
  */
-$album_factory = new PicturesHandler($xoopsDB);
+$album_factory = new Adslight\PicturesHandler($xoopsDB);
 
 /**
  * Getting the title
