@@ -138,7 +138,7 @@ if (!empty($GLOBALS['xoopsUser'])) {
  * Let's get the user name of the owner of the album
  */
 $owner      = new \XoopsUser();
-$identifier = $owner->getUnameFromId($uid);
+$identifier = $owner::getUnameFromId($uid);
 
 /**
  * Adding to the module js and css of the lightbox and new ones

@@ -399,7 +399,7 @@ function viewAds($lid = 0)
                 }
             }
             $owner      = new \XoopsUser();
-            $identifier = $owner->getUnameFromId($usid);
+            $identifier = $owner::getUnameFromId($usid);
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
                 $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
 <script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
