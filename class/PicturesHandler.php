@@ -60,7 +60,7 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function __construct($db)
     {
-        parent::__construct($db, 'adslight_pictures', 'Pictures', 'cod_img', 'title');
+        parent::__construct($db, 'adslight_pictures', Pictures::class, 'cod_img', 'title');
     }
 
     /**
