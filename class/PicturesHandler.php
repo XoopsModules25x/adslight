@@ -65,7 +65,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * create a new light_pictures
      *
-     * @param  bool $isNew flag the new objects as "new"?
+     * @param bool $isNew flag the new objects as "new"?
      * @return \XoopsObject light_pictures
      */
     public function create($isNew = true)
@@ -111,7 +111,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * insert a new AdslightPicture object into the database
      *
      * @param \XoopsObject $adslightPictures
-     * @param bool        $force
+     * @param bool         $force
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
     public function insert(\XoopsObject $adslightPictures, $force = false)
@@ -167,8 +167,8 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * delete Pictures object from the database
      *
-     * @param  \XoopsObject $adslightPictures reference to the Pictures to delete
-     * @param  bool        $force
+     * @param \XoopsObject $adslightPictures reference to the Pictures to delete
+     * @param bool         $force
      * @return bool        FALSE if failed.
      */
     public function delete(\XoopsObject $adslightPictures, $force = false)
@@ -194,8 +194,8 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * retrieve Pictures object(s) from the database
      *
-     * @param  \CriteriaElement|\CriteriaCompo $criteria  {@link \CriteriaElement} conditions to be met
-     * @param  bool            $id_as_key use the UID as key for the array?
+     * @param \CriteriaElement|\CriteriaCompo $criteria  {@link \CriteriaElement} conditions to be met
+     * @param bool                            $id_as_key use the UID as key for the array?
      * @return array  array of {@link Pictures} objects
      */
     public function &getObjects(\CriteriaElement $criteria = null, $id_as_key = false)
@@ -234,7 +234,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * count Pictures matching a condition
      *
-     * @param  \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement} to match
+     * @param \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement} to match
      * @return int    count of Pictures
      */
     public function getCount(\CriteriaElement $criteria = null)
@@ -257,7 +257,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * delete Pictures matching a set of conditions
      *
-     * @param  \CriteriaElement $criteria {@link \CriteriaElement}
+     * @param \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement}
      * @return bool   FALSE if deletion failed
      */
     public function deleteAll(\CriteriaElement $criteria = null)
@@ -277,9 +277,9 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Render a form to send pictures
      *
-     * @param int      $uid
-     * @param int      $lid
-     * @param int      $maxbytes the maximum size of a picture
+     * @param int       $uid
+     * @param int       $lid
+     * @param int       $maxbytes the maximum size of a picture
      * @param \XoopsTpl $xoopsTpl the one in which the form will be rendered
      * @return bool   TRUE
      *
@@ -323,9 +323,9 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Render a form to edit the description of the pictures
      *
-     * @param  string $caption  The description of the picture
-     * @param  int    $cod_img  the id of the image in database
-     * @param  string   $filename the url to the thumb of the image so it can be displayed
+     * @param string $caption  The description of the picture
+     * @param int    $cod_img  the id of the image in database
+     * @param string $filename the url to the thumb of the image so it can be displayed
      * @return bool   TRUE
      */
     public function renderFormEdit($caption, $cod_img, $filename)
@@ -358,15 +358,15 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Upload the file and Save into database
      *
-     * @param  string $title         A litle description of the file
-     * @param  string $path_upload   The path to where the file should be uploaded
-     * @param  int  $thumbwidth    the width in pixels that the thumbnail will have
-     * @param  int  $thumbheight   the height in pixels that the thumbnail will have
-     * @param  int  $pictwidth     the width in pixels that the pic will have
-     * @param  int  $pictheight    the height in pixels that the pic will have
-     * @param  int  $maxfilebytes  the maximum size a file can have to be uploaded in bytes
-     * @param  int  $maxfilewidth  the maximum width in pixels that a pic can have
-     * @param  int  $maxfileheight the maximum height in pixels that a pic can have
+     * @param string $title         A litle description of the file
+     * @param string $path_upload   The path to where the file should be uploaded
+     * @param int    $thumbwidth    the width in pixels that the thumbnail will have
+     * @param int    $thumbheight   the height in pixels that the thumbnail will have
+     * @param int    $pictwidth     the width in pixels that the pic will have
+     * @param int    $pictheight    the height in pixels that the pic will have
+     * @param int    $maxfilebytes  the maximum size a file can have to be uploaded in bytes
+     * @param int    $maxfilewidth  the maximum width in pixels that a pic can have
+     * @param int    $maxfileheight the maximum height in pixels that a pic can have
      * @return bool FALSE if upload fails or database fails
      */
     public function receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)
@@ -421,12 +421,12 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Resize a picture and save it to $path_upload
      *
-     * @param  string $img         the path to the file
-     * @param  int    $thumbwidth  the width in pixels that the thumbnail will have
-     * @param  int    $thumbheight the height in pixels that the thumbnail will have
-     * @param  int    $pictwidth   the width in pixels that the pic will have
-     * @param  int    $pictheight  the height in pixels that the pic will have
-     * @param  string $path_upload The path to where the files should be saved after resizing
+     * @param string $img         the path to the file
+     * @param int    $thumbwidth  the width in pixels that the thumbnail will have
+     * @param int    $thumbheight the height in pixels that the thumbnail will have
+     * @param int    $pictwidth   the width in pixels that the pic will have
+     * @param int    $pictheight  the height in pixels that the pic will have
+     * @param string $path_upload The path to where the files should be saved after resizing
      */
     public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload)
     {

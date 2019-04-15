@@ -23,6 +23,8 @@
 use Xmf\Request;
 use XoopsModules\Adslight;
 
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
+
 require_once __DIR__ . '/header.php';
 $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
@@ -34,7 +36,10 @@ $module_id = $xoopsModule->getVar('mid');
 $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid      = Request::getInt('item_id', 0, 'POST');
+
+$permHelper = new \Xmf\Module\Helper\Permission();
+
+$perm_itemid = Request::getInt('item_id', 0, 'POST');
 
 if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -230,12 +235,12 @@ if (Request::hasVar('submit', 'POST')) {
     }
     $form->addElement(new \XoopsFormText(_ADSLIGHT_TEL, 'tel', 50, 50, ''), false);
 
-    // $cat_id = $_GET['cid'];
-    $cid       = 1;
+    //     $cid = $_GET['cid'];
+    $cid       = 0;
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {
         if (!in_array($cid, $cat_perms, true)) {
-            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
+            //mb            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
 
         // Category select box

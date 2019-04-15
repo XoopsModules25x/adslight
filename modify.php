@@ -82,7 +82,7 @@ function listingDel($lid, $ok)
                 echo '<br><div style="text-align:center">';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
-            echo '[ <a href="modify.php?op=ListingDel&amp;lid=' . $lid . '&amp;ok=1">' . _ADSLIGHT_OUI . '</a> | <a href="index.php">' . _ADSLIGHT_NON . '</a> ]<br><br>';
+            echo '[ <a href="modify.php?op=ListingDel&amp;lid=' . $lid . '&amp;ok=1">' . _YES . '</a> | <a href="index.php">' . _NO . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }
@@ -110,7 +110,7 @@ function delReply($r_lid, $ok)
                 echo '<br><div style="text-align:center">';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
-            echo '[ <a href="modify.php?op=DelReply&amp;r_lid=' . addslashes($r_lid) . '&amp;ok=1">' . _ADSLIGHT_OUI . '</a> | <a href="members.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_NON . '</a> ]<br><br>';
+            echo '[ <a href="modify.php?op=DelReply&amp;r_lid=' . addslashes($r_lid) . '&amp;ok=1">' . _YES . '</a> | <a href="members.php?usid=' . addslashes($usid) . '">' . _NO . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }

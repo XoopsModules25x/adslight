@@ -71,8 +71,7 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
     $moduleDirName      = basename(dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
-    /** @var \XoopsModules\Adslight\Helper $helper */
-    /** @var \XoopsModules\Adslight\Utility $utility */
+    /** @var \XoopsModules\Adslight\Helper $helper */ /** @var \XoopsModules\Adslight\Utility $utility */
     /** @var \XoopsModules\Adslight\Common\Configurator $configurator */
     $helper       = \XoopsModules\Adslight\Helper::getInstance();
     $utility      = new \XoopsModules\Adslight\Utility();
@@ -94,8 +93,7 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
                     }
                 }
 
-        */
-        /*
+        */ /*
                 global $xoopsModule;
                 // default Permission Settings ----------------------
                 $moduleId = $xoopsModule->getVar('mid');

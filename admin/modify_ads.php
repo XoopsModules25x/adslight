@@ -359,8 +359,8 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
 /**
  * Delete Listing
  *
- * @param  int    $lid
- * @param  string $photo
+ * @param int    $lid
+ * @param string $photo
  */
 function listingDel($lid, $photo)
 {

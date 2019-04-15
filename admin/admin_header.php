@@ -19,6 +19,8 @@
 
 use XoopsModules\Adslight;
 
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
 
@@ -30,8 +32,10 @@ $moduleDirName = basename(dirname(__DIR__));
 // require_once  dirname(__DIR__) . '/class/grouppermform.php';
 require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
 
+/** @var \XoopsModules\Adslight\Helper $helper */
 $helper = \XoopsModules\Adslight\Helper::getInstance();
 
+/** @var \Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 
 $pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);

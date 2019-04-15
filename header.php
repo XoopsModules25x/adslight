@@ -26,6 +26,8 @@
 
 use Xmf\Module\Admin;
 
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+
 $moduleDirName = basename(__DIR__);
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 
@@ -39,5 +41,4 @@ $myts = \MyTextSanitizer::getInstance();
 
 xoops_loadLanguage('main', $moduleDirName);
 
-$GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
-require_once XOOPS_ROOT_PATH . '/header.php';
+//require_once XOOPS_ROOT_PATH . '/header.php';

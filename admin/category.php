@@ -31,9 +31,9 @@ $op = Request::getString('op', 'liste');
 #  function adsNewCat
 #####################################################
 /**
- * @param $cat
+ * @param $cid
  */
-function adsNewCat($cat)
+function adsNewCat($cid)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName;
 
@@ -53,9 +53,9 @@ function adsNewCat($cat)
 
     $cid = Request::getInt('cid', 0, 'GET');
 
-    $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, cat_order, affprice, cat_moderate, moderate_subcat FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cat}");
+    $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, cat_order, affprice, cat_moderate, moderate_subcat FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid}");
     list($cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat) = $xoopsDB->fetchRow($result);
-    $mytree->makeMySelBox('title', 'title', $cat, 1);
+    $mytree->makeMySelBox('title', 'title', $cid, 1);
     echo "    </td>\n" . "  </tr>\n";
 
     $cat_desc     = '';
@@ -98,19 +98,11 @@ function adsNewCat($cat)
     }
     echo '</select>&nbsp;&nbsp;<img src="' . XOOPS_URL . '/modules/adslight/assets/images/img_cat/default.png" name="avatar" align="absmiddle"><br><b>' . _AM_ADSLIGHT_REPIMGCAT . '</b><br>../modules/adslight/assets/images/img_cat/..</td></tr>';
 
-    echo '<tr><td class="even">'
-         . _AM_ADSLIGHT_DISPLPRICE2
-         . ' </td><td class="odd" colspan=2><input type="radio" name="affprice" value="1" checked>'
-         . _AM_ADSLIGHT_OUI
-         . '&nbsp;&nbsp; <input type="radio" name="affprice" value="0">'
-         . _AM_ADSLIGHT_NON
-         . ' ('
-         . _AM_ADSLIGHT_INTHISCAT
-         . ')</td></tr>';
+    echo '<tr><td class="even">' . _AM_ADSLIGHT_DISPLPRICE2 . ' </td><td class="odd" colspan=2><input type="radio" name="affprice" value="1" checked>' . _YES . '&nbsp;&nbsp; <input type="radio" name="affprice" value="0">' . _NO . ' (' . _AM_ADSLIGHT_INTHISCAT . ')</td></tr>';
 
-    echo '<tr><td class="even">' . _AM_ADSLIGHT_MODERATE_CAT . ' </td><td class="odd" colspan=2><input type="radio" name="cat_moderate" value="1"checked>' . _AM_ADSLIGHT_OUI . '&nbsp;&nbsp; <input type="radio" name="cat_moderate" value="0">' . _AM_ADSLIGHT_NON . '</td></tr>';
+    echo '<tr><td class="even">' . _AM_ADSLIGHT_MODERATE_CAT . ' </td><td class="odd" colspan=2><input type="radio" name="cat_moderate" value="1"checked>' . _YES . '&nbsp;&nbsp; <input type="radio" name="cat_moderate" value="0">' . _NO . '</td></tr>';
 
-    echo '<tr><td class="even">' . _AM_ADSLIGHT_MODERATE_SUBCATS . ' </td><td class="odd" colspan=2><input type="radio" name="moderate_subcat" value="1"checked>' . _AM_ADSLIGHT_OUI . '&nbsp;&nbsp; <input type="radio" name="moderate_subcat" value="0">' . _AM_ADSLIGHT_NON . '</td></tr>';
+    echo '<tr><td class="even">' . _AM_ADSLIGHT_MODERATE_SUBCATS . ' </td><td class="odd" colspan=2><input type="radio" name="moderate_subcat" value="1"checked>' . _YES . '&nbsp;&nbsp; <input type="radio" name="moderate_subcat" value="0">' . _NO . '</td></tr>';
 
     if ('title' !== $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
         echo '<tr><td>' . _AM_ADSLIGHT_ORDER . ' </td><td><input type="text" name="cat_order" size="4" value="0" ></td><td class="foot"><input type="submit" value="' . _AM_ADSLIGHT_ADD . '" ></td></tr>';
@@ -143,7 +135,7 @@ function adsModCat($cid)
     Adslight\Utility::showImage();
 
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, cat_order, affprice, cat_moderate, moderate_subcat FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid=$cid");
-    list($cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $order, $affprice, $cat_moderate, $moderate_subcat) = $xoopsDB->fetchRow($result);
+    list($cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat) = $xoopsDB->fetchRow($result);
 
     $title    = $myts->htmlSpecialChars($title);
     $cat_desc = $myts->addSlashes($cat_desc);
@@ -254,12 +246,12 @@ function adsModCat($cid)
  * @param $title
  * @param $cat_desc
  * @param $cat_keywords
- * @param $order
+ * @param $cat_order
  * @param $affprice
  * @param $cat_moderate
  * @param $moderate_subcat
  */
-function AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $order, $affprice, $cat_moderate, $moderate_subcat)
+function adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_order, $affprice, $cat_moderate, $moderate_subcat)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
 
@@ -287,12 +279,12 @@ function AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $order,
  * @param $cat_keywords
  * @param $cid
  * @param $img
- * @param $order
+ * @param $cat_order
  * @param $affprice
  * @param $cat_moderate
  * @param $moderate_subcat
  */
-function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $order, $affprice, $cat_moderate, $moderate_subcat)
+function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $affprice, $cat_moderate, $moderate_subcat)
 {
     global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
 
@@ -337,7 +329,7 @@ function adsDelCat($cid, $ok = 0)
         OpenTable();
         echo '<br><div style="text-align: center;"><strong>' . _AM_ADSLIGHT_SURDELCAT . '</strong></div><br><br>';
         echo "[ <a href=\"category.php?op=AdsDelCat&cid={$cid}&ok=1\">" . _YES . '</a> | <a href="map.php">' . _NO . '</a> ]<br><br>';
-        CloseTable();
+        closeTable();
         xoops_cp_footer();
     }
 }
@@ -366,7 +358,7 @@ switch ($op) {
         adsModCat($cid);
         break;
     case 'AdsModCatS':
-        AdsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_order, $affprice, $cat_moderate, $moderate_subcat);
+        adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_order, $affprice, $cat_moderate, $moderate_subcat);
         break;
     default:
         //        index();

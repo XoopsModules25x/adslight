@@ -13,7 +13,6 @@ namespace XoopsModules\Adslight;
 */
 
 /**
- * oledrion
  *
  * @copyright   {@link https://xoops.org/ XOOPS Project}
  * @license     {@link http://www.fsf.org/copyleft/gpl.html GNU public license}
@@ -35,7 +34,7 @@ class Currency
     protected $currencyPosition;
 
     /**
-     * Oledrion_Currency constructor.
+     * Currency constructor.
      */
     public function __construct()
     {
@@ -74,7 +73,7 @@ class Currency
     /**
      * Returns an amount according to the currency's preferences (defined in the module's options)
      *
-     * @param  float|int $amount The amount to work on
+     * @param float|int $amount The amount to work on
      * @return string    The amount formated according to the currency
      */
     public function amountInCurrency($amount = 0)
@@ -85,8 +84,8 @@ class Currency
     /**
      * Format an amount for display according to module's preferences
      *
-     * @param  float  $originalAmount The amount to format
-     * @param  string $format         Format to use, 's' for Short and 'l' for Long
+     * @param float  $originalAmount The amount to format
+     * @param string $format         Format to use, 's' for Short and 'l' for Long
      * @return string The amount formated
      */
     public function amountForDisplay($originalAmount, $format = 's')

@@ -23,8 +23,9 @@
 use Xmf\Request;
 use XoopsModules\Adslight;
 
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+
 require_once __DIR__ . '/header.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
@@ -59,9 +60,9 @@ function index()
         $GLOBALS['xoopsTpl'] = new \XoopsTpl();
     }
 
-    $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+    //    $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 
-    //    require_once XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
 
     $GLOBALS['xoopsTpl']->assign('xmid', $xoopsModule->getVar('mid'));
     $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -331,7 +332,7 @@ $show    = Request::getInt('show', null, 'GET');
 $orderby = Request::getInt('orderby', null, 'GET');
 
 switch ($pa) {
-    case 'Adsview':
+    case 'adsview':
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
         adsView($cid, $min, $orderby, $show);
         break;
@@ -340,7 +341,7 @@ switch ($pa) {
         viewAds($lid);
         break;
     default:
-        $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+        //        $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
         index();
         break;
 }

@@ -49,6 +49,8 @@ class ClassifiedsTree
         $this->table = $table_name;
         $this->id    = $id_name;
         $this->pid   = $pid_name;
+        $this->order = '';
+        $this->title = '';
     }
 
     /**
