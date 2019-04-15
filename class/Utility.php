@@ -251,10 +251,9 @@ class Utility
             list($thing) = $xoopsDB->fetchRow($result);
             $count = $thing;
             $arr   = $mytree->getAllChildId($sel_id);
-            $size  = count($arr);
-            for ($i = 0; $i < $size; ++$i) {
-                if (in_array($arr[$i], $categories, true)) {
-                    $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$arr[$i] . " AND valid='Yes' AND status!='1'";
+            foreach ($arr as $iValue) {
+                if (in_array($iValue, $categories, true)) {
+                    $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$iValue . " AND valid='Yes' AND status!='1'";
 
                     $result2 = $xoopsDB->query($query2);
                     list($thing) = $xoopsDB->fetchRow($result2);
@@ -738,7 +737,7 @@ class Utility
      *
      *   saveCategory_Permissions()
      *
-     * @param  array $groups : group with granted permission
+     * @param array  $groups : group with granted permission
      * @param        $categoryId
      * @param        $permName
      * @return bool : TRUE if the no errors occured
