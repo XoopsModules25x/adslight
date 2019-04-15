@@ -572,8 +572,7 @@ class Utility
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         ob_start();
         $xt->makeMySelBox('title', 'title', 0, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
-        $block['selectbox'] = ob_get_contents();
-        ob_end_clean();
+        $block['selectbox'] = ob_get_clean();
 
         return $block;
     }

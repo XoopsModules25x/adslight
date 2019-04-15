@@ -416,8 +416,7 @@ function adsView($cid, $min, $orderby, $show = 0)
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         ob_start();
         $xt->makeMySelBox('title', 'title', $cid, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
-        $select_go_cats = ob_get_contents();
-        ob_end_clean();
+        $select_go_cats = ob_get_clean();
         $GLOBALS['xoopsTpl']->assign('select_go_cats', $select_go_cats);
     }
 }

@@ -320,8 +320,7 @@ if (Request::hasVar('submit', 'POST')) {
         $form->addElement(new \XoopsFormHidden('date', time()), false);
         $form->addElement(new \XoopsFormButton('', 'submit', _ADSLIGHT_SUBMIT, 'submit'));
         $form->display();
-        $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_contents());
-        ob_end_clean();
+        $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_clean());
     } else {    // User can't see any category
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }

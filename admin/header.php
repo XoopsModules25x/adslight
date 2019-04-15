@@ -34,6 +34,7 @@ if (!@require_once XOOPS_ROOT_PATH . '/Frameworks/art/functions.admin.php'):
      * @param string $breadcrumb
      * @return bool|string
      */
+
     function loadModuleAdminMenu($currentoption, $breadcrumb = '')
     {
         if (!$adminObject = $GLOBALS['xoopsModule']->getAdminMenu()) {
