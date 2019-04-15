@@ -718,7 +718,7 @@ foreach ($_POST as $k => $v) {
 
 //$pa  = Request::getString('pa', '', 'GET');
 //$lid = Request::getInt('lid', 0);
-//$op  = Request::getCmd('op', '');
+//$op  = Request::getString('op', '');
 
 $pa  = Request::getInt('pa', '', 'GET');
 $lid = 0;
