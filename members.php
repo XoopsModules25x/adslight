@@ -29,6 +29,7 @@ $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
 $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 xoops_load('XoopsLocal');
+$moduleDirName = basename(__DIR__);
 
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree                                  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');

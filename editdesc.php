@@ -25,9 +25,6 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 
-$moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . mb_strtoupper($moduleDirName);
-
 /**
  * Xoops Header
  */

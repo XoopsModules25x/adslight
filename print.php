@@ -31,7 +31,7 @@ require_once __DIR__ . '/header.php';
  */
 function PrintAd($lid)
 {
-    global $xoopsConfig, $xoopsDB, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsDB, $useroffset, $myts, $xoopsLogger;
 
     $currenttheme = $xoopsConfig['theme_set'];
     $lid          = (int)$lid;

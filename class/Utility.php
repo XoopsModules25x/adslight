@@ -36,9 +36,6 @@ namespace XoopsModules\Adslight;
 use Xmf\Request;
 use XoopsModules\Adslight;
 
-$moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . mb_strtoupper($moduleDirName);
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 $myts = \MyTextSanitizer::getInstance();
 
@@ -57,7 +54,7 @@ class Utility
 
     public static function expireAd()
     {
-        global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $main_lang;
+        global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta;
 
         $datenow = time();
         $message = '';
@@ -187,7 +184,7 @@ class Utility
      */
     public static function updateUserRating($sel_id)
     {
-        global $xoopsDB, $moduleDirName, $main_lang;
+        global $xoopsDB;
 
         $usid = Request::getInt('usid', 0, 'GET');
 
@@ -213,7 +210,7 @@ class Utility
      */
     public static function updateItemRating($sel_id)
     {
-        global $xoopsDB, $moduleDirName, $main_lang;
+        global $xoopsDB;
 
         $lid = Request::getInt('lid', 0, 'GET');
 
@@ -240,7 +237,7 @@ class Utility
      */
     public static function getTotalItems($sel_id, $status = '')
     {
-        global $xoopsDB, $mytree, $moduleDirName;
+        global $xoopsDB, $mytree;
         $categories = self::getMyItemIds('adslight_view');
         $count      = 0;
         $arr        = [];
@@ -272,7 +269,6 @@ class Utility
      */
     public static function getMyItemIds($permtype)
     {
-        global $moduleDirName;
         static $permissions = [];
         if (is_array($permissions)
             && array_key_exists($permtype, $permissions)) {
@@ -301,6 +297,8 @@ class Utility
     public static function getModuleOption($option, $repmodule = 'adslight')
     {
         global $xoopsModule;
+        /** @var \XoopsModules\Adslight\Helper $helper */
+        $helper = \XoopsModules\Adslight\Helper::getInstance();
         static $tbloptions = [];
         if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
             return $tbloptions[$option];
@@ -334,7 +332,6 @@ class Utility
 
     public static function showImage()
     {
-        global $moduleDirName;
         echo "<script type=\"text/javascript\">\n";
         echo "<!--\n\n";
         echo "function showimage() {\n";
@@ -394,7 +391,6 @@ class Utility
      */
     public static function convertOrderByTrans($orderby)
     {
-        global $main_lang;
         $orderbyTrans = '';
         if ('hits ASC' === $orderby) {
             $orderbyTrans = '' . _ADSLIGHT_POPULARITYLTOM . '';
@@ -544,7 +540,7 @@ class Utility
      */
     public static function getCatNameFromId($cid)
     {
-        global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
+        global $xoopsDB, $xoopsConfig, $myts;
 
         $sql = 'SELECT SQL_CACHE title FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid = '$cid'";
 
@@ -568,10 +564,10 @@ class Utility
     {
         global $xoopsDB;
 
-        $xt   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+        $xoopsTree   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         ob_start();
-        $xt->makeMySelBox('title', 'title', 0, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
+        $xoopsTree->makeMySelBox('title', 'title', 0, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
         $block['selectbox'] = ob_get_clean();
 
         return $block;
@@ -744,13 +740,8 @@ class Utility
     public static function saveCategoryPermissions($groups, $categoryId, $permName)
     {
         global $xoopsModule;
-
-        $moduleDirName = basename(dirname(__DIR__));
-
-        if (false !== ($helper = Helper::getHelper($moduleDirName))) {
-        } else {
-            $helper = \Xmf\Module\Helper::getHelper('system');
-        }
+        /** @var \XoopsModules\Adslight\Helper $helper */
+        $helper = \XoopsModules\Adslight\Helper::getInstance();
 
         $result = true;
         //        $xoopsModule = sf_getModuleInfo();

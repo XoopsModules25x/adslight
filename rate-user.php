@@ -25,6 +25,7 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/class/module.errorhandler.php';
+$moduleDirName = basename(__DIR__);
 $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 
 if (!empty($_POST['submit'])) {

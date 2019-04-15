@@ -26,6 +26,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 $search_form = new \XoopsThemeForm(_SR_SEARCH, 'search', 'search.php', 'get');
 $mids        = $xoopsModule->getVar('mid');
 $mid         = $xoopsModule->getVar('name');
+$module_array = [];
 
 // create form elements
 $search_form->addElement(new \XoopsFormText(_SR_KEYWORDS, 'query', 30, 255, htmlspecialchars(stripslashes(implode(' ', $queries)), ENT_QUOTES)), true);

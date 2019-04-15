@@ -23,9 +23,6 @@
 use Xmf\Request;
 use XoopsModules\Adslight;
 
-$moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . mb_strtoupper($moduleDirName);
-
 /**
  * Xoops header ...
  */

@@ -31,7 +31,7 @@ $op = Request::getString('op', 'liste');
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $admin_lang;
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
@@ -137,7 +137,7 @@ function index()
  */
 function listingAddType($type)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='{$type}'"));
     if ($numrows > 0) {
@@ -175,7 +175,7 @@ function listingAddType($type)
  */
 function listingModType($id_type)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $admin_lang;
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     $id_type = (int)$id_type;
@@ -245,7 +245,7 @@ function listingDelType($id_type)
  */
 function listingAddPrice($type)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
     list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='{$nom_price}'"));
     if ($numrows > 0) {
@@ -339,7 +339,7 @@ function listingModPriceS($id_price, $nom_price)
  */
 function listingDelPrice($id_price)
 {
-    global $xoopsDB, $moduleDirName, $admin_lang;
+    global $xoopsDB, $admin_lang;
 
     $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='{$id_price}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEDEL);
@@ -352,7 +352,7 @@ function listingDelPrice($id_price)
  */
 function listingAddUsure($type)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
     $type = $myts->htmlSpecialChars($type);
 
@@ -447,7 +447,7 @@ function listingModUsureS($id_usure, $nom_usure)
  */
 function listingDelUsure($id_usure)
 {
-    global $xoopsDB, $moduleDirName, $admin_lang;
+    global $xoopsDB, $admin_lang;
 
     $id_usure = (int)$id_usure;
     $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure='{$id_usure}'");

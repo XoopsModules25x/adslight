@@ -31,7 +31,7 @@ require_once __DIR__ . '/header.php';
  */
 function ReportAbuse($lid)
 {
-    global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger;
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     require_once XOOPS_ROOT_PATH . '/header.php';
@@ -94,7 +94,7 @@ function ReportAbuse($lid)
  */
 function MailAd($lid, $yname, $ymail, $fname, $fmail)
 {
-    global $xoopsConfig, $xoopsTpl, $xoopsDB, $xoopsModule, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsTpl, $xoopsDB, $xoopsModule, $myts, $xoopsLogger;
 
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');

@@ -116,7 +116,7 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function insert(\XoopsObject $adslightPictures, $force = false)
     {
-        global $xoopsConfig, $lid, $moduleDirName;
+        global $xoopsConfig, $lid;
         if (!$adslightPictures instanceof Pictures) {
             return false;
         }
@@ -287,7 +287,7 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
     {
-        global $moduleDirName, $main_lang, $xoopsUser;
+        global $moduleDirName, $xoopsUser;
         $uid        = (int)$uid;
         $lid        = (int)$lid;
         $form       = new \XoopsThemeForm(_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
@@ -330,7 +330,7 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function renderFormEdit($caption, $cod_img, $filename)
     {
-        global $moduleDirName, $main_lang;
+        global $moduleDirName;
 
         $form       = new \XoopsThemeForm(_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
         $field_desc = new \XoopsFormText($caption, 'caption', 35, 55);

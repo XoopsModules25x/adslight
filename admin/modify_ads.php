@@ -124,7 +124,7 @@ function index()
  */
 function modifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext;
 
     $mytree        = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $contactselect = '';
@@ -370,7 +370,7 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
  */
 function listingDel($lid, $photo)
 {
-    global $xoopsDB, $moduleDirName;
+    global $xoopsDB;
 
     $lid = (int)$lid;
 

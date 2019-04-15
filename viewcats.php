@@ -61,7 +61,7 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
  */
 function adsView($cid, $min, $orderby, $show = 0)
 {
-    global $xoopsDB, $xoopsTpl, $xoopsConfig, $myts, $mytree, $imagecat, $meta, $moduleDirName, $main_lang, $mid, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsTpl, $xoopsConfig, $myts, $mytree, $imagecat, $meta, $mid, $prem_perm, $xoopsModule;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
@@ -412,10 +412,10 @@ function adsView($cid, $min, $orderby, $show = 0)
     if (!$GLOBALS['xoopsUser']) {
         global $xoopsDB;
 
-        $xt   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+        $xoopsTree   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         ob_start();
-        $xt->makeMySelBox('title', 'title', $cid, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
+        $xoopsTree->makeMySelBox('title', 'title', $cid, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
         $select_go_cats = ob_get_clean();
         $GLOBALS['xoopsTpl']->assign('select_go_cats', $select_go_cats);
     }

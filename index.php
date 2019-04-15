@@ -50,8 +50,10 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
 
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $prem_perm, $xoopsModule;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+    $moduleDirName = basename(__DIR__);
+
     /** @var \XoopsModules\Adslight\Helper $helper */
     $helper = \XoopsModules\Adslight\Helper::getInstance();
 

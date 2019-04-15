@@ -31,7 +31,7 @@ $op = Request::getInt('op', 'liste');
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $admin_lang;
 
     //    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $photo3 = '';
@@ -194,7 +194,7 @@ function index()
  */
 function indexView($lid = null)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $admin_lang;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -339,7 +339,7 @@ function indexView($lid = null)
  */
 function modifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $admin_lang;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -541,7 +541,7 @@ function modifyAds($lid)
  */
 function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
     $lid   = (int)$lid;
     $cat   = (int)$cat;
@@ -576,7 +576,7 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
  */
 function listingDel($lid, $photo)
 {
-    global $xoopsDB, $moduleDirName, $admin_lang;
+    global $xoopsDB, $admin_lang;
 
     $lid     = (int)$lid;
     $result2 = $xoopsDB->query('SELECT p.url FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_pictures') . " p  ON l.lid=p.lid WHERE l.lid={$lid}");
@@ -629,7 +629,7 @@ function listingDel($lid, $photo)
  */
 function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $admin_lang;
 
     $lid       = (int)$lid;
     $cid       = (int)$cid;

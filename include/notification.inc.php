@@ -22,8 +22,6 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
-$moduleDirName = basename(dirname(__DIR__));
-
 /**
  * @param $category
  * @param $item_id
@@ -37,6 +35,7 @@ function adslight_notify_iteminfo($category, $item_id)
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
+    $helper = \XoopsModules\Adslight\Helper::getInstance();
 
     if ('global' === $category) {
         $item['name'] = '';

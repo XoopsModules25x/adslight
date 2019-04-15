@@ -35,7 +35,7 @@ $op = Request::getString('op', 'liste');
  */
 function adsNewCat($cid)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -123,7 +123,7 @@ function adsNewCat($cid)
  */
 function adsModCat($cid)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $moduleDirName;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -253,7 +253,7 @@ function adsModCat($cid)
  */
 function adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_order, $affprice, $cat_moderate, $moderate_subcat)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
+    global $xoopsDB, $xoopsConfig, $myts;
 
     $title = $myts->htmlSpecialChars($title);
     $cidd  = (int)$cidd;
@@ -286,7 +286,7 @@ function adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_or
  */
 function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $affprice, $cat_moderate, $moderate_subcat)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $moduleDirName;
+    global $xoopsDB, $xoopsConfig, $myts;
 
     $moderate_subcat = (int)$moderate_subcat;
     $title           = $myts->htmlSpecialChars($title);
@@ -313,7 +313,7 @@ function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $af
  */
 function adsDelCat($cid, $ok = 0)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $moduleDirName;
+    global $xoopsDB, $xoopsConfig, $xoopsModule;
 
     $cid = (int)$cid;
     if (1 == (int)$ok) {
