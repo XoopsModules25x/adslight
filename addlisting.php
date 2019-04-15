@@ -67,10 +67,12 @@ if (Request::hasVar('submit', 'POST')) {
         redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
 
-    if ('' == Request::getString('title', '', 'POST')) {
+    if ('' === Request::getString('title', '', 'POST')) {
         //        $eh->show('1001'); //'0001' => 'Could not connect to the forums database.',
-        $moduleHandler = $helper->getHandler('Module');
-        $myModule      = $moduleHandler->getByDirname('adslight');
+        /** @var \XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        /** @var \XoopsModule $myModule */
+        $myModule = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
     $cid = Request::getInt('cid', 0, 'POST');
@@ -107,7 +109,8 @@ if (Request::hasVar('submit', 'POST')) {
     // $xoopsDB->query($sql) || $eh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
-        $moduleHandler = $helper->getHandler('Module');
+        /** @var \XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }

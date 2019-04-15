@@ -58,7 +58,6 @@ function adslight_maps_show($options)
  */
 function adslight_maps_edit($options)
 {
-    global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
     $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 

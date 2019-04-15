@@ -31,8 +31,8 @@ $op = Request::getString('op', 'liste');
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext;
-    //    require_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
+    global $xoopsDB, $myts, $desctext;
+
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/admin_header.php';

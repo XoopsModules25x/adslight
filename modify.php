@@ -44,7 +44,7 @@ if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $mo
  */
 function listingDel($lid, $ok)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger;
+    global $xoopsDB;
 
     $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($usid) = $xoopsDB->fetchRow($result);
@@ -92,7 +92,7 @@ function listingDel($lid, $ok)
  */
 function delReply($r_lid, $ok)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger;
+    global $xoopsDB;
 
     $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_replies') . ' r ON l.lid=r.lid  WHERE r.r_lid=' . $xoopsDB->escape($r_lid));
     list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
@@ -119,7 +119,7 @@ function delReply($r_lid, $ok)
  */
 function modAd($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsTheme, $myts, $xoopsLogger;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts;
     $contactselect = '';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -366,7 +366,7 @@ function modAd($lid)
  */
 function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $xoopsLogger;
+    global $xoopsDB, $myts;
 
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, $GLOBALS['xoopsSecurity']->getErrors());

@@ -24,10 +24,10 @@ require_once dirname(__DIR__) . '/preloads/autoloader.php';
 $moduleDirName      = basename(dirname(__DIR__));
 $moduleDirNameUpper = mb_strtoupper($moduleDirName); //$capsDirName
 
-/** @var \XoopsDatabase $db */
+/** @var \XoopsMySQLDatabase $xoopsDB */
 /** @var Adslight\Helper $helper */
 /** @var Adslight\Utility $utility */
-$db      = \XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
 $helper  = Adslight\Helper::getInstance();
 $utility = new Adslight\Utility();
 //$configurator = new Adslight\Common\Configurator();
@@ -35,8 +35,8 @@ $utility = new Adslight\Utility();
 $helper->loadLanguage('common');
 
 //handlers
-//$categoryHandler     = new Adslight\CategoryHandler($db);
-//$downloadHandler     = new Adslight\DownloadHandler($db);
+//$categoryHandler     = new Adslight\CategoryHandler($xoopsDB);
+//$downloadHandler     = new Adslight\DownloadHandler($xoopsDB);
 
 if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
     define($moduleDirNameUpper . '_DIRNAME', basename(dirname(__DIR__)));

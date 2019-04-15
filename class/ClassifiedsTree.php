@@ -225,7 +225,7 @@ class ClassifiedsTree
         }
         $myts = \MyTextSanitizer::getInstance();
         echo '<select name="' . $sel_name . '"';
-        if ('' != $onchange) {
+        if ('' !== $onchange) {
             echo ' onchange="' . $onchange . '"';
         }
         echo '>';
@@ -363,7 +363,6 @@ class ClassifiedsTree
      */
     public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
     {
-        global $moduleDirName;
 
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 

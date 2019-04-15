@@ -48,7 +48,6 @@ function xoops_module_pre_update_adslight(\XoopsModule $module)
 {
     /** @var \XoopsModules\Adslight\Helper $helper */
     /** @var \XoopsModules\Adslight\Utility $utility */
-    $moduleDirName = basename(dirname(__DIR__));
     $helper        = \XoopsModules\Adslight\Helper::getInstance();
     $utility       = new \XoopsModules\Adslight\Utility();
 
@@ -69,7 +68,6 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
 {
     global $xoopsDB;
     $moduleDirName      = basename(dirname(__DIR__));
-    $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     /** @var \XoopsModules\Adslight\Helper $helper */ /** @var \XoopsModules\Adslight\Utility $utility */
     /** @var \XoopsModules\Adslight\Common\Configurator $configurator */
@@ -78,60 +76,6 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
     $configurator = new \XoopsModules\Adslight\Common\Configurator();
 
     if ($previousVersion < 230) {
-        /*
-                //rename column
-                $tables     = new Tables();
-                $migrate    = new Migrate($moduleDirName);
-                $table      = 'adslight_categories';
-                $column     = 'ordre';
-                $newName    = 'cat_order';
-                $attributes = "INT(5) NOT NULL DEFAULT '0'";
-                if ($tables->useTable($table)) {
-                    $tables->alterColumn($table, $column, $attributes, $newName);
-                    if (!$tables->executeQueue()) {
-                        echo '<br>' . _AM_ADSLIGHT_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
-                    }
-                }
-
-        */ /*
-                global $xoopsModule;
-                // default Permission Settings ----------------------
-                $moduleId = $xoopsModule->getVar('mid');
-                //    $module_name = $xoopsModule->getVar('name');
-                //    $module_dirname = $xoopsModule->getVar('dirname');
-                //    $module_version = $xoopsModule->getVar('version');
-                $grouppermHandler = xoops_getHandler('groupperm');
-                // access rights ------------------------------------------
-                $grouppermHandler->addRight($moduleDirName . '_premium', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ADMIN, $moduleId);
-                $grouppermHandler->addRight($moduleDirName . '_submit', 1, XOOPS_GROUP_USERS, $moduleId);
-                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_USERS, $moduleId);
-                $grouppermHandler->addRight($moduleDirName . '_view', 1, XOOPS_GROUP_ANONYMOUS, $moduleId);
-        */
-
-        /*
-                $groups1 = [XOOPS_GROUP_ADMIN];
-                $groups2 = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS];
-                $groups3 = [XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS];
-
-                $permName1 = $moduleDirName . '_premium';
-                $permName2 = $moduleDirName . '_submit';
-                $permName3 = $moduleDirName . '_view';
-
-                $rowsCount = $xoopsDB->getRowsNum($xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('adslight_categories') . ''));
-
-                $result = $xoopsDB->query('SELECT cid FROM ' . $xoopsDB->prefix('adslight_categories'));
-
-                while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-
-                    $categoryId = (int)($myrow['cid']);
-                    $utility::saveCategoryPermissions($groups1, $categoryId, $permName1);
-                    $utility::saveCategoryPermissions($groups2, $categoryId, $permName2);
-                    $utility::saveCategoryPermissions($groups3, $categoryId, $permName3);
-                }
-
-        */
 
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {

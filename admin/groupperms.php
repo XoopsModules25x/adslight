@@ -24,7 +24,6 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
-//require_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
 
 $op = Request::getString('op', 'liste');
 xoops_cp_header();

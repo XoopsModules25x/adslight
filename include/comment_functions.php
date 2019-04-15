@@ -30,9 +30,10 @@ if (isset($usid)) {
      */
     function adslight_com_update($usid, $total_num)
     {
-        $db  = \XoopsDatabaseFactory::getDatabaseConnection();
-        $sql = 'UPDATE ' . $db->prefix('adslight_listing') . " SET comments = {$total_num} WHERE usid = {$usid}";
-        $db->query($sql);
+        /** @var \XoopsMySQLDatabase $xoopsDB */
+        $xoopsDB  = \XoopsDatabaseFactory::getDatabaseConnection();
+        $sql = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET comments = {$total_num} WHERE usid = {$usid}";
+        $xoopsDB->query($sql);
     }
 
     /**

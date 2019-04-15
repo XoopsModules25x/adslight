@@ -57,8 +57,7 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
  */
 function viewAds($lid = 0)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $prem_perm, $xoopsModule;
-    global $xoopsModuleConfig, $xoopsUser;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $prem_perm, $xoopsUser;
 
     $moduleDirName = basename(__DIR__);
 

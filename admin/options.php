@@ -31,7 +31,7 @@ $op = Request::getString('op', 'liste');
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $admin_lang;
+    global $xoopsDB,  $myts, $admin_lang;
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
@@ -175,7 +175,7 @@ function listingAddType($type)
  */
 function listingModType($id_type)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $admin_lang;
+    global $xoopsDB, $xoopsConfig,  $myts, $admin_lang;
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     $id_type = (int)$id_type;
@@ -432,7 +432,7 @@ function listingModUsure($id_usure)
  */
 function listingModUsureS($id_usure, $nom_usure)
 {
-    global $xoopsDB, $xoopsConfig, $myts;
+    global $xoopsDB,  $myts;
 
     $nom_usure = $myts->htmlSpecialChars($nom_usure);
 

@@ -316,7 +316,7 @@ class Utility
             /** @var \XoopsModuleHandler $moduleHandler */
             $moduleHandler = xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
-            /** @var \XoopsModuleHandler $moduleHandler */
+            /** @var \XoopsConfigHandler $configHandler */
             $configHandler = xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
@@ -540,7 +540,7 @@ class Utility
      */
     public static function getCatNameFromId($cid)
     {
-        global $xoopsDB, $xoopsConfig, $myts;
+        global $xoopsDB, $myts;
 
         $sql = 'SELECT SQL_CACHE title FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid = '$cid'";
 
@@ -749,6 +749,7 @@ class Utility
 
         $grouppermHandler = xoops_getHandler('groupperm');
         // First, if the permissions are already there, delete them
+        /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler->deleteByModule($moduleId, $permName, $categoryId);
         // Save the new permissions
         if (count($groups) > 0) {

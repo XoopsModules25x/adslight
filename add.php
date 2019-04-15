@@ -68,8 +68,10 @@ if (Request::hasVar('submit', 'POST')) {
     //        redirect_header( XOOPS_URL . "/modules/adslight/index.php", 2, $xoopsCaptcha->getMessage() );
     //    }
     if (Request::hasVar('submit', 'POST')) {
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $myModule      = $moduleHandler->getByDirname('adslight');
+        /** @var \XoopsModule $myModule */
+        $myModule = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
 
@@ -127,10 +129,11 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['TYPE']            = Adslight\Utility::getNameType($type);
         $tags['LINK_URL']        = XOOPS_URL . '/modules/adslight/viewads.php?' . '&lid=' . $lid;
         $sql                     = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
-        $result2                 = $xoopsDB->query($sql);
-        $row                     = $xoopsDB->fetchArray($result2);
-        $tags['CATEGORY_TITLE']  = $row['title'];
-        $tags['CATEGORY_URL']    = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cid);
+        /** @var mysqli_result $result2 */
+        $result2                = $xoopsDB->query($sql);
+        $row                    = $xoopsDB->fetchArray($result2);
+        $tags['CATEGORY_TITLE'] = $row['title'];
+        $tags['CATEGORY_URL']   = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cid);
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
@@ -151,6 +154,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['NEED_TO_LOGIN']  = _ADSLIGHT_NEED_TO_LOGIN;
         $tags['ADMIN_LINK']     = XOOPS_URL . '/modules/adslight/admin/validate_ads.php';
         $sql                    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
+        /** @var mysqli_result $result2 */
         $result2                = $xoopsDB->query($sql);
         $row                    = $xoopsDB->fetchArray($result2);
         $tags['CATEGORY_TITLE'] = $row['title'];
@@ -248,6 +252,7 @@ if (Request::hasVar('submit', 'POST')) {
         $mytree->makeMySelBox('title', 'title', $cid, 'cid');
         $form->addElement(new \XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_clean()), true);
 
+        /** @var mysqli_result $category */
         $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid='" . $xoopsDB->escape($cid) . "'");
 
         list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);

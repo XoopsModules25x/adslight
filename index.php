@@ -25,6 +25,8 @@ use XoopsModules\Adslight;
 
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 
+global $xoopsModule;
+
 require_once __DIR__ . '/header.php';
 
 $myts      = \MyTextSanitizer::getInstance();
@@ -50,7 +52,7 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
 
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $prem_perm;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
     $moduleDirName = basename(__DIR__);
 
@@ -313,15 +315,6 @@ function index()
     }
 }
 
-#  function categorynewgraphic
-#####################################################
-/**
- * @param $cid
- */
-function categorynewgraphic($cid)
-{
-    global $xoopsDB;
-}
 
 ######################################################
 

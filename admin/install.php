@@ -50,7 +50,7 @@ list($conf_id) = $xoopsDB->fetchRow($res);
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname('system');
-/** @var \XoopsModuleHandler $moduleHandler */
+/** @var \XoopsConfigHandler $configHandler */
 $configHandler = xoops_getHandler('config');
 $config_theme  = $configHandler->getConfig($conf_id, true);
 

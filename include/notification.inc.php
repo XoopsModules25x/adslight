@@ -35,7 +35,6 @@ function adslight_notify_iteminfo($category, $item_id)
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
-    $helper = \XoopsModules\Adslight\Helper::getInstance();
 
     if ('global' === $category) {
         $item['name'] = '';
@@ -51,7 +50,8 @@ function adslight_notify_iteminfo($category, $item_id)
 
         $result = $xoopsDB->query($sql);
         if (!$result) {
-            $moduleHandler = $helper->getHandler('Module');
+            /** @var \XoopsModuleHandler $moduleHandler */
+            $moduleHandler = xoops_getHandler('module');
             $myModule      = $moduleHandler->getByDirname('adslight');
             $myModule->setErrors('Could not query the database.');
         } else {

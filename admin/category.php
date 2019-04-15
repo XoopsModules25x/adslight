@@ -35,15 +35,12 @@ $op = Request::getString('op', 'liste');
  */
 function adsNewCat($cid)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts;
+    global $xoopsDB, $myts;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    //    require_once __DIR__ . '/header.php';
-
-    //    loadModuleAdminMenu(1, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_ADDSUBCAT . '</legend>';
-    //    ShowImg();
+
     Adslight\Utility::showImage();
 
     echo '<form method="post" action="category.php" name="imcat"><input type="hidden" name="op" value="AdsAddCat"></font><br><br>
@@ -123,7 +120,7 @@ function adsNewCat($cid)
  */
 function adsModCat($cid)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts;
+    global $xoopsDB, $myts;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -253,7 +250,7 @@ function adsModCat($cid)
  */
 function adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_order, $affprice, $cat_moderate, $moderate_subcat)
 {
-    global $xoopsDB, $xoopsConfig, $myts;
+    global $xoopsDB, $myts;
 
     $title = $myts->htmlSpecialChars($title);
     $cidd  = (int)$cidd;
@@ -286,7 +283,7 @@ function adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_or
  */
 function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $affprice, $cat_moderate, $moderate_subcat)
 {
-    global $xoopsDB, $xoopsConfig, $myts;
+    global $xoopsDB, $myts;
 
     $moderate_subcat = (int)$moderate_subcat;
     $title           = $myts->htmlSpecialChars($title);
@@ -313,10 +310,9 @@ function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $af
  */
 function adsDelCat($cid, $ok = 0)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule;
-
     $cid = (int)$cid;
     if (1 == (int)$ok) {
+        /** @var \XoopsMySQLDatabase $xoopsDB */
         $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid} OR pid={$cid}");
         $xoopsDB->queryf('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE cid={$cid}");

@@ -30,7 +30,7 @@ require_once __DIR__ . '/header.php';
  */
 function SendFriend($lid)
 {
-    global $xoopsConfig, $xoopsDB, $xoopsTheme, $xoopsLogger;
+    global $xoopsDB, $xoopsTheme, $xoopsLogger;
     $idd = $idde = $iddee = '';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     require_once XOOPS_ROOT_PATH . '/header.php';
@@ -91,7 +91,7 @@ function SendFriend($lid)
  */
 function MailAd($lid, $yname, $ymail, $fname, $fmail)
 {
-    global $xoopsConfig, $xoopsTpl, $xoopsDB, $xoopsModule, $myts, $xoopsLogger;
+    global $xoopsConfig, $xoopsTpl, $xoopsDB, $xoopsModule, $myts;
 
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');

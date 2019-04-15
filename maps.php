@@ -50,7 +50,7 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
 #####################################################
 function adslightMaps()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $mytree, $meta, $mid, $prem_perm;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $prem_perm;
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
 

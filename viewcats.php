@@ -102,7 +102,7 @@ function adsView($cid, $min, $orderby, $show = 0)
     /// No Adds in this Cat ///
     $submit_perms = Adslight\Utility::getMyItemIds('adslight_submit');
 
-    if ($GLOBALS['xoopsUser'] && is_array($submit_perms)
+    if (is_array($submit_perms) && $GLOBALS['xoopsUser']
         && count($submit_perms) > 0) {
         $GLOBALS['xoopsTpl']->assign('not_adds_in_this_cat', '' . _ADSLIGHT_ADD_LISTING_NOTADDSINTHISCAT . '<a href="addlisting.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_ADD_LISTING_NOTADDSSUBMIT . '</a>');
     } else {
@@ -181,7 +181,7 @@ function adsView($cid, $min, $orderby, $show = 0)
     }
 
     $submit_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if ($GLOBALS['xoopsUser'] && is_array($submit_perms)
+    if (is_array($submit_perms) && $GLOBALS['xoopsUser']
         && count($submit_perms) > 0) {
         $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLCATS . '<a href="addlisting.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>
 ';
@@ -190,7 +190,7 @@ function adsView($cid, $min, $orderby, $show = 0)
 ';
     }
 
-    if (1 == $GLOBALS['xoopsModuleConfig']['adslight_main_cat'] || 0 != $pid) {
+    if (0 != $pid || 1 == $GLOBALS['xoopsModuleConfig']['adslight_main_cat']) {
         $GLOBALS['xoopsTpl']->assign('bullinfotext', $add_listing);
     }
 
@@ -428,7 +428,7 @@ function adsView($cid, $min, $orderby, $show = 0)
  */
 function categorynewgraphic($cid)
 {
-    global $xoopsDB;
+    //global $xoopsDB;
 }
 
 ######################################################

@@ -34,7 +34,7 @@ $moduleDirName = basename(dirname(__DIR__));
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $admin_lang;
+    global $xoopsDB, $xoopsModule, $myts, $desctext, $admin_lang;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $photo3 = '';
@@ -238,7 +238,7 @@ function index()
  */
 function indexView($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsModuleConfig, $myts, $desctext, $admin_lang;
+    global $xoopsDB, $xoopsModule, $myts, $desctext, $admin_lang;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -388,7 +388,7 @@ function indexView($lid)
  */
 function modifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $admin_lang;
+    global $xoopsDB, $xoopsModule, $myts, $desctext, $admin_lang;
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
@@ -594,7 +594,7 @@ function modifyAds($lid)
  */
 function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
+    global $xoopsDB, $myts, $admin_lang;
 
     $lid   = (int)$lid;
     $cat   = (int)$cat;

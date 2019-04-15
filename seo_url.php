@@ -109,8 +109,8 @@ function replace_links($matches)
  */
 function adslight_seo_cat($cid)
 {
-    global $xoopsDB;
-    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
+    /** @var \XoopsMySQLDatabase $xoopsDB */
+    $xoopsDB     = \XoopsDatabaseFactory::getDatabaseConnection();
     $query  = '
         SELECT
             title
@@ -118,8 +118,8 @@ function adslight_seo_cat($cid)
             ' . $xoopsDB->prefix('adslight_categories') . '
         WHERE
             cid = ' . $cid . ' ';
-    $result = $db->query($query);
-    $res    = $db->fetchArray($result);
+    $result = $xoopsDB->query($query);
+    $res    = $xoopsDB->fetchArray($result);
     $ret    = adslight_seo_title($res['title']);
 
     return $ret;
@@ -132,8 +132,8 @@ function adslight_seo_cat($cid)
  */
 function adslight_seo_titre($lid)
 {
-    global $xoopsDB;
-    $db     = \XoopsDatabaseFactory::getDatabaseConnection();
+    /** @var \XoopsMySQLDatabase $xoopsDB */
+    $xoopsDB     = \XoopsDatabaseFactory::getDatabaseConnection();
     $query  = '
         SELECT
             title
@@ -141,8 +141,8 @@ function adslight_seo_titre($lid)
             ' . $xoopsDB->prefix('adslight_listing') . '
         WHERE
             lid = ' . $lid . ' ';
-    $result = $db->query($query);
-    $res    = $db->fetchArray($result);
+    $result = $xoopsDB->query($query);
+    $res    = $xoopsDB->fetchArray($result);
     $ret    = adslight_seo_title($res['title']);
 
     return $ret;
