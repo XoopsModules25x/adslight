@@ -45,7 +45,7 @@ if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $modu
 
 $prem_perm = (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
-$mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree = new \XoopsModules\Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function index
 #####################################################
