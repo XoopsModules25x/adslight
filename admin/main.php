@@ -25,7 +25,7 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op = Request::getString('op', 'liste');
+$op = Request::getString('op', 'list');
 
 #  function Index
 #####################################################

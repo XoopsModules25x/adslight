@@ -77,7 +77,7 @@ if (Request::hasVar('submit', 'POST')) {
 
     $cid       = Request::getInt('cid', 0, 'POST');
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if (!in_array($cid, $cat_perms, true)) {
+    if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
 
@@ -185,7 +185,7 @@ if (Request::hasVar('submit', 'POST')) {
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
     require_once XOOPS_ROOT_PATH . '/header.php';
-    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+//    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $cid          = Request::getInt('cide', 0, 'GET');
     $cat_moderate = Request::getInt('cat_moderate', 0, 'POST');
@@ -243,7 +243,7 @@ if (Request::hasVar('submit', 'POST')) {
     $cid       = 0;
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {
-        if (!in_array($cid, $cat_perms, true)) {
+        if (!in_array($cid, $cat_perms)) {
             //mb            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
 

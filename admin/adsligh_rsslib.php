@@ -175,13 +175,13 @@ function RSS_Display($url, $size = 15, $site = 0)
     foreach ($recents as $article) {
         $type = $article['type'];
         if (0 == $type) {
-            if (true === $opened) {
+            if ($opened) {
                 $page   .= '</ul>';
                 $opened = false;
             }
             $page .= '<b>';
         } else {
-            if (false === $opened) {
+            if (!$opened) {
                 $page   .= '<ul>';
                 $opened = true;
             }
@@ -201,7 +201,7 @@ function RSS_Display($url, $size = 15, $site = 0)
         }
     }
 
-    if (true === $opened) {
+    if ($opened) {
         $page .= '</ul>';
     }
 
@@ -232,13 +232,13 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
     foreach ($recents as $article) {
         $type = $article['type'];
         if (0 == $type) {
-            if (true === $opened) {
+            if ($opened) {
                 $page   .= '</ul>';
                 $opened = false;
             }
             $page .= '<b>';
         } else {
-            if (false === $opened) {
+            if (!$opened) {
                 $page   .= '<ul>';
                 $opened = true;
             }
@@ -254,7 +254,7 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
         }
     }
 
-    if (true === $opened) {
+    if ($opened) {
         $page .= '</ul>';
     }
 

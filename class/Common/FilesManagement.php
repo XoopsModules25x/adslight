@@ -78,10 +78,10 @@ trait FilesManagement
      *
      * @param string $src source directory to delete
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      */
     public static function deleteDirectory($src)
     {
@@ -209,10 +209,10 @@ trait FilesManagement
      * @param string $src  - Source of files being moved
      * @param string $dest - Destination of files being moved
      *
-     * @return bool true on success
+     * @uses \Xmf\Module\Helper::getHelper()
      * @uses \Xmf\Module\Helper::isUserAdmin()
      *
-     * @uses \Xmf\Module\Helper::getHelper()
+     * @return bool true on success
      */
     public static function rcopy($src, $dest)
     {

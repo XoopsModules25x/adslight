@@ -57,15 +57,15 @@ function listingDel($lid, $ok)
             if (1 == $ok) {
                 while (false !== (list($purl) = $xoopsDB->fetchRow($result1))) {
                     if ($purl) {
-                        $destination = XOOPS_ROOT_PATH . '/uploads/AdsLight';
+                        $destination = XOOPS_ROOT_PATH . '/uploads/adslight';
                         if (file_exists("$destination/$purl")) {
                             unlink("$destination/$purl");
                         }
-                        $destination2 = XOOPS_ROOT_PATH . '/uploads/AdsLight/thumbs';
+                        $destination2 = XOOPS_ROOT_PATH . '/uploads/adslight/thumbs';
                         if (file_exists("$destination2/thumb_$purl")) {
                             unlink("$destination2/thumb_$purl");
                         }
-                        $destination3 = XOOPS_ROOT_PATH . '/uploads/AdsLight/midsize';
+                        $destination3 = XOOPS_ROOT_PATH . '/uploads/adslight/midsize';
                         if (file_exists("$destination3/resized_$purl")) {
                             unlink("$destination3/resized_$purl");
                         }
@@ -127,12 +127,13 @@ function modAd($lid)
 
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
+    $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid);
+    $result = $xoopsDB->query($sql);
     list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
 
     $categories = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {
-        if (!in_array((int)$cide, $categories, true)) {
+        if (!in_array((int)$cide, $categories)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
     } else {    // User can't see any category

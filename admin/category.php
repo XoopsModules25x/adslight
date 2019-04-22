@@ -26,7 +26,7 @@ use XoopsModules\Adslight;
 require_once __DIR__ . '/admin_header.php';
 xoops_cp_header();
 
-$op = Request::getString('op', 'liste');
+$op = Request::getString('op', 'list');
 
 #  function adsNewCat
 #####################################################

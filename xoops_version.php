@@ -47,8 +47,8 @@ if (file_exists(XOOPS_ROOT_PATH . '/modules/adslight/sql/' . $xoopsConfig['langu
 }
 
 $modversion['version']             = '2.3';
-$modversion['module_status']       = 'RC 2';
-$modversion['release_date']        = '2019/04/14';
+$modversion['module_status']       = 'RC 3';
+$modversion['release_date']        = '2019/04/22';
 $modversion['name']                = _MI_ADSLIGHT_NAME;
 $modversion['description']         = _MI_ADSLIGHT_DESC;
 $modversion['credits']             = 'AdsLight';
@@ -59,8 +59,8 @@ $modversion['license_file']        = 'http://www.gnu.org/licenses/gpl.html';
 $modversion['official']            = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
 $modversion['image']               = 'assets/images/logoModule.png';
 $modversion['dirname']             = $moduleDirName;
-$modversion['modicons16']          = 'assets/images/icons/';
-$modversion['modicons32']          = 'assets/images/icons/';
+$modversion['modicons16']          = 'assets/images/icons/16';
+$modversion['modicons32']          = 'assets/images/icons/32';
 $modversion['module_website_url']  = 'www.xoops.org';
 $modversion['module_website_name'] = 'XOOPS';
 $modversion['min_php']             = '5.6';
@@ -388,7 +388,7 @@ $modversion['config'][] = [
     'description' => '_MI_ADSLIGHT_UPLOAD_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => XOOPS_ROOT_PATH . '/uploads/AdsLight/',
+    'default'     => XOOPS_ROOT_PATH . '/uploads/adslight/',
 ];
 
 $modversion['config'][] = [
@@ -397,7 +397,7 @@ $modversion['config'][] = [
     'description' => '_MI_ADSLIGHT_LINKUPLOAD_DESC',
     'formtype'    => 'textbox',
     'valuetype'   => 'text',
-    'default'     => XOOPS_URL . '/uploads/AdsLight/',
+    'default'     => XOOPS_URL . '/uploads/adslight',
 ];
 
 $modversion['config'][] = [

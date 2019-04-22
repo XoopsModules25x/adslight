@@ -166,7 +166,7 @@ if ($trows > '0') {
         list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
 
         if ($isadmin) {
-            $adminlink = "<a href='" . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid=' . $lid . "'><img src='" . $pathIcon16 . "/edit.png' border=0 alt=\"" . _ADSLIGHT_MODADMIN . '" ></a>';
+            $adminlink = "<a href='" . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=modifyAds&amp;lid=' . $lid . "'><img src='" . $pathIcon16 . "/edit.png' border=0 alt=\"" . _ADSLIGHT_MODADMIN . '" ></a>';
             $GLOBALS['xoopsTpl']->assign('isadmin', $isadmin);
         } else {
             $adminlink = '';

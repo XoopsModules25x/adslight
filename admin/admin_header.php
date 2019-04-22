@@ -17,20 +17,19 @@
  * @author       XOOPS Development Team
  */
 
+use Xmf\Request;
 use XoopsModules\Adslight;
 
 include dirname(__DIR__) . '/preloads/autoloader.php';
-
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
+require  dirname(__DIR__) . '/include/common.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
-
 /** @var \XoopsModules\Adslight\Helper $helper */
 $helper = \XoopsModules\Adslight\Helper::getInstance();
-
 /** @var \Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 

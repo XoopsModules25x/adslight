@@ -97,7 +97,7 @@ function viewAds($lid = 0)
         if ($usid = $member_usid) {
             $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
-            if ('' != $GLOBALS['xoopsUser']->getVar('name')) {
+            if ('' !== $GLOBALS['xoopsUser']->getVar('name')) {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('name') . ' (' . $GLOBALS['xoopsUser']->getVar('uname') . ')');
             } else {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('uname'));
@@ -225,7 +225,7 @@ function viewAds($lid = 0)
 
             $contact_pm = '<a href="' . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . addslashes($usid) . '">&nbsp;' . _ADSLIGHT_CONTACT_BY_PM . '</a>';
         }
-        if (true === $viewcount_judge) {
+        if ($viewcount_judge) {
             $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid));
         }
         if (1 == $item_votes) {
@@ -286,7 +286,7 @@ function viewAds($lid = 0)
                 $GLOBALS['xoopsTpl']->assign('isOwner', $isOwner);
             }
             if ($GLOBALS['xoopsUser']->isAdmin()) {
-                $GLOBALS['xoopsTpl']->assign('admin', '<a href="' . XOOPS_URL . '/modules/adslight/admin/modify_ads.php?op=ModifyAds&amp;lid=' . $lid . '"><img src=' . $pathIcon16 . '/edit.png  border=0 alt="' . _ADSLIGHT_MODADMIN . '" ></a>');
+                $GLOBALS['xoopsTpl']->assign('admin', '<a href="' . XOOPS_URL . '/modules/adslight/admin/modify_ads.php?op=modifyAds&amp;lid=' . $lid . '"><img src=' . $pathIcon16 . '/edit.png  border=0 alt="' . _ADSLIGHT_MODADMIN . '" ></a>');
             }
         }
 

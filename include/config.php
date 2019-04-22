@@ -35,12 +35,16 @@ function getConfig()
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/midsize',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
         'copyBlankFiles' => [
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName,
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/category',
             XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/screenshots',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/thumbs',
+            XOOPS_UPLOAD_PATH . '/' . $moduleDirName . '/midsize',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
 
