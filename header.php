@@ -26,10 +26,15 @@
 
 use Xmf\Module\Admin;
 
+include __DIR__ . '/preloads/autoloader.php';
+
+// $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+
 $moduleDirName = basename(__DIR__);
 require_once dirname(dirname(__DIR__)) . '/mainfile.php';
-require_once __DIR__ . '/class/Utility.php';
 
+/** @var \XoopsModules\Adslight\Helper $helper */
+$helper = \XoopsModules\Adslight\Helper::getInstance();
 if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
     require_once __DIR__ . '/seo_url.php';
 }
@@ -38,7 +43,6 @@ $pathIcon16 = Admin::iconUrl('', 16);
 
 $myts = \MyTextSanitizer::getInstance();
 
-xoops_loadLanguage('main', $moduleDirName);
+// Load language files
+$helper->loadLanguage('main');
 
-$GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
-require_once XOOPS_ROOT_PATH . '/header.php';

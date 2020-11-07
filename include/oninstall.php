@@ -17,6 +17,8 @@
 
 use XoopsModules\Adslight;
 
+include dirname(__DIR__) . '/preloads/autoloader.php';
+
 /**
  * Prepares system prior to attempting to install module
  * @param XoopsModule $module {@link XoopsModule}

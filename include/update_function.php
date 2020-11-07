@@ -20,7 +20,6 @@
 -------------------------------------------------------------------------
 */
 
-// require_once  dirname(__DIR__) . '/class/Utility.php';
 /**
  * @param XoopsObject $xoopsModule
  *

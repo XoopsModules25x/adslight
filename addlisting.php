@@ -50,9 +50,8 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $premium = 0; // set for access to non-premium content only
 }
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 //@todo - seems this should let users through if they have group rights instead of
@@ -68,16 +67,18 @@ if (Request::hasVar('submit', 'POST')) {
         redirect_header(XOOPS_URL . '/', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
 
-    if ('' == Request::getString('title', '', 'POST')) {
+    if ('' === Request::getString('title', '', 'POST')) {
         //        $eh->show('1001'); //'0001' => 'Could not connect to the forums database.',
-        $moduleHandler = $helper->getHandler('Module');
-        $myModule      = $moduleHandler->getByDirname('adslight');
+        /** @var \XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        /** @var \XoopsModule $myModule */
+        $myModule = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
     $cid = Request::getInt('cid', 0, 'POST');
 
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if (!in_array($cid, $cat_perms, true)) {
+    if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
 
@@ -108,7 +109,8 @@ if (Request::hasVar('submit', 'POST')) {
     // $xoopsDB->query($sql) || $eh->show('0013'); //            '0013' => 'Could not query the database.', // <br>Error: ' . $GLOBALS['xoopsDB']->error() . '',
     $success = $xoopsDB->query($sql);
     if (!$success) {
-        $moduleHandler = $helper->getHandler('Module');
+        /** @var \XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
         $myModule      = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not query the database.');
     }
@@ -245,7 +247,7 @@ if (Request::hasVar('submit', 'POST')) {
     $cid       = Request::getInt('cid', 0, 'GET');
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if ((is_array($cat_perms) && count($cat_perms) > 0) && $cid > 0) {
-        if (!in_array($cid, $cat_perms, true)) {
+        if (!in_array($cid, $cat_perms)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
 
@@ -321,8 +323,7 @@ if (Request::hasVar('submit', 'POST')) {
         $form->addElement(new \XoopsFormHidden('date', time()), false);
         $form->addElement(new \XoopsFormButton('', 'submit', _ADSLIGHT_SUBMIT, 'submit'));
         $form->display();
-        $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_contents());
-        ob_end_clean();
+        $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_clean());
     } else {    // User can't see any category
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }

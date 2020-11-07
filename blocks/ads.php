@@ -31,8 +31,7 @@ use XoopsModules\Adslight;
  */
 function adslight_show($options)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
-    global $xoopsDB, $moduleDirName, $block_lang;
+    global $xoopsDB, $block_lang;
 
     $block = [];
     $myts  = \MyTextSanitizer::getInstance();

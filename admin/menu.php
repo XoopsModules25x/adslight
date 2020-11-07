@@ -52,13 +52,13 @@ $adminmenu[] = [
     'link'  => 'admin/map.php',
     'icon'  => $pathIcon32 . '/category.png',
 ];
-
-$adminmenu[] = [
-    'title' => _MI_ADSLIGHT_ADMENU5,
-    'link'  => 'admin/options.php',
-    'icon'  => $pathModIcon32 . '/preferences.png',
-];
-
+if (isset($pathModIcon32) && null !== $pathModIcon32) {
+    $adminmenu[] = [
+        'title' => _MI_ADSLIGHT_ADMENU5,
+        'link'  => 'admin/options.php',
+        'icon'  => $pathModIcon32 . '/preferences.png',
+    ];
+}
 $adminmenu[] = [
     'title' => _MI_ADSLIGHT_ADMENU2,
     'link'  => 'admin/groupperms.php',

@@ -29,12 +29,11 @@ function b_adslight_add()
     global $xoopsDB;
     $moduleDirName = basename(dirname(__DIR__));
     xoops_loadLanguage('main', $moduleDirName);
-    $xt   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $xoopsTree   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $jump = XOOPS_URL . '/modules/adslight/addlisting.php?cid=';
     ob_start();
-    $xt->makeMySelBox('title', 'title', 0, 1, 'pid', "location=\"{$jump}\"+this.options[this.selectedIndex].value");
-    $block['selectbox'] = ob_get_contents();
-    ob_end_clean();
+    $xoopsTree->makeMySelBox('title', 'title', 0, 1, 'pid', "location=\"{$jump}\"+this.options[this.selectedIndex].value");
+    $block['selectbox'] = ob_get_clean();
 
     return $block;
 }

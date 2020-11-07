@@ -25,14 +25,13 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * @param $lid
  */
 function PrintAd($lid)
 {
-    global $xoopsConfig, $xoopsDB, $useroffset, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsConfig, $xoopsDB, $useroffset, $myts;
 
     $currenttheme = $xoopsConfig['theme_set'];
     $lid          = (int)$lid;
@@ -87,7 +86,7 @@ function PrintAd($lid)
         echo '<strong>' . _ADSLIGHT_PRICE2 . "</strong> $price " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . "  - $typeprice<br>";
     }
     if ($photo) {
-        echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/AdsLight/$url\" width=\"130px\" border=0 ></div>";
+        echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/adslight/$url\" width=\"130px\" border=0 ></div>";
     }
     echo '</td>
           </tr>

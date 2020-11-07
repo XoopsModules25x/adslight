@@ -281,3 +281,5 @@ define('_MI_ADSLIGHT_SETTING_7', '0');
 
 define('_MI_ADSLIGHT_HOME', 'Home');
 define('_MI_ADSLIGHT_ABOUT', 'About');
+
+define('MI_ADSLIGHT_ADMENU2', 'Listing');

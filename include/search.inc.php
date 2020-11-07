@@ -22,8 +22,6 @@
 
 use XoopsModules\Adslight;
 
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
-
 /**
  * @param $queryarray
  * @param $andor
@@ -41,7 +39,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
         $visible = false;
     }
 
-    global $xoopsDB, $moduleDirName;
+    global $xoopsDB;
 
     $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes' AND status!='1' AND date<=" . time() . ' ';
 

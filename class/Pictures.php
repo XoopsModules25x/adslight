@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Adslight;
+
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -32,7 +35,6 @@ require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 /**
  * light_pictures class.
@@ -41,6 +43,7 @@ require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
  */
 class Pictures extends \XoopsObject
 {
+    /** @var \XoopsMySQLDatabase $db */
     public $db;
     // constructor
 
@@ -74,7 +77,6 @@ class Pictures extends \XoopsObject
      */
     public function load($id)
     {
-        global $moduleDirName;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' ';
         $myrow = $this->db->fetchArray($this->db->query($sql));
         $this->assignVars($myrow);
@@ -96,8 +98,8 @@ class Pictures extends \XoopsObject
      */
     public function getAllPictures($criteria = [], $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
     {
-        global $moduleDirName;
-        $db          = \XoopsDatabaseFactory::getDatabaseConnection();
+        /** @var \XoopsMySQLDatabase $xoopsDB */
+        $xoopsDB          = \XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = [];
         $where_query = '';
         if (is_array($criteria) && count($criteria) > 0) {
@@ -110,15 +112,15 @@ class Pictures extends \XoopsObject
             $where_query = " WHERE {$criteria}";
         }
         if (!$asobject) {
-            $sql    = 'SELECT cod_img FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
-            $result = $db->query($sql, $limit, $start);
-            while (false !== ($myrow = $db->fetchArray($result))) {
+            $sql    = 'SELECT cod_img FROM ' . $xoopsDB->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
+            $result = $xoopsDB->query($sql, $limit, $start);
+            while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
                 $ret[] = $myrow['cog_img'];
             }
         } else {
-            $sql    = 'SELECT * FROM ' . $db->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
-            $result = $db->query($sql, $limit, $start);
-            while (false !== ($myrow = $db->fetchArray($result))) {
+            $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
+            $result = $xoopsDB->query($sql, $limit, $start);
+            while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
                 $ret[] = new self($myrow);
             }
         }

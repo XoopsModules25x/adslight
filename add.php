@@ -23,6 +23,8 @@
 use Xmf\Request;
 use XoopsModules\Adslight;
 
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
+
 require_once __DIR__ . '/header.php';
 $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
@@ -34,7 +36,10 @@ $module_id = $xoopsModule->getVar('mid');
 $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
-$perm_itemid      = Request::getInt('item_id', 0, 'POST');
+
+$permHelper = new \Xmf\Module\Helper\Permission();
+
+$perm_itemid = Request::getInt('item_id', 0, 'POST');
 
 if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -42,9 +47,8 @@ if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $mo
 
 $premium = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? 1 : 0;
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
+
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 if (!$GLOBALS['xoopsUser'] instanceof \XoopsUser) {
@@ -64,14 +68,16 @@ if (Request::hasVar('submit', 'POST')) {
     //        redirect_header( XOOPS_URL . "/modules/adslight/index.php", 2, $xoopsCaptcha->getMessage() );
     //    }
     if (Request::hasVar('submit', 'POST')) {
+        /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
-        $myModule      = $moduleHandler->getByDirname('adslight');
+        /** @var \XoopsModule $myModule */
+        $myModule = $moduleHandler->getByDirname('adslight');
         $myModule->setErrors('Could not connect to the database.');
     }
 
     $cid       = Request::getInt('cid', 0, 'POST');
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if (!in_array($cid, $cat_perms, true)) {
+    if (!in_array($cid, $cat_perms)) {
         redirect_header(XOOPS_URL, 2, _NOPERM);
     }
 
@@ -123,10 +129,11 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['TYPE']            = Adslight\Utility::getNameType($type);
         $tags['LINK_URL']        = XOOPS_URL . '/modules/adslight/viewads.php?' . '&lid=' . $lid;
         $sql                     = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
-        $result2                 = $xoopsDB->query($sql);
-        $row                     = $xoopsDB->fetchArray($result2);
-        $tags['CATEGORY_TITLE']  = $row['title'];
-        $tags['CATEGORY_URL']    = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cid);
+        /** @var mysqli_result $result2 */
+        $result2                = $xoopsDB->query($sql);
+        $row                    = $xoopsDB->fetchArray($result2);
+        $tags['CATEGORY_TITLE'] = $row['title'];
+        $tags['CATEGORY_URL']   = XOOPS_URL . '/modules/adslight/viewcats.php?cid="' . addslashes($cid);
         /** @var \XoopsNotificationHandler $notificationHandler */
         $notificationHandler = xoops_getHandler('notification');
         $notificationHandler->triggerEvent('global', 0, 'new_listing', $tags);
@@ -147,6 +154,7 @@ if (Request::hasVar('submit', 'POST')) {
         $tags['NEED_TO_LOGIN']  = _ADSLIGHT_NEED_TO_LOGIN;
         $tags['ADMIN_LINK']     = XOOPS_URL . '/modules/adslight/admin/validate_ads.php';
         $sql                    = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . addslashes($cid);
+        /** @var mysqli_result $result2 */
         $result2                = $xoopsDB->query($sql);
         $row                    = $xoopsDB->fetchArray($result2);
         $tags['CATEGORY_TITLE'] = $row['title'];
@@ -177,7 +185,7 @@ if (Request::hasVar('submit', 'POST')) {
 } else {
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_addlisting.tpl';
     require_once XOOPS_ROOT_PATH . '/header.php';
-    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+//    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $cid          = Request::getInt('cide', 0, 'GET');
     $cat_moderate = Request::getInt('cat_moderate', 0, 'POST');
@@ -231,20 +239,20 @@ if (Request::hasVar('submit', 'POST')) {
     }
     $form->addElement(new \XoopsFormText(_ADSLIGHT_TEL, 'tel', 50, 50, ''), false);
 
-    // $cat_id = $_GET['cid'];
-    $cid       = 1;
+    //     $cid = $_GET['cid'];
+    $cid       = 0;
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($cat_perms) && count($cat_perms) > 0) {
-        if (!in_array($cid, $cat_perms, true)) {
-            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
+        if (!in_array($cid, $cat_perms)) {
+            //mb            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
 
         // Category select box
         ob_start();
         $mytree->makeMySelBox('title', 'title', $cid, 'cid');
-        $form->addElement(new \XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_contents()), true);
-        ob_end_clean();
+        $form->addElement(new \XoopsFormLabel(_ADSLIGHT_CAT3, ob_get_clean()), true);
 
+        /** @var mysqli_result $category */
         $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid='" . $xoopsDB->escape($cid) . "'");
 
         list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
@@ -326,8 +334,7 @@ if (Request::hasVar('submit', 'POST')) {
         $form->addElement(new \XoopsFormHidden('date', time()), false);
         $form->addElement(new \XoopsFormButton('', 'submit', _ADSLIGHT_SUBMIT, 'submit'));
         $form->display();
-        $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_contents());
-        ob_end_clean();
+        $GLOBALS['xoopsTpl']->assign('submit_form', ob_get_clean());
     } else {    // User can't see any category
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
     }

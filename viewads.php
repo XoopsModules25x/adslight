@@ -48,8 +48,6 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $prem_perm = '1';
 }
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function viewads
@@ -59,8 +57,10 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
  */
 function viewAds($lid = 0)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
-    global $xoopsModuleConfig, $xoopsUser;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $prem_perm, $xoopsUser;
+
+    $moduleDirName = basename(__DIR__);
+
     $pathIcon16     = \Xmf\Module\Admin::iconUrl('', 16);
     $contact_pm     = $contact = '';
     $pictures_array = [];
@@ -97,7 +97,7 @@ function viewAds($lid = 0)
         if ($usid = $member_usid) {
             $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
-            if (mb_strlen($GLOBALS['xoopsUser']->getVar('name'))) {
+            if ('' !== $GLOBALS['xoopsUser']->getVar('name')) {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('name') . ' (' . $GLOBALS['xoopsUser']->getVar('uname') . ')');
             } else {
                 $GLOBALS['xoopsTpl']->assign('user_name', $GLOBALS['xoopsUser']->getVar('uname'));
@@ -225,7 +225,7 @@ function viewAds($lid = 0)
 
             $contact_pm = '<a href="' . XOOPS_URL . '/pmlite.php?send2=1&amp;to_userid=' . addslashes($usid) . '">&nbsp;' . _ADSLIGHT_CONTACT_BY_PM . '</a>';
         }
-        if (true === $viewcount_judge) {
+        if ($viewcount_judge) {
             $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . ' SET hits=hits+1 WHERE lid = ' . $xoopsDB->escape($lid));
         }
         if (1 == $item_votes) {
@@ -286,7 +286,7 @@ function viewAds($lid = 0)
                 $GLOBALS['xoopsTpl']->assign('isOwner', $isOwner);
             }
             if ($GLOBALS['xoopsUser']->isAdmin()) {
-                $GLOBALS['xoopsTpl']->assign('admin', '<a href="' . XOOPS_URL . '/modules/adslight/admin/modify_ads.php?op=ModifyAds&amp;lid=' . $lid . '"><img src=' . $pathIcon16 . '/edit.png  border=0 alt="' . _ADSLIGHT_MODADMIN . '" ></a>');
+                $GLOBALS['xoopsTpl']->assign('admin', '<a href="' . XOOPS_URL . '/modules/adslight/admin/modify_ads.php?op=modifyAds&amp;lid=' . $lid . '"><img src=' . $pathIcon16 . '/edit.png  border=0 alt="' . _ADSLIGHT_MODADMIN . '" ></a>');
             }
         }
 
@@ -306,7 +306,7 @@ function viewAds($lid = 0)
         $GLOBALS['xoopsTpl']->assign('xoops_pagetitle', $title . ' - ' . $town . ': ' . $country . ' - ' . $ctitle);
 
         // meta description tags for ads
-        $desctextclean = strip_tags($desctext, '<font><img><strong><i><u>');
+        $desctextclean = strip_tags($desctext, '<span><img><strong><i><u>');
         $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . mb_substr($desctextclean, 0, 150));
 
         if ($price > 0) {
@@ -373,12 +373,11 @@ function viewAds($lid = 0)
         $GLOBALS['xoopsTpl']->assign('user_profile', '<img src="assets/images/profil.png" border="0" alt="' . _ADSLIGHT_PROFILE . '" >&nbsp;&nbsp;<a rel="nofollow" href="' . XOOPS_URL . '/user.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_PROFILE . ' ' . $user_profile . '</a>');
 
         if ('' != $photo) {
-            require_once __DIR__ . '/class/Pictures.php';
-            require_once __DIR__ . '/class/PicturesHandler.php';
+
 
             $criteria_lid          = new \Criteria('lid', $lid);
             $criteria_uid          = new \Criteria('uid', $usid);
-            $album_factory         = new PicturesHandler($xoopsDB);
+            $album_factory         = new Adslight\PicturesHandler($xoopsDB);
             $pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
             $pictures_number       = $album_factory->getCount($criteria_lid, $criteria_uid);
             if (0 == $pictures_number) {
@@ -400,7 +399,7 @@ function viewAds($lid = 0)
                 }
             }
             $owner      = new \XoopsUser();
-            $identifier = $owner->getUnameFromId($usid);
+            $identifier = $owner::getUnameFromId($usid);
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
                 $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
 <script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>

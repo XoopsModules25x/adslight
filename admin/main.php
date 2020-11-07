@@ -25,14 +25,14 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op = Request::getString('op', 'liste');
+$op = Request::getString('op', 'list');
 
 #  function Index
 #####################################################
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $desctext, $moduleDirName;
-    //    require_once XOOPS_ROOT_PATH."/modules/adslight/class/classifiedstree.php";
+    global $xoopsDB, $myts, $desctext;
+
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/admin_header.php';

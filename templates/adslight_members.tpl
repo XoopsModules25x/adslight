@@ -62,8 +62,8 @@
                         <td align="left"><{$item.expires}></td>
                         <td align="left"><{$item.town}></td>
                         <{if $istheirs}><{if $permit}>
-                            <td align="right"><{$item.rrows}>&nbsp;<{$item.view_now}></td><{/if}><{/if}>
-                        <td align="left"><{$item.hits}></td>
+                            <td align="center"><{$item.rrows}>&nbsp;<{$item.view_now}></td><{/if}><{/if}>
+                        <td align="center"><{$item.hits}></td>
                     </tr>
                 <{/foreach}>
             </table>

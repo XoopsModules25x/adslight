@@ -21,22 +21,18 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
-$moduleDirName = basename(dirname(__DIR__));
-$main_lang     = '_' . mb_strtoupper($moduleDirName);
+require_once __DIR__ . '/header.php';
 
 /**
  * Xoops Header
  */
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
 require_once XOOPS_ROOT_PATH . '/header.php';
-require_once XOOPS_ROOT_PATH . '/class/criteria.php';
 
 /**
  * Include modules classes
  */
-require_once __DIR__ . '/class/Pictures.php';
-require_once __DIR__ . '/class/PicturesHandler.php';
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
     redirect_header(Request::getString('HTTP_REFERER', '', 'SERVER'), 3, _ADSLIGHT_TOKENEXPIRED);
@@ -54,7 +50,7 @@ if (1 == $marker) {
      */
     $title = Request::getString('caption', '', 'POST');
 
-    $picture_factory = new PicturesHandler($xoopsDB);
+    $picture_factory = new Adslight\PicturesHandler($xoopsDB);
     $picture         = $picture_factory->create(false);
     $picture->load($cod_img);
     $picture->setVar('title', $title);
@@ -77,7 +73,7 @@ if (1 == $marker) {
  * Creating the factory  and the criteria to edit the desc of the picture
  * The user must be the owner
  */
-$album_factory = new PicturesHandler($xoopsDB);
+$album_factory = new Adslight\PicturesHandler($xoopsDB);
 $criteria_img  = new \Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new \Criteria('uid_owner', $uid);

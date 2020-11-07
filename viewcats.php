@@ -49,8 +49,6 @@ if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $m
     $prem_perm = '1';
 }
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function view (categories)
@@ -63,7 +61,7 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
  */
 function adsView($cid, $min, $orderby, $show = 0)
 {
-    global $xoopsDB, $xoopsTpl, $xoopsConfig, $myts, $mytree, $imagecat, $meta, $moduleDirName, $main_lang, $mid, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsTpl, $xoopsConfig, $myts, $mytree, $imagecat, $meta, $mid, $prem_perm, $xoopsModule;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
@@ -104,7 +102,7 @@ function adsView($cid, $min, $orderby, $show = 0)
     /// No Adds in this Cat ///
     $submit_perms = Adslight\Utility::getMyItemIds('adslight_submit');
 
-    if ($GLOBALS['xoopsUser'] && is_array($submit_perms)
+    if (is_array($submit_perms) && $GLOBALS['xoopsUser']
         && count($submit_perms) > 0) {
         $GLOBALS['xoopsTpl']->assign('not_adds_in_this_cat', '' . _ADSLIGHT_ADD_LISTING_NOTADDSINTHISCAT . '<a href="addlisting.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_ADD_LISTING_NOTADDSSUBMIT . '</a>');
     } else {
@@ -140,13 +138,15 @@ function adsView($cid, $min, $orderby, $show = 0)
     $GLOBALS['xoopsTpl']->assign('subcat_title2', _ADSLIGHT_ANNONCES);
 
     $categories = Adslight\Utility::getMyItemIds('adslight_view');
-    if (is_array($categories) && count($categories) > 0) {
-        if (!in_array($cid, $categories, true)) {
-            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
-        }
-    } else {    // User can't see any category
-        redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
-    }
+    
+//TO DO - check on permissions here
+//    if ($categories && is_array($categories)) {
+//        if (!in_array($cid, $categories)) {
+//            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
+//        }
+//    } else {    // User can't see any category
+//        redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
+//    }
 
     $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
 
@@ -175,24 +175,22 @@ function adsView($cid, $min, $orderby, $show = 0)
 
     if ($cat_desc > '0') {
         // meta description & keywords tags for categories
-        $cat_desc_clean     = strip_tags($cat_desc, '<font><img><strong><i><u>');
-        $cat_keywords_clean = strip_tags($cat_keywords, '<font><img><strong><i><u><br><li>');
+        $cat_desc_clean     = strip_tags($cat_desc, '<span><img><strong><i><u>');
+        $cat_keywords_clean = strip_tags($cat_keywords, '<span><img><strong><i><u><br><li>');
 
         $GLOBALS['xoTheme']->addMeta('meta', 'description', '' . mb_substr($cat_desc_clean, 0, 200));
         $GLOBALS['xoTheme']->addMeta('meta', 'keywords', '' . mb_substr($cat_keywords_clean, 0, 1000));
     }
 
     $submit_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if ($GLOBALS['xoopsUser'] && is_array($submit_perms)
+    if (is_array($submit_perms) && $GLOBALS['xoopsUser']
         && count($submit_perms) > 0) {
-        $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLCATS . '<a href="addlisting.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>
-';
+        $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLCATS . '<a href="addlisting.php?cid=' . addslashes($cid) . '">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>';
     } else {    // User can't see any category
-        $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLCATSOK . '<a href="' . XOOPS_URL . '/register.php">' . _ADSLIGHT_ADD_LISTING_SUB . '</a>.
-';
+        $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLCATSOK . '<a href="' . XOOPS_URL . '/register.php">' . _ADSLIGHT_ADD_LISTING_SUB . '</a>.';
     }
 
-    if (1 == $GLOBALS['xoopsModuleConfig']['adslight_main_cat'] || 0 != $pid) {
+    if (0 != $pid || 1 == $GLOBALS['xoopsModuleConfig']['adslight_main_cat']) {
         $GLOBALS['xoopsTpl']->assign('bullinfotext', $add_listing);
     }
 
@@ -202,7 +200,7 @@ function adsView($cid, $min, $orderby, $show = 0)
     if (count($arr) > 0) {
         $scount = 1;
         foreach ($arr as $ele) {
-            if (in_array($ele['cid'], $categories, true)) {
+            if (in_array($ele['cid'], $categories)) {
                 $sub_arr         = [];
                 $sub_arr         = $mytree->getFirstChild($ele['cid'], 'title');
                 $space           = 0;
@@ -210,7 +208,7 @@ function adsView($cid, $min, $orderby, $show = 0)
                 $infercategories = '';
                 $totallisting    = Adslight\Utility::getTotalItems($ele['cid'], 1);
                 foreach ($sub_arr as $sub_ele) {
-                    if (in_array($sub_ele['cid'], $categories, true)) {
+                    if (in_array($sub_ele['cid'], $categories)) {
                         $chtitle = $myts->htmlSpecialChars($sub_ele['title']);
 
                         if ($chcount > 5) {
@@ -318,7 +316,7 @@ function adsView($cid, $min, $orderby, $show = 0)
             $date = formatTimestamp($date, 's');
             if ($GLOBALS['xoopsUser']) {
                 if ($GLOBALS['xoopsUser']->isAdmin()) {
-                    $a_item['admin'] = '<a href="' . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid=' . $lid . '"><img src="' . $pathIcon16 . '/edit.png' . '" border=0 alt="' . _ADSLIGHT_MODADMIN . '" title="' . _ADSLIGHT_MODADMIN . '"></a>';
+                    $a_item['admin'] = '<a href="' . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=modifyAds&amp;lid=' . $lid . '"><img src="' . $pathIcon16 . '/edit.png' . '" border=0 alt="' . _ADSLIGHT_MODADMIN . '" title="' . _ADSLIGHT_MODADMIN . '"></a>';
                 }
             }
 
@@ -414,12 +412,11 @@ function adsView($cid, $min, $orderby, $show = 0)
     if (!$GLOBALS['xoopsUser']) {
         global $xoopsDB;
 
-        $xt   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+        $xoopsTree   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         ob_start();
-        $xt->makeMySelBox('title', 'title', $cid, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
-        $select_go_cats = ob_get_contents();
-        ob_end_clean();
+        $xoopsTree->makeMySelBox('title', 'title', $cid, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
+        $select_go_cats = ob_get_clean();
         $GLOBALS['xoopsTpl']->assign('select_go_cats', $select_go_cats);
     }
 }
@@ -431,7 +428,7 @@ function adsView($cid, $min, $orderby, $show = 0)
  */
 function categorynewgraphic($cid)
 {
-    global $xoopsDB;
+    //global $xoopsDB;
 }
 
 ######################################################

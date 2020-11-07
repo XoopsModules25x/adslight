@@ -23,8 +23,11 @@
 use Xmf\Request;
 use XoopsModules\Adslight;
 
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
+
+global $xoopsModule;
+
 require_once __DIR__ . '/header.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
@@ -42,8 +45,6 @@ if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $modu
 
 $prem_perm = (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function index
@@ -51,8 +52,10 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
 
 function index()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm, $xoopsModule;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $mytree, $meta, $mid, $prem_perm;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+    $moduleDirName = basename(__DIR__);
+
     /** @var \XoopsModules\Adslight\Helper $helper */
     $helper = \XoopsModules\Adslight\Helper::getInstance();
 
@@ -61,9 +64,9 @@ function index()
         $GLOBALS['xoopsTpl'] = new \XoopsTpl();
     }
 
-    $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+    //    $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 
-    //    require_once XOOPS_ROOT_PATH . '/header.php';
+    require_once XOOPS_ROOT_PATH . '/header.php';
 
     $GLOBALS['xoopsTpl']->assign('xmid', $xoopsModule->getVar('mid'));
     $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
@@ -101,7 +104,8 @@ function index()
         }
     }
 
-    $result = $xoopsDB->query('SELECT SQL_CACHE COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE valid="No"');
+    $sql = 'SELECT COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE valid="No"';
+    $result = $xoopsDB->query($sql);
     list($propo) = $xoopsDB->fetchRow($result);
 
     if ($propo > 0) {
@@ -152,14 +156,14 @@ function index()
         $content      .= $title . ' ';
 
         $arr = [];
-        if (in_array($myrow['cid'], $categories, true)) {
+        if (in_array($myrow['cid'], $categories)) {
             $arr           = $mytree->getFirstChild($myrow['cid'], 'title');
             $space         = 0;
             $chcount       = 1;
             $subcategories = '';
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_souscat']) {
                 foreach ($arr as $ele) {
-                    if (in_array($ele['cid'], $categories, true)) {
+                    if (in_array($ele['cid'], $categories)) {
                         $chtitle = $myts->htmlSpecialChars($ele['title']);
                         if ($chcount > $GLOBALS['xoopsModuleConfig']['adslight_nbsouscat']) {
                             $subcategories .= "<a href=\"viewcats.php?cid={$myrow['cid']}\">" . _ADSLIGHT_CATPLUS . '</a>';
@@ -213,9 +217,10 @@ function index()
             $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
         }
 
-        $result = $xoopsDB->query('SELECT SQL_CACHE lid, title, status, type, price, typeprice, date, town, country, usid, premium, valid, photo, hits FROM '
+        $sql = 'SELECT  SQL_CACHE  lid, title, status, type, price, typeprice, date, town, country, usid, premium, valid, photo, hits FROM '
                                   . $xoopsDB->prefix('adslight_listing')
-                                  . " WHERE valid='Yes' and status!='1' {$cat_perms} ORDER BY date DESC LIMIT {$GLOBALS['xoopsModuleConfig']['adslight_newcount']}");
+                                  . " WHERE valid='Yes' and status!='1' {$cat_perms} ORDER BY date DESC LIMIT {$GLOBALS['xoopsModuleConfig']['adslight_newcount']}";
+        $result = $xoopsDB->query($sql);
         if ($result) {
             $GLOBALS['xoopsTpl']->assign('last_head', _ADSLIGHT_THE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_newcount'] . ' ' . _ADSLIGHT_LASTADD);
             $GLOBALS['xoopsTpl']->assign('last_head_title', _ADSLIGHT_TITLE);
@@ -245,9 +250,9 @@ function index()
                 $useroffset = '';
                 if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
                     $timezone   = $GLOBALS['xoopsUser']->timezone();
-                    $useroffset = !empty($timezone) ? $timezone : $xoopsConfig['default_TZ'];
+                    $useroffset = !empty($timezone) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
                     if ($GLOBALS['xoopsUser']->isAdmin()) {
-                        $a_item['admin'] = '<a href="' . XOOPS_URL . "/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid={$lid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" alt=\"" . _ADSLIGHT_MODADMIN . '"></a>';
+                        $a_item['admin'] = '<a href="' . XOOPS_URL . "/modules/adslight/admin/validate_ads.php?op=modifyAds&amp;lid={$lid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" alt=\"" . _ADSLIGHT_MODADMIN . '"></a>';
                     }
                 }
 
@@ -333,7 +338,7 @@ $show    = Request::getInt('show', null, 'GET');
 $orderby = Request::getInt('orderby', null, 'GET');
 
 switch ($pa) {
-    case 'Adsview':
+    case 'adsview':
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
         adsView($cid, $min, $orderby, $show);
         break;
@@ -343,6 +348,7 @@ switch ($pa) {
         break;
     default:
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
+//        $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
         index();
         break;
 }

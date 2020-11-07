@@ -24,11 +24,12 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+
 $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
 $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
 xoops_load('XoopsLocal');
+$moduleDirName = basename(__DIR__);
 
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree                                  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
@@ -165,7 +166,7 @@ if ($trows > '0') {
         list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
 
         if ($isadmin) {
-            $adminlink = "<a href='" . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=ModifyAds&amp;lid=' . $lid . "'><img src='" . $pathIcon16 . "/edit.png' border=0 alt=\"" . _ADSLIGHT_MODADMIN . '" ></a>';
+            $adminlink = "<a href='" . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=modifyAds&amp;lid=' . $lid . "'><img src='" . $pathIcon16 . "/edit.png' border=0 alt=\"" . _ADSLIGHT_MODADMIN . '" ></a>';
             $GLOBALS['xoopsTpl']->assign('isadmin', $isadmin);
         } else {
             $adminlink = '';

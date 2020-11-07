@@ -42,7 +42,7 @@ $prem_perm = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $gr
 #####################################################
 function tips_writing()
 {
-    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $mytree, $meta, $mid, $moduleDirName, $main_lang, $prem_perm;
+    global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $mytree, $meta, $mid, $prem_perm;
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_tips_writing_ad.tpl';
     require_once XOOPS_ROOT_PATH . '/header.php';

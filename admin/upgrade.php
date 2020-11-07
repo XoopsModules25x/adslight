@@ -27,7 +27,6 @@ $admin_lang    = '_AM_' . mb_strtoupper($moduleDirName);
 
 require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 xoops_cp_header();
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 if (($xoopsUser instanceof \XoopsUser)
     && $xoopsUser->isAdmin($xoopsModule->mid())) {

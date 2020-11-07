@@ -21,7 +21,7 @@
                 <{$category.subcategories}>
             </div>
         </td>
-        <{if $category.count is div by 2}>
+        <{if $category.count % 2 == 0}>
     </tr>
     <tr>
         <{/if}>

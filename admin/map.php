@@ -25,11 +25,11 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op = Request::getString('op', 'liste');
+$op = Request::getString('op', 'list');
 
 $mytree = new  Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-global $mytree, $xoopsDB, $moduleDirName;
+global $mytree, $xoopsDB;
 xoops_cp_header();
 //loadModuleAdminMenu(1, "");
 $adminObject->displayNavigation(basename(__FILE__));

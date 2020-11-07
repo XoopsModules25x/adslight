@@ -25,7 +25,7 @@ use XoopsModules\Adslight;
 
 require_once __DIR__ . '/admin_header.php';
 
-$op = Request::getString('op', 'liste');
+$op = Request::getString('op', 'list');
 
 /**
  * Main Ad Display
@@ -45,13 +45,19 @@ function index()
     $photo_thumb_dir   = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/thumbs';
     $photo_resized_dir = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/midsize';
     if (!is_dir($photo_dir)) {
-        mkdir($photo_dir);
+        if (!mkdir($photo_dir) && !is_dir($photo_dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_dir));
+        }
     }
     if (!is_dir($photo_thumb_dir)) {
-        mkdir($photo_thumb_dir);
+        if (!mkdir($photo_thumb_dir) && !is_dir($photo_thumb_dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_thumb_dir));
+        }
     }
     if (!is_dir($photo_resized_dir)) {
-        mkdir($photo_resized_dir);
+        if (!mkdir($photo_resized_dir) && !is_dir($photo_resized_dir)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_resized_dir));
+        }
     }
     if (!is_writable($photo_dir) || !is_readable($photo_dir)) {
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_CHECKER . '</legend><br>';
@@ -71,7 +77,8 @@ function index()
         echo '</fieldset><br>';
     }
 
-    $result  = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid");
+    $sql  = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid";
+    $result = $xoopsDB->query($sql);
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
         ///////// Il y a [..] Annonces en attente d'être approuvées //////
@@ -96,7 +103,7 @@ function index()
              . '</b><br><br>'
              . _AM_ADSLIGHT_NUMANN
              . ' <input type="text" name="lid" size="12" maxlength="11">&nbsp;&nbsp;'
-             . '<input type="hidden" name="op" value="ModifyAds">'
+             . '<input type="hidden" name="op" value="modifyAds">'
              . '<input type="submit" value="'
              . _AM_ADSLIGHT_MODIF
              . '">'
@@ -118,7 +125,7 @@ function index()
  */
 function modifyAds($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext, $moduleDirName, $admin_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts, $desctext;
 
     $mytree        = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $contactselect = '';
@@ -131,8 +138,8 @@ function modifyAds($lid)
 
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
-
+    $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}";
+    $result = $xoopsDB->query($sql);
     while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result))) {
         $title    = $myts->htmlSpecialChars($title);
         $status   = $myts->htmlSpecialChars($status);
@@ -284,7 +291,7 @@ function modifyAds($lid)
         $time = time();
         echo "</tr><tr class='head' border='1'>
             <td>&nbsp;</td><td><select name=\"op\">
-            <option value=\"ModifyAdsS\"> " . _AM_ADSLIGHT_MODIF . '
+            <option value=\"modifyAdsS\"> " . _AM_ADSLIGHT_MODIF . '
             <option value="ListingDel"> ' . _AM_ADSLIGHT_DEL . '
             </select><input type="submit" value="' . _AM_ADSLIGHT_GO . '"></td>
             </tr></table>';
@@ -359,12 +366,12 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
 /**
  * Delete Listing
  *
- * @param  int    $lid
- * @param  string $photo
+ * @param int    $lid
+ * @param string $photo
  */
 function listingDel($lid, $photo)
 {
-    global $xoopsDB, $moduleDirName;
+    global $xoopsDB;
 
     $lid = (int)$lid;
 
@@ -372,15 +379,15 @@ function listingDel($lid, $photo)
 
     while (false !== (list($purl) = $xoopsDB->fetchRow($result2))) {
         if ($purl) {
-            $destination = XOOPS_ROOT_PATH . '/uploads/AdsLight';
+            $destination = XOOPS_ROOT_PATH . '/uploads/adslight';
             if (file_exists("{$destination}/{$purl}")) {
                 unlink("{$destination}/{$purl}");
             }
-            $destination2 = XOOPS_ROOT_PATH . '/uploads/AdsLight/thumbs';
+            $destination2 = XOOPS_ROOT_PATH . '/uploads/adslight/thumbs';
             if (file_exists("{$destination2}/thumb_{$purl}")) {
                 unlink("{$destination2}/thumb_{$purl}");
             }
-            $destination3 = XOOPS_ROOT_PATH . '/uploads/AdsLight/midsize';
+            $destination3 = XOOPS_ROOT_PATH . '/uploads/adslight/midsize';
             if (file_exists("{$destination3}/resized_{$purl}")) {
                 unlink("{$destination3}/resized_{$purl}");
             }
@@ -410,10 +417,10 @@ switch ($op) {
     case 'ListingDel':
         listingDel($lid, $photo);
         break;
-    case 'ModifyAds':
+    case 'modifyAds':
         modifyAds($lid);
         break;
-    case 'ModifyAdsS':
+    case 'modifyAdsS':
         modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
     default:

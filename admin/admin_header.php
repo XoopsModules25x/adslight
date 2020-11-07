@@ -16,24 +16,21 @@
  * @since
  * @author       XOOPS Development Team
  */
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
-// require_once  dirname(__DIR__) . '/class/Utility.php';
+
+use Xmf\Request;
+use XoopsModules\Adslight;
+
+include dirname(__DIR__) . '/preloads/autoloader.php';
+require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
+require  dirname(__DIR__) . '/include/common.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-//require_once  dirname(__DIR__) . '/include/gtickets.php';
-// require_once  dirname(__DIR__) . '/class/Utility.php';
-// require_once  dirname(__DIR__) . '/class/classifiedstree.php';
-// require_once  dirname(__DIR__) . '/class/grouppermform.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
-// require_once  dirname(__DIR__) . '/class/classifiedstree.php';
-
-// require_once  dirname(__DIR__) . '/class/Utility.php';
-//require_once  dirname(__DIR__) . '/include/common.php';
-
+/** @var \XoopsModules\Adslight\Helper $helper */
 $helper = \XoopsModules\Adslight\Helper::getInstance();
-
+/** @var \Xmf\Module\Admin $adminObject */
 $adminObject = \Xmf\Module\Admin::getInstance();
 
 $pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);

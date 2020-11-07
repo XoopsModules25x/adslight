@@ -322,3 +322,57 @@ define('_AM_ADSLIGHT_ERROR_COLUMN', 'Could not create column in database : %s');
 define('_AM_ADSLIGHT_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
 define('_AM_ADSLIGHT_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
 define('_AM_ADSLIGHT_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');
+
+
+//new
+//Buttons
+define('AM_ADSLIGHT_ADD_LISTING', 'Add new Listing');
+define('AM_ADSLIGHT_LISTING_LIST', 'List of Listing');
+
+// Listing
+define('AM_ADSLIGHT_LISTING_ADD', 'Add a listing');
+define('AM_ADSLIGHT_LISTING_EDIT', 'Edit listing');
+define('AM_ADSLIGHT_LISTING_DELETE', 'Delete listing');
+define('AM_ADSLIGHT_LISTING_LID', '#');
+define('AM_ADSLIGHT_LISTING_CID', 'Cat');
+define('AM_ADSLIGHT_LISTING_TITLE', 'Title');
+define('AM_ADSLIGHT_LISTING_STATUS', 'Status');
+define('AM_ADSLIGHT_LISTING_EXPIRE', 'Expire');
+define('AM_ADSLIGHT_LISTING_TYPE', 'Type');
+define('AM_ADSLIGHT_LISTING_DESCTEXT', 'Desc');
+define('AM_ADSLIGHT_LISTING_TEL', 'Tel');
+define('AM_ADSLIGHT_LISTING_PRICE', 'Price');
+define('AM_ADSLIGHT_LISTING_TYPEPRICE', 'Type price');
+define('AM_ADSLIGHT_LISTING_TYPEUSURE', 'Type usure');
+define('AM_ADSLIGHT_LISTING_DATE', 'Date');
+define('AM_ADSLIGHT_LISTING_EMAIL', 'Email');
+define('AM_ADSLIGHT_LISTING_SUBMITTER', 'Submitter');
+define('AM_ADSLIGHT_LISTING_USID', 'Usid');
+define('AM_ADSLIGHT_LISTING_TOWN', 'Town');
+define('AM_ADSLIGHT_LISTING_COUNTRY', 'Country');
+define('AM_ADSLIGHT_LISTING_CONTACTBY', 'Contactby');
+define('AM_ADSLIGHT_LISTING_PREMIUM', 'Premium');
+define('AM_ADSLIGHT_LISTING_VALID', 'Valid');
+define('AM_ADSLIGHT_LISTING_PHOTO', 'Photo');
+define('AM_ADSLIGHT_LISTING_HITS', 'Hits');
+define('AM_ADSLIGHT_LISTING_ITEM_RATING', 'Rating');
+define('AM_ADSLIGHT_LISTING_ITEM_VOTES', 'Votes');
+define('AM_ADSLIGHT_LISTING_USER_RATING', 'U_rating');
+define('AM_ADSLIGHT_LISTING_USER_VOTES', 'U_votes');
+define('AM_ADSLIGHT_LISTING_COMMENTS', 'Comments');
+define('AM_ADSLIGHT_LISTING_REMIND', 'Remind');
+//General
+define('AM_ADSLIGHT_FORMOK', 'Registered successfull');
+define('AM_ADSLIGHT_FORMDELOK', 'Deleted successfull');
+define('AM_ADSLIGHT_FORMSUREDEL', "Are you sure to Delete: <span class='bold red'>%s</span></b>");
+define('AM_ADSLIGHT_FORMSURERENEW', "Are you sure to Renew: <span class='bold red'>%s</span></b>");
+define('AM_ADSLIGHT_FORMUPLOAD', 'Upload');
+define('AM_ADSLIGHT_FORMIMAGE_PATH', 'File presents in %s');
+define('AM_ADSLIGHT_FORM_ACTION', 'Action');
+define('AM_ADSLIGHT_SELECT', 'Select action for selected item(s)');
+define('AM_ADSLIGHT_SELECTED_DELETE', 'Delete selected item(s)');
+define('AM_ADSLIGHT_SELECTED_ACTIVATE', 'Activate selected item(s)');
+define('AM_ADSLIGHT_SELECTED_DEACTIVATE', 'De-activate selected item(s)');
+define('AM_ADSLIGHT_SELECTED_ERROR', 'You selected nothing to delete');
+define('AM_ADSLIGHT_CLONED_OK', 'Record cloned successfully');
+define('AM_ADSLIGHT_CLONED_FAILED', 'Cloning of the record has failed');

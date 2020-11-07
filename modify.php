@@ -24,9 +24,7 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 require_once __DIR__ . '/header.php';
-$moduleDirName = basename(__DIR__);
-$main_lang     = '_' . mb_strtoupper($moduleDirName);
-//require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
@@ -46,7 +44,7 @@ if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $mo
  */
 function listingDel($lid, $ok)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsDB;
 
     $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
     list($usid) = $xoopsDB->fetchRow($result);
@@ -59,15 +57,15 @@ function listingDel($lid, $ok)
             if (1 == $ok) {
                 while (false !== (list($purl) = $xoopsDB->fetchRow($result1))) {
                     if ($purl) {
-                        $destination = XOOPS_ROOT_PATH . '/uploads/AdsLight';
+                        $destination = XOOPS_ROOT_PATH . '/uploads/adslight';
                         if (file_exists("$destination/$purl")) {
                             unlink("$destination/$purl");
                         }
-                        $destination2 = XOOPS_ROOT_PATH . '/uploads/AdsLight/thumbs';
+                        $destination2 = XOOPS_ROOT_PATH . '/uploads/adslight/thumbs';
                         if (file_exists("$destination2/thumb_$purl")) {
                             unlink("$destination2/thumb_$purl");
                         }
-                        $destination3 = XOOPS_ROOT_PATH . '/uploads/AdsLight/midsize';
+                        $destination3 = XOOPS_ROOT_PATH . '/uploads/adslight/midsize';
                         if (file_exists("$destination3/resized_$purl")) {
                             unlink("$destination3/resized_$purl");
                         }
@@ -82,7 +80,7 @@ function listingDel($lid, $ok)
                 echo '<br><div style="text-align:center">';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
-            echo '[ <a href="modify.php?op=ListingDel&amp;lid=' . $lid . '&amp;ok=1">' . _ADSLIGHT_OUI . '</a> | <a href="index.php">' . _ADSLIGHT_NON . '</a> ]<br><br>';
+            echo '[ <a href="modify.php?op=ListingDel&amp;lid=' . $lid . '&amp;ok=1">' . _YES . '</a> | <a href="index.php">' . _NO . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }
@@ -94,7 +92,7 @@ function listingDel($lid, $ok)
  */
 function delReply($r_lid, $ok)
 {
-    global $xoopsDB, $xoopsConfig, $xoopsTheme, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsDB;
 
     $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_replies') . ' r ON l.lid=r.lid  WHERE r.r_lid=' . $xoopsDB->escape($r_lid));
     list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
@@ -110,7 +108,7 @@ function delReply($r_lid, $ok)
                 echo '<br><div style="text-align:center">';
                 echo '<strong>' . _ADSLIGHT_SURDELANN . '</strong></div><br><br>';
             }
-            echo '[ <a href="modify.php?op=DelReply&amp;r_lid=' . addslashes($r_lid) . '&amp;ok=1">' . _ADSLIGHT_OUI . '</a> | <a href="members.php?usid=' . addslashes($usid) . '">' . _ADSLIGHT_NON . '</a> ]<br><br>';
+            echo '[ <a href="modify.php?op=DelReply&amp;r_lid=' . addslashes($r_lid) . '&amp;ok=1">' . _YES . '</a> | <a href="members.php?usid=' . addslashes($usid) . '">' . _NO . '</a> ]<br><br>';
             echo '</td></tr></table>';
         }
     }
@@ -121,21 +119,21 @@ function delReply($r_lid, $ok)
  */
 function modAd($lid)
 {
-    global $xoopsDB, $xoopsModule, $xoopsConfig, $xoopsTheme, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsDB, $xoopsModule, $xoopsConfig, $myts;
     $contactselect = '';
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-    require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
+
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
 
-    //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
     $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    $result = $xoopsDB->query('SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
+    $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid);
+    $result = $xoopsDB->query($sql);
     list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
 
     $categories = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {
-        if (!in_array($cide, $categories, true)) {
+        if (!in_array((int)$cide, $categories)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
     } else {    // User can't see any category
@@ -369,7 +367,7 @@ function modAd($lid)
  */
 function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid)
 {
-    global $xoopsDB, $xoopsConfig, $myts, $xoopsLogger, $moduleDirName, $main_lang;
+    global $xoopsDB, $myts;
 
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, $GLOBALS['xoopsSecurity']->getErrors());

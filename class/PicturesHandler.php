@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Adslight;
+
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -21,6 +24,7 @@
 */
 
 use Xmf\Request;
+use XoopsModules\Adslight;
 
 /**
  * Protection against inclusion outside the site
@@ -34,7 +38,6 @@ require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/modules/adslight/class/Utility.php';
 
 // -------------------------------------------------------------------------
 // ------------------light_pictures user handler class -------------------
@@ -56,18 +59,18 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function __construct($db)
     {
-        parent::__construct($db, 'adslight_pictures', 'Pictures', 'cod_img', 'title');
+        parent::__construct($db, 'adslight_pictures', Pictures::class, 'cod_img', 'title');
     }
 
     /**
      * create a new light_pictures
      *
-     * @param  bool $isNew flag the new objects as "new"?
-     * @return XoopsObject light_pictures
+     * @param bool $isNew flag the new objects as "new"?
+     * @return \XoopsObject light_pictures
      */
     public function create($isNew = true)
     {
-        $adslightPictures = new Pictures();
+        $adslightPictures = new Adslight\Pictures();
         if ($isNew) {
             $adslightPictures->setNew();
         } else {
@@ -87,15 +90,13 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function get($id, $lid = null)
     {
-        global $moduleDirName;
-
         $sql = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' AND lid=' . $lid . ' ';
         if (!$result = $this->db->query($sql)) {
             return false;
         }
         $numrows = $this->db->getRowsNum($result);
         if (1 == $numrows) {
-            $adslightPictures = new Pictures();
+            $adslightPictures = new Adslight\Pictures();
             $adslightPictures->assignVars($this->db->fetchArray($result));
 
             return $adslightPictures;
@@ -107,13 +108,13 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * insert a new AdslightPicture object into the database
      *
-     * @param XoopsObject $adslightPictures
-     * @param bool        $force
+     * @param \XoopsObject $adslightPictures
+     * @param bool         $force
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
     public function insert(\XoopsObject $adslightPictures, $force = false)
     {
-        global $xoopsConfig, $lid, $moduleDirName;
+        global $lid;
         if (!$adslightPictures instanceof Pictures) {
             return false;
         }
@@ -129,7 +130,7 @@ class PicturesHandler extends \XoopsObjectHandler
         $now = time();
         if ($adslightPictures->isNew()) {
             // add/modify of Pictures
-            $adslightPictures = new Pictures();
+            $adslightPictures = new Adslight\Pictures();
 
             $format = 'INSERT INTO `%s` (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
@@ -164,14 +165,12 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * delete Pictures object from the database
      *
-     * @param  XoopsObject $adslightPictures reference to the Pictures to delete
-     * @param  bool        $force
+     * @param \XoopsObject $adslightPictures reference to the Pictures to delete
+     * @param bool         $force
      * @return bool        FALSE if failed.
      */
     public function delete(\XoopsObject $adslightPictures, $force = false)
     {
-        global $moduleDirName;
-
         if (!$adslightPictures instanceof Pictures) {
             return false;
         }
@@ -191,18 +190,16 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * retrieve Pictures object(s) from the database
      *
-     * @param  CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
-     * @param  bool            $id_as_key use the UID as key for the array?
+     * @param \CriteriaElement|\CriteriaCompo $criteria  {@link \CriteriaElement} conditions to be met
+     * @param bool                            $id_as_key use the UID as key for the array?
      * @return array  array of {@link Pictures} objects
      */
-    public function &getObjects(CriteriaElement $criteria = null, $id_as_key = false)
+    public function &getObjects(\CriteriaElement $criteria = null, $id_as_key = false)
     {
-        global $moduleDirName;
-
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -215,7 +212,7 @@ class PicturesHandler extends \XoopsObjectHandler
             return $ret;
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
-            $adslightPictures = new Pictures();
+            $adslightPictures = new Adslight\Pictures();
             $adslightPictures->assignVars($myrow);
             if (!$id_as_key) {
                 $ret[] = $adslightPictures;
@@ -231,15 +228,13 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * count Pictures matching a condition
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement} to match
+     * @param \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement} to match
      * @return int    count of Pictures
      */
-    public function getCount(CriteriaElement $criteria = null)
+    public function getCount(\CriteriaElement $criteria = null)
     {
-        global $moduleDirName;
-
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         $result = $this->db->query($sql);
@@ -254,14 +249,13 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * delete Pictures matching a set of conditions
      *
-     * @param  CriteriaElement $criteria {@link CriteriaElement}
+     * @param \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement}
      * @return bool   FALSE if deletion failed
      */
-    public function deleteAll(CriteriaElement $criteria = null)
+    public function deleteAll(\CriteriaElement $criteria = null)
     {
-        global $moduleDirName;
         $sql = 'DELETE FROM ' . $this->db->prefix('adslight_pictures');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (isset($criteria) && $criteria instanceof \CriteriaElement) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -274,17 +268,17 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Render a form to send pictures
      *
-     * @param int      $uid
-     * @param int      $lid
-     * @param int      $maxbytes the maximum size of a picture
-     * @param XoopsTpl $xoopsTpl the one in which the form will be rendered
+     * @param int       $uid
+     * @param int       $lid
+     * @param int       $maxbytes the maximum size of a picture
+     * @param \XoopsTpl $xoopsTpl the one in which the form will be rendered
      * @return bool   TRUE
      *
      * obs: Some functions wont work on php 4 so edit lines down under acording to your version
      */
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
     {
-        global $moduleDirName, $main_lang, $xoopsUser;
+    	global $xoopsUser;
         $uid        = (int)$uid;
         $lid        = (int)$lid;
         $form       = new \XoopsThemeForm(_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
@@ -320,15 +314,13 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Render a form to edit the description of the pictures
      *
-     * @param  string $caption  The description of the picture
-     * @param  int    $cod_img  the id of the image in database
-     * @param  text   $filename the url to the thumb of the image so it can be displayed
+     * @param string $caption  The description of the picture
+     * @param int    $cod_img  the id of the image in database
+     * @param string $filename the url to the thumb of the image so it can be displayed
      * @return bool   TRUE
      */
     public function renderFormEdit($caption, $cod_img, $filename)
     {
-        global $moduleDirName, $main_lang;
-
         $form       = new \XoopsThemeForm(_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
         $field_desc = new \XoopsFormText($caption, 'caption', 35, 55);
         $form->setExtra('enctype="multipart/form-data"');
@@ -355,20 +347,20 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Upload the file and Save into database
      *
-     * @param  text $title         A litle description of the file
-     * @param  text $path_upload   The path to where the file should be uploaded
-     * @param  int  $thumbwidth    the width in pixels that the thumbnail will have
-     * @param  int  $thumbheight   the height in pixels that the thumbnail will have
-     * @param  int  $pictwidth     the width in pixels that the pic will have
-     * @param  int  $pictheight    the height in pixels that the pic will have
-     * @param  int  $maxfilebytes  the maximum size a file can have to be uploaded in bytes
-     * @param  int  $maxfilewidth  the maximum width in pixels that a pic can have
-     * @param  int  $maxfileheight the maximum height in pixels that a pic can have
+     * @param string $title         A litle description of the file
+     * @param string $path_upload   The path to where the file should be uploaded
+     * @param int    $thumbwidth    the width in pixels that the thumbnail will have
+     * @param int    $thumbheight   the height in pixels that the thumbnail will have
+     * @param int    $pictwidth     the width in pixels that the pic will have
+     * @param int    $pictheight    the height in pixels that the pic will have
+     * @param int    $maxfilebytes  the maximum size a file can have to be uploaded in bytes
+     * @param int    $maxfilewidth  the maximum width in pixels that a pic can have
+     * @param int    $maxfileheight the maximum height in pixels that a pic can have
      * @return bool FALSE if upload fails or database fails
      */
     public function receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)
     {
-        global $xoopsDB, $lid;
+        global $lid;
         //busca id do user logado
         $uid = $GLOBALS['xoopsUser']->getVar('uid');
         $lid = Request::getInt('lid', 0, 'POST');
@@ -418,12 +410,12 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * Resize a picture and save it to $path_upload
      *
-     * @param  string $img         the path to the file
-     * @param  int    $thumbwidth  the width in pixels that the thumbnail will have
-     * @param  int    $thumbheight the height in pixels that the thumbnail will have
-     * @param  int    $pictwidth   the width in pixels that the pic will have
-     * @param  int    $pictheight  the height in pixels that the pic will have
-     * @param  string $path_upload The path to where the files should be saved after resizing
+     * @param string $img         the path to the file
+     * @param int    $thumbwidth  the width in pixels that the thumbnail will have
+     * @param int    $thumbheight the height in pixels that the thumbnail will have
+     * @param int    $pictwidth   the width in pixels that the pic will have
+     * @param int    $pictheight  the height in pixels that the pic will have
+     * @param string $path_upload The path to where the files should be saved after resizing
      */
     public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload)
     {

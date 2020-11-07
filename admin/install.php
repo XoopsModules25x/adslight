@@ -50,7 +50,7 @@ list($conf_id) = $xoopsDB->fetchRow($res);
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname('system');
-/** @var \XoopsModuleHandler $moduleHandler */
+/** @var \XoopsConfigHandler $configHandler */
 $configHandler = xoops_getHandler('config');
 $config_theme  = $configHandler->getConfig($conf_id, true);
 
@@ -73,7 +73,8 @@ switch ($action) {
         if (file_exists(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . "/modules/{$file}")) {
             unlink(XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . "/modules/{$file}");
         }
-        FS_Storage::dircopy(XOOPS_ROOT_PATH . '/modules/adslight/Root/themes/', XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . '/', $success, $error);
+        //        FS_Storage::dircopy(XOOPS_ROOT_PATH . '/modules/adslight/Root/themes/', XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . '/', $success, $error);
+        XoopsModules\Adslight\Utility::rcopy(XOOPS_ROOT_PATH . '/modules/adslight/Root/themes/', XOOPS_ROOT_PATH . '/themes/' . $config_theme->getConfValueForOutput() . '/');
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $xoopsTpl = new \XoopsTpl();
         $GLOBALS['xoopsTpl']->clear_cache('db:system_block_user.tpl');
