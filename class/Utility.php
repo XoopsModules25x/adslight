@@ -646,8 +646,10 @@ class Utility
             setlocale(LC_MONETARY, '');
         }
 
-        setlocale(LC_ALL, 'en_US');
-        //        setlocale(LC_ALL, 'fr_FR');
+        //JJDai
+        // setlocale(LC_ALL, 'en_US');
+        //setlocale(LC_ALL, 'fr_FR');
+//$symb = $helper->getConfig('adslight_currency_symbol');
 
         $locale = localeconv();
         preg_match_all($regex, $format, $matches, PREG_SET_ORDER);
@@ -1004,5 +1006,79 @@ class Utility
 
         return $truncate;
     }
+
+/***********************************************************************
+ * $fldVersion : dossier version de fancybox
+***********************************************************************/
+public static function load_lib_js(){   
+global $xoTheme, $xoopsModuleConfig;
+
+
+$fld = XOOPS_URL . "/modules/adslight/" . "assets/";
+    
+    if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
+// $xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
+// $xoTheme->addStyleSheet(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');    
+    
+	       $xoTheme->addScript($fld  .    "/js/lightbox/js/lightbox.js");
+	       $xoTheme->addStyleSheet($fld . "/js/lightbox/css/lightbox.css");    
+
+
+    } else {
+	       //$xoTheme->addStyleSheet($fld . "/css/galery.css" type="text/css" media="screen");    
+
+    }
+
+/*
+            if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
+                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
+<script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="assets/lightbox/js/jquery-ui-1.8.18.custom.min"></script>
+<script type="text/javascript" src="assets/lightbox/js/jquery.smooth-scroll.min.js"></script>
+<script type="text/javascript" src="assets/lightbox/js/lightbox.js"></script>
+
+<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >
+<link rel="stylesheet" type="text/css" media="screen" href="assets/lightbox/css/lightbox.css"></link>';
+            } else {
+                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
+<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
+            }
+
+
+  $fldVersion = "fancybox_215";
+  $fbFolder =  XOOPS_URL . "/Frameworks/" . $fldVersion;     
+  //$modFolder = "modules/" . $module_dirname;
+  $modFolder = "modules/" . 'mediatheque';
+
+	//$xoTheme->addStyleSheet($fModule . '/css/style.css');
+	$xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
+	
+  //to-do : a remplacer par  jquery.mousewheel-3.0.6.pack.js
+  $xoTheme->addScript($fbFolder . "/jquery.mousewheel-3.0.4.pack.js");
+
+	$xoTheme->addStyleSheet($fbFolder . "/jquery.fancybox.css?v=2.1.5");
+	$xoTheme->addScript($fbFolder . "/jquery.fancybox.js?v=2.1.5");
+
+//-----------------------------------------
+//  OPTIONAL
+	$xoTheme->addStyleSheet($fbFolder . "/helpers/jquery.fancybox-buttons.css?v=1.0.5");
+	$xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-buttons.js?v=1.0.5");
+
+	$xoTheme->addStyleSheet($fbFolder . "/helpers/jquery.fancybox-thumbs.css?v=1.0.7");
+	$xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-thumbs.js?v=1.0.7");
+
+	$xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-media.js?v=1.0.6");
+
+//-----------------------------------------
+
+
+
+	$xoTheme->addScript($modFolder . "/js/media.fancybox.js");
+  
+*/    
+
+
+}
+
 
 }

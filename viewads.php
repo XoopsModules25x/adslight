@@ -400,7 +400,11 @@ function viewAds($lid = 0)
             }
             $owner      = new \XoopsUser();
             $identifier = $owner::getUnameFromId($usid);
+            
+Adslight\Utility::load_lib_js(); // JJDai
+/*
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
+            
                 $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
 <script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="assets/lightbox/js/jquery-ui-1.8.18.custom.min"></script>
@@ -412,17 +416,18 @@ function viewAds($lid = 0)
                 $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
 <link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
             }
+*/
 
             $GLOBALS['xoopsTpl']->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
 
             $GLOBALS['xoopsTpl']->assign('permit', $prem_perm);
-
             if ($GLOBALS['xoopsModuleConfig']['active_rewriteurl'] > 0) {
                 /*  ici le meta Canonicale pour le Rewrite */
-                $GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
+                //$GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
             } else {
-                $GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
+                //$GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
             }
+            
             $GLOBALS['xoopsTpl']->assign('photo', $photo);
             $GLOBALS['xoopsTpl']->assign('pic_lid', $pic_lid);
             $GLOBALS['xoopsTpl']->assign('pic_owner', $uid_owner);

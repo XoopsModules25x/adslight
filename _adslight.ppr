@@ -514,7 +514,7 @@ _adslight
 19=view_photos.php
 [Selected Project Files]
 Main=
-Selected=view_photos.php
+Selected=class\Utility.php
 [viewads.php]
 TopLine=394
 Caret=1,411
@@ -528,7 +528,7 @@ Caret=1,432
 TopLine=68
 Caret=137,80
 [class\Utility.php]
-TopLine=1006
+TopLine=1007
 Caret=1,1023
 [xoops_version.php]
 TopLine=581
@@ -573,5 +573,5 @@ Caret=1,1
 TopLine=1
 Caret=1,1
 [view_photos.php]
-TopLine=163
-Caret=3,189
+TopLine=131
+Caret=1,149

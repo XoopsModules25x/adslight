@@ -143,15 +143,16 @@ $identifier = $owner::getUnameFromId($uid);
 /**
  * Adding to the module js and css of the lightbox and new ones
  */
-if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
-    $header_lightbox = '<script type="text/javascript" src="lightbox/js/prototype.js"></script>
-<script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
-<script type="text/javascript" src="lightbox/js/lightbox.js"></script>
-<link rel="stylesheet" href="include/adslight.css" type="text/css" media="screen" >
-<link rel="stylesheet" href="lightbox/css/lightbox.css" type="text/css" media="screen" >';
-} else {
-    $header_lightbox = '<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
-}
+ Adslight\Utility::load_lib_js(); // JJDai
+// if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
+//     $header_lightbox = '<script type="text/javascript" src="lightbox/js/prototype.js"></script>
+// <script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
+// <script type="text/javascript" src="lightbox/js/lightbox.js"></script>
+// <link rel="stylesheet" href="include/adslight.css" type="text/css" media="screen" >
+// <link rel="stylesheet" href="lightbox/css/lightbox.css" type="text/css" media="screen" >';
+// } else {
+//     $header_lightbox = '<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
+//}
 
 /**
  * Assigning smarty variables
@@ -185,7 +186,7 @@ $GLOBALS['xoopsTpl']->assign('lang_delete', _ADSLIGHT_DELETE);
 $GLOBALS['xoopsTpl']->assign('lang_editdesc', _ADSLIGHT_EDITDESC);
 $GLOBALS['xoopsTpl']->assign('isOwner', $isOwner);
 $GLOBALS['xoopsTpl']->assign('permit', $permit);
-$GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
+//$GLOBALS['xoopsTpl']->assign('xoops_module_header', $header_lightbox);
 
 $GLOBALS['xoopsTpl']->assign('xoopsSecurity', $GLOBALS['xoopsSecurity']->getTokenHTML());
 
