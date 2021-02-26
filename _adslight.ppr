@@ -1,0 +1,577 @@
+[Config]
+Compilator.SaveAll=0
+Compilator.Capture=0
+Compilator.CompileOnBackground=0
+Compilator.ProgSaveAll=0
+Compilator.ProgRunSelection=0
+Compilator.LogType=0
+DefaultDir=J:\Xoops\_Xoops\Xoops 2.5.10\modules-Xoops\adslight\adslight-master\adslight
+DefaultCP=0
+LogtoEnd=1
+DontOpen=0
+AbsolutePath=0
+FileFormat=0
+ProjectFilesOnly=0
+HTServer=localhost
+Extensions=*.*
+[Project tree]
+_adslight
+	+adslight
+		-admin
+			admin\about.php
+			admin\admin.block.php
+			admin\admin_footer.php
+			admin\admin_header.php
+			admin\adsligh_rsslib.php
+			admin\category.php
+			admin\groupperms.php
+			admin\index.html
+			admin\index.php
+			admin\install.php
+			admin\main.php
+			admin\map.php
+			admin\menu.php
+			admin\modify_ads.php
+			admin\options.php
+			admin\support_forum.php
+			admin\upgrade.php
+			admin\validate_ads.php
+			admin\view_ads.php
+		-assets
+			-css
+				assets\css\admin.css
+				assets\css\adslight.css
+				assets\css\galery.css
+				assets\css\index.html
+			-images
+				-admin
+					assets\images\admin\add_ads.png
+					assets\images\admin\avatar-iluc.jpg
+					assets\images\admin\book_search.png
+					assets\images\admin\brick.png
+					assets\images\admin\chart_organisation.png
+					assets\images\admin\chart_organisation_add.png
+					assets\images\admin\comment.png
+					assets\images\admin\comment_32.png
+					assets\images\admin\comment_user.png
+					assets\images\admin\email_forward.png
+					assets\images\admin\error_button.png
+					assets\images\admin\error_button_32.png
+					assets\images\admin\group.png
+					assets\images\admin\group_add.png
+					assets\images\admin\info_button.png
+					assets\images\admin\info_button_32.png
+					assets\images\admin\page_table_close_32.png
+					assets\images\admin\page_white_add.png
+					assets\images\admin\page_white_code.png
+					assets\images\admin\page_white_flash.png
+					assets\images\admin\page_white_text.png
+					assets\images\admin\page_white_world.png
+					assets\images\admin\report_add.png
+					assets\images\admin\report_go.png
+					assets\images\admin\report_magnify.png
+					assets\images\admin\script_code.png
+					assets\images\admin\search_button_green_32.png
+					assets\images\admin\star_16.png
+					assets\images\admin\user_go.png
+					assets\images\admin\vcard_add.png
+					assets\images\admin\warning_32.png
+					assets\images\admin\web_layout.png
+					assets\images\admin\world.png
+				-bubble
+					assets\images\bubble\bubble_ads.png
+					assets\images\bubble\image-1.png
+					assets\images\bubble\image-2.png
+					assets\images\bubble\image-3.png
+					assets\images\bubble\image-4.png
+					assets\images\bubble\image-6.png
+					assets\images\bubble\index.html
+					assets\images\bubble\ProtectPicture.gif
+				-deco
+					assets\images\deco\icon.png
+					assets\images\deco\index.html
+				-flags
+					-unavailable
+						assets\images\flags\unavailable\cz.png
+						assets\images\flags\unavailable\fi.png
+						assets\images\flags\unavailable\ie.png
+						assets\images\flags\unavailable\it.png
+						assets\images\flags\unavailable\lt.png
+						assets\images\flags\unavailable\pl.png
+						assets\images\flags\unavailable\pt.png
+						assets\images\flags\unavailable\ru.png
+					assets\images\flags\ba.png
+					assets\images\flags\de.png
+					assets\images\flags\es.png
+					assets\images\flags\fr.png
+					assets\images\flags\nl.png
+					assets\images\flags\uk.png
+					assets\images\flags\unavailable.png
+				-icons
+					-16
+						assets\images\icons\16\arrow.gif
+						assets\images\icons\16\asc.png
+						assets\images\icons\16\desc.png
+						assets\images\icons\16\index.html
+						assets\images\icons\16\off.png
+						assets\images\icons\16\on.png
+						assets\images\icons\16\search_button_16.png
+						assets\images\icons\16\selasc.png
+						assets\images\icons\16\seldesc.png
+						assets\images\icons\16\tick.png
+					-32
+						assets\images\icons\32\bookmarked.png
+						assets\images\icons\32\discussion.png
+						assets\images\icons\32\folder_smart.png
+						assets\images\icons\32\index.html
+						assets\images\icons\32\info.png
+						assets\images\icons\32\install.png
+						assets\images\icons\32\monitor.png
+						assets\images\icons\32\plus.png
+						assets\images\icons\32\preferences.png
+						assets\images\icons\32\public.png
+						assets\images\icons\32\refresh.png
+						assets\images\icons\32\stop.png
+						assets\images\icons\32\unread-mail.png
+						assets\images\icons\32\up_alt.png
+						assets\images\icons\32\window.png
+					assets\images\icons\bookmarked.png
+					assets\images\icons\discussion.png
+					assets\images\icons\folder_smart.png
+					assets\images\icons\index.html
+					assets\images\icons\info.png
+					assets\images\icons\install.png
+					assets\images\icons\monitor.png
+					assets\images\icons\plus.png
+					assets\images\icons\preferences.png
+					assets\images\icons\public.png
+					assets\images\icons\refresh.png
+					assets\images\icons\search_button_16.png
+					assets\images\icons\stop.png
+					assets\images\icons\tick.png
+					assets\images\icons\unread-mail.png
+					assets\images\icons\up_alt.png
+					assets\images\icons\window.png
+				-img_cat
+					assets\images\img_cat\animals.png
+					assets\images\img_cat\appliances.png
+					assets\images\img_cat\boat.png
+					assets\images\img_cat\camera.png
+					assets\images\img_cat\car.png
+					assets\images\img_cat\caravan.png
+					assets\images\img_cat\cd.png
+					assets\images\img_cat\clothing.png
+					assets\images\img_cat\computer.png
+					assets\images\img_cat\default.png
+					assets\images\img_cat\dvd.png
+					assets\images\img_cat\furniture.png
+					assets\images\img_cat\guitar.png
+					assets\images\img_cat\hifi.png
+					assets\images\img_cat\home.png
+					assets\images\img_cat\horse.png
+					assets\images\img_cat\index.html
+					assets\images\img_cat\jewelry.png
+					assets\images\img_cat\motorbike.png
+					assets\images\img_cat\mountain_bike.png
+					assets\images\img_cat\nature.png
+					assets\images\img_cat\paragliding.png
+					assets\images\img_cat\rc.png
+					assets\images\img_cat\telephony.png
+					assets\images\img_cat\televisor.png
+					assets\images\img_cat\toys.png
+					assets\images\img_cat\tractor.png
+					assets\images\img_cat\video_games.png
+					assets\images\img_cat\wake.png
+					assets\images\img_cat\wine.png
+				-menu
+					assets\images\menu\advanced.png
+					assets\images\menu\back_alt.png
+					assets\images\menu\comment.png
+					assets\images\menu\edit.png
+					assets\images\menu\edit2.png
+					assets\images\menu\info.png
+					assets\images\menu\line_verti.png
+					assets\images\menu\newdoc.png
+					assets\images\menu\newdoc2.png
+					assets\images\menu\noacces-mail.png
+					assets\images\menu\profile.png
+					assets\images\menu\read-mail.png
+					assets\images\menu\rewind button white.png
+					assets\images\menu\rss_alt.png
+					assets\images\menu\rss2.png
+					assets\images\menu\search.png
+					assets\images\menu\status_offline.png
+					assets\images\menu\status_online.png
+					assets\images\menu\stop.png
+					assets\images\menu\unread-mail.png
+				-users
+					assets\images\users\index.html
+				assets\images\alerteabus.png
+				assets\images\annonce.png
+				assets\images\arrow.gif
+				assets\images\blank.gif
+				assets\images\blank.png
+				assets\images\camera_nophoto.png
+				assets\images\camera_photo.png
+				assets\images\close.gif
+				assets\images\closelabel.gif
+				assets\images\date.png
+				assets\images\date_error.png
+				assets\images\del.gif
+				assets\images\down.gif
+				assets\images\edit.gif
+				assets\images\error.png
+				assets\images\friend.gif
+				assets\images\house.png
+				assets\images\index.html
+				assets\images\lesannonces.png
+				assets\images\loading.gif
+				assets\images\logo_mini.png
+				assets\images\logoModule.png
+				assets\images\modif.gif
+				assets\images\newred.gif
+				assets\images\next.gif
+				assets\images\nextlabel.gif
+				assets\images\nophoto.jpg
+				assets\images\nophoto_item.gif
+				assets\images\plus.gif
+				assets\images\plus.png
+				assets\images\prev.gif
+				assets\images\prevlabel.gif
+				assets\images\print.gif
+				assets\images\profil.png
+				assets\images\rssfeed_buttons.png
+				assets\images\saq.gif
+				assets\images\saq_2.gif
+				assets\images\search.png
+				assets\images\shape_square_add.png
+				assets\images\sold.gif
+				assets\images\up.gif
+				assets\images\world_go.png
+			-js
+				-lightbox
+					-css
+						assets\js\lightbox\css\index.html
+						assets\js\lightbox\css\lightbox.css
+						assets\js\lightbox\css\lightbox.min.css
+						assets\js\lightbox\css\screen.css
+					-images
+						assets\js\lightbox\images\bg-checker.png
+						assets\js\lightbox\images\box.png
+						assets\js\lightbox\images\bullet.gif
+						assets\js\lightbox\images\close.png
+						assets\js\lightbox\images\donate.png
+						assets\js\lightbox\images\favicon.gif
+						assets\js\lightbox\images\index.html
+						assets\js\lightbox\images\loading.gif
+						assets\js\lightbox\images\next.png
+						assets\js\lightbox\images\prev.png
+						assets\js\lightbox\images\speech-bubbles.png
+					-js
+						assets\js\lightbox\js\index.html
+						assets\js\lightbox\js\jquery.smooth-scroll.min.js
+						assets\js\lightbox\js\jquery-1.7.2.min.js
+						assets\js\lightbox\js\jquery-ui-1.8.18.custom.min.js
+						assets\js\lightbox\js\lightbox.js
+						assets\js\lightbox\js\lightbox.min.js
+						assets\js\lightbox\js\lightbox.min.map
+						assets\js\lightbox\js\lightbox-plus-jquery.js
+						assets\js\lightbox\js\lightbox-plus-jquery.min.js
+						assets\js\lightbox\js\lightbox-plus-jquery.min.map
+					assets\js\lightbox\index.html
+					assets\js\lightbox\README.markdown
+					assets\js\lightbox\README.md
+				assets\js\index.html
+			assets\index.html
+		-blocks
+			blocks\ads.php
+			blocks\ads_2.php
+			blocks\adslight_add.php
+			blocks\index.html
+			blocks\maps.php
+		+class
+			-Common
+				class\Common\Breadcrumb.php
+				class\Common\Configurator.php
+				class\Common\FilesManagement.php
+				class\Common\index.html
+				class\Common\ServerStats.php
+				class\Common\VersionChecks.php
+			class\ClassifiedObjectTree.php
+			class\ClassifiedsTree.php
+			class\Currency.php
+			class\FS_Storage.php
+			class\Helper.php
+			class\index.html
+			class\Pictures.php
+			class\PicturesHandler.php
+			class\Utility.php
+		-docs
+			docs\changelog.txt
+			docs\credits.txt
+			docs\index.html
+			docs\install.txt
+			docs\lang_diff.txt
+			docs\license.txt
+			docs\readme.txt
+		+include
+			include\comment_functions.php
+			include\common.php
+			include\config.php
+			include\gd.class.php
+			include\index.html
+			include\notification.inc.php
+			include\oninstall.php
+			include\onupdate.inc.php
+			include\onupdate.php
+			include\search.inc.php
+			include\searchform.php
+			include\update_function.php
+			include\updateblock.inc.php
+		-language
+			-english
+				-help
+					language\english\help\help.tpl
+					language\english\help\helpheader.tpl
+					language\english\help\index.html
+				-mail_template
+					language\english\mail_template\index.html
+					language\english\mail_template\listing_approve.tpl
+					language\english\mail_template\listing_contact.tpl
+					language\english\mail_template\listing_edit_confirm.tpl
+					language\english\mail_template\listing_expired.tpl
+					language\english\mail_template\listing_expires.tpl
+					language\english\mail_template\listing_newpost_notify.tpl
+					language\english\mail_template\listing_notify_admin.tpl
+					language\english\mail_template\listing_report_abuse.tpl
+					language\english\mail_template\listing_send_friend.tpl
+				language\english\admin.php
+				language\english\blocks.php
+				language\english\common.php
+				language\english\index.html
+				language\english\main.php
+				language\english\modinfo.php
+			+french
+				-help
+					language\french\help\help.html
+					language\french\help\index.html
+				-mail_template
+					language\french\mail_template\index.html
+					language\french\mail_template\listing_approve.tpl
+					language\french\mail_template\listing_contact.tpl
+					language\french\mail_template\listing_edit_confirm.tpl
+					language\french\mail_template\listing_expired.tpl
+					language\french\mail_template\listing_expires.tpl
+					language\french\mail_template\listing_newpost_notify.tpl
+					language\french\mail_template\listing_notify_admin.tpl
+					language\french\mail_template\listing_report_abuse.tpl
+					language\french\mail_template\listing_send_friend.tpl
+				language\french\admin.php
+				language\french\blocks.php
+				language\french\index.html
+				language\french\main.php
+				language\french\modinfo.php
+			language\index.html
+		-maps
+			-french
+				-images
+					maps\french\images\index.html
+					maps\french\images\map.png
+				maps\french\datas.xml
+				maps\french\index.html
+				maps\french\map.swf
+			-russian
+				-images
+					maps\russian\images\index.html
+					maps\russian\images\map.png
+				maps\russian\datas.xml
+				maps\russian\index.html
+				maps\russian\map.swf
+			maps\index.html
+		-plugins
+			-plugin_for_waiting
+				plugins\plugin_for_waiting\.htaccess
+		-preloads
+			preloads\autoloader.php
+			preloads\core.php
+			preloads\index.html
+		-sql
+			-bosanski
+				sql\bosanski\index.html
+				sql\bosanski\mysql.sql
+			+english
+				sql\english\index.html
+				sql\english\mysql.sql
+			+french
+				sql\french\index.html
+				sql\french\mysql.sql
+			-german
+				sql\german\index.html
+				sql\german\mysql.sql
+			-italian
+				sql\italian\index.html
+				sql\italian\mysql.sql
+			-nederlands
+				sql\nederlands\index.html
+				sql\nederlands\mysql.sql
+			-polish
+				sql\polish\index.html
+				sql\polish\mysql.sql
+			-portuguesebr
+				sql\portuguesebr\index.html
+				sql\portuguesebr\mysql.sql
+			-spanish
+				sql\spanish\index.html
+				sql\spanish\mysql.sql
+			sql\index.html
+		+templates
+			-blocks
+				templates\blocks\adslight_block_add.tpl
+				templates\blocks\adslight_block_maps.tpl
+				templates\blocks\adslight_block_new.tpl
+				templates\blocks\adslight_block_top.tpl
+				templates\blocks\adslight_block2_new.tpl
+				templates\blocks\index.html
+			templates\adslight_addlisting.tpl
+			templates\adslight_bookmark.tpl
+			templates\adslight_category.tpl
+			templates\adslight_index.tpl
+			templates\adslight_item.tpl
+			templates\adslight_maps.tpl
+			templates\adslight_members.tpl
+			templates\adslight_menu.tpl
+			templates\adslight_rate_item.tpl
+			templates\adslight_rate_user.tpl
+			templates\adslight_replies.tpl
+			templates\adslight_search.tpl
+			templates\adslight_tips_writing_ad.tpl
+			templates\adslight_view_photos.tpl
+			templates\adslight_xpayment_form.tpl
+			templates\index.html
+		.codeclimate.yml
+		.gitattributes
+		.gitignore
+		.scrutinizer.yml
+		404.php
+		add.php
+		add_photo.php
+		addlisting.php
+		comment_delete.php
+		comment_edit.php
+		comment_new.php
+		comment_post.php
+		comment_reply.php
+		contact.php
+		CONTRIBUTING.md
+		datas.xml
+		delpicture.php
+		display-image.php
+		editdesc.php
+		fluxrss.php
+		header.php
+		index.php
+		ip_image.php
+		maps.php
+		members.php
+		modify.php
+		notification_update.php
+		print.php
+		rate-item.php
+		rate-user.php
+		README.md
+		replies.php
+		report-abuse.php
+		rss.php
+		search.php
+		sendfriend.php
+		seo.php
+		seo_url.php
+		tips_writing_ad.php
+		view_photos.php
+		viewads.php
+		viewcats.php
+		xoops_version.php
+[Open project files]
+0=viewads.php
+1=sql\french\mysql.sql
+2=language\french\main.php
+3=templates\adslight_item.tpl
+4=class\Utility.php
+5=xoops_version.php
+6=viewcats.php
+7=members.php
+8=templates\adslight_members.tpl
+9=sql\english\mysql.sql
+10=language\english\admin.php
+11=language\french\modinfo.php
+12=404.php
+13=language\english\main.php
+14=display-image.php
+15=language\french\blocks.php
+16=assets\js\lightbox\js\lightbox.js
+17=include\common.php
+18=include\comment_functions.php
+19=view_photos.php
+[Selected Project Files]
+Main=
+Selected=view_photos.php
+[viewads.php]
+TopLine=394
+Caret=1,411
+[sql\french\mysql.sql]
+TopLine=83
+Caret=1,110
+[language\french\main.php]
+TopLine=389
+Caret=1,432
+[templates\adslight_item.tpl]
+TopLine=68
+Caret=137,80
+[class\Utility.php]
+TopLine=1006
+Caret=1,1023
+[xoops_version.php]
+TopLine=581
+Caret=1,599
+[viewcats.php]
+TopLine=286
+Caret=1,304
+[members.php]
+TopLine=225
+Caret=7,243
+[templates\adslight_members.tpl]
+TopLine=27
+Caret=33,55
+[sql\english\mysql.sql]
+TopLine=99
+Caret=1,1
+[language\english\admin.php]
+TopLine=341
+Caret=38,353
+[language\french\modinfo.php]
+TopLine=31
+Caret=99,49
+[404.php]
+TopLine=24
+Caret=1,37
+[language\english\main.php]
+TopLine=417
+Caret=5,424
+[display-image.php]
+TopLine=18
+Caret=1,22
+[language\french\blocks.php]
+TopLine=1
+Caret=1,1
+[assets\js\lightbox\js\lightbox.js]
+TopLine=25
+Caret=1,43
+[include\common.php]
+TopLine=69
+Caret=1,1
+[include\comment_functions.php]
+TopLine=1
+Caret=1,1
+[view_photos.php]
+TopLine=163
+Caret=3,189

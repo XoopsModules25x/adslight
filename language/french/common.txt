@@ -1,0 +1,129 @@
+<?php
+/*
+Vous ne pouvez pas changer ou modifier une partie de ce commentaire ou les crédits
+de soutien des développeurs à partir de ce code source ou de tout code source de soutien
+considéré comme protégé par le droit d'auteur (c) du commentaire original ou des auteurs de crédit.
+
+Ce programme est distribué dans l'espoir qu'il sera utile,
+mais SANS AUCUNE GARANTIE ; sans même la garantie implicite de
+COMMERCIALISATION ou D'ADAPTATION À UN USAGE PARTICULIER.
+ */
+/**
+ * Module xfGuestbook
+ *
+ * @copyright       XOOPS Project (https://xoops.org)
+ * @license         GNU GPL 2 ou supérieur (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @paquet         xfGuestbook
+ * @depuis           2.00
+ * @auteur          Xoops Development Team
+ */
+$moduleDirName      = basename(dirname(dirname(__DIR__)));
+$moduleDirNameUpper = mb_strtoupper($moduleDirName);
+
+define('CO_' . $moduleDirNameUpper . '_GDLIBSTATUS', 'Bibliothèque de support GD : ');
+define('CO_' . $moduleDirNameUpper . '_GDLIBVERSION', 'Version de la bibliothèque GD : ');
+define('CO_' . $moduleDirNameUpper . '_GDOFF', "<span style='font-weight: bold;'>Désactivé</span> (Aucune vignette disponible)");
+define('CO_' . $moduleDirNameUpper . '_GDON', "<span style='font-weight: bold;'>Activé</span> (Vignettes disponibles)");
+define('CO_' . $moduleDirNameUpper . '_IMAGEINFO', 'Statut du serveur');
+define('CO_' . $moduleDirNameUpper . '_MAXPOSTSIZE', 'Taille maximale des messages autorisée (directive post_max_size dans php.ini) : ');
+define('CO_' . $moduleDirNameUpper . '_MAXUPLOADSIZE', 'Taille maximale autorisée des envois (directive upload_max_filesize dans php.ini) : ');
+define('CO_' . $moduleDirNameUpper . '_MEMORYLIMIT', 'Limite de mémoire (directive memory_limit dans php.ini) : ');
+define('CO_' . $moduleDirNameUpper . '_METAVERSION', "<span style='font-weight: bold;'>Téléchargement de la version méta :</span> ");
+define('CO_' . $moduleDirNameUpper . '_OFF', "<span style='font-weight: bold;'>Fermé</span>");
+define('CO_' . $moduleDirNameUpper . '_ON', "<span style='font-weight: bold;'>Ouvert</span>");
+define('CO_' . $moduleDirNameUpper . '_SERVERPATH', 'Chemin d\'accès du serveur à la racine de XOOPS : ');
+define('CO_' . $moduleDirNameUpper . '_SERVERUPLOADSTATUS', 'État des envois au serveur : ');
+define('CO_' . $moduleDirNameUpper . '_SPHPINI', "<span style='font-weight: bold;'>Information tirée du fichier PHP ini :</span>");
+define('CO_' . $moduleDirNameUpper . '_UPLOADPATHDSC', 'Remarque. Le chemin des envois * DOIT * contenir le chemin d\'accès complet au serveur de votre dossier uploads.');
+
+define('CO_' . $moduleDirNameUpper . '_PRINT', "<span style='font-weight: bold;'>Imprimer</span>");
+define('CO_' . $moduleDirNameUpper . '_PDF', "<span style='font-weight: bold;'>Créer un PDF</span>");
+
+define('CO_' . $moduleDirNameUpper . '_UPGRADEFAILED0', "La mise à jour a échoué - impossible de renommer le champ '%s'");
+define('CO_' . $moduleDirNameUpper . '_UPGRADEFAILED1', "La mise à jour a échoué - ajout de nouveaux champs impossible");
+define('CO_' . $moduleDirNameUpper . '_UPGRADEFAILED2', "La mise à jour a échoué - impossible de renommer la table '%s'");
+define('CO_' . $moduleDirNameUpper . '_ERROR_COLUMN', 'Impossible de créer une colonne dans la base de données : %s');
+define('CO_' . $moduleDirNameUpper . '_ERROR_BAD_XOOPS', 'Ce module nécessite XOOPS %s+ (%s installé)');
+define('CO_' . $moduleDirNameUpper . '_ERROR_BAD_PHP', 'Ce module nécessite une version PHP %s+ (%s installé)');
+define('CO_' . $moduleDirNameUpper . '_ERROR_TAG_REMOVAL', 'Impossible de supprimer les balises du module Tag');
+
+define('CO_' . $moduleDirNameUpper . '_FOLDERS_DELETED_OK', 'Le dossier des envois a été supprimé');
+
+// Error Msgs
+define('CO_' . $moduleDirNameUpper . '_ERROR_BAD_DEL_PATH', 'Impossible de supprimer le répertoire %s');
+define('CO_' . $moduleDirNameUpper . '_ERROR_BAD_REMOVE', 'Impossible de supprimer %s');
+define('CO_' . $moduleDirNameUpper . '_ERROR_NO_PLUGIN', 'Impossible de charger le plugiciel');
+
+//Help
+define('CO_' . $moduleDirNameUpper . '_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('CO_' . $moduleDirNameUpper . '_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
+define('CO_' . $moduleDirNameUpper . '_BACK_2_ADMIN', 'Retour à l\'administration de ');
+define('CO_' . $moduleDirNameUpper . '_OVERVIEW', 'Présentation');
+
+//define('CO_' . $moduleDirNameUpper . '_HELP_DIR', __DIR__);
+
+//help multi-page
+define('CO_' . $moduleDirNameUpper . '_DISCLAIMER', 'Avertissement');
+define('CO_' . $moduleDirNameUpper . '_LICENSE', 'Licence');
+define('CO_' . $moduleDirNameUpper . '_SUPPORT', 'Support');
+
+//Sample Data
+define('CO_' . $moduleDirNameUpper . '_' . 'ADD_SAMPLEDATA', 'Importer des exemples de données (supprimera TOUTES les données actuelles)');
+define('CO_' . $moduleDirNameUpper . '_' . 'SAMPLEDATA_SUCCESS', 'Exemple de date envoyé avec succès');
+define('CO_' . $moduleDirNameUpper . '_' . 'SAVE_SAMPLEDATA', 'Exporter les tables vers YAML');
+define('CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLE_BUTTON', 'Afficher le bouton exemple ?');
+define('CO_' . $moduleDirNameUpper . '_' . 'SHOW_SAMPLE_BUTTON_DESC', 'Si oui, le bouton « Ajouter des exemples de données » sera visible par l\'administrateur. C\'est Oui par défaut pour la première installation.');
+define('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA', 'Exporter le schéma de base de données vers YAML');
+define('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_SUCCESS', 'L\'exportation du schéma de base de données vers YAML a été un succès');
+define('CO_' . $moduleDirNameUpper . '_' . 'EXPORT_SCHEMA_ERROR', 'ERREUR : l\'exportation du schéma de base de données vers YAML a échoué');
+
+//letter choice
+define('CO_' . $moduleDirNameUpper . '_' . 'BROWSETOTOPIC', "<span style='font-weight: bold;'>Parcourir les éléments par ordre alphabétique</span>");
+define('CO_' . $moduleDirNameUpper . '_' . 'OTHER', 'Autre');
+define('CO_' . $moduleDirNameUpper . '_' . 'ALL', 'Tout');
+
+// block defines
+define('CO_' . $moduleDirNameUpper . '_' . 'ACCESSRIGHTS', 'Droits d\'accès');
+define('CO_' . $moduleDirNameUpper . '_' . 'ACTION', 'Action');
+define('CO_' . $moduleDirNameUpper . '_' . 'ACTIVERIGHTS', 'Droits actifs');
+define('CO_' . $moduleDirNameUpper . '_' . 'BADMIN', 'Administration des blocs');
+define('CO_' . $moduleDirNameUpper . '_' . 'BLKDESC', 'Description');
+define('CO_' . $moduleDirNameUpper . '_' . 'CBCENTER', 'Centre milieu');
+define('CO_' . $moduleDirNameUpper . '_' . 'CBLEFT', 'Centre gauche');
+define('CO_' . $moduleDirNameUpper . '_' . 'CBRIGHT', 'Centre droit');
+define('CO_' . $moduleDirNameUpper . '_' . 'SBLEFT', 'Gauche');
+define('CO_' . $moduleDirNameUpper . '_' . 'SBRIGHT', 'Droite');
+define('CO_' . $moduleDirNameUpper . '_' . 'SIDE', 'Alignement');
+define('CO_' . $moduleDirNameUpper . '_' . 'TITLE', 'Titre');
+define('CO_' . $moduleDirNameUpper . '_' . 'VISIBLE', 'Visible');
+define('CO_' . $moduleDirNameUpper . '_' . 'VISIBLEIN', 'Visible dans');
+define('CO_' . $moduleDirNameUpper . '_' . 'WEIGHT', 'Poids');
+
+define('CO_' . $moduleDirNameUpper . '_' . 'PERMISSIONS', 'Permissions');
+define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS', 'Administrateur de blocs');
+define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS_DESC', 'Blocs / Administrateur de groupe');
+
+define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS_MANAGMENT', 'Gérer');
+define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS_ADDBLOCK', 'Ajouter un nouveau bloc');
+define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS_EDITBLOCK', 'Modifier un bloc');
+define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS_CLONEBLOCK', 'Cloner un bloc');
+
+//myblocksadmin
+define('CO_' . $moduleDirNameUpper . '_' . 'AGDS', 'Groupes Admin');
+define('CO_' . $moduleDirNameUpper . '_' . 'BCACHETIME', 'Temps de cache');
+define('CO_' . $moduleDirNameUpper . '_' . 'BLOCKS_ADMIN', 'Administrateur de blocs');
+
+//Template Admin
+define('CO_' . $moduleDirNameUpper . '_' . 'TPLSETS', 'Gestion des modèles');
+define('CO_' . $moduleDirNameUpper . '_' . 'GENERATE', 'Générer');
+define('CO_' . $moduleDirNameUpper . '_' . 'FILENAME', 'Nom de fichier');
+
+//Menu
+define('CO_' . $moduleDirNameUpper . '_' . 'ADMENU_MIGRATE', 'Migrer');
+define('CO_' . $moduleDirNameUpper . '_' . 'FOLDER_YES', 'Le dossier « %s » existe');
+define('CO_' . $moduleDirNameUpper . '_' . 'FOLDER_NO', 'Le dossier « %s » n\'existe pas. Créez le dossier spécifié avec CHMOD 777.');
+define('CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS', 'Afficher le bouton des outils de développement ?');
+define('CO_' . $moduleDirNameUpper . '_' . 'SHOW_DEV_TOOLS_DESC', 'Si oui, l\'onglet « Migrer » et les autres outils de développement seront visibles par l\'administrateur.');
+
+//Latest Version Check
+define('CO_' . $moduleDirNameUpper . '_' . 'NEW_VERSION', 'Nouvelle version : ');
