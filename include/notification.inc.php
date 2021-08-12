@@ -26,7 +26,7 @@
  * @param $category
  * @param $item_id
  *
- * @return mixed
+ * @return array|void
  */
 function adslight_notify_iteminfo($category, $item_id)
 {

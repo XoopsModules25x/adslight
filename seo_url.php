@@ -34,7 +34,7 @@ ob_start('seo_urls');
 /**
  * @param $s
  *
- * @return mixed
+ * @return array|string|string[]|null
  */
 function seo_urls($s)
 {
@@ -152,7 +152,7 @@ function adslight_seo_titre($lid)
  * @param string $title
  * @param bool   $withExt
  *
- * @return mixed|string
+ * @return array|string|string[]|null
  */
 function adslight_seo_title($title = '', $withExt = false)
 {
@@ -308,7 +308,7 @@ function adslight_seo_title($title = '', $withExt = false)
 /**
  * @param $s
  *
- * @return mixed
+ * @return array|string|string[]|null
  */
 function adslight_absolutize($s)
 {

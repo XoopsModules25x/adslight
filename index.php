@@ -58,7 +58,6 @@ function index()
     $pathIcon16 = Admin::iconUrl('', 16);
     $moduleDirName = basename(__DIR__);
 
-    /** @var \XoopsModules\Adslight\Helper $helper */
     $helper = Helper::getInstance();
 
     if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {

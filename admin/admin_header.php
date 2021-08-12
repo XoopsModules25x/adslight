@@ -30,7 +30,6 @@ require_once dirname(__DIR__, 3) . '/class/xoopsform/grouppermform.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 
-/** @var \XoopsModules\Adslight\Helper $helper */
 $helper = Helper::getInstance();
 /** @var \Xmf\Module\Admin $adminObject */
 $adminObject = Admin::getInstance();

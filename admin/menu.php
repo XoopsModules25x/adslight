@@ -27,7 +27,6 @@ use XoopsModules\Adslight;
 use XoopsModules\Adslight\Helper;
 
 //require_once  dirname(__DIR__) . '/include/common.php';
-/** @var \XoopsModules\Adslight\Helper $helper */
 $helper = Helper::getInstance();
 
 $pathIcon32 = Admin::menuIconPath('');

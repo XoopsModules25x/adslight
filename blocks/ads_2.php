@@ -39,7 +39,6 @@ function adslight_b2_show($options)
 
     $moduleDirName = basename(dirname(__DIR__));
     $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
-    /** @var \XoopsModules\Adslight\Helper $helper */
     $helper = Helper::getInstance();
 
     $block['title'] = constant("{$block_lang}_TITLE");

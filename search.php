@@ -215,8 +215,7 @@ switch ($action) {
 
         require_once XOOPS_ROOT_PATH . '/header.php';
 
-        /** @var \XoopsModules\Adslight\Helper $helper */
-        $helper = Helper::getInstance();
+    $helper = Helper::getInstance();
         $helper->loadLanguage('admin');
 
         $GLOBALS['xoopsTpl']->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');

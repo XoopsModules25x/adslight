@@ -22,7 +22,7 @@
 //require_once dirname(__DIR__) . '/class/classifiedstree.php';
 //require_once XOOPS_ROOT_PATH . '/class/xoopstree.php';
 /**
- * @return mixed
+ * @return array
  */
 function b_adslight_add()
 {

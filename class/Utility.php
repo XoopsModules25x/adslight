@@ -246,7 +246,7 @@ class Utility
             $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " AND valid='Yes' AND status!='1'";
 
             $result = $xoopsDB->query($query);
-            list($thing) = $xoopsDB->fetchRow($result);
+            [$thing] = $xoopsDB->fetchRow($result);
             $count = $thing;
             $arr   = $mytree->getAllChildId($sel_id);
             foreach ($arr as $iValue) {
@@ -254,7 +254,7 @@ class Utility
                     $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$iValue . " AND valid='Yes' AND status!='1'";
 
                     $result2 = $xoopsDB->query($query2);
-                    list($thing) = $xoopsDB->fetchRow($result2);
+                    [$thing] = $xoopsDB->fetchRow($result2);
                     $count += $thing;
                 }
             }
@@ -298,7 +298,6 @@ class Utility
     public static function getModuleOption($option, $repmodule = 'adslight')
     {
         global $xoopsModule;
-        /** @var \XoopsModules\Adslight\Helper $helper */
         $helper = \XoopsModules\Adslight\Helper::getInstance();
         static $tbloptions = [];
         if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
@@ -559,7 +558,7 @@ class Utility
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public static function goCategory()
     {
@@ -628,7 +627,7 @@ class Utility
     {
         global $xoopsDB;
         $sql = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
-        list($nom_type) = $xoopsDB->fetchRow($sql);
+        [$nom_type] = $xoopsDB->fetchRow($sql);
 
         return $nom_type;
     }
@@ -743,7 +742,6 @@ class Utility
     public static function saveCategoryPermissions($groups, $categoryId, $permName)
     {
         global $xoopsModule;
-        /** @var \XoopsModules\Adslight\Helper $helper */
         $helper = \XoopsModules\Adslight\Helper::getInstance();
 
         $result = true;
@@ -780,7 +778,6 @@ class Utility
 
         $select_view   = '';
         $moduleDirName = basename(dirname(__DIR__));
-        /** @var Adslight\Helper $helper */
         $helper = Adslight\Helper::getInstance();
 
         $pathModIcon16 = XOOPS_URL . '/modules/' . $moduleDirName . '/' . $helper->getModule()->getInfo('modicons16');
@@ -881,7 +878,7 @@ class Utility
      * @param int          $id_field
      * @param int          $id
      *
-     * @return mixed
+     * @return false|void
      */
     public static function cloneRecord($tableName, $id_field, $id)
     {

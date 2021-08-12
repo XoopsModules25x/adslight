@@ -86,7 +86,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param int $id of the light_pictures
      * @param     $lid
      *
-     * @return mixed reference to the {@link light_pictures} object, FALSE if failed
+     * @return false|\XoopsModules\Adslight\Pictures reference to the {@link light_pictures} object, FALSE if failed
      */
     public function get($id, $lid = null)
     {
@@ -190,8 +190,8 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * retrieve Pictures object(s) from the database
      *
-     * @param \CriteriaElement|\CriteriaCompo $criteria  {@link \CriteriaElement} conditions to be met
-     * @param bool                            $id_as_key use the UID as key for the array?
+     * @param \CriteriaElement|null $criteria  {@link \CriteriaElement} conditions to be met
+     * @param bool                  $id_as_key use the UID as key for the array?
      * @return array  array of {@link Pictures} objects
      */
     public function &getObjects(\CriteriaElement $criteria = null, $id_as_key = false)
@@ -228,7 +228,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * count Pictures matching a condition
      *
-     * @param \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement} to match
+     * @param \CriteriaElement|null $criteria {@link \CriteriaElement} to match
      * @return int    count of Pictures
      */
     public function getCount(\CriteriaElement $criteria = null)
@@ -241,7 +241,7 @@ class PicturesHandler extends \XoopsObjectHandler
         if (!$result) {
             return 0;
         }
-        list($count) = $this->db->fetchRow($result);
+        [$count] = $this->db->fetchRow($result);
 
         return $count;
     }
@@ -249,7 +249,7 @@ class PicturesHandler extends \XoopsObjectHandler
     /**
      * delete Pictures matching a set of conditions
      *
-     * @param \CriteriaElement|\CriteriaCompo $criteria {@link \CriteriaElement}
+     * @param \CriteriaElement|null $criteria {@link \CriteriaElement}
      * @return bool   FALSE if deletion failed
      */
     public function deleteAll(\CriteriaElement $criteria = null)
