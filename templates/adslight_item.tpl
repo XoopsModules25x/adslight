@@ -76,7 +76,7 @@
                             <{$deleteads|default:false}><br>
                             <{$alerteabus}><br>
                             <br>
-                            <{if $local_country}>
+                            <{if $local_country}> <{* JJDai ajouter la clé google dans les preference du module et tester si elle existe*}>
                                 <img class="mapsgoogle"
                                      src="http://maps.google.com/maps/api/staticmap?size=200x200&maptype=roadmap\&markers=size:mid|color:red|<{$local_town}>+<{$local_country}>&sensor=false">
                             <{/if}>
