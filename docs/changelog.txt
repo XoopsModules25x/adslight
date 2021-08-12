@@ -1,23 +1,28 @@
 <h5>2.3 RC5   [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
 <hr>
-- Nested 'dirname'
-- Min PHP 7.2
-- Case mismatch in method call or class usage
-- Replace qualifier with an import
-- Short form of type keywords
-- Unnecessary double quotes
-- PhpDoc
-- Unnecessary type casting
-- Inverted 'if-else' constructs
-- Ternary operator simplified
-- Unnecessary boolean check
-- Low performing filesystem operations
-- Pass parameter by reference
-- Short list syntax
-- Unqualified function/constant reference
-- Insecure 'htmlspecialchars(...)'
-- UTF-8
-
+- Nested 'dirname' (mamba)
+- Min PHP 7.2 (mamba)
+- Case mismatch in method call or class usage (mamba)
+- Replace qualifier with an import (mamba)
+- Short form of type keywords (mamba)
+- Unnecessary double quotes (mamba)
+- PhpDoc (mamba)
+- Unnecessary type casting (mamba)
+- Inverted 'if-else' constructs (mamba)
+- Ternary operator simplified (mamba)
+- Unnecessary boolean check (mamba)
+- Low performing filesystem operations (mamba)
+- Pass parameter by reference (mamba)
+- Short list syntax (mamba)
+- Unqualified function/constant reference (mamba)
+- Insecure 'htmlspecialchars(...)' (mamba)
+- UTF-8 (mamba)
+- fixed Usid to uid in viewads.php (masel67)
+- Fix bag for type and typeprice, text instead of numbers (masel67)
+- Fix Desctext area in add.php (masel67)
+- Update listing_report_abuse.tpl (masel67)
+- Fix price view, and Undefined variable: xoopsModuleConfig in viewads.php  (masel67)
+- added formatCurrencyTemp() function to format price (mamba)
 
 <h5>2.3 RC4   [2021-08-12]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
 <hr>

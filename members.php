@@ -23,6 +23,7 @@
 use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Adslight\{
+    Helper,
     ClassifiedsTree,
     Utility
 };
@@ -35,6 +36,7 @@ $pathIcon16 = Admin::iconUrl('', 16);
 xoops_load('XoopsLocal');
 $moduleDirName = basename(__DIR__);
 
+$helper = Helper::getInstance();
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
 $mytree                                  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_members.tpl';
@@ -170,9 +172,15 @@ if ($trows > '0') {
         [$r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid] = $xoopsDB->fetchRow($result2);
 
 
-        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
-        [$nom_price] = $xoopsDB->fetchRow($result8);
+        //Fix bug for type and typeprice
+        $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
+        list($nom_type) = $xoopsDB->fetchRow($result7);
 
+        //        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
+        //        [$nom_price] = $xoopsDB->fetchRow($result8);
+
+        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
+        list($nom_price) = $xoopsDB->fetchRow($result8);
 
 
         if ($isadmin) {
@@ -194,6 +202,7 @@ if ($trows > '0') {
             }
         }
 
+
         $GLOBALS['xoopsTpl']->assign('submitter', $submitter);
         $GLOBALS['xoopsTpl']->assign('usid', $usid);
         $GLOBALS['xoopsTpl']->assign('read', "$hits " . _ADSLIGHT_VIEW2);
@@ -204,17 +213,21 @@ if ($trows > '0') {
         $price2 = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
         //      $price = $tempXoopsLocal->number_format($price);
-        $GLOBALS['xoopsTpl']->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . " - $typeprice");
+
+//        $GLOBALS['xoopsTpl']->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . " - $typeprice");
+
+        $currencyCode = $helper->getConfig('adslight_currency_code');
+        $currencySymbol = $helper->getConfig('adslight_currency_symbol');
+        $currencyPosition = $helper->getConfig('currency_position');
+        $formattedCurrencyUtilityTemp = Utility::formatCurrencyTemp($price, $currencyCode, $currencySymbol, $currencyPosition);
+        $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $formattedCurrencyUtilityTemp . ' - ' . $typeprice;
+        $GLOBALS['xoopsTpl']->assign('price', $priceHtml);
+
         $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE);
         $GLOBALS['xoopsTpl']->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']);
         $GLOBALS['xoopsTpl']->assign('price_typeprice', $typeprice);
 
 
-
-
-
-        $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
-        [$nom_type] = $xoopsDB->fetchRow($result7);
         $GLOBALS['xoopsTpl']->assign('type', htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5));
 
         $priceFormatted = Utility::getMoneyFormat('%.2n', $price);
@@ -222,7 +235,13 @@ if ($trows > '0') {
         $priceCurrency = $GLOBALS['xoopsModuleConfig']['adslight_currency_code'];
         //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
         //            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice;
-        $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $priceFormatted . ' - ' . $priceTypeprice;
+//        $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $priceFormatted . ' - ' . $priceTypeprice;
+
+        $currencyCode = $helper->getConfig('adslight_currency_code');
+        $currencySymbol = $helper->getConfig('adslight_currency_symbol');
+        $currencyPosition = $helper->getConfig('currency_position');
+        $formattedCurrencyUtilityTemp = Utility::formatCurrencyTemp($price, $currencyCode, $currencySymbol, $currencyPosition);
+        $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $formattedCurrencyUtilityTemp . ' - ' . $priceTypeprice;
 
         $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE2);
         $GLOBALS['xoopsTpl']->assign('price_price', $priceFormatted);

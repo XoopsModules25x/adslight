@@ -22,7 +22,12 @@
 
 use Xmf\Module\Admin;
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    ClassifiedsTree,
+    Helper,
+    PicturesHandler,
+    Utility
+};
 
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
@@ -49,7 +54,7 @@ if ($grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $mo
     $prem_perm = '0';
 }
 
-$mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function viewads
 #####################################################
@@ -59,6 +64,8 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
 function viewAds($lid = 0)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $xoopsTpl, $myts, $meta, $prem_perm, $xoopsUser;
+
+    $helper = Helper::getInstance();
 
     $moduleDirName = basename(__DIR__);
 
@@ -109,7 +116,7 @@ function viewAds($lid = 0)
             [$show_user] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
             $GLOBALS['xoopsTpl']->assign('show_user', $show_user);
-            $GLOBALS['xoopsTpl']->assign('show_user_link', 'members.php?usid=' . $member_usid);
+            $GLOBALS['xoopsTpl']->assign('show_user_link', 'members.php?uid=' . $member_usid);
         }
     }
 
@@ -118,7 +125,7 @@ function viewAds($lid = 0)
     }
 
     $cat_perms  = '';
-    $categories = Adslight\Utility::getMyItemIds('adslight_view');
+    $categories = Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
@@ -310,12 +317,16 @@ function viewAds($lid = 0)
         $desctextclean = strip_tags($desctext, '<span><img><strong><i><u>');
         $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . mb_substr($desctextclean, 0, 150));
 
+        $currencyCode = $helper->getConfig('adslight_currency_code');
+        $currencySymbol = $helper->getConfig('adslight_currency_symbol');
+        $currencyPosition = $helper->getConfig('currency_position');
+        $formattedCurrencyUtilityTemp = Utility::formatCurrencyTemp($price, $currencyCode, $currencySymbol, $currencyPosition);
+
         if ($price > 0) {
             $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE2);
-            //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
-
-            $priceFormatted = Adslight\Utility::getMoneyFormat('%.2n', $price);
-            $GLOBALS['xoopsTpl']->assign('price_price', $priceFormatted);
+//            $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
+//            $priceFormatted = Utility::getMoneyFormat('%.2n', $price);
+            $GLOBALS['xoopsTpl']->assign('price_price', $formattedCurrencyUtilityTemp);
 
             $priceTypeprice = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
             $GLOBALS['xoopsTpl']->assign('price_typeprice', $priceTypeprice);
@@ -323,7 +334,9 @@ function viewAds($lid = 0)
             $GLOBALS['xoopsTpl']->assign('price_currency', $priceCurrency);
 
 //            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice;
-            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $priceFormatted . ' - ' . $priceTypeprice;
+
+            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $formattedCurrencyUtilityTemp . ' - ' . $priceTypeprice;
+
             $GLOBALS['xoopsTpl']->assign('price', $priceHtml);
 
 
@@ -386,7 +399,7 @@ function viewAds($lid = 0)
 
             $criteria_lid          = new \Criteria('lid', $lid);
             $criteria_uid          = new \Criteria('uid', $usid);
-            $album_factory         = new Adslight\PicturesHandler($xoopsDB);
+            $album_factory         = new PicturesHandler($xoopsDB);
             $pictures_object_array = $album_factory->getObjects($criteria_lid, $criteria_uid);
             $pictures_number       = $album_factory->getCount($criteria_lid, $criteria_uid);
             if (0 == $pictures_number) {
@@ -410,7 +423,7 @@ function viewAds($lid = 0)
             $owner      = new \XoopsUser();
             $identifier = $owner::getUnameFromId($usid);
             
-Adslight\Utility::load_lib_js(); // JJDai
+Utility::load_lib_js(); // JJDai
 /*
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
             
@@ -479,7 +492,7 @@ function categorynewgraphic($cid)
     global $xoopsDB;
 
     $cat_perms  = '';
-    $categories = Adslight\Utility::getMyItemIds('adslight_view');
+    $categories = Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
@@ -509,6 +522,7 @@ switch ($pa) {
         $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
 
         viewAds($lid);
+        require XOOPS_ROOT_PATH . '/include/comment_view.php';
         break;
 }
 require_once XOOPS_ROOT_PATH . '/footer.php';

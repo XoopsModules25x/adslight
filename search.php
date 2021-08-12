@@ -164,7 +164,7 @@ switch ($action) {
                         echo '<strong>' . htmlspecialchars($results[$i]['type'], ENT_QUOTES | ENT_HTML5) . '</strong><br>';
                         if (isset($results[$i]['photo'])
                             && '' !== $results[$i]['photo']) {
-                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
+                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['photo'] . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         }

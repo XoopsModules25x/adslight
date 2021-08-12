@@ -22,8 +22,12 @@
 
 use Xmf\Module\Admin;
 use Xmf\Request;
-use XoopsModules\Adslight;
-use XoopsModules\Adslight\Helper;
+use XoopsModules\Adslight\{
+    ClassifiedsTree,
+    Helper,
+    Utility
+};
+
 
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
 
@@ -47,7 +51,7 @@ if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $modu
 
 $prem_perm = (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) ? '0' : '1';
 
-$mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
 #  function index
 #####################################################
@@ -91,7 +95,7 @@ function index()
     $GLOBALS['xoopsTpl']->assign('adslight_active_rss', $GLOBALS['xoopsModuleConfig']['adslight_active_rss']);
 
     //    ExpireAd();
-    Adslight\Utility::expireAd();
+    Utility::expireAd();
 
     if ($GLOBALS['xoopsUser']) {
         $member_usid = $GLOBALS['xoopsUser']->getVar('uid');
@@ -122,7 +126,7 @@ function index()
             }
         }
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_submit');
+        $categories = Utility::getMyItemIds('adslight_submit');
         $intro      = (is_array($categories)
                        && (count($categories) > 0)) ? _ADSLIGHT_INTRO : '';
         $GLOBALS['xoopsTpl']->assign('intro', $intro);
@@ -130,7 +134,7 @@ function index()
 
     $sql = 'SELECT SQL_CACHE cid, title, img FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE pid = 0 ';
 
-    $categories = Adslight\Utility::getMyItemIds('adslight_view');
+    $categories = Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
     } else {
@@ -153,7 +157,7 @@ function index()
             $img = '';
         }
 
-        $totallisting = Adslight\Utility::getTotalItems($myrow['cid'], 1);
+        $totallisting = Utility::getTotalItems($myrow['cid'], 1);
         $content      .= $title . ' ';
 
         $arr = [];
@@ -201,10 +205,12 @@ function index()
 
     [$catt] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*)  FROM ' . $xoopsDB->prefix("{$moduleDirName}_categories")));
 
-    $submit_perms = Adslight\Utility::getMyItemIds('adslight_submit');
+    $submit_perms = Utility::getMyItemIds('adslight_submit');
 
     if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
-        $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLOK . '<a href="add.php">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>';
+//        $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLOK . '<a href="add.php">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>';
+        $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULLOK . '<a rel="nofollow" class="btn btn-success text-right"  title="submit your ad" href="add.php">' . _ADSLIGHT_ADD_LISTING_SUBOK . '</a>';
+
     } else {
         $add_listing = '' . _ADSLIGHT_ADD_LISTING_BULL . '<a href="' . XOOPS_URL . '/register.php">' . _ADSLIGHT_ADD_LISTING_SUB . '</a>.';
     }
@@ -270,12 +276,21 @@ function index()
                 [$nom_price] = $xoopsDB->fetchRow($result8);
 
                 if ($price > 0) {
-                    $a_item['price']           = $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '';
+//                    $a_item['price']           = $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '';
+                    $currencyCode = $helper->getConfig('adslight_currency_code');
+                    $currencySymbol = $helper->getConfig('adslight_currency_symbol');
+                    $currencyPosition = $helper->getConfig('currency_position');
+                    $formattedCurrencyUtilityTemp = Utility::formatCurrencyTemp($price, $currencyCode, $currencySymbol, $currencyPosition);
+
+                    $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $formattedCurrencyUtilityTemp . ' - ' . $nom_price;
+                    $a_item['price']           = $priceHtml;
+
                     $a_item['price_typeprice'] = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
                 } else {
                     $a_item['price']           = '';
                     $a_item['price_typeprice'] = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
                 }
+
                 $a_item['premium'] = $premium;
                 $a_item['date']    = $date;
                 $a_item['local']   = $town ?: '';

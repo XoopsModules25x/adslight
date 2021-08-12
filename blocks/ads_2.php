@@ -23,7 +23,11 @@
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 use XoopsModules\Adslight;
-use XoopsModules\Adslight\Helper;
+use XoopsModules\Adslight\{
+    Helper,
+    Utility
+};
+
 
 /**
  * @param $options
@@ -36,6 +40,7 @@ function adslight_b2_show($options)
 
     $block = [];
     $myts  = \MyTextSanitizer::getInstance();
+    $helper = Helper::getInstance();
 
     $moduleDirName = basename(dirname(__DIR__));
     $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
@@ -45,7 +50,7 @@ function adslight_b2_show($options)
 
     $updir      = $helper->getConfig($moduleDirName . '_link_upload', '');
     $cat_perms  = '';
-    $categories = Adslight\Utility::getMyItemIds('adslight_view');
+    $categories = Utility::getMyItemIds('adslight_view');
     if (is_array($categories) && count($categories) > 0) {
         $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
     }
@@ -74,16 +79,24 @@ function adslight_b2_show($options)
 
         $ad_title            = $myrow['title'];
         $a_item['status']    = $status;
-        $a_item['type']      = Adslight\Utility::getNameType($type);
-        $a_item['price']     = $price;
+        $a_item['type']      = Utility::getNameType($type);
+//        $a_item['price']     = $price;
         $a_item['typeprice'] = $typeprice;
         $a_item['town']      = $town;
         $a_item['country']   = $country;
         $a_item['id']        = (int)$myrow['lid'];
         $a_item['cid']       = (int)$myrow['cid'];
         $a_item['no_photo']  = '<a href="' . XOOPS_URL . "/modules/$moduleDirName/viewads.php?lid={$a_item['id']}\"><img class=\"thumb\" src=\"" . XOOPS_URL . "/modules/{$moduleDirName}/assets/images/nophoto.jpg\" align=\"left\" width=\"100px\" alt=\"{$ad_title}\"></a>";
-
         $a_item['price_symbol'] = $helper->getConfig($moduleDirName . '_currency_symbol', '');
+
+        $currencyCode = $helper->getConfig('adslight_currency_code');
+        $currencySymbol = $helper->getConfig('adslight_currency_symbol');
+        $currencyPosition = $helper->getConfig('currency_position');
+        $formattedCurrencyUtilityTemp = Utility::formatCurrencyTemp($price, $currencyCode, $currencySymbol, $currencyPosition);
+
+        $priceHtml = $formattedCurrencyUtilityTemp . ' - ' . $typeprice;
+
+        $a_item['price']           = $priceHtml;
 
         if (2 == $status) {
             $a_item['sold'] = '<img src="assets/images/sold.gif" align="left" alt="">';
