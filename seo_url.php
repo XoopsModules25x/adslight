@@ -105,7 +105,7 @@ function replace_links($matches)
 /**
  * @param $cid
  *
- * @return mixed|string
+ * @return array|string|string[]|null
  */
 function adslight_seo_cat($cid)
 {
@@ -128,7 +128,7 @@ function adslight_seo_cat($cid)
 /**
  * @param $lid
  *
- * @return mixed|string
+ * @return array|string|string[]|null
  */
 function adslight_seo_titre($lid)
 {
