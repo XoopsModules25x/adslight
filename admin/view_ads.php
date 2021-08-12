@@ -90,7 +90,7 @@ function index()
         $rank = 1;
 
         while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo, $usid) = $xoopsDB->fetchRow($result))) {
-            $title    = $myts->htmlSpecialChars($title);
+            $title    = htmlspecialchars($title);
             $desctext = $myts->displayTarea($desctext, 1, 0, 1, 1, 1);
 
             if (mb_strlen($desctext) >= 200) {
@@ -100,18 +100,18 @@ function index()
             }
             $date2  = formatTimestamp($date, 's');
             $color  = is_int($rank / 2) ? '#ffffff' : 'head';
-            $status = $myts->htmlSpecialChars($status);
-            $expire = $myts->htmlSpecialChars($expire);
-            $type   = $myts->htmlSpecialChars($type);
-            $tel    = $myts->htmlSpecialChars($tel);
+            $status = htmlspecialchars($status);
+            $expire = htmlspecialchars($expire);
+            $type   = htmlspecialchars($type);
+            $tel    = htmlspecialchars($tel);
             //            $price = number_format($price, 2, ',', ' ');
-            $typeprice = $myts->htmlSpecialChars($typeprice);
-            $typeusure = $myts->htmlSpecialChars($typeusure);
-            $submitter = $myts->htmlSpecialChars($submitter);
-            $town      = $myts->htmlSpecialChars($town);
-            $country   = $myts->htmlSpecialChars($country);
-            $contactby = $myts->htmlSpecialChars($contactby);
-            $premium   = $myts->htmlSpecialChars($premium);
+            $typeprice = htmlspecialchars($typeprice);
+            $typeusure = htmlspecialchars($typeusure);
+            $submitter = htmlspecialchars($submitter);
+            $town      = htmlspecialchars($town);
+            $country   = htmlspecialchars($country);
+            $contactby = htmlspecialchars($contactby);
+            $premium   = htmlspecialchars($premium);
 
             $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
             $sql     = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE  uid_owner={$usid} AND lid={$lid} ORDER BY date_added ASC LIMIT 1";
@@ -214,20 +214,20 @@ function indexView($lid = null)
         $lid      = (int)$lid;
         $cid      = (int)$cid;
         $date2    = formatTimestamp($date, 's');
-        $title    = $myts->htmlSpecialChars($title);
-        $status   = $myts->htmlSpecialChars($status);
-        $expire   = $myts->htmlSpecialChars($expire);
-        $type     = $myts->htmlSpecialChars($type);
+        $title    = htmlspecialchars($title);
+        $status   = htmlspecialchars($status);
+        $expire   = htmlspecialchars($expire);
+        $type     = htmlspecialchars($type);
         $desctext = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel      = $myts->htmlSpecialChars($tel);
+        $tel      = htmlspecialchars($tel);
         //        $price = number_format($price, 2, ',', ' ');
-        $typeprice = $myts->htmlSpecialChars($typeprice);
-        $typeusure = $myts->htmlSpecialChars($typeusure);
-        $submitter = $myts->htmlSpecialChars($submitter);
-        $town      = $myts->htmlSpecialChars($town);
-        $country   = $myts->htmlSpecialChars($country);
-        $contactby = $myts->htmlSpecialChars($contactby);
-        $premium   = $myts->htmlSpecialChars($premium);
+        $typeprice = htmlspecialchars($typeprice);
+        $typeusure = htmlspecialchars($typeusure);
+        $submitter = htmlspecialchars($submitter);
+        $town      = htmlspecialchars($town);
+        $country   = htmlspecialchars($country);
+        $contactby = htmlspecialchars($contactby);
+        $premium   = htmlspecialchars($premium);
 
         echo '<form action="index.php" method="post">';
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -359,21 +359,21 @@ function modifyAds($lid)
     $result = $xoopsDB->query($sql);
 
     while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result))) {
-        $title = $myts->htmlSpecialChars($title);
-        //        $status    = $myts->htmlSpecialChars($status);
+        $title = htmlspecialchars($title);
+        //        $status    = htmlspecialchars($status);
         $status   = (int)$status;
-        $expire   = $myts->htmlSpecialChars($expire);
-        $type     = $myts->htmlSpecialChars($type);
+        $expire   = htmlspecialchars($expire);
+        $type     = htmlspecialchars($type);
         $desctext = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel      = $myts->htmlSpecialChars($tel);
+        $tel      = htmlspecialchars($tel);
         //        $price     = number_format($price, 2, ',', ' ');
-        $typeprice = $myts->htmlSpecialChars($typeprice);
-        $typeusure = $myts->htmlSpecialChars($typeusure);
-        $submitter = $myts->htmlSpecialChars($submitter);
-        $town      = $myts->htmlSpecialChars($town);
-        $country   = $myts->htmlSpecialChars($country);
-        $contactby = $myts->htmlSpecialChars($contactby);
-        $premium   = $myts->htmlSpecialChars($premium);
+        $typeprice = htmlspecialchars($typeprice);
+        $typeusure = htmlspecialchars($typeusure);
+        $submitter = htmlspecialchars($submitter);
+        $town      = htmlspecialchars($town);
+        $country   = htmlspecialchars($country);
+        $contactby = htmlspecialchars($contactby);
+        $premium   = htmlspecialchars($premium);
 
         $date2 = formatTimestamp($date, 's');
 
@@ -547,21 +547,21 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
 
     $lid   = (int)$lid;
     $cat   = (int)$cat;
-    $title = $myts->htmlSpecialChars($title);
-    //    $status    = $myts->htmlSpecialChars($status);
+    $title = htmlspecialchars($title);
+    //    $status    = htmlspecialchars($status);
     $status    = (int)$status;
-    $expire    = $myts->htmlSpecialChars($expire);
-    $type      = $myts->htmlSpecialChars($type);
+    $expire    = htmlspecialchars($expire);
+    $type      = htmlspecialchars($type);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-    $tel       = $myts->htmlSpecialChars($tel);
+    $tel       = htmlspecialchars($tel);
     $price     = str_replace([' '], '', $price);
-    $typeprice = $myts->htmlSpecialChars($typeprice);
-    $typeusure = $myts->htmlSpecialChars($typeusure);
-    $submitter = $myts->htmlSpecialChars($submitter);
-    $town      = $myts->htmlSpecialChars($town);
-    $country   = $myts->htmlSpecialChars($country);
-    $contactby = $myts->htmlSpecialChars($contactby);
-    $premium   = $myts->htmlSpecialChars($premium);
+    $typeprice = htmlspecialchars($typeprice);
+    $typeusure = htmlspecialchars($typeusure);
+    $submitter = htmlspecialchars($submitter);
+    $town      = htmlspecialchars($town);
+    $country   = htmlspecialchars($country);
+    $contactby = htmlspecialchars($contactby);
+    $premium   = htmlspecialchars($premium);
 
     $xoopsDB->query('UPDATE '
                     . $xoopsDB->prefix('adslight_listing')
@@ -635,22 +635,22 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
 
     $lid       = (int)$lid;
     $cid       = (int)$cid;
-    $title     = $myts->htmlSpecialChars($title);
+    $title     = htmlspecialchars($title);
     $status    = (int)$status;
-    $expire    = $myts->htmlSpecialChars($expire);
-    $type      = $myts->htmlSpecialChars($type);
+    $expire    = htmlspecialchars($expire);
+    $type      = htmlspecialchars($type);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-    $tel       = $myts->htmlSpecialChars($tel);
+    $tel       = htmlspecialchars($tel);
     $price     = str_replace([' '], '', $price);
-    $typeprice = $myts->htmlSpecialChars($typeprice);
-    $typeusure = $myts->htmlSpecialChars($typeusure);
-    $submitter = $myts->htmlSpecialChars($submitter);
-    $town      = $myts->htmlSpecialChars($town);
-    $country   = $myts->htmlSpecialChars($country);
-    $contactby = $myts->htmlSpecialChars($contactby);
-    $premium   = $myts->htmlSpecialChars($premium);
-    $valid     = $myts->htmlSpecialChars($valid);
-    $photo     = $myts->htmlSpecialChars($photo);
+    $typeprice = htmlspecialchars($typeprice);
+    $typeusure = htmlspecialchars($typeusure);
+    $submitter = htmlspecialchars($submitter);
+    $town      = htmlspecialchars($town);
+    $country   = htmlspecialchars($country);
+    $contactby = htmlspecialchars($contactby);
+    $premium   = htmlspecialchars($premium);
+    $valid     = htmlspecialchars($valid);
+    $photo     = htmlspecialchars($photo);
     $now       = time();
     $xoopsDB->query('UPDATE '
                     . $xoopsDB->prefix('adslight_listing')

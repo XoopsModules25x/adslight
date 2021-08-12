@@ -46,7 +46,7 @@
                     </div>
                 <{/if}>
                 <{if $xoops_isuser}>
-                <{if $adslight_active_xpayement|default:false == 1 }>
+                <{if $adslight_active_xpayement|default:false === 1 }>
                 <!-- xpayment -->
                 <{if $purchasable && !$sold && $price_amount > 0}>
                 <{include file="db:adslight_xpayment_form.tpl"}>
@@ -93,11 +93,11 @@
         <{$lang_notice|default:false}>
     </div>
     <div style="margin:3px; padding: 3px;">
-        <{if $comment_mode|default:false == "flat"}>
+        <{if $comment_mode|default:false === "flat"}>
             <{include file="db:system_comments_flat.tpl"}>
-        <{elseif $comment_mode|default:false == "thread"}>
+        <{elseif $comment_mode|default:false === "thread"}>
             <{include file="db:system_comments_thread.tpl"}>
-        <{elseif $comment_mode|default:false == "nest"}>
+        <{elseif $comment_mode|default:false === "nest"}>
             <{include file="db:system_comments_nest.tpl"}>
         <{/if}>
     </div>

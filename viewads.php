@@ -176,7 +176,7 @@ function viewAds($lid = 0)
         $grouppermHandler = xoops_getHandler('groupperm');
         $GLOBALS['xoopsTpl']->assign('purchasable', $grouppermHandler->checkRight('adslight_purchase', $cid, $groups, $module_id));
 
-        $ctitle     = $myts->htmlSpecialChars($ctitle);
+        $ctitle     = htmlspecialchars($ctitle);
         $varid[$x]  = $ccid;
         $varnom[$x] = $ctitle;
 
@@ -188,7 +188,7 @@ function viewAds($lid = 0)
                 $result4 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($pid));
                 [$ccid, $pid, $ctitle] = $xoopsDB->fetchRow($result4);
 
-                $ctitle     = $myts->htmlSpecialChars($ctitle);
+                $ctitle     = htmlspecialchars($ctitle);
                 $varid[$x]  = $ccid;
                 $varnom[$x] = $ctitle;
                 ++$x;
@@ -238,21 +238,21 @@ function viewAds($lid = 0)
         $date2    = $date + ($expire * 86400);
         $date     = formatTimestamp($date, 's');
         $date2    = formatTimestamp($date2, 's');
-        $title    = $myts->htmlSpecialChars($title);
-        $status   = $myts->htmlSpecialChars($status);
-        $expire   = $myts->htmlSpecialChars($expire);
-        $type     = $myts->htmlSpecialChars($type);
+        $title    = htmlspecialchars($title);
+        $status   = htmlspecialchars($status);
+        $expire   = htmlspecialchars($expire);
+        $type     = htmlspecialchars($type);
         $desctext = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel      = $myts->htmlSpecialChars($tel);
+        $tel      = htmlspecialchars($tel);
         //        $price = XoopsLocal::number_format($price, 2, ',', ' ');
-        $typeprice = $myts->htmlSpecialChars($typeprice);
-        $typeusure = $myts->htmlSpecialChars($typeusure);
-        $submitter = $myts->htmlSpecialChars($submitter);
-        $usid      = $myts->htmlSpecialChars($usid);
-        $town      = $myts->htmlSpecialChars($town);
-        $country   = $myts->htmlSpecialChars($country);
-        $contactby = $myts->htmlSpecialChars($contactby);
-        $premium   = $myts->htmlSpecialChars($premium);
+        $typeprice = htmlspecialchars($typeprice);
+        $typeusure = htmlspecialchars($typeusure);
+        $submitter = htmlspecialchars($submitter);
+        $usid      = htmlspecialchars($usid);
+        $town      = htmlspecialchars($town);
+        $country   = htmlspecialchars($country);
+        $contactby = htmlspecialchars($contactby);
+        $premium   = htmlspecialchars($premium);
 
         if (2 == $status) {
             $sold = _ADSLIGHT_RESERVED;
@@ -300,7 +300,7 @@ function viewAds($lid = 0)
         $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure='" . $xoopsDB->escape($typeusure) . "'");
         [$nom_usure] = $xoopsDB->fetchRow($result9);
 
-        $GLOBALS['xoopsTpl']->assign('type', $myts->htmlSpecialChars($nom_type));
+        $GLOBALS['xoopsTpl']->assign('type', htmlspecialchars($nom_type));
         $GLOBALS['xoopsTpl']->assign('title', $title);
         $GLOBALS['xoopsTpl']->assign('status', $status);
         $GLOBALS['xoopsTpl']->assign('desctext', $desctext);
@@ -317,7 +317,7 @@ function viewAds($lid = 0)
             $priceFormatted = Adslight\Utility::getMoneyFormat('%.2n', $price);
             $GLOBALS['xoopsTpl']->assign('price_price', $priceFormatted);
 
-            $priceTypeprice = $myts->htmlSpecialChars($nom_price);
+            $priceTypeprice = htmlspecialchars($nom_price);
             $GLOBALS['xoopsTpl']->assign('price_typeprice', $priceTypeprice);
             $priceCurrency = $GLOBALS['xoopsModuleConfig']['adslight_currency_code'];
             $GLOBALS['xoopsTpl']->assign('price_currency', $priceCurrency);

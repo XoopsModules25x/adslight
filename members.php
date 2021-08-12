@@ -215,10 +215,10 @@ if ($trows > '0') {
 
         $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
         [$nom_type] = $xoopsDB->fetchRow($result7);
-        $GLOBALS['xoopsTpl']->assign('type', $myts->htmlSpecialChars($nom_type));
+        $GLOBALS['xoopsTpl']->assign('type', htmlspecialchars($nom_type));
 
         $priceFormatted = Utility::getMoneyFormat('%.2n', $price);
-        $priceTypeprice = $myts->htmlSpecialChars($nom_price);
+        $priceTypeprice = htmlspecialchars($nom_price);
         $priceCurrency = $GLOBALS['xoopsModuleConfig']['adslight_currency_code'];
         //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
         //            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice;
@@ -275,31 +275,31 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->append('items', [
             'id'          => $lid,
             'cid'         => $cid,
-            'title'       => $myts->htmlSpecialChars($title),
-            'status'      => $myts->htmlSpecialChars($status_is),
-            'expire'      => $myts->htmlSpecialChars($expire),
-            'type'        => $myts->htmlSpecialChars($type),
+            'title'       => htmlspecialchars($title),
+            'status'      => htmlspecialchars($status_is),
+            'expire'      => htmlspecialchars($expire),
+            'type'        => htmlspecialchars($type),
             'desctext'    => $myts->displayTarea($desctext),
-            'tel'         => $myts->htmlSpecialChars($tel),
-            'price'       => $myts->htmlSpecialChars($price),
-            'typeprice'   => $myts->htmlSpecialChars($typeprice),
-            'date'        => $myts->htmlSpecialChars($date),
-            'email'       => $myts->htmlSpecialChars($email),
-            'submitter'   => $myts->htmlSpecialChars($submitter),
-            'usid'        => $myts->htmlSpecialChars($usid),
-            'town'        => $myts->htmlSpecialChars($town),
-            'country'     => $myts->htmlSpecialChars($country),
-            'contactby'   => $myts->htmlSpecialChars($contactby),
-            'premium'     => $myts->htmlSpecialChars($premium),
-            'valid'       => $myts->htmlSpecialChars($valid),
+            'tel'         => htmlspecialchars($tel),
+            'price'       => htmlspecialchars($price),
+            'typeprice'   => htmlspecialchars($typeprice),
+            'date'        => htmlspecialchars($date),
+            'email'       => htmlspecialchars($email),
+            'submitter'   => htmlspecialchars($submitter),
+            'usid'        => htmlspecialchars($usid),
+            'town'        => htmlspecialchars($town),
+            'country'     => htmlspecialchars($country),
+            'contactby'   => htmlspecialchars($contactby),
+            'premium'     => htmlspecialchars($premium),
+            'valid'       => htmlspecialchars($valid),
             'hits'        => $hits,
-            'rlid'        => $myts->htmlSpecialChars($rlid),
-            'rdate'       => $myts->htmlSpecialChars($rdate),
-            'rsubmitter'  => $myts->htmlSpecialChars($rsubmitter),
-            'message'     => $myts->htmlSpecialChars($message),
-            'remail'      => $myts->htmlSpecialChars($remail),
+            'rlid'        => htmlspecialchars($rlid),
+            'rdate'       => htmlspecialchars($rdate),
+            'rsubmitter'  => htmlspecialchars($rsubmitter),
+            'message'     => htmlspecialchars($message),
+            'remail'      => htmlspecialchars($remail),
             'rrows'       => $rrows,
-            'expires'     => $myts->htmlSpecialChars($date2),
+            'expires'     => htmlspecialchars($date2),
             'view_now'    => $view_now,
             'modify_link' => $modify_link,
             'photo'       => $photo,

@@ -56,7 +56,7 @@ function index()
         echo '' . _AM_ADSLIGHT_TYPE . ' <select name="id_type">';
 
         while (false !== (list($id_type, $nom_type) = $xoopsDB->fetchRow($result2))) {
-            $nom_type = $myts->htmlSpecialChars($nom_type);
+            $nom_type = htmlspecialchars($nom_type);
             echo "<option value=\"$id_type\">$nom_type</option>";
         }
         echo '</select>
@@ -86,7 +86,7 @@ function index()
         echo '' . _AM_ADSLIGHT_TYPE . ' <select name="id_price">';
 
         while (false !== (list($id_price, $nom_price) = $xoopsDB->fetchRow($result3))) {
-            $nom_price = $myts->htmlSpecialChars($nom_price);
+            $nom_price = htmlspecialchars($nom_price);
             echo "<option value=\"$id_price\">$nom_price</option>";
         }
         echo '</select>
@@ -116,7 +116,7 @@ function index()
         echo _AM_ADSLIGHT_TYPE . ' <select name="id_usure">';
 
         while (false !== (list($id_usure, $nom_usure) = $xoopsDB->fetchRow($result8))) {
-            $nom_usure = $myts->htmlSpecialChars($nom_usure);
+            $nom_usure = htmlspecialchars($nom_usure);
             echo "<option value=\"$id_usure\">$nom_usure</option>";
         }
         echo '</select>
@@ -141,7 +141,7 @@ function listingAddType($type)
 
     [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='{$type}'"));
     if ($numrows > 0) {
-        $nom_type = $myts->htmlSpecialChars($numrows); //mb
+        $nom_type = htmlspecialchars($numrows); //mb
         //        require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
@@ -157,7 +157,7 @@ function listingAddType($type)
         echo '</td></tr></table>';
         xoops_cp_footer();
     } else {
-        $type = $myts->htmlSpecialChars($type);
+        $type = htmlspecialchars($type);
 
         if ('' == $type) {
             $type = '! ! ? ! !';
@@ -184,7 +184,7 @@ function listingModType($id_type)
     $result = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type={$id_type}");
     [$id_type, $nom_type] = $xoopsDB->fetchRow($result);
 
-    $nom_type = $myts->htmlSpecialChars($nom_type);
+    $nom_type = htmlspecialchars($nom_type);
 
     echo '<form action="options.php" method="post">';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -219,7 +219,7 @@ function listingModTypeS($id_type, $nom_type)
     global $xoopsDB, $myts;
 
     $id_type  = (int)$id_type;
-    $nom_type = $myts->htmlSpecialChars($nom_type);
+    $nom_type = htmlspecialchars($nom_type);
     $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_type') . " SET nom_type='{$nom_type}' WHERE id_type='{$id_type}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_TYPEMOD);
 }
@@ -249,7 +249,7 @@ function listingAddPrice($type)
 
     [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='{$nom_price}'"));
     if ($numrows > 0) {
-        $nom_price = $myts->htmlSpecialChars($numrows); //mb
+        $nom_price = htmlspecialchars($numrows); //mb
         //        require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
@@ -265,7 +265,7 @@ function listingAddPrice($type)
         echo '</td></tr></table>';
         xoops_cp_footer();
     } else {
-        $nom_price = $myts->htmlSpecialChars($price);
+        $nom_price = htmlspecialchars($price);
         if ('' == $nom_price) {
             $nom_price = '! ! ? ! !';
         }
@@ -293,7 +293,7 @@ function listingModPrice($id_price)
     $result   = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price={$id_price}");
     [$nom_price] = $xoopsDB->fetchRow($result);
 
-    $nom_price = $myts->htmlSpecialChars($nom_price);
+    $nom_price = htmlspecialchars($nom_price);
 
     echo '<form action="options.php" method="post">';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -327,7 +327,7 @@ function listingModPriceS($id_price, $nom_price)
     global $xoopsDB, $myts;
 
     $id_price  = (int)$id_price;
-    $nom_price = $myts->htmlSpecialChars($nom_price);
+    $nom_price = htmlspecialchars($nom_price);
     $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_price') . " SET nom_price='{$nom_price}' WHERE id_price='{$id_price}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEMOD);
 }
@@ -354,11 +354,11 @@ function listingAddUsure($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
-    $type = $myts->htmlSpecialChars($type);
+    $type = htmlspecialchars($type);
 
     [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE nom_usure='{$type}'"));
     if ($numrows > 0) {
-        $nom_usure = $myts->htmlSpecialChars($numrows); //mb
+        $nom_usure = htmlspecialchars($numrows); //mb
 
         //        require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
@@ -375,7 +375,7 @@ function listingAddUsure($type)
         echo '</td></tr></table>';
         xoops_cp_footer();
     } else {
-        $type = $myts->htmlSpecialChars($type);
+        $type = htmlspecialchars($type);
         if ('' == $type) {
             $type = '! ! ? ! !';
         }
@@ -401,7 +401,7 @@ function listingModUsure($id_usure)
     $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure={$id_usure}");
     [$nom_usure] = $xoopsDB->fetchRow($result9);
 
-    $nom_usure = $myts->htmlSpecialChars($nom_usure);
+    $nom_usure = htmlspecialchars($nom_usure);
 
     echo '<form action="options.php" method="post">';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -434,7 +434,7 @@ function listingModUsureS($id_usure, $nom_usure)
 {
     global $xoopsDB,  $myts;
 
-    $nom_usure = $myts->htmlSpecialChars($nom_usure);
+    $nom_usure = htmlspecialchars($nom_usure);
 
     $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_usure') . " SET nom_usure='{$nom_usure}' WHERE id_usure='{$id_usure}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_USUREMOD);

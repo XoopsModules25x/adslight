@@ -44,16 +44,16 @@ function PrintAd($lid)
                               . $xoopsDB->escape($lid));
     [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url] = $xoopsDB->fetchRow($result);
 
-    $title     = $myts->htmlSpecialChars($title);
-    $expire    = $myts->htmlSpecialChars($expire);
-    $type      = Adslight\Utility::getNameType($myts->htmlSpecialChars($type));
+    $title     = htmlspecialchars($title);
+    $expire    = htmlspecialchars($expire);
+    $type      = Adslight\Utility::getNameType(htmlspecialchars($type));
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
-    $tel       = $myts->htmlSpecialChars($tel);
-    $price     = $myts->htmlSpecialChars($price);
-    $typeprice = $myts->htmlSpecialChars($typeprice);
-    $submitter = $myts->htmlSpecialChars($submitter);
-    $town      = $myts->htmlSpecialChars($town);
-    $country   = $myts->htmlSpecialChars($country);
+    $tel       = htmlspecialchars($tel);
+    $price     = htmlspecialchars($price);
+    $typeprice = htmlspecialchars($typeprice);
+    $submitter = htmlspecialchars($submitter);
+    $town      = htmlspecialchars($town);
+    $country   = htmlspecialchars($country);
 
     echo '
     <html>
@@ -86,7 +86,7 @@ function PrintAd($lid)
         echo '<strong>' . _ADSLIGHT_PRICE2 . "</strong> $price " . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . "  - $typeprice<br>";
     }
     if ($photo) {
-        echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/adslight/$url\" width=\"130px\" border=0 ></div>";
+        echo "<tr><td><div style='text-align:left'><img class=\"thumb\" src=\"" . XOOPS_URL . "/uploads/adslight/$url\" width=\"130px\" border=0 ></div>";
     }
     echo '</td>
           </tr>
@@ -108,7 +108,7 @@ function PrintAd($lid)
     </tr>
     </table>';
     echo '<br><br></td></tr></table></td></tr></table>
-    <br><br><div style="text-align:center">
+    <br><br><div style="text-align:center">
     ' . _ADSLIGHT_EXTRANN . ' <strong>' . $xoopsConfig['sitename'] . '</strong></div><br>
     <a href="' . XOOPS_URL . '/modules/adslight/">' . XOOPS_URL . '/modules/adslight/</a>
     </td></tr></table>

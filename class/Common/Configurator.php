@@ -21,7 +21,7 @@ namespace XoopsModules\Adslight\Common;
  * @since       1.05
  */
 
-// require_once dirname(dirname(__DIR__)) . '/include/common.php';
+// require_once dirname(__DIR__, 2) . '/include/common.php';
 
 /**
  * Class Configurator

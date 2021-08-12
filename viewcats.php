@@ -210,7 +210,7 @@ function adsView($cid, $min, $orderby, $show = 0)
                 $totallisting    = Adslight\Utility::getTotalItems($ele['cid'], 1);
                 foreach ($sub_arr as $sub_ele) {
                     if (in_array($sub_ele['cid'], $categories)) {
-                        $chtitle = $myts->htmlSpecialChars($sub_ele['title']);
+                        $chtitle = htmlspecialchars($sub_ele['title']);
 
                         if ($chcount > 5) {
                             $infercategories .= '...';
@@ -229,7 +229,7 @@ function adsView($cid, $min, $orderby, $show = 0)
                 }
 
                 $GLOBALS['xoopsTpl']->append('subcategories', [
-                    'title'           => $myts->htmlSpecialChars($ele['title']),
+                    'title'           => htmlspecialchars($ele['title']),
                     'id'              => $ele['cid'],
                     'infercategories' => $infercategories,
                     'totallisting'    => $totallisting,
@@ -291,12 +291,12 @@ function adsView($cid, $min, $orderby, $show = 0)
 
         while (false !== (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $contactby, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result1))) {
             $a_item = [];
-            $title  = $myts->htmlSpecialChars($title);
-            $type   = $myts->htmlSpecialChars($type);
+            $title  = htmlspecialchars($title);
+            $type   = htmlspecialchars($type);
             //      $price = number_format($price, 2, ',', ' ');
-            $town       = $myts->htmlSpecialChars($town);
-            $country    = $myts->htmlSpecialChars($country);
-            $contactby  = $myts->htmlSpecialChars($contactby);
+            $town       = htmlspecialchars($town);
+            $country    = htmlspecialchars($country);
+            $contactby  = htmlspecialchars($contactby);
             $useroffset = '';
 
             $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
@@ -327,13 +327,13 @@ function adsView($cid, $min, $orderby, $show = 0)
             $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
             [$nom_price] = $xoopsDB->fetchRow($result8);
 
-            $a_item['type']   = $myts->htmlSpecialChars($nom_type);
+            $a_item['type']   = htmlspecialchars($nom_type);
             $a_item['title']  = '<a href="viewads.php?lid=' . $lid . '"><strong>' . $title . '</strong></a>';
             $a_item['status'] = $status;
             if ($price > 0) {
                 //          $a_item['price'] = $price. ' '. $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].'';
                 $a_item['price']           = Adslight\Utility::getMoneyFormat('%.2n', $price);
-                $a_item['price_typeprice'] = $myts->htmlSpecialChars($nom_price);
+                $a_item['price_typeprice'] = htmlspecialchars($nom_price);
             }
             $a_item['date']  = $date;
             $a_item['local'] = '';

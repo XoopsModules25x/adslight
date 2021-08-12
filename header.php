@@ -27,7 +27,7 @@
 use Xmf\Module\Admin;
 use XoopsModules\Adslight\Helper;
 
-include __DIR__ . '/preloads/autoloader.php';
+require __DIR__ . '/preloads/autoloader.php';
 
 // $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 

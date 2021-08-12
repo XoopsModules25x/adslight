@@ -67,7 +67,7 @@
     </tr>
     <tr>
         <td>
-            <{if $show_nav|default:false == true}>
+            <{if $show_nav|default:false === true}>
                 <div align="center">
                     <strong><{$lang_sortby}></strong>
                     <{$lang_title}>

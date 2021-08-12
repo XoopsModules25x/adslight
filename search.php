@@ -161,7 +161,7 @@ switch ($action) {
                         echo '<style type="text/css" media="all">@import url(' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css);</style>';
                         echo '<table width="100%" class="outer"><tr>';
                         echo '<td width="30%">';
-                        echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
+                        echo '<strong>' . htmlspecialchars($results[$i]['type']) . '</strong><br>';
                         if (isset($results[$i]['photo'])
                             && '' !== $results[$i]['photo']) {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
@@ -173,7 +173,7 @@ switch ($action) {
                         }
                         echo '<td width="50%">';
 
-                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
+                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . htmlspecialchars($results[$i]['title']) . '</a></strong><br><br>';
 
                         if (!XOOPS_USE_MULTIBYTES) {
                             if (mb_strlen($results[$i]['desctext']) >= 14) {
@@ -184,7 +184,7 @@ switch ($action) {
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
                         echo '</td><td width="20%">';
-                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
+                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . htmlspecialchars($results[$i]['price']) . '</a>&nbsp;' . htmlspecialchars($results[$i]['typeprice']) . '</a>';
 
                         echo '</td></tr><tr><td>';
                         echo '<small>';
@@ -255,7 +255,7 @@ switch ($action) {
             for ($i = 0; $i < $count; ++$i) {
                 echo '<table width="100%" class="outer"><tr>';
                 echo '<td width="30%">';
-                echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
+                echo '<strong>' . htmlspecialchars($results[$i]['type']) . '</strong><br>';
                 if (isset($results[$i]['photo'])
                     && '' !== $results[$i]['photo']) {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
@@ -267,7 +267,7 @@ switch ($action) {
                 }
                 echo '<td width="50%">';
 
-                echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
+                echo "<strong><a href='" . $results[$i]['link'] . "'>" . htmlspecialchars($results[$i]['title']) . '</a></strong><br><br>';
 
                 if (!XOOPS_USE_MULTIBYTES) {
                     if (mb_strlen($results[$i]['desctext']) >= 14) {
@@ -275,11 +275,11 @@ switch ($action) {
                     }
                 }
 
-                echo '' . $myts->htmlSpecialChars($results[$i]['desctext']) . '';
+                echo '' . htmlspecialchars($results[$i]['desctext']) . '';
 
                 echo '</td><td width="20%">';
                 echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '
-' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
+' . htmlspecialchars($results[$i]['price']) . '</a>&nbsp;' . htmlspecialchars($results[$i]['typeprice']) . '</a>';
 
                 echo '</td></tr><tr><td>';
                 echo '<small>';

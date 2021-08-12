@@ -66,7 +66,7 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
         $myts    = \MyTextSanitizer::getInstance();
         $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE lid={$myrow['lid']} ORDER BY date_added LIMIT 1 ");
         [$url] = $xoopsDB->fetchRow($result2);
-        $url = $myts->htmlSpecialChars($url);
+        $url = htmlspecialchars($url);
 
         $ret[$i]['image']     = 'assets/images/deco/icon.png';
         $ret[$i]['link']      = 'viewads.php?lid=' . $myrow['lid'] . '';

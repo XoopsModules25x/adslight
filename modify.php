@@ -144,12 +144,12 @@ function modAd($lid)
         $calusern = $GLOBALS['xoopsUser']->uid();
         if ($usid == $calusern) {
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _ADSLIGHT_MODIFANN . '</legend><br><br>';
-            $title    = $myts->htmlSpecialChars($title);
-            $status   = $myts->htmlSpecialChars($status);
-            $expire   = $myts->htmlSpecialChars($expire);
-            $type     = $myts->htmlSpecialChars($type);
+            $title    = htmlspecialchars($title);
+            $status   = htmlspecialchars($status);
+            $expire   = htmlspecialchars($expire);
+            $type     = htmlspecialchars($type);
             $desctext = $myts->displayTarea($desctext, 1);
-            $tel      = $myts->htmlSpecialChars($tel);
+            $tel      = htmlspecialchars($tel);
 
             //            $price      = number_format($price, 2, ',', ' ');
 
@@ -160,13 +160,13 @@ function modAd($lid)
             //  For other countries uncomment the below line and comment out the above line
             //      $price = $tempXoopsLocal->number_format($price);
 
-            $typeprice  = $myts->htmlSpecialChars($typeprice);
-            $typeusure  = $myts->htmlSpecialChars($typeusure);
-            $submitter  = $myts->htmlSpecialChars($submitter);
-            $town       = $myts->htmlSpecialChars($town);
-            $country    = $myts->htmlSpecialChars($country);
-            $contactby  = $myts->htmlSpecialChars($contactby);
-            $premium    = $myts->htmlSpecialChars($premium);
+            $typeprice  = htmlspecialchars($typeprice);
+            $typeusure  = htmlspecialchars($typeusure);
+            $submitter  = htmlspecialchars($submitter);
+            $town       = htmlspecialchars($town);
+            $country    = htmlspecialchars($country);
+            $contactby  = htmlspecialchars($contactby);
+            $premium    = htmlspecialchars($premium);
             $useroffset = '';
             if ($GLOBALS['xoopsUser']) {
                 $timezone   = $GLOBALS['xoopsUser']->timezone();

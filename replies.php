@@ -117,10 +117,10 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->assign('delete_reply', "<a href='modify.php?op=DelReply&amp;r_lid=$r_lid'>" . _ADSLIGHT_DELETE_REPLY . '</a>');
         $GLOBALS['xoopsTpl']->append('items', [
             'id'      => $lid,
-            'title'   => $myts->htmlSpecialChars($title),
+            'title'   => htmlspecialchars($title),
             'date'    => $date,
             'message' => $myts->displayTarea($message),
-            'tele'    => $myts->htmlSpecialChars($tele),
+            'tele'    => htmlspecialchars($tele),
         ]);
     }
     $lid = Request::getInt('lid', 0, 'GET');

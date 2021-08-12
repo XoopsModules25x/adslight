@@ -141,12 +141,12 @@ function modifyAds($lid)
     $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}";
     $result = $xoopsDB->query($sql);
     while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result))) {
-        $title    = $myts->htmlSpecialChars($title);
-        $status   = $myts->htmlSpecialChars($status);
-        $expire   = $myts->htmlSpecialChars($expire);
-        $type     = $myts->htmlSpecialChars($type);
+        $title    = htmlspecialchars($title);
+        $status   = htmlspecialchars($status);
+        $expire   = htmlspecialchars($expire);
+        $type     = htmlspecialchars($type);
         $desctext = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel      = $myts->htmlSpecialChars($tel);
+        $tel      = htmlspecialchars($tel);
         //        $price     = number_format($price, 2, ',', ' ');
 
         xoops_load('XoopsLocal');
@@ -156,13 +156,13 @@ function modifyAds($lid)
         //  For other countries uncomment the below line and comment out the above line
         //      $priceFormatted = $tempXoopsLocal->number_format($price);
 
-        $typeprice = $myts->htmlSpecialChars($typeprice);
-        $typeusure = $myts->htmlSpecialChars($typeusure);
-        $submitter = $myts->htmlSpecialChars($submitter);
-        $town      = $myts->htmlSpecialChars($town);
-        $country   = $myts->htmlSpecialChars($country);
-        $contactby = $myts->htmlSpecialChars($contactby);
-        $premium   = $myts->htmlSpecialChars($premium);
+        $typeprice = htmlspecialchars($typeprice);
+        $typeusure = htmlspecialchars($typeusure);
+        $submitter = htmlspecialchars($submitter);
+        $town      = htmlspecialchars($town);
+        $country   = htmlspecialchars($country);
+        $contactby = htmlspecialchars($contactby);
+        $premium   = htmlspecialchars($premium);
 
         $date2 = formatTimestamp($date, 's');
 
@@ -336,25 +336,25 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
 
     $lid   = (int)$lid;
     $cat   = (int)$cat;
-    $title = $myts->htmlSpecialChars($title);
-    //    $status    = $myts->htmlSpecialChars($status);
+    $title = htmlspecialchars($title);
+    //    $status    = htmlspecialchars($status);
     $status    = (int)$status;
-    $expire    = $myts->htmlSpecialChars($expire);
-    $type      = $myts->htmlSpecialChars($type);
+    $expire    = htmlspecialchars($expire);
+    $type      = htmlspecialchars($type);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-    $tel       = $myts->htmlSpecialChars($tel);
+    $tel       = htmlspecialchars($tel);
     $price     = str_replace([' '], '', $price);
-    $typeprice = $myts->htmlSpecialChars($typeprice);
-    $typeusure = $myts->htmlSpecialChars($typeusure);
+    $typeprice = htmlspecialchars($typeprice);
+    $typeusure = htmlspecialchars($typeusure);
     $date      = (int)$date;
-    $email     = $myts->htmlSpecialChars($email);
-    $submitter = $myts->htmlSpecialChars($submitter);
-    $town      = $myts->htmlSpecialChars($town);
-    $country   = $myts->htmlSpecialChars($country);
-    $contactby = $myts->htmlSpecialChars($contactby);
-    $premium   = $myts->htmlSpecialChars($premium);
-    $valid     = $myts->htmlSpecialChars($valid);
-    $photo     = $myts->htmlSpecialChars($photo);
+    $email     = htmlspecialchars($email);
+    $submitter = htmlspecialchars($submitter);
+    $town      = htmlspecialchars($town);
+    $country   = htmlspecialchars($country);
+    $contactby = htmlspecialchars($contactby);
+    $premium   = htmlspecialchars($premium);
+    $valid     = htmlspecialchars($valid);
+    $photo     = htmlspecialchars($photo);
 
     $sql = 'UPDATE '
            . $xoopsDB->prefix('adslight_listing')

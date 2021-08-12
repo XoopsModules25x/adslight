@@ -55,20 +55,20 @@ function adslight_b2_show($options)
 
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $a_item = [];
-        $title  = $myts->htmlSpecialChars($myrow['title']);
-        //        $status    = $myts->htmlSpecialChars($myrow['status']);
+        $title  = htmlspecialchars($myrow['title']);
+        //        $status    = htmlspecialchars($myrow['status']);
         $status    = (int)$myrow['status'];
-        $type      = $myts->htmlSpecialChars($myrow['type']);
-        $price     = $myts->htmlSpecialChars($myrow['price']);
-        $typeprice = $myts->htmlSpecialChars($myrow['typeprice']);
-        $town      = $myts->htmlSpecialChars($myrow['town']);
-        $country   = $myts->htmlSpecialChars($myrow['country']);
-        $usid      = $myts->htmlSpecialChars($myrow['usid']);
-        $hits      = $myts->htmlSpecialChars($myrow['hits']);
+        $type      = htmlspecialchars($myrow['type']);
+        $price     = htmlspecialchars($myrow['price']);
+        $typeprice = htmlspecialchars($myrow['typeprice']);
+        $town      = htmlspecialchars($myrow['town']);
+        $country   = htmlspecialchars($myrow['country']);
+        $usid      = htmlspecialchars($myrow['usid']);
+        $hits      = htmlspecialchars($myrow['hits']);
 
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
-                $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
+                $title = htmlspecialchars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
             }
         }
 

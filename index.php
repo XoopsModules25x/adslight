@@ -144,10 +144,10 @@ function index()
     $count   = 1;
     $content = '';
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-        $title = $myts->htmlSpecialChars($myrow['title']);
+        $title = htmlspecialchars($myrow['title']);
 
         if ($myrow['img'] && 'http://' !== $myrow['img']) {
-            $cat_img = $myts->htmlSpecialChars($myrow['img']);
+            $cat_img = htmlspecialchars($myrow['img']);
             $img     = "<a href=\"viewcats.php?cid={$myrow['cid']}\"><img src=\"" . XOOPS_URL . "/modules/adslight/assets/images/img_cat/{$cat_img}\" align=\"middle\" alt=\"{$title}\"></a>";
         } else {
             $img = '';
@@ -165,7 +165,7 @@ function index()
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_souscat']) {
                 foreach ($arr as $ele) {
                     if (in_array($ele['cid'], $categories)) {
-                        $chtitle = $myts->htmlSpecialChars($ele['title']);
+                        $chtitle = htmlspecialchars($ele['title']);
                         if ($chcount > $GLOBALS['xoopsModuleConfig']['adslight_nbsouscat']) {
                             $subcategories .= "<a href=\"viewcats.php?cid={$myrow['cid']}\">" . _ADSLIGHT_CATPLUS . '</a>';
                             break;
@@ -183,7 +183,7 @@ function index()
             $GLOBALS['xoopsTpl']->append('categories', [
                 'image'         => $img,
                 'id'            => $myrow['cid'],
-                'title'         => $myts->htmlSpecialChars($myrow['title']),
+                'title'         => htmlspecialchars($myrow['title']),
                 'new'           => categorynewgraphic($myrow['cid']),
                 'subcategories' => $subcategories,
                 'totallisting'  => $totallisting,
@@ -233,12 +233,12 @@ function index()
             $rank = 1;
 
             while (false !== (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result))) {
-                $title = $myts->htmlSpecialChars($title);
-                $type  = $myts->htmlSpecialChars($type);
+                $title = htmlspecialchars($title);
+                $type  = htmlspecialchars($type);
                 //                $price     = number_format($price, 2, ',', ' ');
-                $town      = $myts->htmlSpecialChars($town);
-                $country   = $myts->htmlSpecialChars($country);
-                $premium   = $myts->htmlSpecialChars($premium);
+                $town      = htmlspecialchars($town);
+                $country   = htmlspecialchars($country);
+                $premium   = htmlspecialchars($premium);
                 $a_item    = [];
                 $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
                 $startdate = (time() - (86400 * $newcount));
@@ -263,7 +263,7 @@ function index()
                 $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
                 [$nom_type] = $xoopsDB->fetchRow($result7);
 
-                $a_item['type']  = $myts->htmlSpecialChars($nom_type);
+                $a_item['type']  = htmlspecialchars($nom_type);
                 $a_item['title'] = '<a href="' . XOOPS_URL . "/modules/adslight/viewads.php?lid={$lid}\"><strong>{$title}</strong></a>";
 
                 $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
@@ -271,10 +271,10 @@ function index()
 
                 if ($price > 0) {
                     $a_item['price']           = $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '';
-                    $a_item['price_typeprice'] = $myts->htmlSpecialChars($nom_price);
+                    $a_item['price_typeprice'] = htmlspecialchars($nom_price);
                 } else {
                     $a_item['price']           = '';
-                    $a_item['price_typeprice'] = $myts->htmlSpecialChars($nom_price);
+                    $a_item['price_typeprice'] = htmlspecialchars($nom_price);
                 }
                 $a_item['premium'] = $premium;
                 $a_item['date']    = $date;

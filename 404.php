@@ -21,11 +21,11 @@
 */
 
 if (file_exists(__DIR__ . '/mainfile.php')) {
-    include_once __DIR__ . '/mainfile.php';
+    require_once __DIR__ . '/mainfile.php';
 } elseif (file_exists(__DIR__ . '/../mainfile.php')) {
-    include_once dirname(__DIR__) . '/mainfile.php';
+    require_once dirname(__DIR__) . '/mainfile.php';
 } else {
-    include_once dirname(__DIR__, 2) . '/mainfile.php';
+    require_once dirname(__DIR__, 2) . '/mainfile.php';
 }
 require_once XOOPS_ROOT_PATH . '/header.php';
 
@@ -36,4 +36,4 @@ $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
 echo _MN_ADSLIGHT_ERROR404_TEXT;
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -45,12 +45,12 @@ function adslight_show($options)
 
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $a_item = [];
-        $title  = $myts->htmlSpecialChars($myrow['title']);
-        $type   = $myts->htmlSpecialChars($myrow['type']);
+        $title  = htmlspecialchars($myrow['title']);
+        $type   = htmlspecialchars($myrow['type']);
 
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
-                $title = $myts->htmlSpecialChars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
+                $title = htmlspecialchars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
             }
         }
 
