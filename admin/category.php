@@ -315,7 +315,7 @@ function adsDelCat($cid, $ok = 0)
         /** @var \XoopsMySQLDatabase $xoopsDB */
         $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid} OR pid={$cid}");
-        $xoopsDB->queryf('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE cid={$cid}");
+        $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE cid={$cid}");
 
         redirect_header('map.php', 3, _AM_ADSLIGHT_CATDEL);
     } else {
