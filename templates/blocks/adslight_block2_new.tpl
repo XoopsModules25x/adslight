@@ -13,7 +13,7 @@
             <td align="left"><{if $item.photo}><{$item.photo}><{else}><{$item.no_photo}><{/if}></td>
             <td align="left"><strong><{$item.type}></strong><br><{$item.link}><{if $item.sold}><{$item.sold}><{/if}>
             </td>
-            <td><{if $item.price!=""}><{$item.price_symbol}><{$item.price}>&nbsp;<{$item.typeprice}><{else}>&nbsp;<{/if}></td>
+            <td><{if $item.price|default:'' !=""}><{$item.price}>&nbsp;<{$item.typeprice}><{else}>&nbsp;<{/if}></td>
             <td><{$item.date}></td>
             <td><{$item.town}></td>
             <td align="center"><{$item.hits}></td>

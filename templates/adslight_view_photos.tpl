@@ -18,7 +18,7 @@
     <{/if}>
     <h2><{$lang_nopicyet|default:''}></h2>
     <ul id="album_photos">
-        <{section name=i loop=$pics_array}>
+        <{section name=i loop=$pics_array|default:''}>
             <div class="photo_in_album">
                 <h3><{$pics_array[i].desc}></h3><{if ($isOwner)}>
                 <table border="0" cellspacing="2" cellpadding="0">
