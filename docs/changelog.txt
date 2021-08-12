@@ -1,5 +1,23 @@
 <h5>2.3 RC5   [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
 <hr>
+- Nested 'dirname'
+- Min PHP 7.2
+- Case mismatch in method call or class usage
+- Replace qualifier with an import
+- Short form of type keywords
+- Unnecessary double quotes
+- PhpDoc
+- Unnecessary type casting
+- Inverted 'if-else' constructs
+- Ternary operator simplified
+- Unnecessary boolean check
+- Low performing filesystem operations
+- Pass parameter by reference
+- Short list syntax
+- Unqualified function/constant reference
+- Insecure 'htmlspecialchars(...)'
+- UTF-8
+
 
 <h5>2.3 RC4   [2021-08-12]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
 <hr>
