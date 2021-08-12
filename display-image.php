@@ -38,7 +38,7 @@ $result      = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_p
 $recordexist = $xoopsDB->getRowsNum($result);
 
 if ($recordexist) {
-    list($url) = $xoopsDB->fetchRow($result);
+    [$url] = $xoopsDB->fetchRow($result);
     echo "<br><br><div style='text-align:center'><img class=\"thumb\" src=\"photo/{$url}\" border=0></div>";
 }
 

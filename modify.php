@@ -47,7 +47,7 @@ function listingDel($lid, $ok)
     global $xoopsDB;
 
     $result = $xoopsDB->query('SELECT usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
-    list($usid) = $xoopsDB->fetchRow($result);
+    [$usid] = $xoopsDB->fetchRow($result);
 
     $result1 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE lid=' . $xoopsDB->escape($lid));
 
@@ -95,7 +95,7 @@ function delReply($r_lid, $ok)
     global $xoopsDB;
 
     $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_replies') . ' r ON l.lid=r.lid  WHERE r.r_lid=' . $xoopsDB->escape($r_lid));
-    list($usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid) = $xoopsDB->fetchRow($result);
+    [$usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid] = $xoopsDB->fetchRow($result);
 
     if ($GLOBALS['xoopsUser']) {
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
@@ -129,7 +129,7 @@ function modAd($lid)
 
     $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid);
     $result = $xoopsDB->query($sql);
-    list($lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid) = $xoopsDB->fetchRow($result);
+    [$lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid] = $xoopsDB->fetchRow($result);
 
     $categories = Adslight\Utility::getMyItemIds('adslight_submit');
     if (is_array($categories) && count($categories) > 0) {

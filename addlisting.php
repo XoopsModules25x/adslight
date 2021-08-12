@@ -253,7 +253,7 @@ if (Request::hasVar('submit', 'POST')) {
 
         $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid}");
 
-        list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
+        [$cat_title, $cat_moderate] = $xoopsDB->fetchRow($category);
         $form->addElement(new \XoopsFormLabel(_ADSLIGHT_CAT3, "<b>{$cat_title}</b>"));
         $form->addElement(new \XoopsFormHidden('cid', $cid), true);
 

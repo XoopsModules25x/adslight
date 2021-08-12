@@ -39,7 +39,7 @@ function ReportAbuse($lid)
     $lid    = (int)$lid;
     $idd    = $idde = $iddee = '';
     $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
-    list($lid, $title, $type) = $xoopsDB->fetchRow($result);
+    [$lid, $title, $type] = $xoopsDB->fetchRow($result);
 
     $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
@@ -106,7 +106,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
 
     $lid    = (int)$lid;
     $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
-    list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
+    [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo] = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
     $expire    = $myts->addSlashes($expire);

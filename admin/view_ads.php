@@ -128,10 +128,10 @@ function index()
             }
 
             $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
-            list($nom_type) = $xoopsDB->fetchRow($result7);
+            [$nom_type] = $xoopsDB->fetchRow($result7);
 
             $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
-            list($nom_price) = $xoopsDB->fetchRow($result8);
+            [$nom_price] = $xoopsDB->fetchRow($result8);
 
             echo '<form action="view_ads.php" method="post">';
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -209,7 +209,7 @@ function indexView($lid = null)
         echo "<table class='width100' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td class='top'>";
         echo '<b>' . _AM_ADSLIGHT_WAIT . '</b><br><br>';
 
-        list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo) = $xoopsDB->fetchRow($result);
+        [$lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo] = $xoopsDB->fetchRow($result);
 
         $lid      = (int)$lid;
         $cid      = (int)$cid;

@@ -62,7 +62,7 @@ if (!empty($_POST['submit'])) {
         // Check if ANONYMOUS user is trying to vote more than once per day.
         $yesterday = (time() - (86400 * $anonwaitdays));
         $result    = $xoopsDB->query('SELECT count(*) FROM ' . $xoopsDB->prefix('adslight_item_votedata') . ' WHERE lid=' . $xoopsDB->escape($lid) . " AND ratinguser=0 AND ratinghostname = '$ip' AND ratingtimestamp > $yesterday");
-        list($anonvotecount) = $xoopsDB->fetchRow($result);
+        [$anonvotecount] = $xoopsDB->fetchRow($result);
         if ($anonvotecount > 0) {
             redirect_header('viewads.php?lid=' . $lid . '', 4, constant('_ADSLIGHT_VOTEONCE2'));
         }
@@ -93,7 +93,7 @@ if (!empty($_POST['submit'])) {
     require_once XOOPS_ROOT_PATH . '/header.php';
     $lid    = Request::getInt('lid', 0, 'GET');
     $result = $xoopsDB->query('SELECT lid, title FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
-    list($lid, $title) = $xoopsDB->fetchRow($result);
+    [$lid, $title] = $xoopsDB->fetchRow($result);
     $GLOBALS['xoopsTpl']->assign('link', [
         'lid'   => $lid,
         'title' => $myts->htmlSpecialChars($title),

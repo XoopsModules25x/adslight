@@ -24,7 +24,7 @@ class ClassifiedObjectTree extends \XoopsObjectTree
         if (0 == $xoopsDB->getRowsNum($result)) {
             return $path;
         }
-        list($parentid) = $xoopsDB->fetchRow($result);
+        [$parentid] = $xoopsDB->fetchRow($result);
         $path = '/' . $sel_id . $path . '';
         if (0 == $parentid) {
             return $path;
@@ -53,7 +53,7 @@ class ClassifiedObjectTree extends \XoopsObjectTree
         if (0 == $xoopsDB->getRowsNum($result)) {
             return $path;
         }
-        list($parentid, $name) = $xoopsDB->fetchRow($result);
+        [$parentid, $name] = $xoopsDB->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
         $path = "<a href='" . $funcURL . '&amp;' . $this->myId . '=' . $sel_id . "'>" . $name . '</a>' . $path . '';

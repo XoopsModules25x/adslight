@@ -53,7 +53,7 @@ $orderby = 'date Desc';
 
 $GLOBALS['xoopsTpl']->assign('lid', $lid);
 $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid=' . $xoopsDB->escape($lid));
-list($trow) = $xoopsDB->fetchRow($countresult);
+[$trow] = $xoopsDB->fetchRow($countresult);
 $trows   = $trow;
 $pagenav = '';
 

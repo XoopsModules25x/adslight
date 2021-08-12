@@ -94,7 +94,7 @@ function index()
     }
 
     // Modify Annonces
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing')));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing')));
     if ($numrows > 0) {
         echo "<table width='100%' border='0' class='outer'><tr class='bg4'><td valign='top'>";
         echo '<form method="post" action="modify_ads.php">'

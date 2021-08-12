@@ -37,7 +37,7 @@ function SendFriend($lid)
     $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
-    list($lid, $title, $type) = $xoopsDB->fetchRow($result);
+    [$lid, $title, $type] = $xoopsDB->fetchRow($result);
 
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>
         <strong>" . _ADSLIGHT_SENDTO . " $lid \"<strong>$type : $title</strong>\" " . _ADSLIGHT_FRIEND . "<br><br>
@@ -102,7 +102,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     }
 
     $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
-    list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
+    [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo] = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
     $expire    = $myts->addSlashes($expire);

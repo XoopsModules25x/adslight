@@ -42,7 +42,7 @@ function PrintAd($lid)
                               . $xoopsDB->prefix('adslight_pictures')
                               . ' p ON l.lid=p.lid WHERE l.lid='
                               . $xoopsDB->escape($lid));
-    list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($result);
+    [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url] = $xoopsDB->fetchRow($result);
 
     $title     = $myts->htmlSpecialChars($title);
     $expire    = $myts->htmlSpecialChars($expire);

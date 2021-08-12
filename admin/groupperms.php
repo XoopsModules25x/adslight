@@ -32,7 +32,7 @@ $adminObject->displayNavigation(basename(__FILE__));
 echo '<br><br>';
 global $xoopsDB;
 $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories'));
-list($cat_row) = $xoopsDB->fetchRow($countresult);
+[$cat_row] = $xoopsDB->fetchRow($countresult);
 $cat_rows = $cat_row;
 
 if ('0' == $cat_rows) {

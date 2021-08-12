@@ -46,7 +46,7 @@ if (\Xmf\Request::hasVar('action', 'POST')) {
 */
 $sql = 'SELECT conf_id FROM ' . $xoopsDB->prefix('config') . ' WHERE conf_name = "theme_set"';
 $res = $xoopsDB->query($sql);
-list($conf_id) = $xoopsDB->fetchRow($res);
+[$conf_id] = $xoopsDB->fetchRow($res);
 /** @var \XoopsModuleHandler $moduleHandler */
 $moduleHandler = xoops_getHandler('module');
 $module        = $moduleHandler->getByDirname('system');

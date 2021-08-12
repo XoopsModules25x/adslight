@@ -48,7 +48,7 @@ function index()
     echo '<br>';
 
     // Modifier un type
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type')));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type')));
     if ($numrows > 0) {
         echo '<form method="post" action="options.php">
              <b>' . _AM_ADSLIGHT_MODTYPE . '</b></font><br><br>';
@@ -78,7 +78,7 @@ function index()
     echo '<br>';
 
     // Modifier un type de prix
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_price')));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_price')));
     if ($numrows > 0) {
         echo '<form method="post" action="options.php">
             <b>' . _AM_ADSLIGHT_MODPRICE . '</b></font><br><br>';
@@ -108,7 +108,7 @@ function index()
     echo '<br>';
 
     // Modifier un type d'usure
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure')));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure')));
     if ($numrows > 0) {
         echo '<form method="post" action="options.php">
             <b>' . _AM_ADSLIGHT_MODUSURE . '</b></font><br><br>';
@@ -139,7 +139,7 @@ function listingAddType($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='{$type}'"));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='{$type}'"));
     if ($numrows > 0) {
         $nom_type = $myts->htmlSpecialChars($numrows); //mb
         //        require_once __DIR__ . '/admin_header.php';
@@ -182,7 +182,7 @@ function listingModType($id_type)
     //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODTYPE . '</legend>';
     $result = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type={$id_type}");
-    list($id_type, $nom_type) = $xoopsDB->fetchRow($result);
+    [$id_type, $nom_type] = $xoopsDB->fetchRow($result);
 
     $nom_type = $myts->htmlSpecialChars($nom_type);
 
@@ -247,7 +247,7 @@ function listingAddPrice($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='{$nom_price}'"));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='{$nom_price}'"));
     if ($numrows > 0) {
         $nom_price = $myts->htmlSpecialChars($numrows); //mb
         //        require_once __DIR__ . '/admin_header.php';
@@ -291,7 +291,7 @@ function listingModPrice($id_price)
     echo '<b>' . _AM_ADSLIGHT_MODPRICE . '</b><br><br>';
     $id_price = (int)$id_price;
     $result   = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price={$id_price}");
-    list($nom_price) = $xoopsDB->fetchRow($result);
+    [$nom_price] = $xoopsDB->fetchRow($result);
 
     $nom_price = $myts->htmlSpecialChars($nom_price);
 
@@ -356,7 +356,7 @@ function listingAddUsure($type)
 
     $type = $myts->htmlSpecialChars($type);
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE nom_usure='{$type}'"));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE nom_usure='{$type}'"));
     if ($numrows > 0) {
         $nom_usure = $myts->htmlSpecialChars($numrows); //mb
 
@@ -399,7 +399,7 @@ function listingModUsure($id_usure)
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODUSURE . '</legend>';
     echo '<b>' . _AM_ADSLIGHT_MODUSURE . '</b><br><br>';
     $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure={$id_usure}");
-    list($nom_usure) = $xoopsDB->fetchRow($result9);
+    [$nom_usure] = $xoopsDB->fetchRow($result9);
 
     $nom_usure = $myts->htmlSpecialChars($nom_usure);
 
