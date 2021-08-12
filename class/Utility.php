@@ -45,11 +45,9 @@ $myts = \MyTextSanitizer::getInstance();
  */
 class Utility
 {
-    use Common\VersionChecks; //checkVerXoops, checkVerPhp Traits
-
-    use Common\ServerStats; // getServerStats Trait
-
-    use Common\FilesManagement; // Files Management Trait
+    use Common\VersionChecks;  //checkVerXoops, checkVerPhp Traits
+    use Common\ServerStats;    // getServerStats Trait
+    use Common\FilesManagement;    // Files Management Trait
 
     //--------------- Custom module methods -----------------------------
 
@@ -99,7 +97,7 @@ class Utility
                     $tags['SUBMITTER']  = $submitter;
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail = \getMailer();
+                    $mail               = \getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expires.tpl');
                     $mail->useMail();
@@ -161,7 +159,7 @@ class Utility
                     $tags['TEAM']       = '' . \_ADSLIGHT_TEAM . '';
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail = \getMailer();
+                    $mail               = \getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expired.tpl');
                     $mail->useMail();
@@ -564,8 +562,8 @@ class Utility
     {
         global $xoopsDB;
 
-        $xoopsTree   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
-        $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
+        $xoopsTree = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+        $jump      = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
         \ob_start();
         $xoopsTree->makeMySelBox('title', 'title', 0, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
         $block['selectbox'] = \ob_get_clean();
@@ -648,7 +646,7 @@ class Utility
         //JJDai
         // setlocale(LC_ALL, 'en_US');
         //setlocale(LC_ALL, 'fr_FR');
-//$symb = $helper->getConfig('adslight_currency_symbol');
+        //$symb = $helper->getConfig('adslight_currency_symbol');
 
         $locale = \localeconv();
         \preg_match_all($regex, $format, $matches, \PREG_SET_ORDER);
@@ -746,7 +744,7 @@ class Utility
 
         $result = true;
         //        $xoopsModule = sf_getModuleInfo();
-//        $moduleId = $helper->getModule()->getVar('mid');
+        //        $moduleId = $helper->getModule()->getVar('mid');
         $moduleId = $xoopsModule->getVar('mid');
 
         $grouppermHandler = \xoops_getHandler('groupperm');
@@ -778,7 +776,7 @@ class Utility
 
         $select_view   = '';
         $moduleDirName = \basename(\dirname(__DIR__));
-        $helper = Adslight\Helper::getInstance();
+        $helper        = Adslight\Helper::getInstance();
 
         $pathModIcon16 = XOOPS_URL . '/modules/' . $moduleDirName . '/' . $helper->getModule()->getInfo('modicons16');
 
@@ -869,7 +867,7 @@ class Utility
         }
 
         $row      = $GLOBALS['xoopsDB']->fetchBoth($result);
-        $enumList = \explode(',', \str_replace("'", '', \substr($row['COLUMN_TYPE'], 5, - 6)));
+        $enumList = \explode(',', \str_replace("'", '', \substr($row['COLUMN_TYPE'], 5, -6)));
         return $enumList;
     }
 
@@ -898,7 +896,6 @@ class Utility
         return $new_id;
     }
 
-
     /**
      * truncateHtml can truncate a string up to a number of characters while preserving whole words and HTML tags
      * www.gsdesign.ro/blog/cut-html-string-without-breaking-the-tags
@@ -922,7 +919,7 @@ class Utility
             // splits all html-tags to scanable lines
             \preg_match_all('/(<.+?' . '>)?([^<>]*)/s', $text, $lines, \PREG_SET_ORDER);
             $total_length = \strlen($ending);
-            $openTags    = [];
+            $openTags     = [];
             $truncate     = '';
             foreach ($lines as $line_matchings) {
                 // if there is any html-tag in this line, handle it and add it (uncounted) to the output
@@ -1004,78 +1001,103 @@ class Utility
         return $truncate;
     }
 
-/***********************************************************************
- * $fldVersion : dossier version de fancybox
-***********************************************************************/
-public static function load_lib_js(){   
-global $xoTheme, $xoopsModuleConfig;
+    /***********************************************************************
+     * $fldVersion : dossier version de fancybox
+     ***********************************************************************/
+    public static function load_lib_js()
+    {
+        global $xoTheme, $xoopsModuleConfig;
+
+        $fld = XOOPS_URL . '/modules/adslight/' . 'assets/';
+
+        if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
+            // $xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
+            // $xoTheme->addStyleSheet(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
+
+            $xoTheme->addScript($fld . '/js/lightbox/js/lightbox.js');
+            $xoTheme->addStyleSheet($fld . '/js/lightbox/css/lightbox.css');
+        } else {
+            //$xoTheme->addStyleSheet($fld . "/css/galery.css" type="text/css" media="screen");
+
+        }
+        /*
+                    if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
+                        $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
+        <script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="assets/lightbox/js/jquery-ui-1.8.18.custom.min"></script>
+        <script type="text/javascript" src="assets/lightbox/js/jquery.smooth-scroll.min.js"></script>
+        <script type="text/javascript" src="assets/lightbox/js/lightbox.js"></script>
+
+        <link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >
+        <link rel="stylesheet" type="text/css" media="screen" href="assets/lightbox/css/lightbox.css"></link>';
+                    } else {
+                        $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
+        <link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
+                    }
 
 
-$fld = XOOPS_URL . '/modules/adslight/' . 'assets/';
-    
-    if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
-// $xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
-// $xoTheme->addStyleSheet(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');    
-    
-	       $xoTheme->addScript($fld . '/js/lightbox/js/lightbox.js');
-	       $xoTheme->addStyleSheet($fld . '/js/lightbox/css/lightbox.css');
+          $fldVersion = "fancybox_215";
+          $fbFolder =  XOOPS_URL . "/Frameworks/" . $fldVersion;
+          //$modFolder = "modules/" . $module_dirname;
+          $modFolder = "modules/" . 'mediatheque';
+
+            //$xoTheme->addStyleSheet($fModule . '/css/style.css');
+            $xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
+
+          //to-do : a remplacer par  jquery.mousewheel-3.0.6.pack.js
+          $xoTheme->addScript($fbFolder . "/jquery.mousewheel-3.0.4.pack.js");
+
+            $xoTheme->addStyleSheet($fbFolder . "/jquery.fancybox.css?v=2.1.5");
+            $xoTheme->addScript($fbFolder . "/jquery.fancybox.js?v=2.1.5");
+
+        //-----------------------------------------
+        //  OPTIONAL
+            $xoTheme->addStyleSheet($fbFolder . "/helpers/jquery.fancybox-buttons.css?v=1.0.5");
+            $xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-buttons.js?v=1.0.5");
+
+            $xoTheme->addStyleSheet($fbFolder . "/helpers/jquery.fancybox-thumbs.css?v=1.0.7");
+            $xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-thumbs.js?v=1.0.7");
+
+            $xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-media.js?v=1.0.6");
+
+        //-----------------------------------------
 
 
-    } else {
-	       //$xoTheme->addStyleSheet($fld . "/css/galery.css" type="text/css" media="screen");    
 
+            $xoTheme->addScript($modFolder . "/js/media.fancybox.js");
+
+        */
     }
 
-/*
-            if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
-                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
-<script type="text/javascript" src="assets/lightbox/js/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="assets/lightbox/js/jquery-ui-1.8.18.custom.min"></script>
-<script type="text/javascript" src="assets/lightbox/js/jquery.smooth-scroll.min.js"></script>
-<script type="text/javascript" src="assets/lightbox/js/lightbox.js"></script>
+    /**
+     * Currency Format
+     *
+     * @param float $number
+     * @param string $currency The 3-letter ISO 4217 currency code indicating the currency to use.
+     * @param string $localeCode (local language code, e.g. en_US)
+     * @return string|false formatted currency value
+     */
+    public static function formatCurrency($number, $currency='USD', $localeCode='')
+    {
+        $localeCode?? locale_get_default();
+        $fmt = new \NumberFormatter( $localeCode, \NumberFormatter::CURRENCY );
+        return $fmt->formatCurrency($number, $currency);;
+    }
 
-<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >
-<link rel="stylesheet" type="text/css" media="screen" href="assets/lightbox/css/lightbox.css"></link>';
-            } else {
-                $header_lightbox = '<link rel="stylesheet" href="' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css" type="text/css" media="all" >
-<link rel="stylesheet" href="assets/css/galery.css" type="text/css" media="screen" >';
-            }
-
-
-  $fldVersion = "fancybox_215";
-  $fbFolder =  XOOPS_URL . "/Frameworks/" . $fldVersion;     
-  //$modFolder = "modules/" . $module_dirname;
-  $modFolder = "modules/" . 'mediatheque';
-
-	//$xoTheme->addStyleSheet($fModule . '/css/style.css');
-	$xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/jquery.js');
-	
-  //to-do : a remplacer par  jquery.mousewheel-3.0.6.pack.js
-  $xoTheme->addScript($fbFolder . "/jquery.mousewheel-3.0.4.pack.js");
-
-	$xoTheme->addStyleSheet($fbFolder . "/jquery.fancybox.css?v=2.1.5");
-	$xoTheme->addScript($fbFolder . "/jquery.fancybox.js?v=2.1.5");
-
-//-----------------------------------------
-//  OPTIONAL
-	$xoTheme->addStyleSheet($fbFolder . "/helpers/jquery.fancybox-buttons.css?v=1.0.5");
-	$xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-buttons.js?v=1.0.5");
-
-	$xoTheme->addStyleSheet($fbFolder . "/helpers/jquery.fancybox-thumbs.css?v=1.0.7");
-	$xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-thumbs.js?v=1.0.7");
-
-	$xoTheme->addScript($fbFolder . "/helpers/jquery.fancybox-media.js?v=1.0.6");
-
-//-----------------------------------------
-
-
-
-	$xoTheme->addScript($modFolder . "/js/media.fancybox.js");
-  
-*/    
-
-
-}
-
-
+    /**
+     * Currency Format (temporary)
+     *
+     * @param float $number
+     * @param string $currency The 3-letter ISO 4217 currency code indicating the currency to use.
+     * @param string $currencySymbol
+     * @param int $currencyPosition
+     * @return string formatted currency value
+     */
+    public static function formatCurrencyTemp($number, $currency='USD', $currencySymbol='$', $currencyPosition=0)
+    {
+        $currentDefault = locale_get_default();
+        $fmt = new \NumberFormatter( $currentDefault, \NumberFormatter::DECIMAL  );
+        $formattedNumber =  $fmt->format($number);
+        return 1 === $currencyPosition ? $currencySymbol . $formattedNumber : $formattedNumber . ' ' . $currencySymbol;
+    }
 }
