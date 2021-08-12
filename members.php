@@ -58,7 +58,7 @@ $permit = (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $gro
 
 $GLOBALS['xoopsTpl']->assign('permit', $permit);
 $isadmin = (($GLOBALS['xoopsUser'] instanceof \XoopsUser)
-            && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid())) ? true : false;
+            && $GLOBALS['xoopsUser']->isAdmin($xoopsModule->mid()));
 
 $GLOBALS['xoopsTpl']->assign('add_from', _ADSLIGHT_ADDFROM . ' ' . $xoopsConfig['sitename']);
 $GLOBALS['xoopsTpl']->assign('add_from_title', _ADSLIGHT_ADDFROM);

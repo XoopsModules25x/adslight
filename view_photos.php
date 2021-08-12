@@ -54,7 +54,7 @@ if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
      * Is the user the owner of the album ?
      */
 
-    $isOwner = ($GLOBALS['xoopsUser']->getVar('uid') == $uid) ? true : false;
+    $isOwner = $GLOBALS['xoopsUser']->getVar('uid') == $uid;
 
     $module_id = $xoopsModule->getVar('mid');
 
