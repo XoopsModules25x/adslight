@@ -124,13 +124,13 @@ class Utility
                         $destination  = XOOPS_ROOT_PATH . '/uploads/adslight';
                         $destination2 = XOOPS_ROOT_PATH . '/uploads/adslight/thumbs';
                         $destination3 = XOOPS_ROOT_PATH . '/uploads/adslight/midsize';
-                        if (file_exists("$destination/$url")) {
+                        if (is_file("$destination/$url")) {
                             unlink("$destination/$url");
                         }
-                        if (file_exists("$destination2/thumb_$url")) {
+                        if (is_file("$destination2/thumb_$url")) {
                             unlink("$destination2/thumb_$url");
                         }
-                        if (file_exists("$destination3/resized_$url")) {
+                        if (is_file("$destination3/resized_$url")) {
                             unlink("$destination3/resized_$url");
                         }
                     }

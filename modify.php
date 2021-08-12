@@ -58,15 +58,15 @@ function listingDel($lid, $ok)
                 while (false !== (list($purl) = $xoopsDB->fetchRow($result1))) {
                     if ($purl) {
                         $destination = XOOPS_ROOT_PATH . '/uploads/adslight';
-                        if (file_exists("$destination/$purl")) {
+                        if (is_file("$destination/$purl")) {
                             unlink("$destination/$purl");
                         }
                         $destination2 = XOOPS_ROOT_PATH . '/uploads/adslight/thumbs';
-                        if (file_exists("$destination2/thumb_$purl")) {
+                        if (is_file("$destination2/thumb_$purl")) {
                             unlink("$destination2/thumb_$purl");
                         }
                         $destination3 = XOOPS_ROOT_PATH . '/uploads/adslight/midsize';
-                        if (file_exists("$destination3/resized_$purl")) {
+                        if (is_file("$destination3/resized_$purl")) {
                             unlink("$destination3/resized_$purl");
                         }
 

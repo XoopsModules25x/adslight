@@ -74,7 +74,7 @@ class FS_Storage
             closedir($all);
             rmdir($location);
         } else {
-            if (file_exists((string)$location)) {
+            if (is_file((string)$location)) {
                 unlink((string)$location);
             }
         }
