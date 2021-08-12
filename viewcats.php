@@ -20,6 +20,7 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Adslight;
 
@@ -62,7 +63,7 @@ $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 
 function adsView($cid, $min, $orderby, $show = 0)
 {
     global $xoopsDB, $xoopsTpl, $xoopsConfig, $myts, $mytree, $imagecat, $meta, $mid, $prem_perm, $xoopsModule;
-    $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+    $pathIcon16 = Admin::iconUrl('', 16);
 
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_category.tpl';
     require_once XOOPS_ROOT_PATH . '/header.php';
@@ -116,7 +117,7 @@ function adsView($cid, $min, $orderby, $show = 0)
         if ($usid = $member_usid) {
             $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
-            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $member_usid . ' '));
+            [$show_user] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $member_usid . ' '));
 
             $GLOBALS['xoopsTpl']->assign('show_user', $show_user);
             $GLOBALS['xoopsTpl']->assign('show_user_link', 'members.php?usid=' . $member_usid);
@@ -157,7 +158,7 @@ function adsView($cid, $min, $orderby, $show = 0)
     $GLOBALS['xoopsTpl']->assign('category_id', $cid);
 
     $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE  cid=' . $xoopsDB->escape($cid) . ' AND valid="Yes" AND status!="1"');
-    list($trow) = $xoopsDB->fetchRow($countresult);
+    [$trow] = $xoopsDB->fetchRow($countresult);
     $trows = $trow;
 
     $cat_perms = '';
@@ -166,7 +167,7 @@ function adsView($cid, $min, $orderby, $show = 0)
     }
 
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid) . ' ' . $cat_perms);
-    list($cid, $pid, $title, $cat_desc, $cat_keywords) = $xoopsDB->fetchRow($result);
+    [$cid, $pid, $title, $cat_desc, $cat_keywords] = $xoopsDB->fetchRow($result);
 
     $GLOBALS['xoopsTpl']->assign('cat_desc', $cat_desc);
     $GLOBALS['xoopsTpl']->assign('cat_title', _ADSLIGHT_ANNONCES . ' ' . $title);
@@ -321,10 +322,10 @@ function adsView($cid, $min, $orderby, $show = 0)
             }
 
             $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
-            list($nom_type) = $xoopsDB->fetchRow($result7);
+            [$nom_type] = $xoopsDB->fetchRow($result7);
 
             $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
-            list($nom_price) = $xoopsDB->fetchRow($result8);
+            [$nom_price] = $xoopsDB->fetchRow($result8);
 
             $a_item['type']   = $myts->htmlSpecialChars($nom_type);
             $a_item['title']  = '<a href="viewads.php?lid=' . $lid . '"><strong>' . $title . '</strong></a>';

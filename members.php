@@ -20,6 +20,7 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Adslight\{
     ClassifiedsTree,
@@ -30,7 +31,7 @@ require_once __DIR__ . '/header.php';
 
 $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 global $xoopsModule;
-$pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+$pathIcon16 = Admin::iconUrl('', 16);
 xoops_load('XoopsLocal');
 $moduleDirName = basename(__DIR__);
 
@@ -102,7 +103,7 @@ if (is_array($categories) && count($categories) > 0) {
 
 if (1 == $istheirs) {
     $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid) . " AND valid='Yes' $cat_perms");
-    list($trow) = $xoopsDB->fetchRow($countresult);
+    [$trow] = $xoopsDB->fetchRow($countresult);
 
     $sql    = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, date, email, submitter, usid, town, country, contactby, premium, valid, photo, hits, item_rating, item_votes, user_rating, user_votes, comments FROM '
               . $xoopsDB->prefix('adslight_listing')
@@ -112,7 +113,7 @@ if (1 == $istheirs) {
     $result = $xoopsDB->query($sql, $show, $min);
 } else {
     $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE usid=' . $xoopsDB->escape($usid) . " AND valid='Yes' AND status!='1' $cat_perms");
-    list($trow) = $xoopsDB->fetchRow($countresult);
+    [$trow] = $xoopsDB->fetchRow($countresult);
 
     $sql    = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, date, email, submitter, usid, town, country, contactby, premium, valid, photo, hits, item_rating, item_votes, user_rating, user_votes, comments FROM '
               . $xoopsDB->prefix('adslight_listing')
@@ -161,16 +162,16 @@ if ($trows > '0') {
             $status_is = _ADSLIGHT_SOLD;
         }
         $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_replies') . " WHERE lid='" . $xoopsDB->escape($lid) . "'");
-        list($rrow) = $xoopsDB->fetchRow($countresult);
+        [$rrow] = $xoopsDB->fetchRow($countresult);
         $rrows = $rrow;
         $GLOBALS['xoopsTpl']->assign('reply_count', $rrows);
 
         $result2 = $xoopsDB->query('SELECT r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid =' . $xoopsDB->escape($lid));
-        list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
+        [$r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid] = $xoopsDB->fetchRow($result2);
 
 
         $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
-        list($nom_price) = $xoopsDB->fetchRow($result8);
+        [$nom_price] = $xoopsDB->fetchRow($result8);
 
 
 
@@ -213,7 +214,7 @@ if ($trows > '0') {
 
 
         $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
-        list($nom_type) = $xoopsDB->fetchRow($result7);
+        [$nom_type] = $xoopsDB->fetchRow($result7);
         $GLOBALS['xoopsTpl']->assign('type', $myts->htmlSpecialChars($nom_type));
 
         $priceFormatted = Utility::getMoneyFormat('%.2n', $price);

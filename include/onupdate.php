@@ -19,6 +19,9 @@
 use Xmf\Database\Migrate;
 use Xmf\Database\Tables;
 use XoopsModules\Adslight;
+use XoopsModules\Adslight\Common\Configurator;
+use XoopsModules\Adslight\Helper;
+use XoopsModules\Adslight\Utility;
 
 if ((!defined('XOOPS_ROOT_PATH'))
     || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
@@ -48,8 +51,8 @@ function xoops_module_pre_update_adslight(\XoopsModule $module)
 {
     /** @var \XoopsModules\Adslight\Helper $helper */
     /** @var \XoopsModules\Adslight\Utility $utility */
-    $helper        = \XoopsModules\Adslight\Helper::getInstance();
-    $utility       = new \XoopsModules\Adslight\Utility();
+    $helper        = Helper::getInstance();
+    $utility       = new Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
@@ -71,9 +74,9 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
 
     /** @var \XoopsModules\Adslight\Helper $helper */ /** @var \XoopsModules\Adslight\Utility $utility */
     /** @var \XoopsModules\Adslight\Common\Configurator $configurator */
-    $helper       = \XoopsModules\Adslight\Helper::getInstance();
-    $utility      = new \XoopsModules\Adslight\Utility();
-    $configurator = new \XoopsModules\Adslight\Common\Configurator();
+    $helper       = Helper::getInstance();
+    $utility      = new Utility();
+    $configurator = new Configurator();
 
     if ($previousVersion < 230) {
 

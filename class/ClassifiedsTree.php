@@ -23,6 +23,7 @@ namespace XoopsModules\Adslight;
 -------------------------------------------------------------------------
 */
 
+use Xmf\Module\Admin;
 use XoopsModules\Adslight;
 
 /**
@@ -165,7 +166,7 @@ class ClassifiedsTree
             $sql .= " ORDER BY {$order}";
         }
         $result = $this->db->query($sql);
-        list($r_id) = $this->db->fetchRow($result);
+        [$r_id] = $this->db->fetchRow($result);
         if (0 == $r_id) {
             return $idarray;
         }
@@ -198,7 +199,7 @@ class ClassifiedsTree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        list($parentid, $name) = $this->db->fetchRow($result);
+        [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
         $path = '/' . $name . $path . '';
@@ -281,7 +282,7 @@ class ClassifiedsTree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        list($parentid, $name) = $this->db->fetchRow($result);
+        [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
         $name = $myts->htmlSpecialChars($name);
 
@@ -310,7 +311,7 @@ class ClassifiedsTree
         if (0 == $this->db->getRowsNum($result)) {
             return $path;
         }
-        list($parentid) = $this->db->fetchRow($result);
+        [$parentid] = $this->db->fetchRow($result);
         $path = "/{$sel_id}{$path}";
         if (0 == $parentid) {
             return $path;
@@ -399,7 +400,7 @@ class ClassifiedsTree
     public function makeAdSelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '')
     {
         global $myts, $xoopsDB;
-        $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
+        $pathIcon16 = Admin::iconUrl('', 16);
         //        require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
 
         if ('' == $sel_name) {

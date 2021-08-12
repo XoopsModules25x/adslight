@@ -16,6 +16,7 @@
  */
 
 use XoopsModules\Adslight;
+use XoopsModules\Adslight\Utility;
 
 include dirname(__DIR__) . '/preloads/autoloader.php';
 
@@ -29,7 +30,7 @@ function xoops_module_pre_install_adslight(\XoopsModule $module)
 {
     require_once __DIR__ . '/common.php';
     /** @var \XoopsModules\Adslight\Utility $utility */
-    $utility = new \XoopsModules\Adslight\Utility();
+    $utility = new Utility();
     //check for minimum XOOPS version
     $xoopsSuccess = $utility::checkVerXoops($module);
 
@@ -65,7 +66,7 @@ function xoops_module_install_adslight(\XoopsModule $module)
     //    $configurator = require_once __DIR__   . '/config.php';
     $configurator = new Adslight\Common\Configurator();
     /** @var \XoopsModules\Adslight\Utility $utility */
-    $utility = new \XoopsModules\Adslight\Utility();
+    $utility = new Utility();
 
     /*
 

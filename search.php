@@ -22,6 +22,7 @@
 
 use Xmf\Request;
 use XoopsModules\Adslight;
+use XoopsModules\Adslight\Helper;
 
 $moduleDirName = basename(__DIR__);
 //@todo replace the following code - use Filters
@@ -215,7 +216,7 @@ switch ($action) {
         require_once XOOPS_ROOT_PATH . '/header.php';
 
         /** @var \XoopsModules\Adslight\Helper $helper */
-        $helper = \XoopsModules\Adslight\Helper::getInstance();
+        $helper = Helper::getInstance();
         $helper->loadLanguage('admin');
 
         $GLOBALS['xoopsTpl']->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');

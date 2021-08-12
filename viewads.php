@@ -20,6 +20,7 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Adslight;
 
@@ -61,7 +62,7 @@ function viewAds($lid = 0)
 
     $moduleDirName = basename(__DIR__);
 
-    $pathIcon16     = \Xmf\Module\Admin::iconUrl('', 16);
+    $pathIcon16     = Admin::iconUrl('', 16);
     $contact_pm     = $contact = '';
     $pictures_array = [];
     $cid            = 0;
@@ -105,7 +106,7 @@ function viewAds($lid = 0)
 
             $GLOBALS['xoopsTpl']->assign('user_email', $GLOBALS['xoopsUser']->getVar('email'));
 
-            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
+            [$show_user] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
 
             $GLOBALS['xoopsTpl']->assign('show_user', $show_user);
             $GLOBALS['xoopsTpl']->assign('show_user_link', 'members.php?usid=' . $member_usid);
@@ -140,7 +141,7 @@ function viewAds($lid = 0)
     }
 
     if ($recordexist) {
-        list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits, $item_rating, $item_votes, $user_rating, $user_votes, $comments, $cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($result);
+        [$lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid, $photo, $hits, $item_rating, $item_votes, $user_rating, $user_votes, $comments, $cod_img, $pic_lid, $uid_owner, $url] = $xoopsDB->fetchRow($result);
 
         $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
         $startdate = (time() - (86400 * $newcount));
@@ -161,7 +162,7 @@ function viewAds($lid = 0)
         $i     = 0;
 
         $result3 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE  cid=' . $xoopsDB->escape($cid));
-        list($ccid, $pid, $ctitle) = $xoopsDB->fetchRow($result3);
+        [$ccid, $pid, $ctitle] = $xoopsDB->fetchRow($result3);
 
         $GLOBALS['xoopsTpl']->assign('category_title', $ctitle);
 
@@ -179,13 +180,13 @@ function viewAds($lid = 0)
         $varid[$x]  = $ccid;
         $varnom[$x] = $ctitle;
 
-        list($nbe) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE valid="Yes" AND cid=' . $xoopsDB->escape($cid) . ' AND status!="1"'));
+        [$nbe] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE valid="Yes" AND cid=' . $xoopsDB->escape($cid) . ' AND status!="1"'));
 
         if (0 != $pid) {
             $x = 1;
             while (0 != $pid) {
                 $result4 = $xoopsDB->query('SELECT cid, pid, title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($pid));
-                list($ccid, $pid, $ctitle) = $xoopsDB->fetchRow($result4);
+                [$ccid, $pid, $ctitle] = $xoopsDB->fetchRow($result4);
 
                 $ctitle     = $myts->htmlSpecialChars($ctitle);
                 $varid[$x]  = $ccid;
@@ -291,13 +292,13 @@ function viewAds($lid = 0)
         }
 
         $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
-        list($nom_type) = $xoopsDB->fetchRow($result7);
+        [$nom_type] = $xoopsDB->fetchRow($result7);
 
         $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
-        list($nom_price) = $xoopsDB->fetchRow($result8);
+        [$nom_price] = $xoopsDB->fetchRow($result8);
 
         $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure='" . $xoopsDB->escape($typeusure) . "'");
-        list($nom_usure) = $xoopsDB->fetchRow($result9);
+        [$nom_usure] = $xoopsDB->fetchRow($result9);
 
         $GLOBALS['xoopsTpl']->assign('type', $myts->htmlSpecialChars($nom_type));
         $GLOBALS['xoopsTpl']->assign('title', $title);
@@ -455,7 +456,7 @@ Adslight\Utility::load_lib_js(); // JJDai
     }
     $result8 = $xoopsDB->query('SELECT title FROM ' . $xoopsDB->prefix('adslight_categories') . ' WHERE cid=' . $xoopsDB->escape($cid));
 
-    list($ctitle) = $xoopsDB->fetchRow($result8);
+    [$ctitle] = $xoopsDB->fetchRow($result8);
     $GLOBALS['xoopsTpl']->assign('friend', '<img src="assets/images/friend.gif" border="0" alt="' . _ADSLIGHT_SENDFRIENDS . '" >&nbsp;&nbsp;<a rel="nofollow" href="sendfriend.php?op=SendFriend&amp;lid=' . $lid . '">' . _ADSLIGHT_SENDFRIENDS . '</a>');
 
     $GLOBALS['xoopsTpl']->assign('alerteabus', '<img src="assets/images/error.png" border="0" alt="' . _ADSLIGHT_ALERTEABUS . '" >&nbsp;&nbsp;<a rel="nofollow" href="report-abuse.php?op=ReportAbuse&amp;lid=' . $lid . '">' . _ADSLIGHT_ALERTEABUS . '</a>');
@@ -484,7 +485,7 @@ function categorynewgraphic($cid)
     }
 
     $newresult = $xoopsDB->query('SELECT date FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . $xoopsDB->escape($cid) . ' AND valid = "Yes" ' . $cat_perms . ' ORDER BY DATE DESC LIMIT 1');
-    list($date) = $xoopsDB->fetchRow($newresult);
+    [$date] = $xoopsDB->fetchRow($newresult);
 
     $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
     $startdate = (time() - (86400 * $newcount));

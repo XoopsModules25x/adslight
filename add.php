@@ -20,6 +20,7 @@
 -------------------------------------------------------------------------
 */
 
+use Xmf\Module\Helper\Permission;
 use Xmf\Request;
 use XoopsModules\Adslight;
 
@@ -37,7 +38,7 @@ $groups    = ($GLOBALS['xoopsUser'] instanceof \XoopsUser) ? $GLOBALS['xoopsUser
 /** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
 
-$permHelper = new \Xmf\Module\Helper\Permission();
+$permHelper = new Permission();
 
 $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
@@ -255,7 +256,7 @@ if (Request::hasVar('submit', 'POST')) {
         /** @var mysqli_result $category */
         $category = $xoopsDB->query('SELECT title, cat_moderate FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid='" . $xoopsDB->escape($cid) . "'");
 
-        list($cat_title, $cat_moderate) = $xoopsDB->fetchRow($category);
+        [$cat_title, $cat_moderate] = $xoopsDB->fetchRow($category);
 
         if ('1' == $premium) {
             $radio        = new \XoopsFormRadio(_ADSLIGHT_STATUS, 'status', '');

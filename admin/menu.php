@@ -22,13 +22,15 @@
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
+use Xmf\Module\Admin;
 use XoopsModules\Adslight;
+use XoopsModules\Adslight\Helper;
 
 //require_once  dirname(__DIR__) . '/include/common.php';
 /** @var \XoopsModules\Adslight\Helper $helper */
-$helper = \XoopsModules\Adslight\Helper::getInstance();
+$helper = Helper::getInstance();
 
-$pathIcon32 = \Xmf\Module\Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 if (is_object($helper->getModule())) {
     $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 }
