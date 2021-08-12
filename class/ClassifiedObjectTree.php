@@ -55,7 +55,7 @@ class ClassifiedObjectTree extends \XoopsObjectTree
         }
         [$parentid, $name] = $xoopsDB->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
-        $name = htmlspecialchars($name, ENT_QUOTES | ENT_HTML5);
+        $name = \htmlspecialchars($name, \ENT_QUOTES | \ENT_HTML5);
         $path = "<a href='" . $funcURL . '&amp;' . $this->myId . '=' . $sel_id . "'>" . $name . '</a>' . $path . '';
         if (0 == $parentid) {
             return $path;

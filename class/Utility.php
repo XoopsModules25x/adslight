@@ -63,12 +63,12 @@ class Utility
         $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes'");
 
         while (false !== (list($lids, $title, $expire, $type, $desctext, $dateann, $email, $submitter, $photo, $valid, $hits, $comments, $remind) = $xoopsDB->fetchRow($result5))) {
-            $title     = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
-            $expire    = htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
-            $type      = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
+            $title     = \htmlspecialchars($title, \ENT_QUOTES | \ENT_HTML5);
+            $expire    = \htmlspecialchars($expire, \ENT_QUOTES | \ENT_HTML5);
+            $type      = \htmlspecialchars($type, \ENT_QUOTES | \ENT_HTML5);
             $desctext  = &$myts->displayTarea($desctext, 1, 1, 1, 1, 1);
-            $submitter = htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
-            $remind    = htmlspecialchars($remind, ENT_QUOTES | ENT_HTML5);
+            $submitter = \htmlspecialchars($submitter, \ENT_QUOTES | \ENT_HTML5);
+            $remind    = \htmlspecialchars($remind, \ENT_QUOTES | \ENT_HTML5);
             $supprdate = $dateann + ($expire * 86400);
             $almost    = $GLOBALS['xoopsModuleConfig']['adslight_almost'];
 

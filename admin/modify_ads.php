@@ -141,12 +141,12 @@ function modifyAds($lid)
     $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}";
     $result = $xoopsDB->query($sql);
     while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result))) {
-        $title    = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
-        $status   = htmlspecialchars($status, ENT_QUOTES | ENT_HTML5);
-        $expire   = htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
-        $type     = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
+        $title    = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+        $status   = \htmlspecialchars($status, ENT_QUOTES | ENT_HTML5);
+        $expire   = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+        $type     = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
         $desctext = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel      = htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
+        $tel      = \htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
         //        $price     = number_format($price, 2, ',', ' ');
 
         xoops_load('XoopsLocal');
@@ -156,13 +156,13 @@ function modifyAds($lid)
         //  For other countries uncomment the below line and comment out the above line
         //      $priceFormatted = $tempXoopsLocal->number_format($price);
 
-        $typeprice = htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
-        $typeusure = htmlspecialchars($typeusure, ENT_QUOTES | ENT_HTML5);
-        $submitter = htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
-        $town      = htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
-        $country   = htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
-        $contactby = htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
-        $premium   = htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
+        $typeprice = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+        $typeusure = \htmlspecialchars($typeusure, ENT_QUOTES | ENT_HTML5);
+        $submitter = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+        $town      = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+        $country   = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+        $contactby = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+        $premium   = \htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
 
         $date2 = formatTimestamp($date, 's');
 
@@ -336,25 +336,25 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
 
     $lid   = (int)$lid;
     $cat   = (int)$cat;
-    $title = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
-    //    $status    = htmlspecialchars($status);
+    $title = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+    //    $status    = \htmlspecialchars($status);
     $status    = (int)$status;
-    $expire    = htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
-    $type      = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
+    $expire    = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+    $type      = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-    $tel       = htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
+    $tel       = \htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
     $price     = str_replace([' '], '', $price);
-    $typeprice = htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
-    $typeusure = htmlspecialchars($typeusure, ENT_QUOTES | ENT_HTML5);
+    $typeprice = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+    $typeusure = \htmlspecialchars($typeusure, ENT_QUOTES | ENT_HTML5);
     $date      = (int)$date;
-    $email     = htmlspecialchars($email, ENT_QUOTES | ENT_HTML5);
-    $submitter = htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
-    $town      = htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
-    $country   = htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
-    $contactby = htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
-    $premium   = htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
-    $valid     = htmlspecialchars($valid, ENT_QUOTES | ENT_HTML5);
-    $photo     = htmlspecialchars($photo, ENT_QUOTES | ENT_HTML5);
+    $email     = \htmlspecialchars($email, ENT_QUOTES | ENT_HTML5);
+    $submitter = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+    $town      = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+    $country   = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+    $contactby = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+    $premium   = \htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
+    $valid     = \htmlspecialchars($valid, ENT_QUOTES | ENT_HTML5);
+    $photo     = \htmlspecialchars($photo, ENT_QUOTES | ENT_HTML5);
 
     $sql = 'UPDATE '
            . $xoopsDB->prefix('adslight_listing')

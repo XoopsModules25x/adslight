@@ -218,7 +218,7 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->assign('type', htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5));
 
         $priceFormatted = Utility::getMoneyFormat('%.2n', $price);
-        $priceTypeprice = htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
+        $priceTypeprice = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
         $priceCurrency = $GLOBALS['xoopsModuleConfig']['adslight_currency_code'];
         //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
         //            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice;

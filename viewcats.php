@@ -210,7 +210,7 @@ function adsView($cid, $min, $orderby, $show = 0)
                 $totallisting    = Adslight\Utility::getTotalItems($ele['cid'], 1);
                 foreach ($sub_arr as $sub_ele) {
                     if (in_array($sub_ele['cid'], $categories)) {
-                        $chtitle = htmlspecialchars($sub_ele['title'], ENT_QUOTES | ENT_HTML5);
+                        $chtitle = \htmlspecialchars($sub_ele['title'], ENT_QUOTES | ENT_HTML5);
 
                         if ($chcount > 5) {
                             $infercategories .= '...';
@@ -291,12 +291,12 @@ function adsView($cid, $min, $orderby, $show = 0)
 
         while (false !== (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $contactby, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result1))) {
             $a_item = [];
-            $title  = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
-            $type   = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
+            $title  = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+            $type   = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
             //      $price = number_format($price, 2, ',', ' ');
-            $town       = htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
-            $country    = htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
-            $contactby  = htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+            $town       = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+            $country    = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+            $contactby  = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
             $useroffset = '';
 
             $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
@@ -327,13 +327,13 @@ function adsView($cid, $min, $orderby, $show = 0)
             $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
             [$nom_price] = $xoopsDB->fetchRow($result8);
 
-            $a_item['type']   = htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5);
+            $a_item['type']   = \htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5);
             $a_item['title']  = '<a href="viewads.php?lid=' . $lid . '"><strong>' . $title . '</strong></a>';
             $a_item['status'] = $status;
             if ($price > 0) {
                 //          $a_item['price'] = $price. ' '. $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].'';
                 $a_item['price']           = Adslight\Utility::getMoneyFormat('%.2n', $price);
-                $a_item['price_typeprice'] = htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
+                $a_item['price_typeprice'] = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
             }
             $a_item['date']  = $date;
             $a_item['local'] = '';
