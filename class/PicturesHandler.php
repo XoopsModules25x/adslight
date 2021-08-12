@@ -214,10 +214,10 @@ class PicturesHandler extends \XoopsObjectHandler
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $adslightPictures = new Adslight\Pictures();
             $adslightPictures->assignVars($myrow);
-            if (!$id_as_key) {
-                $ret[] = $adslightPictures;
-            } else {
+            if ($id_as_key) {
                 $ret[$myrow['cod_img']] = $adslightPictures;
+            } else {
+                $ret[] = $adslightPictures;
             }
             unset($adslightPictures);
         }

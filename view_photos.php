@@ -66,10 +66,10 @@ if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
     $perm_itemid = Request::getInt('item_id', 0, 'POST');
 
     //If no access
-    if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-        $permit = '0';
-    } else {
+    if ($grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
         $permit = '1';
+    } else {
+        $permit = '0';
     }
 
     /**

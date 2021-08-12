@@ -49,17 +49,17 @@ function adslight_notify_iteminfo($category, $item_id)
         $sql = 'SELECT SQL_CACHE title  FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid ={$item_id} LIMIT 1";
 
         $result = $xoopsDB->query($sql);
-        if (!$result) {
-            /** @var \XoopsModuleHandler $moduleHandler */
-            $moduleHandler = xoops_getHandler('module');
-            $myModule      = $moduleHandler->getByDirname('adslight');
-            $myModule->setErrors('Could not query the database.');
-        } else {
+        if ($result) {
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['title'];
             $item['url']  = XOOPS_URL . '/modules/adslight/index.php?pa=adsview&amp;cid=' . $item_id;
 
             return $item;
+        } else {
+            /** @var \XoopsModuleHandler $moduleHandler */
+            $moduleHandler = xoops_getHandler('module');
+            $myModule      = $moduleHandler->getByDirname('adslight');
+            $myModule->setErrors('Could not query the database.');
         }
     }
 

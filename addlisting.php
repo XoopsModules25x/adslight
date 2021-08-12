@@ -44,10 +44,10 @@ $perm_itemid      = Request::getInt('item_id', 0, 'POST');
 if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-    $premium = 1; // user has premium content rights
-} else {
+if ($grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     $premium = 0; // set for access to non-premium content only
+} else {
+    $premium = 1; // user has premium content rights
 }
 
 require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';

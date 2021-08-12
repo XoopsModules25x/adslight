@@ -51,7 +51,7 @@ function adsNewCat($cid)
     $cid = Request::getInt('cid', 0, 'GET');
 
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, cat_order, affprice, cat_moderate, moderate_subcat FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid}");
-    list($cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat) = $xoopsDB->fetchRow($result);
+    [$cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat] = $xoopsDB->fetchRow($result);
     $mytree->makeMySelBox('title', 'title', $cid, 1);
     echo "    </td>\n" . "  </tr>\n";
 
@@ -81,15 +81,15 @@ function adsNewCat($cid)
     asort($filelist);
     //    while (list($key, $file) = each($filelist)) {
     foreach ($filelist as $key => $file) {
-        if (!preg_match('`gif$|jpg$|png$`i', $file)) {
-            if ('.' === $file || '..' === $file) {
-                $a = 1;
-            }
-        } else {
+        if (preg_match('`gif$|jpg$|png$`i', $file)) {
             if ('default.png' === $file) {
                 echo "<option value=\"{$file}\" selected>{$file}</option>";
             } else {
                 echo "<option value=\"{$file}\">{$file}</option>";
+            }
+        } else {
+            if ('.' === $file || '..' === $file) {
+                $a = 1;
             }
         }
     }
@@ -132,7 +132,7 @@ function adsModCat($cid)
     Adslight\Utility::showImage();
 
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, cat_order, affprice, cat_moderate, moderate_subcat FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid=$cid");
-    list($cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat) = $xoopsDB->fetchRow($result);
+    [$cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat] = $xoopsDB->fetchRow($result);
 
     $title    = $myts->htmlSpecialChars($title);
     $cat_desc = $myts->addSlashes($cat_desc);
@@ -164,15 +164,15 @@ function adsModCat($cid)
     asort($filelist);
     //    while (list($key, $file) = each($filelist)) {
     foreach ($filelist as $key => $file) {
-        if (!preg_match('`gif$|jpg$|png$`i', $file)) {
-            if ('.' === $file || '..' === $file) {
-                $a = 1;
-            }
-        } else {
+        if (preg_match('`gif$|jpg$|png$`i', $file)) {
             if ($file == $imgs) {
                 echo "<option value=\"{$file}\" selected>{$file}</option>";
             } else {
                 echo "<option value=\"{$file}\">{$file}</option>";
+            }
+        } else {
+            if ('.' === $file || '..' === $file) {
+                $a = 1;
             }
         }
     }

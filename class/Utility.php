@@ -699,10 +699,10 @@ class Utility
                     $suffix = ')';
                     break;
             }
-            if (!$flags['nosimbol']) {
-                $currency = $cprefix . ('i' === $conversion ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
-            } else {
+            if ($flags['nosimbol']) {
                 $currency = '';
+            } else {
+                $currency = $cprefix . ('i' === $conversion ? $locale['int_curr_symbol'] : $locale['currency_symbol']) . $csuffix;
             }
             $space = $locale["{$letter}_sep_by_space"] ? ' ' : '';
 

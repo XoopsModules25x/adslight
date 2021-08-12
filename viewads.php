@@ -43,10 +43,10 @@ $perm_itemid      = Request::getInt('item_id', 0, 'POST');
 if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-    $prem_perm = '0';
-} else {
+if ($grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
     $prem_perm = '1';
+} else {
+    $prem_perm = '0';
 }
 
 $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');

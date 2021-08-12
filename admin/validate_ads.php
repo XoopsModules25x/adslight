@@ -146,10 +146,10 @@ function index()
             $photo4 = ($photo > 0) ? (string)$photo : '0';
 
             $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
-            list($nom_type) = $xoopsDB->fetchRow($result7);
+            [$nom_type] = $xoopsDB->fetchRow($result7);
 
             $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
-            list($nom_price) = $xoopsDB->fetchRow($result8);
+            [$nom_price] = $xoopsDB->fetchRow($result8);
 
             /*        $result9 = $xoopsDB->query("select nom_usure from ".$xoopsDB->prefix('adslight_usure')." where id_usure=".(int)$typeusure."");
                 list($nom_usure) = $xoopsDB->fetchRow($result9); */
@@ -208,7 +208,7 @@ function index()
     }
 
     // Modify Annonces
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' '));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' '));
     if ($numrows > 0) {
         echo "<table class='outer width100 bnone'><tr class='bg4'><td class='top'>";
         echo '<form method="post" action="validate_ads.php">'
@@ -254,7 +254,7 @@ function indexView($lid)
         echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td valign='top'>";
         echo '<b>' . _AM_ADSLIGHT_WAIT . '</b><br><br>';
 
-        list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo) = $xoopsDB->fetchRow($result);
+        [$lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo] = $xoopsDB->fetchRow($result);
 
         $date2    = formatTimestamp($date, 's');
         $title    = $myts->htmlSpecialChars($title);
@@ -625,10 +625,10 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
            . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typeusure='{$typeusure}', date='{$date}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}";
 
     $result = $xoopsDB->query($sql);
-    if (!$result) {
-        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
-    } else {
+    if ($result) {
         redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
+    } else {
+        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
     }
 }
 
@@ -718,10 +718,10 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
     $sql = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typeusure='{$typeusure}', date='{$now}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}";
 
     $result = $xoopsDB->query($sql);
-    if (!$result) {
-        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
-    } else {
+    if ($result) {
         redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
+    } else {
+        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
     }
 
     if ('' !== $email) {
