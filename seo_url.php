@@ -198,7 +198,7 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%7C/', // |
         '/%7D/', // }
         '/%7E/', // ~
-        "/\./", // .
+        '/\./', // .
         '/%2A/',
         '/%2B/',
         '/quot/',

@@ -1014,14 +1014,14 @@ public static function load_lib_js(){
 global $xoTheme, $xoopsModuleConfig;
 
 
-$fld = XOOPS_URL . "/modules/adslight/" . "assets/";
+$fld = XOOPS_URL . '/modules/adslight/' . 'assets/';
     
     if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
 // $xoTheme->addScript(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');
 // $xoTheme->addStyleSheet(XOOPS_URL . '/browse.php?Frameworks/jquery/plugins/jquery.lightbox.js');    
     
-	       $xoTheme->addScript($fld  .    "/js/lightbox/js/lightbox.js");
-	       $xoTheme->addStyleSheet($fld . "/js/lightbox/css/lightbox.css");    
+	       $xoTheme->addScript($fld . '/js/lightbox/js/lightbox.js');
+	       $xoTheme->addStyleSheet($fld . '/js/lightbox/css/lightbox.css');
 
 
     } else {

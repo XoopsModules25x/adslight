@@ -27,7 +27,7 @@ use XoopsModules\Adslight\Helper;
 $moduleDirName = basename(__DIR__);
 //@todo replace the following code - use Filters
 foreach ($_REQUEST as $key => $val) {
-    $val            = preg_replace("/[^_A-Za-z0-9-\.&=]/i", '', $val);
+    $val            = preg_replace('/[^_A-Za-z0-9-\.&=]/i', '', $val);
     $_REQUEST[$key] = $val;
 }
 
@@ -168,7 +168,7 @@ switch ($action) {
                         } else {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         }
-                        if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                        if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                             $results[$i]['link'] = '' . $results[$i]['link'];
                         }
                         echo '<td width="50%">';
@@ -263,7 +263,7 @@ switch ($action) {
                 } else {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 }
-                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                     $results[$i]['link'] = '' . $results[$i]['link'];
                 }
                 echo '<td width="50%">';
