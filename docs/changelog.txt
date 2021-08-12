@@ -1,3 +1,6 @@
+<h5>2.3 RC5   [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
+<hr>
+
 <h5>2.3 RC4   [2021-08-12]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
 <hr>
 - updates, fixes (mamba)
