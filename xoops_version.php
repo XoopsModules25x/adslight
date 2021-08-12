@@ -63,8 +63,8 @@ $modversion['modicons16']          = 'assets/images/icons/16';
 $modversion['modicons32']          = 'assets/images/icons/32';
 $modversion['module_website_url']  = 'www.xoops.org';
 $modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '5.6';
-$modversion['min_xoops']           = '2.5.9';
+$modversion['min_php']             = '7.2';
+$modversion['min_xoops']           = '2.5.10';
 $modversion['min_admin']           = '1.2';
 $modversion['min_db']              = ['mysql' => '5.5'];
 
@@ -72,7 +72,7 @@ $modversion['sqlfile']['mysql'] = $adslight_sql;
 $modversion['onInstall']        = 'include/oninstall.php';
 $modversion['onUpdate']         = 'include/onupdate.php';
 
-$modversion['release']           = '13-04-2019';
+$modversion['release']           = '12-08-2021';
 $modversion['support_site_url']  = 'http://#';
 $modversion['support_site_name'] = 'AdsLight';
 
