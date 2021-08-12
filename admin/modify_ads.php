@@ -152,9 +152,9 @@ function modifyAds($lid)
         xoops_load('XoopsLocal');
         $tempXoopsLocal = new \XoopsLocal();
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
-        $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
+        $priceFormatted = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
-        //      $price = $tempXoopsLocal->number_format($price);
+        //      $priceFormatted = $tempXoopsLocal->number_format($price);
 
         $typeprice = $myts->htmlSpecialChars($typeprice);
         $typeusure = $myts->htmlSpecialChars($typeusure);
@@ -356,9 +356,11 @@ function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel
     $valid     = $myts->htmlSpecialChars($valid);
     $photo     = $myts->htmlSpecialChars($photo);
 
-    $xoopsDB->query('UPDATE '
-                    . $xoopsDB->prefix('adslight_listing')
-                    . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typeusure='{$typeusure}', date='{$date}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}");
+    $sql = 'UPDATE '
+           . $xoopsDB->prefix('adslight_listing')
+           . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typeusure='{$typeusure}', date='{$date}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}";
+
+    $result = $xoopsDB->query($sql);
 
     redirect_header('modify_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
 }
