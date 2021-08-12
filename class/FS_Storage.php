@@ -55,27 +55,27 @@ class FS_Storage
      */
     public static function deldir($location)
     {
-        if (is_dir($location)) {
-            $all = opendir($location);
-            while ($file = readdir($all)) {
-                if ('..' !== $file && '.' !== $file && is_dir("$location/$file")) {
+        if (\is_dir($location)) {
+            $all = \opendir($location);
+            while ($file = \readdir($all)) {
+                if ('..' !== $file && '.' !== $file && \is_dir("$location/$file")) {
                     self::deldir("$location/$file");
-                    if (file_exists("$location/$file")) {
-                        rmdir("$location/$file");
+                    if (\file_exists("$location/$file")) {
+                        \rmdir("$location/$file");
                     }
                     unset($file);
-                } elseif (!is_dir("$location/$file")) {
-                    if (file_exists("$location/$file")) {
-                        unlink("$location/$file");
+                } elseif (!\is_dir("$location/$file")) {
+                    if (\file_exists("$location/$file")) {
+                        \unlink("$location/$file");
                     }
                     unset($file);
                 }
             }
-            closedir($all);
-            rmdir($location);
+            \closedir($all);
+            \rmdir($location);
         } else {
-            if (is_file((string)$location)) {
-                unlink((string)$location);
+            if (\is_file((string)$location)) {
+                \unlink((string)$location);
             }
         }
     }
@@ -86,8 +86,8 @@ class FS_Storage
      */
     public static function date_modif($fichier)
     {
-        $tmp = filemtime($fichier);
-        return date('d/m/Y H:i', $tmp);
+        $tmp = \filemtime($fichier);
+        return \date('d/m/Y H:i', $tmp);
     }
 
 
@@ -108,19 +108,19 @@ class FS_Storage
     public static function dircopy($srcdir, $dstdir, &$errors, &$success, $verbose = false)
     {
         $num = 0;
-        if (!is_dir($dstdir)) {
-            if (!mkdir($dstdir) && !is_dir($dstdir)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dstdir));
+        if (!\is_dir($dstdir)) {
+            if (!\mkdir($dstdir) && !\is_dir($dstdir)) {
+                throw new \RuntimeException(\sprintf('Directory "%s" was not created', $dstdir));
             }
         }
-        if ($curdir = opendir($srcdir)) {
-            while ($file = readdir($curdir)) {
+        if ($curdir = \opendir($srcdir)) {
+            while ($file = \readdir($curdir)) {
                 if ('.' !== $file && '..' !== $file) {
-                    $srcfile = $srcdir . DIRECTORY_SEPARATOR . $file;
-                    $dstfile = $dstdir . DIRECTORY_SEPARATOR . $file;
-                    if (is_file($srcfile)) {
-                        if (is_file($dstfile)) {
-                            $ow = filemtime($srcfile) - filemtime($dstfile);
+                    $srcfile = $srcdir . \DIRECTORY_SEPARATOR . $file;
+                    $dstfile = $dstdir . \DIRECTORY_SEPARATOR . $file;
+                    if (\is_file($srcfile)) {
+                        if (\is_file($dstfile)) {
+                            $ow = \filemtime($srcfile) - \filemtime($dstfile);
                         } else {
                             $ow = 1;
                         }
@@ -128,8 +128,8 @@ class FS_Storage
                             if ($verbose) {
                                 echo "Copying '$srcfile' to '$dstfile'...";
                             }
-                            if (copy($srcfile, $dstfile)) {
-                                touch($dstfile, filemtime($srcfile));
+                            if (\copy($srcfile, $dstfile)) {
+                                \touch($dstfile, \filemtime($srcfile));
                                 $num++;
                                 if ($verbose) {
                                     echo "OK\n";
@@ -139,12 +139,12 @@ class FS_Storage
                                 $errors[] = $srcfile;
                             }
                         }
-                    } else if (is_dir($srcfile)) {
+                    } else if (\is_dir($srcfile)) {
                         $num += self::dircopy($srcfile, $dstfile, $errors, $success, $verbose);
                     }
                 }
             }
-            closedir($curdir);
+            \closedir($curdir);
         }
         return $num;
     }
@@ -159,9 +159,9 @@ class FS_Storage
     public static function copyOrMoveFile($destDir, $srcFile, &$error, &$success, $move = false)
     {
         $mess        = ConfService::getMessages();
-        $destFile    = ConfService::getRootDir() . $destDir . '/' . basename($srcFile);
+        $destFile    = ConfService::getRootDir() . $destDir . '/' . \basename($srcFile);
         $realSrcFile = ConfService::getRootDir() . "/$srcFile";
-        if (!file_exists($realSrcFile)) {
+        if (!\file_exists($realSrcFile)) {
             $error[] = $mess[100] . $srcFile;
             return;
         }
@@ -169,16 +169,16 @@ class FS_Storage
             $error[] = $mess[101];
             return;
         }
-        if (is_dir($realSrcFile)) {
+        if (\is_dir($realSrcFile)) {
             $errors    = [];
             $succFiles = [];
             $dirRes    = self::dircopy($realSrcFile, $destFile, $errors, $succFiles);
-            if (count($errors)) {
+            if (\count($errors)) {
                 $error[] = $mess[114];
                 return;
             }
         } else {
-            $res = copy($realSrcFile, $destFile);
+            $res = \copy($realSrcFile, $destFile);
             if (1 != $res) {
                 $error[] = $mess[114];
                 return;
@@ -193,15 +193,15 @@ class FS_Storage
                 $messagePart = $mess[123] . ' ' . $mess[122];
             }
             if (isset($dirRes)) {
-                $success[] = $mess[117] . ' ' . basename($srcFile) . ' ' . $messagePart . " ($dirRes " . $mess[116] . ') ';
+                $success[] = $mess[117] . ' ' . \basename($srcFile) . ' ' . $messagePart . " ($dirRes " . $mess[116] . ') ';
             } else {
-                $success[] = $mess[34] . ' ' . basename($srcFile) . ' ' . $messagePart;
+                $success[] = $mess[34] . ' ' . \basename($srcFile) . ' ' . $messagePart;
             }
         } else {
             if (isSet($dirRes)) {
-                $success[] = $mess[117] . ' ' . basename($srcFile) . ' ' . $mess[73] . " $destDir (" . $dirRes . ' ' . $mess[116] . ')';
+                $success[] = $mess[117] . ' ' . \basename($srcFile) . ' ' . $mess[73] . " $destDir (" . $dirRes . ' ' . $mess[116] . ')';
             } else {
-                $success[] = $mess[34] . ' ' . basename($srcFile) . ' ' . $mess[73] . " $destDir";
+                $success[] = $mess[34] . ' ' . \basename($srcFile) . ' ' . $mess[73] . " $destDir";
             }
         }
 

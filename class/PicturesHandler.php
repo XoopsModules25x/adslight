@@ -127,20 +127,20 @@ class PicturesHandler extends \XoopsObjectHandler
         foreach ($adslightPictures->cleanVars as $k => $v) {
             ${$k} = $v;
         }
-        $now = time();
+        $now = \time();
         if ($adslightPictures->isNew()) {
             // add/modify of Pictures
             $adslightPictures = new Adslight\Pictures();
 
             $format = 'INSERT INTO `%s` (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
-            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url));
+            $sql    = \sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url));
             $force  = true;
         } else {
             $format = 'UPDATE `%s` SET ';
             $format .= 'cod_img=%u, title=%s, date_added=%s, date_modified=%s, lid=%s, uid_owner=%s, url=%s';
             $format .= ' WHERE cod_img = %u';
-            $sql    = sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url), $cod_img);
+            $sql    = \sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url), $cod_img);
         }
         if ($force) {
             $result = $this->db->queryF($sql);
@@ -174,7 +174,7 @@ class PicturesHandler extends \XoopsObjectHandler
         if (!$adslightPictures instanceof Pictures) {
             return false;
         }
-        $sql = sprintf('DELETE FROM `%s` WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $adslightPictures->getVar('cod_img'));
+        $sql = \sprintf('DELETE FROM `%s` WHERE cod_img = %u', $this->db->prefix('adslight_pictures'), $adslightPictures->getVar('cod_img'));
         if ($force) {
             $result = $this->db->queryF($sql);
         } else {
@@ -281,13 +281,13 @@ class PicturesHandler extends \XoopsObjectHandler
     	global $xoopsUser;
         $uid        = (int)$uid;
         $lid        = (int)$lid;
-        $form       = new \XoopsThemeForm(_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
-        $field_url  = new \XoopsFormFile(_ADSLIGHT_SELECT_PHOTO, 'sel_photo', 2000000);
-        $field_desc = new \XoopsFormText(_ADSLIGHT_CAPTION, 'caption', 35, 55);
+        $form       = new \XoopsThemeForm(\_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
+        $field_url  = new \XoopsFormFile(\_ADSLIGHT_SELECT_PHOTO, 'sel_photo', 2000000);
+        $field_desc = new \XoopsFormText(\_ADSLIGHT_CAPTION, 'caption', 35, 55);
 
         $form->setExtra('enctype="multipart/form-data"');
-        $button_send   = new \XoopsFormButton('', 'submit_button', _ADSLIGHT_UPLOADPICTURE, 'submit');
-        $field_warning = new \XoopsFormLabel(sprintf(_ADSLIGHT_YOUCANUPLOAD, $maxbytes / 1024));
+        $button_send   = new \XoopsFormButton('', 'submit_button', \_ADSLIGHT_UPLOADPICTURE, 'submit');
+        $field_warning = new \XoopsFormLabel(\sprintf(\_ADSLIGHT_YOUCANUPLOAD, $maxbytes / 1024));
         $field_lid     = new \XoopsFormHidden('lid', $lid);
         $field_uid     = new \XoopsFormHidden('uid', $uid);
 
@@ -302,7 +302,7 @@ class PicturesHandler extends \XoopsObjectHandler
         $form->addElement($field_token, true);
 
         $form->addElement($button_send);
-        if (str_replace('.', '', PHP_VERSION) > 499) {
+        if (\str_replace('.', '', \PHP_VERSION) > 499) {
             $form->assign($xoopsTpl);
         } else {
             $form->display();
@@ -321,10 +321,10 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function renderFormEdit($caption, $cod_img, $filename)
     {
-        $form       = new \XoopsThemeForm(_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
+        $form       = new \XoopsThemeForm(\_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
         $field_desc = new \XoopsFormText($caption, 'caption', 35, 55);
         $form->setExtra('enctype="multipart/form-data"');
-        $button_send = new \XoopsFormButton(_ADSLIGHT_EDIT, 'submit_button', _SUBMIT, 'submit');
+        $button_send = new \XoopsFormButton(\_ADSLIGHT_EDIT, 'submit_button', _SUBMIT, 'submit');
         //@todo - replace alt with language string
         $field_warning = new \XoopsFormLabel("<img src='{$filename}' alt='sssss'>");
         $field_cod_img = new \XoopsFormHidden('cod_img', $cod_img);
@@ -365,8 +365,8 @@ class PicturesHandler extends \XoopsObjectHandler
         $uid = $GLOBALS['xoopsUser']->getVar('uid');
         $lid = Request::getInt('lid', 0, 'POST');
         //create a hash so it does not erase another file
-        $hash1 = time();
-        $hash  = mb_substr($hash1, 0, 4);
+        $hash1 = \time();
+        $hash  = \mb_substr($hash1, 0, 4);
         // mimetypes and settings put this in admin part later
         $allowed_mimetypes = [
             'image/jpeg',
@@ -420,39 +420,39 @@ class PicturesHandler extends \XoopsObjectHandler
     public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload)
     {
         $img2   = $img;
-        $path   = pathinfo($img);
-        $img    = imagecreatefromjpeg($img);
-        $xratio = $thumbwidth / imagesx($img);
-        $yratio = $thumbheight / imagesy($img);
+        $path   = \pathinfo($img);
+        $img    = \imagecreatefromjpeg($img);
+        $xratio = $thumbwidth / \imagesx($img);
+        $yratio = $thumbheight / \imagesy($img);
         if ($xratio < 1 || $yratio < 1) {
             if ($xratio < $yratio) {
-                $resized = imagecreatetruecolor($thumbwidth, floor(imagesy($img) * $xratio));
+                $resized = \imagecreatetruecolor($thumbwidth, \floor(\imagesy($img) * $xratio));
             } else {
-                $resized = imagecreatetruecolor(floor(imagesx($img) * $yratio), $thumbheight);
+                $resized = \imagecreatetruecolor(\floor(\imagesx($img) * $yratio), $thumbheight);
             }
-            imagecopyresampled($resized, $img, 0, 0, 0, 0, imagesx($resized) + 1, imagesy($resized) + 1, imagesx($img), imagesy($img));
-            imagejpeg($resized, "{$path_upload}/thumbs/thumb_{$path['basename']}");
-            imagedestroy($resized);
+            \imagecopyresampled($resized, $img, 0, 0, 0, 0, \imagesx($resized) + 1, \imagesy($resized) + 1, \imagesx($img), \imagesy($img));
+            \imagejpeg($resized, "{$path_upload}/thumbs/thumb_{$path['basename']}");
+            \imagedestroy($resized);
         } else {
-            imagejpeg($img, "{$path_upload}/thumbs/thumb_{$path['basename']}");
+            \imagejpeg($img, "{$path_upload}/thumbs/thumb_{$path['basename']}");
         }
-        imagedestroy($img);
-        $path2   = pathinfo($img2);
-        $img2    = imagecreatefromjpeg($img2);
-        $xratio2 = $pictwidth / imagesx($img2);
-        $yratio2 = $pictheight / imagesy($img2);
+        \imagedestroy($img);
+        $path2   = \pathinfo($img2);
+        $img2    = \imagecreatefromjpeg($img2);
+        $xratio2 = $pictwidth / \imagesx($img2);
+        $yratio2 = $pictheight / \imagesy($img2);
         if ($xratio2 < 1 || $yratio2 < 1) {
             if ($xratio2 < $yratio2) {
-                $resized2 = imagecreatetruecolor($pictwidth, floor(imagesy($img2) * $xratio2));
+                $resized2 = \imagecreatetruecolor($pictwidth, \floor(\imagesy($img2) * $xratio2));
             } else {
-                $resized2 = imagecreatetruecolor(floor(imagesx($img2) * $yratio2), $pictheight);
+                $resized2 = \imagecreatetruecolor(\floor(\imagesx($img2) * $yratio2), $pictheight);
             }
-            imagecopyresampled($resized2, $img2, 0, 0, 0, 0, imagesx($resized2) + 1, imagesy($resized2) + 1, imagesx($img2), imagesy($img2));
-            imagejpeg($resized2, "{$path_upload}/midsize/resized_{$path2['basename']}");
-            imagedestroy($resized2);
+            \imagecopyresampled($resized2, $img2, 0, 0, 0, 0, \imagesx($resized2) + 1, \imagesy($resized2) + 1, \imagesx($img2), \imagesy($img2));
+            \imagejpeg($resized2, "{$path_upload}/midsize/resized_{$path2['basename']}");
+            \imagedestroy($resized2);
         } else {
-            imagejpeg($img2, "{$path_upload}/midsize/resized_{$path2['basename']}");
+            \imagejpeg($img2, "{$path_upload}/midsize/resized_{$path2['basename']}");
         }
-        imagedestroy($img2);
+        \imagedestroy($img2);
     }
 }

@@ -66,8 +66,8 @@ class ClassifiedsTree
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . ' ';
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
-            $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
         if ('' != $order) {
@@ -98,8 +98,8 @@ class ClassifiedsTree
         $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id);
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
-            $result .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $result .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
         $count = $this->db->getRowsNum($result);
@@ -126,8 +126,8 @@ class ClassifiedsTree
         $sql    = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
-            $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
         if ('' != $order) {
@@ -158,8 +158,8 @@ class ClassifiedsTree
         $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
-            $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
         if ('' != $order) {
@@ -189,9 +189,9 @@ class ClassifiedsTree
         //        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . "'");
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
+        if (\is_array($categories) && \count($categories) > 0) {
             //            $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
-            $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
+            $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
         }
 
         $result = $this->db->query($sql);
@@ -234,8 +234,8 @@ class ClassifiedsTree
         $sql        = 'SELECT SQL_CACHE cid, title FROM ' . $this->table . ' WHERE pid=0';
         $categories = Adslight\Utility::getMyItemIds('adslight_submit');
 
-        if (is_array($categories) && count($categories) > 0) {
-            $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
         }
 
         if ('' != $order) {
@@ -255,7 +255,7 @@ class ClassifiedsTree
             $sel = '';
             $arr = $this->getChildTreeArray($catid, $order);
             foreach ($arr as $option) {
-                $option['prefix'] = str_replace('.', '--', $option['prefix']);
+                $option['prefix'] = \str_replace('.', '--', $option['prefix']);
                 $catpath          = $option['prefix'] . '&nbsp;' . $myts->displayTarea($option[$title]);
                 if ($option['cid'] == $preset_id) {
                     $sel = ' selected';
@@ -288,7 +288,7 @@ class ClassifiedsTree
 
         $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
 
-        $path = "&nbsp;&nbsp;{$arrow}&nbsp;&nbsp;<a title=\"" . _ADSLIGHT_ANNONCES . " {$name}\" href=\"{$funcURL}" . $this->id . '=' . (int)$sel_id . "\">{$name}</a>{$path}";
+        $path = "&nbsp;&nbsp;{$arrow}&nbsp;&nbsp;<a title=\"" . \_ADSLIGHT_ANNONCES . " {$name}\" href=\"{$funcURL}" . $this->id . '=' . (int)$sel_id . "\">{$name}</a>{$path}";
 
         if (0 == $parentid) {
             return $path;
@@ -333,8 +333,8 @@ class ClassifiedsTree
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
-            $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
         if ('' != $order) {
@@ -368,8 +368,8 @@ class ClassifiedsTree
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
-            $sql .= ' AND cid IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
         }
 
         if ('' != $order) {
@@ -419,9 +419,9 @@ class ClassifiedsTree
                 echo "({$cat_order})";
             }
             echo "&nbsp;&nbsp;{$name}&nbsp;&nbsp;</th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsNewCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/add.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_ADDSUBCAT . '" title="' . _AM_ADSLIGHT_ADDSUBCAT . "\"></a></th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsModCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_MODIFSUBCAT . '" title="' . _AM_ADSLIGHT_MODIFSUBCAT . "\"></a></th>
-                <th class=\"center width10\"><a href=\"category.php?op=AdsDelCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/delete.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . _AM_ADSLIGHT_DELSUBCAT . '" title="' . _AM_ADSLIGHT_DELSUBCAT . '"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsNewCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/add.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . \_AM_ADSLIGHT_ADDSUBCAT . '" title="' . \_AM_ADSLIGHT_ADDSUBCAT . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsModCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/edit.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . \_AM_ADSLIGHT_MODIFSUBCAT . '" title="' . \_AM_ADSLIGHT_MODIFSUBCAT . "\"></a></th>
+                <th class=\"center width10\"><a href=\"category.php?op=AdsDelCat&amp;cid={$catid}\"><img src=\"{$pathIcon16}/delete.png\" border=\"0\" width=\"18\" height=\"18\" alt=\"" . \_AM_ADSLIGHT_DELSUBCAT . '" title="' . \_AM_ADSLIGHT_DELSUBCAT . '"></a></th>
                 </tr>';
 
             $arr   = $this->getChildTreeMapArray($catid, $order);
@@ -429,16 +429,16 @@ class ClassifiedsTree
             foreach ($arr as $option) {
                 echo "<tr class=\"{$class}\"><td>";
 
-                $option['prefix'] = str_replace('.', ' &nbsp;&nbsp;-&nbsp;', $option['prefix']);
+                $option['prefix'] = \str_replace('.', ' &nbsp;&nbsp;-&nbsp;', $option['prefix']);
                 $catpath          = $option['prefix'] . '&nbsp;&nbsp;' . $myts->htmlSpecialChars($option[$title]);
                 $cat_orderS       = $option['cat_order'];
                 if ('cat_order' === $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
                     echo "({$cat_orderS})";
                 }
                 echo '' . $catpath . '</a></td>
-                    <td align="center"><a href="category.php?op=AdsNewCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/add.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_ADDSUBCAT . '"title="' . _AM_ADSLIGHT_ADDSUBCAT . '"></a></td>
-                    <td align="center"><a href="category.php?op=AdsModCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/edit.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_MODIFSUBCAT . '" title ="' . _AM_ADSLIGHT_MODIFSUBCAT . '"></a></td>
-                    <td align="center"><a href="category.php?op=AdsDelCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/delete.png' . '" border=0 width=18 height=18 alt="' . _AM_ADSLIGHT_DELSUBCAT . '" title="' . _AM_ADSLIGHT_DELSUBCAT . '"></a></td>';
+                    <td align="center"><a href="category.php?op=AdsNewCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/add.png' . '" border=0 width=18 height=18 alt="' . \_AM_ADSLIGHT_ADDSUBCAT . '"title="' . \_AM_ADSLIGHT_ADDSUBCAT . '"></a></td>
+                    <td align="center"><a href="category.php?op=AdsModCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/edit.png' . '" border=0 width=18 height=18 alt="' . \_AM_ADSLIGHT_MODIFSUBCAT . '" title ="' . \_AM_ADSLIGHT_MODIFSUBCAT . '"></a></td>
+                    <td align="center"><a href="category.php?op=AdsDelCat&amp;cid=' . $option[$this->id] . '"><img src="' . $pathIcon16 . '/delete.png' . '" border=0 width=18 height=18 alt="' . \_AM_ADSLIGHT_DELSUBCAT . '" title="' . \_AM_ADSLIGHT_DELSUBCAT . '"></a></td>';
 
                 $class = ('even' === $class) ? 'odd' : 'even';
             }
@@ -460,8 +460,8 @@ class ClassifiedsTree
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . ' ';
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (is_array($categories) && count($categories) > 0) {
-            $sql .= ' AND ' . $this->pid . ' IN (' . implode(',', $categories) . ') ';
+        if (\is_array($categories) && \count($categories) > 0) {
+            $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
         if ('' != $order) {

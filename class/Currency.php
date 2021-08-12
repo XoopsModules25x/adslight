@@ -38,7 +38,7 @@ class Currency
      */
     public function __construct()
     {
-        $moduleDirName = basename(__DIR__);
+        $moduleDirName = \basename(__DIR__);
         $helper        = Helper::getHelper($moduleDirName);
 
         // Get the module's preferences
@@ -48,8 +48,8 @@ class Currency
         $this->moneyFull        = $helper->getConfig('money_full');
         $this->moneyShort       = $helper->getConfig('money_short');
         $this->currencyPosition = $helper->getConfig('currency_position');
-        $this->thousandsSep     = str_replace('[space]', ' ', $this->thousandsSep);
-        $this->decimalSep       = str_replace('[space]', ' ', $this->decimalSep);
+        $this->thousandsSep     = \str_replace('[space]', ' ', $this->thousandsSep);
+        $this->decimalSep       = \str_replace('[space]', ' ', $this->decimalSep);
     }
 
     /**
@@ -78,7 +78,7 @@ class Currency
      */
     public function amountInCurrency($amount = 0)
     {
-        return number_format($amount, $this->decimalsCount, $this->decimalSep, $this->thousandsSep);
+        return \number_format($amount, $this->decimalsCount, $this->decimalSep, $this->thousandsSep);
     }
 
     /**

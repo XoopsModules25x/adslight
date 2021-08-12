@@ -57,7 +57,7 @@ class Utility
     {
         global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta;
 
-        $datenow = time();
+        $datenow = \time();
         $message = '';
 
         $result5 = $xoopsDB->query('SELECT lid, title, expire, type, desctext, date, email, submitter, photo, valid, hits, comments, remind FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes'");
@@ -81,17 +81,17 @@ class Utility
 
                 if ($email) {
                     $tags               = [];
-                    $subject            = '' . _ADSLIGHT_ALMOST . '';
+                    $subject            = '' . \_ADSLIGHT_ALMOST . '';
                     $tags['TITLE']      = $title;
-                    $tags['HELLO']      = '' . _ADSLIGHT_HELLO . '';
-                    $tags['YOUR_AD_ON'] = '' . _ADSLIGHT_YOUR_AD_ON . '';
-                    $tags['VEDIT_AD']   = '' . _ADSLIGHT_VEDIT_AD . '';
-                    $tags['YOUR_AD']    = '' . _ADSLIGHT_YOUR_AD . '';
-                    $tags['SOON']       = '' . _ADSLIGHT_SOON . '';
-                    $tags['VIEWED']     = '' . _ADSLIGHT_VU . '';
-                    $tags['TIMES']      = '' . _ADSLIGHT_TIMES . '';
-                    $tags['WEBMASTER']  = '' . _ADSLIGHT_WEBMASTER . '';
-                    $tags['THANKS']     = '' . _ADSLIGHT_THANKS . '';
+                    $tags['HELLO']      = '' . \_ADSLIGHT_HELLO . '';
+                    $tags['YOUR_AD_ON'] = '' . \_ADSLIGHT_YOUR_AD_ON . '';
+                    $tags['VEDIT_AD']   = '' . \_ADSLIGHT_VEDIT_AD . '';
+                    $tags['YOUR_AD']    = '' . \_ADSLIGHT_YOUR_AD . '';
+                    $tags['SOON']       = '' . \_ADSLIGHT_SOON . '';
+                    $tags['VIEWED']     = '' . \_ADSLIGHT_VU . '';
+                    $tags['TIMES']      = '' . \_ADSLIGHT_TIMES . '';
+                    $tags['WEBMASTER']  = '' . \_ADSLIGHT_WEBMASTER . '';
+                    $tags['THANKS']     = '' . \_ADSLIGHT_THANKS . '';
                     $tags['TYPE']       = static::getNameType($type);
                     $tags['DESCTEXT']   = $desctext;
                     $tags['HITS']       = $hits;
@@ -99,7 +99,7 @@ class Utility
                     $tags['SUBMITTER']  = $submitter;
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail = getMailer();
+                    $mail = \getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expires.tpl');
                     $mail->useMail();
@@ -124,14 +124,14 @@ class Utility
                         $destination  = XOOPS_ROOT_PATH . '/uploads/adslight';
                         $destination2 = XOOPS_ROOT_PATH . '/uploads/adslight/thumbs';
                         $destination3 = XOOPS_ROOT_PATH . '/uploads/adslight/midsize';
-                        if (is_file("$destination/$url")) {
-                            unlink("$destination/$url");
+                        if (\is_file("$destination/$url")) {
+                            \unlink("$destination/$url");
                         }
-                        if (is_file("$destination2/thumb_$url")) {
-                            unlink("$destination2/thumb_$url");
+                        if (\is_file("$destination2/thumb_$url")) {
+                            \unlink("$destination2/thumb_$url");
                         }
-                        if (is_file("$destination3/resized_$url")) {
-                            unlink("$destination3/resized_$url");
+                        if (\is_file("$destination3/resized_$url")) {
+                            \unlink("$destination3/resized_$url");
                         }
                     }
                 }
@@ -142,26 +142,26 @@ class Utility
                 //  $message = ""._ADS_HELLO." $submitter,\n\n"._ADS_STOP2."\n $type : $title\n $desctext\n"._ADS_STOP3."\n\n"._ADS_VU." $lu "._ADS_VU2."\n\n"._ADS_OTHER." ".XOOPS_URL."/modules/myAds\n\n"._ADS_THANK."\n\n"._ADS_TEAM." ".$meta['title']."\n".XOOPS_URL."";
                 if ($email) {
                     $tags               = [];
-                    $subject            = '' . _ADSLIGHT_STOP . '';
+                    $subject            = '' . \_ADSLIGHT_STOP . '';
                     $tags['TITLE']      = $title;
-                    $tags['HELLO']      = '' . _ADSLIGHT_HELLO . '';
+                    $tags['HELLO']      = '' . \_ADSLIGHT_HELLO . '';
                     $tags['TYPE']       = static::getNameType($type);
                     $tags['DESCTEXT']   = $desctext;
                     $tags['HITS']       = $hits;
                     $tags['META_TITLE'] = $meta['title'];
                     $tags['SUBMITTER']  = $submitter;
-                    $tags['YOUR_AD_ON'] = '' . _ADSLIGHT_YOUR_AD_ON . '';
-                    $tags['EXPIRED']    = '' . _ADSLIGHT_EXPIRED . '';
-                    $tags['MESSTEXT']   = stripslashes($message);
-                    $tags['OTHER']      = '' . _ADSLIGHT_OTHER . '';
-                    $tags['WEBMASTER']  = '' . _ADSLIGHT_WEBMASTER . '';
-                    $tags['THANKS']     = '' . _ADSLIGHT_THANKS . '';
-                    $tags['VIEWED']     = '' . _ADSLIGHT_VU . '';
-                    $tags['TIMES']      = '' . _ADSLIGHT_TIMES . '';
-                    $tags['TEAM']       = '' . _ADSLIGHT_TEAM . '';
+                    $tags['YOUR_AD_ON'] = '' . \_ADSLIGHT_YOUR_AD_ON . '';
+                    $tags['EXPIRED']    = '' . \_ADSLIGHT_EXPIRED . '';
+                    $tags['MESSTEXT']   = \stripslashes($message);
+                    $tags['OTHER']      = '' . \_ADSLIGHT_OTHER . '';
+                    $tags['WEBMASTER']  = '' . \_ADSLIGHT_WEBMASTER . '';
+                    $tags['THANKS']     = '' . \_ADSLIGHT_THANKS . '';
+                    $tags['VIEWED']     = '' . \_ADSLIGHT_VU . '';
+                    $tags['TIMES']      = '' . \_ADSLIGHT_TIMES . '';
+                    $tags['TEAM']       = '' . \_ADSLIGHT_TEAM . '';
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail = getMailer();
+                    $mail = \getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expired.tpl');
                     $mail->useMail();
@@ -198,7 +198,7 @@ class Utility
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
-        $finalrating = number_format($finalrating, 4);
+        $finalrating = \number_format($finalrating, 4);
         $query       = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET user_rating=$finalrating, user_votes=$votesDB WHERE usid=" . $xoopsDB->escape($sel_id) . '';
         //echo $query;
         $xoopsDB->query($query) || exit();
@@ -224,7 +224,7 @@ class Utility
             $totalrating += $rating;
         }
         $finalrating = $totalrating / $votesDB;
-        $finalrating = number_format($finalrating, 4);
+        $finalrating = \number_format($finalrating, 4);
         $query       = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET item_rating=$finalrating, item_votes=$votesDB WHERE lid=" . $xoopsDB->escape($sel_id) . '';
         //echo $query;
         $xoopsDB->query($query) || exit();
@@ -242,7 +242,7 @@ class Utility
         $categories = self::getMyItemIds('adslight_view');
         $count      = 0;
         $arr        = [];
-        if (in_array($sel_id, $categories)) {
+        if (\in_array($sel_id, $categories)) {
             $query = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$sel_id . " AND valid='Yes' AND status!='1'";
 
             $result = $xoopsDB->query($query);
@@ -250,7 +250,7 @@ class Utility
             $count = $thing;
             $arr   = $mytree->getAllChildId($sel_id);
             foreach ($arr as $iValue) {
-                if (in_array($iValue, $categories)) {
+                if (\in_array($iValue, $categories)) {
                     $query2 = 'SELECT SQL_CACHE count(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE cid=' . (int)$iValue . " AND valid='Yes' AND status!='1'";
 
                     $result2 = $xoopsDB->query($query2);
@@ -271,17 +271,17 @@ class Utility
     public static function getMyItemIds($permtype)
     {
         static $permissions = [];
-        if (is_array($permissions)
-            && array_key_exists($permtype, $permissions)) {
+        if (\is_array($permissions)
+            && \array_key_exists($permtype, $permissions)) {
             return $permissions[$permtype];
         }
 
         /** @var \XoopsModuleHandler $moduleHandler */
-        $moduleHandler = xoops_getHandler('module');
+        $moduleHandler = \xoops_getHandler('module');
         $myModule      = $moduleHandler->getByDirname('adslight');
-        $groups        = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+        $groups        = \is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
         /** @var \XoopsGroupPermHandler $grouppermHandler */
-        $grouppermHandler       = xoops_getHandler('groupperm');
+        $grouppermHandler       = \xoops_getHandler('groupperm');
         $categories             = $grouppermHandler->getItemIds($permtype, $groups, $myModule->getVar('mid'));
         $permissions[$permtype] = $categories;
 
@@ -300,13 +300,13 @@ class Utility
         global $xoopsModule;
         $helper = \XoopsModules\Adslight\Helper::getInstance();
         static $tbloptions = [];
-        if (is_array($tbloptions) && array_key_exists($option, $tbloptions)) {
+        if (\is_array($tbloptions) && \array_key_exists($option, $tbloptions)) {
             return $tbloptions[$option];
         }
 
         $retval = false;
         if (isset($GLOBALS['xoopsModuleConfig'])
-            && (is_object($xoopsModule)
+            && (\is_object($xoopsModule)
                 && $xoopsModule->getVar('dirname') == $repmodule
                 && $xoopsModule->getVar('isactive'))) {
             if (isset($GLOBALS['xoopsModuleConfig'][$option])) {
@@ -314,10 +314,10 @@ class Utility
             }
         } else {
             /** @var \XoopsModuleHandler $moduleHandler */
-            $moduleHandler = xoops_getHandler('module');
+            $moduleHandler = \xoops_getHandler('module');
             $module        = $moduleHandler->getByDirname($repmodule);
             /** @var \XoopsConfigHandler $configHandler */
-            $configHandler = xoops_getHandler('config');
+            $configHandler = \xoops_getHandler('config');
             if ($module) {
                 $moduleConfig = $configHandler->getConfigsByCat(0, $GLOBALS['xoopsModule']->getVar('mid'));
                 if (null !== $helper->getConfig($option)) {
@@ -353,7 +353,7 @@ class Utility
      */
     public static function convertOrderByIn($orderby)
     {
-        switch (trim($orderby)) {
+        switch (\trim($orderby)) {
             case 'titleA':
                 $orderby = 'title ASC';
                 break;
@@ -393,28 +393,28 @@ class Utility
     {
         $orderbyTrans = '';
         if ('hits ASC' === $orderby) {
-            $orderbyTrans = '' . _ADSLIGHT_POPULARITYLTOM . '';
+            $orderbyTrans = '' . \_ADSLIGHT_POPULARITYLTOM . '';
         }
         if ('hits DESC' === $orderby) {
-            $orderbyTrans = '' . _ADSLIGHT_POPULARITYMTOL . '';
+            $orderbyTrans = '' . \_ADSLIGHT_POPULARITYMTOL . '';
         }
         if ('title ASC' === $orderby) {
-            $orderbyTrans = '' . _ADSLIGHT_TITLEATOZ . '';
+            $orderbyTrans = '' . \_ADSLIGHT_TITLEATOZ . '';
         }
         if ('title DESC' === $orderby) {
-            $orderbyTrans = '' . _ADSLIGHT_TITLEZTOA . '';
+            $orderbyTrans = '' . \_ADSLIGHT_TITLEZTOA . '';
         }
         if ('date ASC' === $orderby) {
-            $orderbyTrans = '' . _ADSLIGHT_DATEOLD . '';
+            $orderbyTrans = '' . \_ADSLIGHT_DATEOLD . '';
         }
         if ('date DESC' === $orderby) {
-            $orderbyTrans = '' . _ADSLIGHT_DATENEW . '';
+            $orderbyTrans = '' . \_ADSLIGHT_DATENEW . '';
         }
         if ('price ASC' === $orderby) {
-            $orderbyTrans = _ADSLIGHT_PRICELTOH;
+            $orderbyTrans = \_ADSLIGHT_PRICELTOH;
         }
         if ('price DESC' === $orderby) {
-            $orderbyTrans = '' . _ADSLIGHT_PRICEHTOL . '';
+            $orderbyTrans = '' . \_ADSLIGHT_PRICEHTOL . '';
         }
 
         return $orderbyTrans;
@@ -471,7 +471,7 @@ class Utility
         $options = [];
         $isAdmin = $GLOBALS['xoopsUser']->isAdmin($xoopsModule->getVar('mid'));
 
-        if (class_exists('XoopsFormEditor')) {
+        if (\class_exists('XoopsFormEditor')) {
             $options['name']   = $name;
             $options['value']  = $value;
             $options['rows']   = 20;
@@ -479,12 +479,12 @@ class Utility
             $options['width']  = $width;
             $options['height'] = $height;
             if ($isAdmin) {
-                $myEditor = new \XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new \XoopsFormEditor(\ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightAdminUser'], $options, $nohtml = false, $onfailure = 'textarea');
             } else {
-                $myEditor = new \XoopsFormEditor(ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
+                $myEditor = new \XoopsFormEditor(\ucfirst($name), $GLOBALS['xoopsModuleConfig']['adslightEditorUser'], $options, $nohtml = false, $onfailure = 'textarea');
             }
         } else {
-            $myEditor = new \XoopsFormDhtmlTextArea(ucfirst($name), $name, $value, '100%', '100%');
+            $myEditor = new \XoopsFormDhtmlTextArea(\ucfirst($name), $name, $value, '100%', '100%');
         }
 
         //        $form->addElement($descEditor);
@@ -566,9 +566,9 @@ class Utility
 
         $xoopsTree   = new \XoopsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
         $jump = XOOPS_URL . '/modules/adslight/viewcats.php?cid=';
-        ob_start();
+        \ob_start();
         $xoopsTree->makeMySelBox('title', 'title', 0, 1, 'pid', 'location="' . $jump . '"+this.options[this.selectedIndex].value');
-        $block['selectbox'] = ob_get_clean();
+        $block['selectbox'] = \ob_get_clean();
 
         return $block;
     }
@@ -641,8 +641,8 @@ class Utility
     public static function getMoneyFormat($format, $number)
     {
         $regex = '/%((?:[\^!\-]|\+|\(|\=.)*)([0-9]+)?' . '(?:#([0-9]+))?(?:\.([0-9]+))?([in%])/';
-        if ('C' === setlocale(LC_MONETARY, 0)) {
-            setlocale(LC_MONETARY, '');
+        if ('C' === \setlocale(\LC_MONETARY, 0)) {
+            \setlocale(\LC_MONETARY, '');
         }
 
         //JJDai
@@ -650,20 +650,20 @@ class Utility
         //setlocale(LC_ALL, 'fr_FR');
 //$symb = $helper->getConfig('adslight_currency_symbol');
 
-        $locale = localeconv();
-        preg_match_all($regex, $format, $matches, PREG_SET_ORDER);
+        $locale = \localeconv();
+        \preg_match_all($regex, $format, $matches, \PREG_SET_ORDER);
         foreach ($matches as $fmatch) {
             $value      = (float)$number;
             $flags      = [
-                'fillchar'  => preg_match('/\=(.)/', $fmatch[1], $match) ? $match[1] : ' ',
-                'nogroup'   => preg_match('/\^/', $fmatch[1]) > 0,
-                'usesignal' => preg_match('/\+|\(/', $fmatch[1], $match) ? $match[0] : '+',
-                'nosimbol'  => preg_match('/\!/', $fmatch[1]) > 0,
-                'isleft'    => preg_match('/\-/', $fmatch[1]) > 0,
+                'fillchar'  => \preg_match('/\=(.)/', $fmatch[1], $match) ? $match[1] : ' ',
+                'nogroup'   => \preg_match('/\^/', $fmatch[1]) > 0,
+                'usesignal' => \preg_match('/\+|\(/', $fmatch[1], $match) ? $match[0] : '+',
+                'nosimbol'  => \preg_match('/\!/', $fmatch[1]) > 0,
+                'isleft'    => \preg_match('/\-/', $fmatch[1]) > 0,
             ];
-            $width      = trim($fmatch[2]) ? (int)$fmatch[2] : 0;
-            $left       = trim($fmatch[3]) ? (int)$fmatch[3] : 0;
-            $right      = trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
+            $width      = \trim($fmatch[2]) ? (int)$fmatch[2] : 0;
+            $left       = \trim($fmatch[3]) ? (int)$fmatch[3] : 0;
+            $right      = \trim($fmatch[4]) ? (int)$fmatch[4] : $locale['int_frac_digits'];
             $conversion = $fmatch[5];
 
             $positive = true;
@@ -706,24 +706,24 @@ class Utility
             }
             $space = $locale["{$letter}_sep_by_space"] ? ' ' : '';
 
-            $value = number_format($value, $right, $locale['mon_decimal_point'], $flags['nogroup'] ? '' : $locale['mon_thousands_sep']);
-            $value = @explode($locale['mon_decimal_point'], $value);
+            $value = \number_format($value, $right, $locale['mon_decimal_point'], $flags['nogroup'] ? '' : $locale['mon_thousands_sep']);
+            $value = @\explode($locale['mon_decimal_point'], $value);
 
-            $n = mb_strlen($prefix) + mb_strlen($currency) + mb_strlen($value[0]);
+            $n = \mb_strlen($prefix) + \mb_strlen($currency) + \mb_strlen($value[0]);
             if ($left > 0 && $left > $n) {
-                $value[0] = str_repeat($flags['fillchar'], $left - $n) . $value[0];
+                $value[0] = \str_repeat($flags['fillchar'], $left - $n) . $value[0];
             }
-            $value = implode($locale['mon_decimal_point'], $value);
+            $value = \implode($locale['mon_decimal_point'], $value);
             if ($locale["{$letter}_cs_precedes"]) {
                 $value = $prefix . $currency . $space . $value . $suffix;
             } else {
                 $value = $prefix . $value . $space . $currency . $suffix;
             }
             if ($width > 0) {
-                $value = str_pad($value, $width, $flags['fillchar'], $flags['isleft'] ? STR_PAD_RIGHT : STR_PAD_LEFT);
+                $value = \str_pad($value, $width, $flags['fillchar'], $flags['isleft'] ? \STR_PAD_RIGHT : \STR_PAD_LEFT);
             }
 
-            $format = str_replace($fmatch[0], $value, $format);
+            $format = \str_replace($fmatch[0], $value, $format);
         }
 
         return $format;
@@ -749,12 +749,12 @@ class Utility
 //        $moduleId = $helper->getModule()->getVar('mid');
         $moduleId = $xoopsModule->getVar('mid');
 
-        $grouppermHandler = xoops_getHandler('groupperm');
+        $grouppermHandler = \xoops_getHandler('groupperm');
         // First, if the permissions are already there, delete them
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler->deleteByModule($moduleId, $permName, $categoryId);
         // Save the new permissions
-        if (count($groups) > 0) {
+        if (\count($groups) > 0) {
             foreach ($groups as $groupId) {
                 $grouppermHandler->addRight($permName, $categoryId, $groupId, $moduleId);
             }
@@ -777,7 +777,7 @@ class Utility
         global $start, $order, $file_cat, $sort, $xoopsModule;
 
         $select_view   = '';
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
         $helper = Adslight\Helper::getInstance();
 
         $pathModIcon16 = XOOPS_URL . '/modules/' . $moduleDirName . '/' . $helper->getModule()->getInfo('modicons16');
@@ -806,9 +806,9 @@ class Utility
     public static function blockAddCatSelect($cats)
     {
         $cat_sql = '';
-        if (is_array($cats)) {
-            $cat_sql = '(' . current($cats);
-            array_shift($cats);
+        if (\is_array($cats)) {
+            $cat_sql = '(' . \current($cats);
+            \array_shift($cats);
             foreach ($cats as $cat) {
                 $cat_sql .= ',' . $cat;
             }
@@ -826,10 +826,10 @@ class Utility
         global $xoopsTpl, $xoTheme;
         $myts    = \MyTextSanitizer::getInstance();
         $content = $myts->undoHtmlSpecialChars($myts->displayTarea($content));
-        if (null !== $xoTheme && is_object($xoTheme)) {
-            $xoTheme->addMeta('meta', 'keywords', strip_tags($content));
+        if (null !== $xoTheme && \is_object($xoTheme)) {
+            $xoTheme->addMeta('meta', 'keywords', \strip_tags($content));
         } else {    // Compatibility for old Xoops versions
-            $xoopsTpl->assign('xoops_metaKeywords', strip_tags($content));
+            $xoopsTpl->assign('xoops_metaKeywords', \strip_tags($content));
         }
     }
 
@@ -841,10 +841,10 @@ class Utility
         global $xoopsTpl, $xoTheme;
         $myts    = \MyTextSanitizer::getInstance();
         $content = $myts->undoHtmlSpecialChars($myts->displayTarea($content));
-        if (null !== $xoTheme && is_object($xoTheme)) {
-            $xoTheme->addMeta('meta', 'description', strip_tags($content));
+        if (null !== $xoTheme && \is_object($xoTheme)) {
+            $xoTheme->addMeta('meta', 'description', \strip_tags($content));
         } else {    // Compatibility for old Xoops versions
-            $xoopsTpl->assign('xoops_metaDescription', strip_tags($content));
+            $xoopsTpl->assign('xoops_metaDescription', \strip_tags($content));
         }
     }
 
@@ -869,7 +869,7 @@ class Utility
         }
 
         $row      = $GLOBALS['xoopsDB']->fetchBoth($result);
-        $enumList = explode(',', str_replace("'", '', substr($row['COLUMN_TYPE'], 5, - 6)));
+        $enumList = \explode(',', \str_replace("'", '', \substr($row['COLUMN_TYPE'], 5, - 6)));
         return $enumList;
     }
 
@@ -885,11 +885,11 @@ class Utility
         $new_id = false;
         $table  = $GLOBALS['xoopsDB']->prefix($tableName);
         // copy content of the record you wish to clone
-        $tempTable = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query("SELECT * FROM $table WHERE $id_field='$id' "), MYSQLI_ASSOC) or exit('Could not select record');
+        $tempTable = $GLOBALS['xoopsDB']->fetchArray($GLOBALS['xoopsDB']->query("SELECT * FROM $table WHERE $id_field='$id' "), \MYSQLI_ASSOC) or exit('Could not select record');
         // set the auto-incremented id's value to blank.
         unset($tempTable[$id_field]);
         // insert cloned copy of the original  record
-        $result = $GLOBALS['xoopsDB']->queryF("INSERT INTO $table (" . implode(', ', array_keys($tempTable)) . ") VALUES ('" . implode("', '", array_values($tempTable)) . "')") or exit($GLOBALS['xoopsDB']->error());
+        $result = $GLOBALS['xoopsDB']->queryF("INSERT INTO $table (" . \implode(', ', \array_keys($tempTable)) . ") VALUES ('" . \implode("', '", \array_values($tempTable)) . "')") or exit($GLOBALS['xoopsDB']->error());
 
         if ($result) {
             // Return the new id
@@ -916,55 +916,55 @@ class Utility
     {
         if ($considerHtml) {
             // if the plain text is shorter than the maximum length, return the whole text
-            if (strlen(preg_replace('/<.*?' . '>/', '', $text)) <= $length) {
+            if (\strlen(\preg_replace('/<.*?' . '>/', '', $text)) <= $length) {
                 return $text;
             }
             // splits all html-tags to scanable lines
-            preg_match_all('/(<.+?' . '>)?([^<>]*)/s', $text, $lines, PREG_SET_ORDER);
-            $total_length = strlen($ending);
+            \preg_match_all('/(<.+?' . '>)?([^<>]*)/s', $text, $lines, \PREG_SET_ORDER);
+            $total_length = \strlen($ending);
             $openTags    = [];
             $truncate     = '';
             foreach ($lines as $line_matchings) {
                 // if there is any html-tag in this line, handle it and add it (uncounted) to the output
                 if (!empty($line_matchings[1])) {
                     // if it's an "empty element" with or without xhtml-conform closing slash
-                    if (preg_match('/^<(\s*.+?\/\s*|\s*(img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param)(\s.+?)?)>$/is', $line_matchings[1])) {
+                    if (\preg_match('/^<(\s*.+?\/\s*|\s*(img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param)(\s.+?)?)>$/is', $line_matchings[1])) {
                         // do nothing
                         // if tag is a closing tag
-                    } elseif (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
+                    } elseif (\preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
                         // delete tag from $openTags list
-                        $pos = array_search($tag_matchings[1], $openTags);
+                        $pos = \array_search($tag_matchings[1], $openTags);
                         if (false !== $pos) {
                             unset($openTags[$pos]);
                         }
                         // if tag is an opening tag
-                    } elseif (preg_match('/^<\s*([^\s>!]+).*?' . '>$/s', $line_matchings[1], $tag_matchings)) {
+                    } elseif (\preg_match('/^<\s*([^\s>!]+).*?' . '>$/s', $line_matchings[1], $tag_matchings)) {
                         // add tag to the beginning of $openTags list
-                        array_unshift($openTags, strtolower($tag_matchings[1]));
+                        \array_unshift($openTags, \strtolower($tag_matchings[1]));
                     }
                     // add html-tag to $truncate'd text
                     $truncate .= $line_matchings[1];
                 }
                 // calculate the length of the plain text part of the line; handle entities as one character
-                $content_length = strlen(preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
+                $content_length = \strlen(\preg_replace('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', ' ', $line_matchings[2]));
                 if ($total_length + $content_length > $length) {
                     // the number of characters which are left
                     $left            = $length - $total_length;
                     $entities_length = 0;
                     // search for html entities
-                    if (preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, PREG_OFFSET_CAPTURE)) {
+                    if (\preg_match_all('/&[0-9a-z]{2,8};|&#[0-9]{1,7};|[0-9a-f]{1,6};/i', $line_matchings[2], $entities, \PREG_OFFSET_CAPTURE)) {
                         // calculate the real length of all entities in the legal range
                         foreach ($entities[0] as $entity) {
                             if ($entity[1] + 1 - $entities_length <= $left) {
                                 $left--;
-                                $entities_length += strlen($entity[0]);
+                                $entities_length += \strlen($entity[0]);
                             } else {
                                 // no more characters left
                                 break;
                             }
                         }
                     }
-                    $truncate .= substr($line_matchings[2], 0, $left + $entities_length);
+                    $truncate .= \substr($line_matchings[2], 0, $left + $entities_length);
                     // maximum lenght is reached, so get off the loop
                     break;
                 } else {
@@ -977,19 +977,19 @@ class Utility
                 }
             }
         } else {
-            if (strlen($text) <= $length) {
+            if (\strlen($text) <= $length) {
                 return $text;
             } else {
-                $truncate = substr($text, 0, $length - strlen($ending));
+                $truncate = \substr($text, 0, $length - \strlen($ending));
             }
         }
         // if the words shouldn't be cut in the middle...
         if (!$exact) {
             // ...search the last occurance of a space...
-            $spacepos = strrpos($truncate, ' ');
+            $spacepos = \strrpos($truncate, ' ');
             if (isset($spacepos)) {
                 // ...and cut the text in this position
-                $truncate = substr($truncate, 0, $spacepos);
+                $truncate = \substr($truncate, 0, $spacepos);
             }
         }
         // add the defined ending to the text

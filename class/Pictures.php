@@ -54,15 +54,15 @@ class Pictures extends \XoopsObject
     public function __construct($id = null, $lid = null)
     {
         $this->db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $this->initVar('cod_img', XOBJ_DTYPE_INT, null, false, 10);
-        $this->initVar('title', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('date_added', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('date_modified', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('lid', XOBJ_DTYPE_INT, null, false, 10);
-        $this->initVar('uid_owner', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('url', XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('cod_img', \XOBJ_DTYPE_INT, null, false, 10);
+        $this->initVar('title', \XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('date_added', \XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('date_modified', \XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('lid', \XOBJ_DTYPE_INT, null, false, 10);
+        $this->initVar('uid_owner', \XOBJ_DTYPE_TXTBOX, null, false);
+        $this->initVar('url', \XOBJ_DTYPE_TXTBOX, null, false);
         if (!empty($lid)) {
-            if (is_array($lid)) {
+            if (\is_array($lid)) {
                 $this->assignVars($lid);
             } else {
                 $this->load((int)$lid);
@@ -102,13 +102,13 @@ class Pictures extends \XoopsObject
         $xoopsDB          = \XoopsDatabaseFactory::getDatabaseConnection();
         $ret         = [];
         $where_query = '';
-        if (is_array($criteria) && count($criteria) > 0) {
+        if (\is_array($criteria) && \count($criteria) > 0) {
             $where_query = ' WHERE';
             foreach ($criteria as $c) {
                 $where_query .= " {$c} AND";
             }
-            $where_query = mb_substr($where_query, 0, -4);
-        } elseif (!is_array($criteria) && $criteria) {
+            $where_query = \mb_substr($where_query, 0, -4);
+        } elseif (!\is_array($criteria) && $criteria) {
             $where_query = " WHERE {$criteria}";
         }
         if ($asobject) {

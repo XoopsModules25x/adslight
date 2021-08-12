@@ -19,7 +19,7 @@ namespace XoopsModules\Adslight;
  * @since
  * @author       XOOPS Development Team
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+\defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Class Helper
@@ -34,7 +34,7 @@ class Helper extends \Xmf\Module\Helper
     public function __construct($debug = false)
     {
         $this->debug   = $debug;
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
         parent::__construct($moduleDirName);
     }
 
@@ -73,7 +73,7 @@ class Helper extends \Xmf\Module\Helper
         /** @var \XoopsMySQLDatabase $xoopsDB */
         $ret   = false;
         $xoopsDB    = \XoopsDatabaseFactory::getDatabaseConnection();
-        $class = '\\XoopsModules\\' . ucfirst(mb_strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
+        $class = '\\XoopsModules\\' . \ucfirst(\mb_strtolower(\basename(\dirname(__DIR__)))) . '\\' . $name . 'Handler';
         $ret   = new $class($xoopsDB);
 
         return $ret;
