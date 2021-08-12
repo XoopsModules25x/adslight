@@ -907,11 +907,11 @@ class Utility
      * www.gsdesign.ro/blog/cut-html-string-without-breaking-the-tags
      * www.cakephp.org
      *
-     * @param string  $text         String to truncate.
-     * @param integer $length       Length of returned string, including ellipsis.
-     * @param string  $ending       Ending to be appended to the trimmed string.
-     * @param boolean $exact        If false, $text will not be cut mid-word
-     * @param boolean $considerHtml If true, HTML tags would be handled correctly
+     * @param string $text         String to truncate.
+     * @param int    $length       Length of returned string, including ellipsis.
+     * @param string $ending       Ending to be appended to the trimmed string.
+     * @param bool   $exact        If false, $text will not be cut mid-word
+     * @param bool   $considerHtml If true, HTML tags would be handled correctly
      *
      * @return string Trimmed string.
      */
