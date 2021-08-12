@@ -21,10 +21,10 @@ use Xmf\Request;
 use XoopsModules\Adslight;
 
 include dirname(__DIR__) . '/preloads/autoloader.php';
-require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
+require dirname(__DIR__, 3) . '/include/cp_header.php';
+require dirname(__DIR__, 3) . '/class/xoopsformloader.php';
 require  dirname(__DIR__) . '/include/common.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
+require_once dirname(__DIR__, 3) . '/class/xoopsform/grouppermform.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 

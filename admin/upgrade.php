@@ -25,7 +25,7 @@ use XoopsModules\Adslight;
 $moduleDirName = basename(dirname(__DIR__));
 $admin_lang    = '_AM_' . mb_strtoupper($moduleDirName);
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(__DIR__, 3) . '/include/cp_header.php';
 xoops_cp_header();
 
 if (($xoopsUser instanceof \XoopsUser)

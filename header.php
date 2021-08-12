@@ -31,7 +31,7 @@ include __DIR__ . '/preloads/autoloader.php';
 // $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 
 $moduleDirName = basename(__DIR__);
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(__DIR__, 2) . '/mainfile.php';
 
 /** @var \XoopsModules\Adslight\Helper $helper */
 $helper = \XoopsModules\Adslight\Helper::getInstance();

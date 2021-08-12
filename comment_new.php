@@ -22,7 +22,7 @@
 
 use Xmf\Request;
 
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(__DIR__, 2) . '/mainfile.php';
 
 $moduleDirName = basename(__DIR__);
 

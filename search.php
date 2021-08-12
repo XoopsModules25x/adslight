@@ -32,7 +32,7 @@ foreach ($_REQUEST as $key => $val) {
 
 $xoopsOption['pagetype'] = 'search';
 
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(__DIR__, 2) . '/mainfile.php';
 
 $xmid = $xoopsModule->getVar('mid');
 /** @var \XoopsConfigHandler $configHandler */

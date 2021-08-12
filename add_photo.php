@@ -26,7 +26,7 @@ use XoopsModules\Adslight;
 /**
  * Xoops header ...
  */
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once dirname(__DIR__, 2) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 

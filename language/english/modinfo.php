@@ -262,7 +262,7 @@ define('_MI_ADSLIGHT_PURCHASELISTING_DESC', 'These are the categories that the c
 define('_MI_ADSLIGHT_ADVISE_TITLE', 'Our Advise');
 define('_MI_ADSLIGHT_ADVISE_TEXT', 'Here goes your text');
 //Help
-define('_MI_ADSLIGHT_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_ADSLIGHT_DIRNAME', basename(dirname(__DIR__, 2)));
 define('_MI_ADSLIGHT_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_ADSLIGHT_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_ADSLIGHT_HELP_OVERVIEW', 'Overview');

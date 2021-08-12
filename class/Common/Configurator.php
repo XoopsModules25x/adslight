@@ -44,7 +44,7 @@ class Configurator
      */
     public function __construct()
     {
-        require_once dirname(dirname(__DIR__)) . '/include/config.php';
+        require_once dirname(__DIR__, 2) . '/include/config.php';
         $config = getConfig();
 
         $this->name            = $config->name;
