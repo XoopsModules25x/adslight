@@ -222,13 +222,13 @@ switch ($action) {
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->get($mid);
-        $results       = &$module->search($queries, $andor, 20, $start, $uid);
+        $results = $module->search($queries, $andor, 20, $start, $uid);
         $count         = 0;
         if (is_array($results)) {
             $count = count($results);
         }
         if ($count > 0) {
-            $next_results = &$module->search($queries, $andor, 1, $start + 20, $uid);
+            $next_results = $module->search($queries, $andor, 1, $start + 20, $uid);
             $count        = 0;
             if (is_array($next_results)) {
                 $count = count($next_results);

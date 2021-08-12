@@ -99,7 +99,7 @@ class Utility
                     $tags['SUBMITTER']  = $submitter;
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail               = &getMailer();
+                    $mail = getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expires.tpl');
                     $mail->useMail();
@@ -161,7 +161,7 @@ class Utility
                     $tags['TEAM']       = '' . _ADSLIGHT_TEAM . '';
                     $tags['DURATION']   = $expire;
                     $tags['LINK_URL']   = XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/viewads.php?' . '&lid=' . $lids;
-                    $mail               = &getMailer();
+                    $mail = getMailer();
                     $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/');
                     $mail->setTemplate('listing_expired.tpl');
                     $mail->useMail();

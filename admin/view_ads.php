@@ -678,7 +678,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
         $tags['APPROVED']   = _AM_ADSLIGHT_APPROVED;
 
         $subject = _AM_ADSLIGHT_ANNACCEPT;
-        $mail    = &getMailer();
+        $mail    = getMailer();
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . "/language/{$xoopsConfig['language']}/mail_template/");
         $mail->setTemplate('listing_approve.tpl');
         $mail->useMail();
