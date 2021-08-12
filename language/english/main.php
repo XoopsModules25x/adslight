@@ -355,9 +355,9 @@ define('_ADSLIGHT_CONTACT_SUBMITTER', 'Contact');
 define('_ADSLIGHT_SENDFRIENDS', 'Email this listing');
 //report-abuse.php
 define('_ADSLIGHT_REPORTSENDTO', '<b>Report this ad:</b><br><br>ad No. ');
-define('_ADSLIGHT_REPORTANNSEND', 'Thank you for your help!<br>The ad just be reported to Admin.');
-define('_ADSLIGHT_REPORTSUBJET', '[Alert] An ad undesirable ');
-define('_ADSLIGHT_REPORTMESSAGE', 'Believes that this announcement is illegal and you wanted to know.');
+define('_ADSLIGHT_REPORTANNSEND', 'Thank you for your help!<br>The ad has been just reported to Admin.');
+define('_ADSLIGHT_REPORTSUBJET', '[Alert] An ad is undesirable ');
+define('_ADSLIGHT_REPORTMESSAGE', 'believes that this announcement is illegal and wanted you to know about it.');
 //index.php >> Infos Bulle //
 define('_ADSLIGHT_ADD_LISTING_BULL', 'To add a listing<br>Thank you for ');
 define('_ADSLIGHT_ADD_LISTING_SUB', 'register');
