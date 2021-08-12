@@ -215,10 +215,10 @@ if ($trows > '0') {
 
         $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
         [$nom_type] = $xoopsDB->fetchRow($result7);
-        $GLOBALS['xoopsTpl']->assign('type', htmlspecialchars($nom_type));
+        $GLOBALS['xoopsTpl']->assign('type', htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5));
 
         $priceFormatted = Utility::getMoneyFormat('%.2n', $price);
-        $priceTypeprice = htmlspecialchars($nom_price);
+        $priceTypeprice = htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
         $priceCurrency = $GLOBALS['xoopsModuleConfig']['adslight_currency_code'];
         //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
         //            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice;
@@ -275,31 +275,31 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->append('items', [
             'id'          => $lid,
             'cid'         => $cid,
-            'title'       => htmlspecialchars($title),
-            'status'      => htmlspecialchars($status_is),
-            'expire'      => htmlspecialchars($expire),
-            'type'        => htmlspecialchars($type),
+            'title'       => htmlspecialchars($title, ENT_QUOTES | ENT_HTML5),
+            'status'      => htmlspecialchars($status_is, ENT_QUOTES | ENT_HTML5),
+            'expire'      => htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5),
+            'type'        => htmlspecialchars($type, ENT_QUOTES | ENT_HTML5),
             'desctext'    => $myts->displayTarea($desctext),
-            'tel'         => htmlspecialchars($tel),
-            'price'       => htmlspecialchars($price),
-            'typeprice'   => htmlspecialchars($typeprice),
-            'date'        => htmlspecialchars($date),
-            'email'       => htmlspecialchars($email),
-            'submitter'   => htmlspecialchars($submitter),
-            'usid'        => htmlspecialchars($usid),
-            'town'        => htmlspecialchars($town),
-            'country'     => htmlspecialchars($country),
-            'contactby'   => htmlspecialchars($contactby),
-            'premium'     => htmlspecialchars($premium),
-            'valid'       => htmlspecialchars($valid),
+            'tel'         => htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5),
+            'price'       => htmlspecialchars($price, ENT_QUOTES | ENT_HTML5),
+            'typeprice'   => htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5),
+            'date'        => htmlspecialchars($date, ENT_QUOTES | ENT_HTML5),
+            'email'       => htmlspecialchars($email, ENT_QUOTES | ENT_HTML5),
+            'submitter'   => htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5),
+            'usid'        => htmlspecialchars($usid, ENT_QUOTES | ENT_HTML5),
+            'town'        => htmlspecialchars($town, ENT_QUOTES | ENT_HTML5),
+            'country'     => htmlspecialchars($country, ENT_QUOTES | ENT_HTML5),
+            'contactby'   => htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5),
+            'premium'     => htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5),
+            'valid'       => htmlspecialchars($valid, ENT_QUOTES | ENT_HTML5),
             'hits'        => $hits,
-            'rlid'        => htmlspecialchars($rlid),
-            'rdate'       => htmlspecialchars($rdate),
-            'rsubmitter'  => htmlspecialchars($rsubmitter),
-            'message'     => htmlspecialchars($message),
-            'remail'      => htmlspecialchars($remail),
+            'rlid'        => htmlspecialchars($rlid, ENT_QUOTES | ENT_HTML5),
+            'rdate'       => htmlspecialchars($rdate, ENT_QUOTES | ENT_HTML5),
+            'rsubmitter'  => htmlspecialchars($rsubmitter, ENT_QUOTES | ENT_HTML5),
+            'message'     => htmlspecialchars($message, ENT_QUOTES | ENT_HTML5),
+            'remail'      => htmlspecialchars($remail, ENT_QUOTES | ENT_HTML5),
             'rrows'       => $rrows,
-            'expires'     => htmlspecialchars($date2),
+            'expires'     => htmlspecialchars($date2, ENT_QUOTES | ENT_HTML5),
             'view_now'    => $view_now,
             'modify_link' => $modify_link,
             'photo'       => $photo,

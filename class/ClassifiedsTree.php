@@ -201,7 +201,7 @@ class ClassifiedsTree
         }
         [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
-        $name = htmlspecialchars($name);
+        $name = htmlspecialchars($name, ENT_QUOTES | ENT_HTML5);
         $path = '/' . $name . $path . '';
         if (0 == $parentid) {
             return $path;
@@ -284,7 +284,7 @@ class ClassifiedsTree
         }
         [$parentid, $name] = $this->db->fetchRow($result);
         $myts = \MyTextSanitizer::getInstance();
-        $name = htmlspecialchars($name);
+        $name = htmlspecialchars($name, ENT_QUOTES | ENT_HTML5);
 
         $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
 
@@ -430,7 +430,7 @@ class ClassifiedsTree
                 echo "<tr class=\"{$class}\"><td>";
 
                 $option['prefix'] = \str_replace('.', ' &nbsp;&nbsp;-&nbsp;', $option['prefix']);
-                $catpath          = $option['prefix'] . '&nbsp;&nbsp;' . htmlspecialchars($option[$title]);
+                $catpath          = $option['prefix'] . '&nbsp;&nbsp;' . htmlspecialchars($option[$title], ENT_QUOTES | ENT_HTML5);
                 $cat_orderS       = $option['cat_order'];
                 if ('cat_order' === $GLOBALS['xoopsModuleConfig']['adslight_csortorder']) {
                     echo "({$cat_orderS})";
@@ -491,7 +491,7 @@ class ClassifiedsTree
         $myts   = \MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['cid']] = [
-                'title' => htmlspecialchars($myrow['title']),
+                'title' => htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5),
                 'pid'   => $myrow['pid'],
             ];
         }

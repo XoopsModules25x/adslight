@@ -96,7 +96,7 @@ if (!empty($_POST['submit'])) {
     [$lid, $title] = $xoopsDB->fetchRow($result);
     $GLOBALS['xoopsTpl']->assign('link', [
         'lid'   => $lid,
-        'title' => htmlspecialchars($title),
+        'title' => htmlspecialchars($title, ENT_QUOTES | ENT_HTML5),
     ]);
     $GLOBALS['xoopsTpl']->assign('lang_voteonce', constant('_ADSLIGHT_VOTEONCE'));
     $GLOBALS['xoopsTpl']->assign('lang_ratingscale', constant('_ADSLIGHT_RATINGSCALE'));

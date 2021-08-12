@@ -55,20 +55,20 @@ function adslight_b2_show($options)
 
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $a_item = [];
-        $title  = htmlspecialchars($myrow['title']);
+        $title  = htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5);
         //        $status    = htmlspecialchars($myrow['status']);
         $status    = (int)$myrow['status'];
-        $type      = htmlspecialchars($myrow['type']);
-        $price     = htmlspecialchars($myrow['price']);
-        $typeprice = htmlspecialchars($myrow['typeprice']);
-        $town      = htmlspecialchars($myrow['town']);
-        $country   = htmlspecialchars($myrow['country']);
-        $usid      = htmlspecialchars($myrow['usid']);
-        $hits      = htmlspecialchars($myrow['hits']);
+        $type      = htmlspecialchars($myrow['type'], ENT_QUOTES | ENT_HTML5);
+        $price     = htmlspecialchars($myrow['price'], ENT_QUOTES | ENT_HTML5);
+        $typeprice = htmlspecialchars($myrow['typeprice'], ENT_QUOTES | ENT_HTML5);
+        $town      = htmlspecialchars($myrow['town'], ENT_QUOTES | ENT_HTML5);
+        $country   = htmlspecialchars($myrow['country'], ENT_QUOTES | ENT_HTML5);
+        $usid      = htmlspecialchars($myrow['usid'], ENT_QUOTES | ENT_HTML5);
+        $hits      = htmlspecialchars($myrow['hits'], ENT_QUOTES | ENT_HTML5);
 
         if (!XOOPS_USE_MULTIBYTES) {
             if (mb_strlen($myrow['title']) >= $options[2]) {
-                $title = htmlspecialchars(mb_substr($myrow['title'], 0, $options[2] - 1)) . '...';
+                $title = htmlspecialchars(mb_substr($myrow['title'], 0, $options[2] - 1), ENT_QUOTES | ENT_HTML5) . '...';
             }
         }
 

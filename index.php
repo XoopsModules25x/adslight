@@ -144,10 +144,10 @@ function index()
     $count   = 1;
     $content = '';
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-        $title = htmlspecialchars($myrow['title']);
+        $title = htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5);
 
         if ($myrow['img'] && 'http://' !== $myrow['img']) {
-            $cat_img = htmlspecialchars($myrow['img']);
+            $cat_img = htmlspecialchars($myrow['img'], ENT_QUOTES | ENT_HTML5);
             $img     = "<a href=\"viewcats.php?cid={$myrow['cid']}\"><img src=\"" . XOOPS_URL . "/modules/adslight/assets/images/img_cat/{$cat_img}\" align=\"middle\" alt=\"{$title}\"></a>";
         } else {
             $img = '';
@@ -165,7 +165,7 @@ function index()
             if (1 == $GLOBALS['xoopsModuleConfig']['adslight_souscat']) {
                 foreach ($arr as $ele) {
                     if (in_array($ele['cid'], $categories)) {
-                        $chtitle = htmlspecialchars($ele['title']);
+                        $chtitle = htmlspecialchars($ele['title'], ENT_QUOTES | ENT_HTML5);
                         if ($chcount > $GLOBALS['xoopsModuleConfig']['adslight_nbsouscat']) {
                             $subcategories .= "<a href=\"viewcats.php?cid={$myrow['cid']}\">" . _ADSLIGHT_CATPLUS . '</a>';
                             break;
@@ -183,7 +183,7 @@ function index()
             $GLOBALS['xoopsTpl']->append('categories', [
                 'image'         => $img,
                 'id'            => $myrow['cid'],
-                'title'         => htmlspecialchars($myrow['title']),
+                'title'         => htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5),
                 'new'           => categorynewgraphic($myrow['cid']),
                 'subcategories' => $subcategories,
                 'totallisting'  => $totallisting,
@@ -233,12 +233,12 @@ function index()
             $rank = 1;
 
             while (false !== (list($lid, $title, $status, $type, $price, $typeprice, $date, $town, $country, $usid, $premium, $valid, $photo, $hits) = $xoopsDB->fetchRow($result))) {
-                $title = htmlspecialchars($title);
-                $type  = htmlspecialchars($type);
+                $title = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+                $type  = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
                 //                $price     = number_format($price, 2, ',', ' ');
-                $town      = htmlspecialchars($town);
-                $country   = htmlspecialchars($country);
-                $premium   = htmlspecialchars($premium);
+                $town      = htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+                $country   = htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+                $premium   = htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
                 $a_item    = [];
                 $newcount  = $GLOBALS['xoopsModuleConfig']['adslight_countday'];
                 $startdate = (time() - (86400 * $newcount));
@@ -263,7 +263,7 @@ function index()
                 $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
                 [$nom_type] = $xoopsDB->fetchRow($result7);
 
-                $a_item['type']  = htmlspecialchars($nom_type);
+                $a_item['type']  = htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5);
                 $a_item['title'] = '<a href="' . XOOPS_URL . "/modules/adslight/viewads.php?lid={$lid}\"><strong>{$title}</strong></a>";
 
                 $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
@@ -271,10 +271,10 @@ function index()
 
                 if ($price > 0) {
                     $a_item['price']           = $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '';
-                    $a_item['price_typeprice'] = htmlspecialchars($nom_price);
+                    $a_item['price_typeprice'] = htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
                 } else {
                     $a_item['price']           = '';
-                    $a_item['price_typeprice'] = htmlspecialchars($nom_price);
+                    $a_item['price_typeprice'] = htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
                 }
                 $a_item['premium'] = $premium;
                 $a_item['date']    = $date;

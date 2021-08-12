@@ -144,12 +144,12 @@ function modAd($lid)
         $calusern = $GLOBALS['xoopsUser']->uid();
         if ($usid == $calusern) {
             echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _ADSLIGHT_MODIFANN . '</legend><br><br>';
-            $title    = htmlspecialchars($title);
-            $status   = htmlspecialchars($status);
-            $expire   = htmlspecialchars($expire);
-            $type     = htmlspecialchars($type);
+            $title    = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+            $status   = htmlspecialchars($status, ENT_QUOTES | ENT_HTML5);
+            $expire   = htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+            $type     = htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
             $desctext = $myts->displayTarea($desctext, 1);
-            $tel      = htmlspecialchars($tel);
+            $tel      = htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
 
             //            $price      = number_format($price, 2, ',', ' ');
 
@@ -160,13 +160,13 @@ function modAd($lid)
             //  For other countries uncomment the below line and comment out the above line
             //      $price = $tempXoopsLocal->number_format($price);
 
-            $typeprice  = htmlspecialchars($typeprice);
-            $typeusure  = htmlspecialchars($typeusure);
-            $submitter  = htmlspecialchars($submitter);
-            $town       = htmlspecialchars($town);
-            $country    = htmlspecialchars($country);
-            $contactby  = htmlspecialchars($contactby);
-            $premium    = htmlspecialchars($premium);
+            $typeprice  = htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+            $typeusure  = htmlspecialchars($typeusure, ENT_QUOTES | ENT_HTML5);
+            $submitter  = htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+            $town       = htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+            $country    = htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+            $contactby  = htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+            $premium    = htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
             $useroffset = '';
             if ($GLOBALS['xoopsUser']) {
                 $timezone   = $GLOBALS['xoopsUser']->timezone();

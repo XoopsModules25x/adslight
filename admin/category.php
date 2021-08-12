@@ -134,7 +134,7 @@ function adsModCat($cid)
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, cat_order, affprice, cat_moderate, moderate_subcat FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid=$cid");
     [$cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat] = $xoopsDB->fetchRow($result);
 
-    $title    = htmlspecialchars($title);
+    $title    = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
     $cat_desc = $myts->addSlashes($cat_desc);
     echo '<form action="category.php" method="post" name="imcat">';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -252,7 +252,7 @@ function adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_or
 {
     global $xoopsDB, $myts;
 
-    $title = htmlspecialchars($title);
+    $title = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
     $cidd  = (int)$cidd;
 
     $xoopsDB->query('UPDATE '
@@ -286,7 +286,7 @@ function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $af
     global $xoopsDB, $myts;
 
     $moderate_subcat = (int)$moderate_subcat;
-    $title           = htmlspecialchars($title);
+    $title           = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
     if ('' == $title) {
         $title = '! ! ? ! !';
     }

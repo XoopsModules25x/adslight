@@ -44,16 +44,16 @@ function PrintAd($lid)
                               . $xoopsDB->escape($lid));
     [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url] = $xoopsDB->fetchRow($result);
 
-    $title     = htmlspecialchars($title);
-    $expire    = htmlspecialchars($expire);
-    $type      = Adslight\Utility::getNameType(htmlspecialchars($type));
+    $title     = htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+    $expire    = htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+    $type      = Adslight\Utility::getNameType(htmlspecialchars($type, ENT_QUOTES | ENT_HTML5));
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1, 1, 1);
-    $tel       = htmlspecialchars($tel);
-    $price     = htmlspecialchars($price);
-    $typeprice = htmlspecialchars($typeprice);
-    $submitter = htmlspecialchars($submitter);
-    $town      = htmlspecialchars($town);
-    $country   = htmlspecialchars($country);
+    $tel       = htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
+    $price     = htmlspecialchars($price, ENT_QUOTES | ENT_HTML5);
+    $typeprice = htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+    $submitter = htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+    $town      = htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+    $country   = htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
 
     echo '
     <html>
