@@ -69,7 +69,7 @@ function viewAds($lid = 0)
     $tempXoopsLocal                          = new \XoopsLocal();
     $GLOBALS['xoopsOption']['template_main'] = 'adslight_item.tpl';
     require_once XOOPS_ROOT_PATH . '/header.php';
-    require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
+//    require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
     $lid  = ((int)$lid > 0) ? (int)$lid : 0;
     $rate = ('1' == $GLOBALS['xoopsModuleConfig']['adslight_rate_item']) ? '1' : '0';
     $GLOBALS['xoopsTpl']->assign('rate', $rate);
@@ -310,14 +310,22 @@ function viewAds($lid = 0)
         $GLOBALS['xoTheme']->addMeta('meta', 'description', "$title - " . mb_substr($desctextclean, 0, 150));
 
         if ($price > 0) {
-            $GLOBALS['xoopsTpl']->assign('price', '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice);
             $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE2);
             //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
 
-            $GLOBALS['xoopsTpl']->assign('price_price', Adslight\Utility::getMoneyFormat('%.2n', $price));
+            $priceFormatted = Adslight\Utility::getMoneyFormat('%.2n', $price);
+            $GLOBALS['xoopsTpl']->assign('price_price', $priceFormatted);
 
-            $GLOBALS['xoopsTpl']->assign('price_typeprice', $myts->htmlSpecialChars($nom_price));
-            $GLOBALS['xoopsTpl']->assign('price_currency', $GLOBALS['xoopsModuleConfig']['adslight_currency_code']);
+            $priceTypeprice = $myts->htmlSpecialChars($nom_price);
+            $GLOBALS['xoopsTpl']->assign('price_typeprice', $priceTypeprice);
+            $priceCurrency = $GLOBALS['xoopsModuleConfig']['adslight_currency_code'];
+            $GLOBALS['xoopsTpl']->assign('price_currency', $priceCurrency);
+
+//            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice;
+            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $priceFormatted . ' - ' . $priceTypeprice;
+            $GLOBALS['xoopsTpl']->assign('price', $priceHtml);
+
+
             $GLOBALS['xoopsTpl']->assign('price_amount', $price);
         }
 

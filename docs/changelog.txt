@@ -1,6 +1,13 @@
+<h5>2.3 RC4   [2021-08-12]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
+<hr>
+- updates, fixes (mamba)
+- fix for https://github.com/XoopsModules25x/adslight/issues/12 (cesagonchu/mamba)
+- PHP8 Smarty defaults (mamba)
+
 <h5>2.3 RC3   [2019-04-22]</h5>  Dev: XOOPS 2.5.10, PHP 7.3.4
 <hr>
 - updates, fixes (mamba)
+
 
 <h5>2.3 RC2   [2019-04-14]</h5>  Dev: XOOPS 2.5.10, PHP 7.3.4
 <hr>

@@ -21,7 +21,10 @@
 */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    ClassifiedsTree,
+    Utility
+};
 
 require_once __DIR__ . '/header.php';
 
@@ -32,7 +35,7 @@ xoops_load('XoopsLocal');
 $moduleDirName = basename(__DIR__);
 
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/class/classifiedstree.php';
-$mytree                                  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+$mytree                                  = new ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_members.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once XOOPS_ROOT_PATH . '/include/comment_view.php';
@@ -92,7 +95,7 @@ if ($GLOBALS['xoopsUser']) {
 }
 
 $cat_perms  = '';
-$categories = Adslight\Utility::getMyItemIds('adslight_view');
+$categories = Utility::getMyItemIds('adslight_view');
 if (is_array($categories) && count($categories) > 0) {
     $cat_perms .= ' AND cid IN (' . implode(',', $categories) . ') ';
 }
@@ -165,6 +168,12 @@ if ($trows > '0') {
         $result2 = $xoopsDB->query('SELECT r_lid, lid, date, submitter, message, email, r_usid FROM ' . $xoopsDB->prefix('adslight_replies') . ' WHERE lid =' . $xoopsDB->escape($lid));
         list($r_lid, $rlid, $rdate, $rsubmitter, $message, $remail, $r_usid) = $xoopsDB->fetchRow($result2);
 
+
+        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
+        list($nom_price) = $xoopsDB->fetchRow($result8);
+
+
+
         if ($isadmin) {
             $adminlink = "<a href='" . XOOPS_URL . '/modules/adslight/admin/validate_ads.php?op=modifyAds&amp;lid=' . $lid . "'><img src='" . $pathIcon16 . "/edit.png' border=0 alt=\"" . _ADSLIGHT_MODADMIN . '" ></a>';
             $GLOBALS['xoopsTpl']->assign('isadmin', $isadmin);
@@ -191,13 +200,41 @@ if ($trows > '0') {
         $GLOBALS['xoopsTpl']->assign('status_head', _ADSLIGHT_STATUS);
         $tempXoopsLocal = new \XoopsLocal();
         //  For US currency with 2 numbers after the decimal comment out if you dont want 2 numbers after decimal
-        $price = $tempXoopsLocal->number_format($price, 2, ',', ' ');
+        $price2 = $tempXoopsLocal->number_format($price, 2, ',', ' ');
         //  For other countries uncomment the below line and comment out the above line
         //      $price = $tempXoopsLocal->number_format($price);
         $GLOBALS['xoopsTpl']->assign('price', '<strong>' . _ADSLIGHT_PRICE . "</strong>$price" . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . " - $typeprice");
         $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE);
         $GLOBALS['xoopsTpl']->assign('money_sign', '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol']);
         $GLOBALS['xoopsTpl']->assign('price_typeprice', $typeprice);
+
+
+
+
+
+        $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type='" . $xoopsDB->escape($type) . "'");
+        list($nom_type) = $xoopsDB->fetchRow($result7);
+        $GLOBALS['xoopsTpl']->assign('type', $myts->htmlSpecialChars($nom_type));
+
+        $priceFormatted = Utility::getMoneyFormat('%.2n', $price);
+        $priceTypeprice = $myts->htmlSpecialChars($nom_price);
+        $priceCurrency = $GLOBALS['xoopsModuleConfig']['adslight_currency_code'];
+        //      $GLOBALS['xoopsTpl']->assign('price_price', $price.' '.$GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'].' ');
+        //            $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $price . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . ' - ' . $typeprice;
+        $priceHtml = '<strong>' . _ADSLIGHT_PRICE2 . '</strong>' . $priceFormatted . ' - ' . $priceTypeprice;
+
+        $GLOBALS['xoopsTpl']->assign('price_head', _ADSLIGHT_PRICE2);
+        $GLOBALS['xoopsTpl']->assign('price_price', $priceFormatted);
+        $GLOBALS['xoopsTpl']->assign('price_typeprice', $priceTypeprice);
+        $GLOBALS['xoopsTpl']->assign('price_currency', $priceCurrency);
+        $GLOBALS['xoopsTpl']->assign('price', $priceHtml);
+        $GLOBALS['xoopsTpl']->assign('priceHtml', $priceHtml);
+
+
+
+
+
+
         $GLOBALS['xoopsTpl']->assign('local_town', (string)$town);
         $GLOBALS['xoopsTpl']->assign('local_country', (string)$country);
         $GLOBALS['xoopsTpl']->assign('local_head', _ADSLIGHT_LOCAL2);

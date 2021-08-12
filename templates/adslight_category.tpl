@@ -3,7 +3,7 @@
 <{/if}>
 <{include file='db:adslight_search.tpl'}>
 <br>
-<{$select_go_cats}>
+<{$select_go_cats|default:''}>
 <br><br>
 <h1><{$cat_title}><{$Feed_RSS_cat}></h1>
 <{$category_path}><br><br>
@@ -11,7 +11,7 @@
     <tr>
         <td class="odd" align="center">
             <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <{if $lang_subcat}>
+                <{if $lang_subcat|default:''}>
                 <tr>
                     <td colspan="3">
                         <{$lang_subcat}>
@@ -27,7 +27,7 @@
                     <td colspan="2">
                         <table width="90%"><br>
                             <tr>
-                                <{foreach item=subcat from=$subcategories}>
+                                <{foreach item=subcat from=$subcategories|default:null}>
                                 <td align="left">
                                     <table cellspacing="2" cellpadding='0' align="left">
                                         <tr>
@@ -54,7 +54,7 @@
                         </table>
                     </td>
                     <td align="right">
-                        <{if $lang_subcat}>
+                        <{if $lang_subcat|default:''}>
                             <{if $adslight_use_catscode == 1}>
                                 <{$adslight_cats_code}>
                             <{/if}>
@@ -67,7 +67,7 @@
     </tr>
     <tr>
         <td>
-            <{if $show_nav == true}>
+            <{if $show_nav|default:false == true}>
                 <div align="center">
                     <strong><{$lang_sortby}></strong>
                     <{$lang_title}>
@@ -86,7 +86,7 @@
                         <{$lang_cursortedby}>
                     </span></div>
             <{/if}>
-            <div align="center"><{$nav_page}><br></div>
+            <div align="center"><{$nav_page|default:false}><br></div>
             <{if $use_extra_code == 1}>
                 <{foreach from=$items item=item name=items}>
                     <{if $smarty.foreach.items.iteration eq $index_code_place}>
@@ -111,7 +111,7 @@
                                 </td>
                             <{/if}>
                             <td width="24" align="right">
-                                <{if $item.photo}>
+                                <{if $item.photo|default:''}>
                                     <{$item.photo}>
                                 <{else}>
                                     <{$item.no_photo}>
@@ -143,7 +143,7 @@
                                 </td>
                             <{/if}>
                             <td width="24" align="right">
-                                <{if $item.photo}>
+                                <{if $item.photo|default:''}>
                                     <{$item.photo}>
                                 <{else}>
                                     <{$item.no_photo}>
@@ -157,7 +157,7 @@
                                 <strong><{$item.price}></strong>&nbsp;-&nbsp;<{$item.price_typeprice}>
                                 <{else}>&nbsp;
                                 <{/if}><br>
-                                <{if $item.sold}><{$item.sold}><{/if}>
+                                <{if $item.sold|default:''}><{$item.sold}><{/if}>
                             </td>
                             <td align="center">
                                 <{$item.local}>
@@ -165,7 +165,7 @@
                         </tr>
                     <{/foreach}>
                 </table>
-            <{/if}><{if !$lang_subcat}><{if !$item}>
+            <{/if}><{if !$lang_subcat|default:''}><{if !$item}>
                 <br>
                 <div style="text-align: center;"><{$not_adds_in_this_cat}></div>
                 <br>
@@ -175,7 +175,7 @@
     </tr>
 </table>
 <br><{$category_path}>
-<div align="center"><br><{$nav_page}></div>
+<div align="center"><br><{$nav_page|default:false}></div>
 <{include file='db:system_notification_select.tpl'}>
 <br>
 <br>

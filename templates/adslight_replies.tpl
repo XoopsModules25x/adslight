@@ -9,7 +9,7 @@
     </table>
     <br>
     <br>
-    <{$nav_page}>
+    <{$nav_page|default:false}>
     <br>
     <br>
     <{foreach item=item from=$items}>
@@ -21,7 +21,7 @@
                 <td class="head"><{$submitter_head}>&nbsp;&nbsp;<{$submitter}><br><br></td>
             </tr>
             <tr>
-                <td class="head"><{$date_head}>&nbsp;&nbsp;<{$item.date}><br><br></td>
+                <td class="head"><{$date_head}>&nbsp;&nbsp;<{$item.date_created}><br><br></td>
             </tr>
             <tr>
                 <td class="head"><{$email_head}>&nbsp;&nbsp;<{$email}><br><br></td>
@@ -40,7 +40,7 @@
     <{/foreach}>
     </table>
     <br>
-    <{$nav_page}>
+    <{$nav_page|default:false}>
     <br>
     <br>
 <{else}>

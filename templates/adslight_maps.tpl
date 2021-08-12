@@ -23,6 +23,6 @@
         </td>
     </tr>
 </table>
-<div align="center"><br><{$nav_page}></div>
+<div align="center"><br><{$nav_page|default:false}></div>
 <{include file='db:system_notification_select.tpl'}>
 <br>
