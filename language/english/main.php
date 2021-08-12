@@ -421,7 +421,7 @@ define('_MN_ADSLIGHT_ERROR404', 'Error 404');
 define('_MN_ADSLIGHT_ERROR404_TEXT', '<table class="errorMsg" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td>
-<div style="text-align:center">
+<div style="text-align:center">
     <h1>Error 404</h1><br><br>
 </div>
 </td>
