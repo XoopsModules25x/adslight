@@ -16,7 +16,7 @@
         <br>
         <{$lang_upgrade_now}>
     <{/if}>
-    <h2><{$lang_nopicyet}></h2>
+    <h2><{$lang_nopicyet|default:''}></h2>
     <ul id="album_photos">
         <{section name=i loop=$pics_array}>
             <div class="photo_in_album">
@@ -79,15 +79,15 @@
     <{$form_picture.elements.submit_button.body}>
     </form><{$form_picture.javascript}><{/if}>
 <div style="text-align: center; padding: 3px; margin: 3px;">
-    <{$commentsnav}>
-    <{$lang_notice}>
+    <{$commentsnav|default:''}>
+    <{$lang_notice|default:''}>
 </div>
 <div style="margin: 3px; padding: 3px;">
-    <{if $comment_mode == "flat"}>
+    <{if $comment_mode|default:'' == "flat"}>
         <{include file="db:system_comments_flat.tpl"}>
-    <{elseif $comment_mode == "thread"}>
+    <{elseif $comment_mode|default:'' == "thread"}>
         <{include file="db:system_comments_thread.tpl"}>
-    <{elseif $comment_mode == "nest"}>
+    <{elseif $comment_mode|default:'' == "nest"}>
         <{include file="db:system_comments_nest.tpl"}>
     <{/if}>
 </div>

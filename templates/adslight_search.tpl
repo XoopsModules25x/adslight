@@ -2,7 +2,7 @@
     <tr>
         <th><{$add_from_title}> <{$add_from_sitename}></th>
     </tr>
-    <{if $moderated}>
+    <{if $moderated|default:false}>
         <{if $xoops_isadmin}>
             <tr>
                 <td class="center even">
@@ -65,8 +65,7 @@
     </tr>
 </table>
 <script type='text/javascript'>
-    <!--
-    function xoopsFormValidate_search() {
-    }
-    //-->
+
+<{*    function xoopsFormValidate_search() {}*}>
+
 </script>

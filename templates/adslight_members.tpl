@@ -7,42 +7,41 @@
         <td class="head"><{$nav_main}></td>
     </tr>
     <tr>
-        <td class="head"><{$all_user_listings}><{$submitter}>
+        <td class="head"><{$all_user_listings}><{$submitter|default:''}>
         </td>
     </tr>
 </table>
 <br>
-<{if $istheirs == "1"}><{if $rate !='0'}>
+<{if $istheirs|default:'' == "1"}><{if $rate !='0'}>
     <strong><{$lang_user_rating}></strong>
     <{$rating}> (<{$user_votes}>)<{/if}><{else}>
     <{if $rate !='0'}><strong><{$lang_user_rating}></strong> <{$rating}> (<{$user_votes}>)
         <br>
-        >
-        <ahref="rate-user.php?usid=<{$usid}>" rel="nofollow"><{$lang_ratethisuser}></a><{/if}>
+        <a href="rate-user.php?usid=<{$usid}>" rel="nofollow"><{$lang_ratethisuser}></a><{/if}>
 <{/if}>
-<br><br><{$nav_page}><br><br>
+<br><br><{$nav_page|default:false}><br><br>
 <table cellspacing="0" class="outer" style="width:100%;">
     <tr>
         <td style="padding:0;">
             <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
                 <tr>
-                    <{if $isadmin}>
+                    <{if $isadmin|default:''}>
                         <td class="head"></td>
                     <{/if}>
                     <td class="head"></td>
-                    <{if $istheirs}><{if $permit}>
+                    <{if $istheirs|default:''}><{if $permit}>
                         <td class="head" align="center"><{$status_head}></td><{/if}><{/if}>
                     <td class="head"><{$title_head}></td>
-                    <{if $istheirs}>
+                    <{if $istheirs|default:''}>
                         <td class="head" align="center"><{$edit_ad}></td><{/if}>
 
                     <td class="head" align="left"><{$expires_head}></td>
-                    <td class="head" align="left"><{$local_head}></td>
-                    <{if $istheirs}><{if $permit}>
+                    <td class="head" align="left"><{$local_head|default:''}></td>
+                    <{if $istheirs|default:''}><{if $permit}>
                         <td class="head"><{$replies_head}></td><{/if}><{/if}>
                     <td class="head" align="left"><{$views_head}></td>
                 </tr>
-                <{foreach item=item from=$items}>
+                <{foreach item=item from=$items|default:null}>
                     <tr class=<{cycle values="odd,even"}>>
                         <{if $isadmin}>
                             <td><{$item.adminlink}></td><{/if}>
@@ -52,8 +51,12 @@
                             <td align="left"><{$item.status}></td><{/if}><{/if}>
                         <td align="left"><a href="viewads.php?lid=<{$item.id}>"><strong><{$item.title}></strong></a>&nbsp;<{$item.new}>
                             <br>
-                            <{$item.type}><br>
-                            <strong><{$item.price}></strong>&nbsp;<{$money_sign}>&nbsp;<{$item.typeprice}><br><br>
+<{*                            <{$item.type}><br>*}>
+<{*                            <strong><{$item.price}></strong>&nbsp;<{$money_sign}>&nbsp;<{$item.typeprice}><br><br>*}>
+
+<{*                        <td align="left"><{$type}></td>*}>
+                            <{$type}> <br><{$priceHtml|default:''}>
+
                             <{if $item.sold}><{$item.sold}><{/if}><br>
                         </td>
                         <{if $istheirs}>
@@ -73,7 +76,7 @@
 
     </tr>
 </table>
-<br><br><{$nav_page}><br><br>
+<br><br><{$nav_page|default:false}><br><br>
 <div style="text-align: center; padding: 3px; margin:3px;">
     <{$comments_head}>
 </div>

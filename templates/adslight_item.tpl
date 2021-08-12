@@ -11,11 +11,11 @@
                 <h1><{$title}></h1>
                 <strong><{$type}></strong>
                 <strong><{$price_price}></strong>
-                <{$price_typeprice}>&nbsp;-&nbsp;<{$usure_typeusure}>&nbsp;
-                <{$admin}>
+                <{$price_typeprice}>&nbsp;-&nbsp;<{$user_typeuser|default:''}>&nbsp;
+                <{$admin|default:false}>
                 <hr>
                 <br>
-                <{if $sold}>
+                <{if $sold|default:false}>
                     <br>
                     <{$sold}>
                     <br>
@@ -30,7 +30,7 @@
                 <br>
                 <hr>
                 <{if $photo != "0"}>
-                    <{section name=i loop=$pics_array}>
+                    <{section name=i loop=$pics_array|default:null}>
                         <a href="<{$path_uploads}>/midsize/resized_<{$pics_array[i].url}>" target="_self"
                            rel="lightbox[album]" title="<{$pics_array[i].desc}>">
                             <img class="thumb" src="<{$path_uploads}>/thumbs/thumb_<{$pics_array[i].url}>"
@@ -46,12 +46,11 @@
                     </div>
                 <{/if}>
                 <{if $xoops_isuser}>
-                <{if $adslight_active_xpayement == 1 }>
+                <{if $adslight_active_xpayement|default:false == 1 }>
                 <!-- xpayment -->
                 <{if $purchasable && !$sold && $price_amount > 0}>
                 <{include file="db:adslight_xpayment_form.tpl"}>
-            </
-            tr>
+            </tr>
             <{/if}>
             <!-- xpayment -->
             <{/if}><{/if}>
@@ -63,7 +62,7 @@
                 <table border="0" cellspacing="1" class="outer" style="width:200px;">
                     <tr>
                         <td class="blockright">
-                            <{$date}><br>
+                            <{$date|default:false}><br>
                             <strong><{$local_head}></strong> <{$local_town}><br>
                             <strong><{$country_head}></strong> <{$local_country}><br>
                             <hr>
@@ -72,9 +71,9 @@
                             <{$printA}><br>
                             <{$friend}><br>
                             <hr>
-                            <{$add_photos}><br>
-                            <{$modifyads}><br>
-                            <{$deleteads}><br>
+                            <{$add_photos|default:false}><br>
+                            <{$modifyads|default:false}><br>
+                            <{$deleteads|default:false}><br>
                             <{$alerteabus}><br>
                             <br>
                             <{if $local_country}>
@@ -90,15 +89,15 @@
     </table>
     <!-- Block Comment -->
     <div style="text-align: center; padding: 3px; margin:3px;">
-        <{$commentsnav}>
-        <{$lang_notice}>
+        <{$commentsnav|default:false}>
+        <{$lang_notice|default:false}>
     </div>
     <div style="margin:3px; padding: 3px;">
-        <{if $comment_mode == "flat"}>
+        <{if $comment_mode|default:false == "flat"}>
             <{include file="db:system_comments_flat.tpl"}>
-        <{elseif $comment_mode == "thread"}>
+        <{elseif $comment_mode|default:false == "thread"}>
             <{include file="db:system_comments_thread.tpl"}>
-        <{elseif $comment_mode == "nest"}>
+        <{elseif $comment_mode|default:false == "nest"}>
             <{include file="db:system_comments_nest.tpl"}>
         <{/if}>
     </div>

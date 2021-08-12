@@ -6,7 +6,7 @@
 <table border="0" cellspacing="0" cellpadding="0" align="center">
     <td colspan="2" valign="top"></td>
     <tr>
-        <{foreach item=category from=$categories}>
+        <{foreach item=category from=$categories|default:null}>
         <td valign="top">
             <{if $category.image != ""}>
                 <{$category.image}>
@@ -75,7 +75,7 @@
                                 </td>
                             <{/if}>
                             <td width="24" align="right">
-                                <{if $item.photo}>
+                                <{if $item.photo|default:''}>
                                     <{$item.photo}>
                                 <{else}>
                                     <{$item.no_photo}>
@@ -98,7 +98,7 @@
                     </table>
                 <{/foreach}><{else}>
                 <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
-                    <{foreach item=item from=$items}>
+                    <{foreach item=item from=$items|default:null}>
                         <tr class='<{cycle values="odd,even"}>'>
                             <{if $xoops_isadmin}>
                                 <td width="20">
@@ -106,7 +106,7 @@
                                 </td>
                             <{/if}>
                             <td width="24" align="right">
-                                <{if $item.photo}>
+                                <{if $item.photo|default:''}>
                                     <{$item.photo}>
                                 <{else}>
                                     <{$item.no_photo}>
@@ -120,7 +120,7 @@
                                 <strong><{$item.price}></strong>&nbsp;-&nbsp;<{$item.price_typeprice}>
                                 <{else}>&nbsp;
                                 <{/if}><br>
-                                <{if $item.sold}><{$item.sold}><{/if}>
+                                <{if $item.sold|default:false}><{$item.sold}><{/if}>
                             </td>
                             <td align="center">
                                 <{$item.local}>
