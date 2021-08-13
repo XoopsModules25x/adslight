@@ -1,4 +1,4 @@
-<h5>2.3 RC5   [NOT RELEASED]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
+<h5>2.3 RC5   [2021-08-12]</h5>  Dev: XOOPS 2.5.10, PHP 7.4.22, PHP 8.0.9
 <hr>
 - Nested 'dirname' (mamba)
 - Min PHP 7.2 (mamba)
