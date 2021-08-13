@@ -33,11 +33,7 @@ $myts = \MyTextSanitizer::getInstance(); // MyTextSanitizer object
 //$erh = new ErrorHandler; //ErrorHandler object
 
 $module_id = $xoopsModule->getVar('mid');
-if (is_object($GLOBALS['xoopsUser'])) {
-    $groups = $GLOBALS['xoopsUser']->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
-}
+$groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
 $perm_itemid      = Request::getInt('item_id', 0, 'POST');
@@ -246,7 +242,7 @@ if (Request::hasVar('submit', 'POST')) {
 
     $cid       = Request::getInt('cid', 0, 'GET');
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if ((is_array($cat_perms) && count($cat_perms) > 0) && $cid > 0) {
+    if ((is_array($cat_perms) && $cat_perms !== []) && $cid > 0) {
         if (!in_array($cid, $cat_perms)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }

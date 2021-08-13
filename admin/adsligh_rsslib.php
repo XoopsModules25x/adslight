@@ -147,9 +147,7 @@ function RSS_Links($url, $size = 15)
         $page  .= "<li><a href=\"{$link}\">{$title}</a></li>\n";
     }
 
-    $page .= "</ul>\n";
-
-    return $page;
+    return $page . "</ul>\n";
 }
 
 /**
@@ -165,7 +163,7 @@ function RSS_Display($url, $size = 15, $site = 0)
     $recents = [];
     $opened  = false;
     $page    = '';
-    $site    = (0 == (int)$site) ? 1 : 0;
+    $site    = (0 == $site) ? 1 : 0;
 
     RSS_Retrieve($url);
     if ($size > 0) {
@@ -180,11 +178,9 @@ function RSS_Display($url, $size = 15, $site = 0)
                 $opened = false;
             }
             $page .= '<b>';
-        } else {
-            if (!$opened) {
-                $page   .= '<ul>';
-                $opened = true;
-            }
+        } elseif (!$opened) {
+            $page   .= '<ul>';
+            $opened = true;
         }
         $title = $article['title'];
         $link  = $article['link'];
@@ -222,7 +218,7 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
     $recents = [];
     $opened  = false;
     $page    = '';
-    $site    = (0 == (int)$site) ? 1 : 0;
+    $site    = (0 == $site) ? 1 : 0;
 
     RSS_Retrieve($url);
     if ($size > 0) {
@@ -237,11 +233,9 @@ function RSS_DisplayForum($url, $size = 15, $site = 0, $withdate = 0)
                 $opened = false;
             }
             $page .= '<b>';
-        } else {
-            if (!$opened) {
-                $page   .= '<ul>';
-                $opened = true;
-            }
+        } elseif (!$opened) {
+            $page   .= '<ul>';
+            $opened = true;
         }
 
         $title = $article['title'];

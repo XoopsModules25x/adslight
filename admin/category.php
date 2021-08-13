@@ -53,7 +53,9 @@ function adsNewCat($cid)
     $result = $xoopsDB->query('SELECT cid, pid, title, cat_desc, cat_keywords, img, cat_order, affprice, cat_moderate, moderate_subcat FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid}");
     [$cat_id, $pid, $title, $cat_desc, $cat_keywords, $imgs, $cat_order, $affprice, $cat_moderate, $moderate_subcat] = $xoopsDB->fetchRow($result);
     $mytree->makeMySelBox('title', 'title', $cid, 1);
-    echo "    </td>\n" . "  </tr>\n";
+    echo '    </td>
+  </tr>
+';
 
     $cat_desc     = '';
     $cat_keywords = '';
@@ -80,17 +82,15 @@ function adsNewCat($cid)
     }
     asort($filelist);
     //    while (list($key, $file) = each($filelist)) {
-    foreach ($filelist as $key => $file) {
+    foreach ($filelist as $file) {
         if (preg_match('`gif$|jpg$|png$`i', $file)) {
             if ('default.png' === $file) {
                 echo "<option value=\"{$file}\" selected>{$file}</option>";
             } else {
                 echo "<option value=\"{$file}\">{$file}</option>";
             }
-        } else {
-            if ('.' === $file || '..' === $file) {
-                $a = 1;
-            }
+        } elseif ('.' === $file || '..' === $file) {
+            $a = 1;
         }
     }
     echo '</select>&nbsp;&nbsp;<img src="' . XOOPS_URL . '/modules/adslight/assets/images/img_cat/default.png" name="avatar" align="absmiddle"><br><b>' . _AM_ADSLIGHT_REPIMGCAT . '</b><br>../modules/adslight/assets/images/img_cat/..</td></tr>';
@@ -109,7 +109,11 @@ function adsNewCat($cid)
         echo '<tr><td class="foot" colspan=3><input type="submit" value="' . _AM_ADSLIGHT_ADD . '" ></td></tr>';
     }
 
-    echo "</table>\n" . "</form>\n" . "<br>\n" . "</fieldset><br>\n";
+    echo '</table>
+</form>
+<br>
+</fieldset><br>
+';
     xoops_cp_footer();
 }
 
@@ -163,17 +167,15 @@ function adsModCat($cid)
     }
     asort($filelist);
     //    while (list($key, $file) = each($filelist)) {
-    foreach ($filelist as $key => $file) {
+    foreach ($filelist as $file) {
         if (preg_match('`gif$|jpg$|png$`i', $file)) {
             if ($file == $imgs) {
                 echo "<option value=\"{$file}\" selected>{$file}</option>";
             } else {
                 echo "<option value=\"{$file}\">{$file}</option>";
             }
-        } else {
-            if ('.' === $file || '..' === $file) {
-                $a = 1;
-            }
+        } elseif ('.' === $file || '..' === $file) {
+            $a = 1;
         }
     }
     echo '</select>&nbsp;&nbsp;<img src="' . XOOPS_URL . "/modules/adslight/assets/images/img_cat/{$imgs}\" name=\"avatar\" align=\"absmiddle\"><br><b>" . _AM_ADSLIGHT_REPIMGCAT . '</b><br>../modules/adslight/assets/images/img_cat/..</td></tr>';
@@ -311,7 +313,7 @@ function adsAddCat($title, $cat_desc, $cat_keywords, $cid, $img, $cat_order, $af
 function adsDelCat($cid, $ok = 0)
 {
     $cid = (int)$cid;
-    if (1 == (int)$ok) {
+    if (1 == $ok) {
         /** @var \XoopsMySQLDatabase $xoopsDB */
         $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
         $xoopsDB->queryF('DELETE FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid={$cid} OR pid={$cid}");

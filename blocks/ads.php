@@ -48,10 +48,8 @@ function adslight_show($options)
         $title  = \htmlspecialchars($myrow['title'], ENT_QUOTES | ENT_HTML5);
         $type   = \htmlspecialchars($myrow['type'], ENT_QUOTES | ENT_HTML5);
 
-        if (!XOOPS_USE_MULTIBYTES) {
-            if (mb_strlen($myrow['title']) >= $options[2]) {
-                $title = \htmlspecialchars(mb_substr($myrow['title'], 0, $options[2] - 1), ENT_QUOTES | ENT_HTML5) . '...';
-            }
+        if (!XOOPS_USE_MULTIBYTES && mb_strlen($myrow['title']) >= $options[2]) {
+            $title = \htmlspecialchars(mb_substr($myrow['title'], 0, $options[2] - 1), ENT_QUOTES | ENT_HTML5) . '...';
         }
 
         $a_item['type'] = Adslight\Utility::getNameType($type);

@@ -27,7 +27,6 @@ require_once dirname(__DIR__, 2) . '/mainfile.php';
 $moduleDirName = basename(__DIR__);
 
 $com_itemid = Request::getInt('com_itemid', 0, 'GET');
-$com_itemid = $com_itemid;
 if ($com_itemid > 0) {
     // Get link title
     $sql            = 'SELECT title FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid={$com_itemid}";

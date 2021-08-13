@@ -70,7 +70,7 @@ function PrintAd($lid)
     $useroffset = 0;
     if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
         $timezone   = $GLOBALS['xoopsUser']->timezone();
-        $useroffset = !empty($timezone) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
+        $useroffset = empty($timezone) ? $xoopsConfig['default_TZ'] : $GLOBALS['xoopsUser']->timezone();
     }
     $date  = ($useroffset * 3600) + $date;
     $date2 = $date + ($expire * 86400);
@@ -92,13 +92,13 @@ function PrintAd($lid)
           </tr>
     <tr>
       <td><strong>' . _ADSLIGHT_DESC . "</strong><br><br><div style=\"text-align:justify;\">$desctext</div><p>";
-    if ($tel) {
+    if ('' !== $tel) {
         echo '<br><strong>' . _ADSLIGHT_TEL . "</strong> $tel";
     }
-    if ($town) {
+    if ('' !== $town) {
         echo '<br><strong>' . _ADSLIGHT_TOWN . "</strong> $town";
     }
-    if ($country) {
+    if ('' !== $country) {
         echo '<br><strong>' . _ADSLIGHT_COUNTRY . "</strong> $country";
     }
     echo '<hr>';

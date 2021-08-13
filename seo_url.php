@@ -50,9 +50,8 @@ function seo_urls($s)
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         //    '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})'.$XPS_URL.'\/modules\/'.$module_name.'\/()([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
     ];
-    $s      = preg_replace_callback($search, 'replace_links', $s);
 
-    return $s;
+    return preg_replace_callback($search, 'replace_links', $s);
 }
 
 /**
@@ -97,9 +96,8 @@ function replace_links($matches)
     if ('?' === $req_string) {
         $req_string = '';
     }
-    $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
 
-    return $ret;
+    return '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
 }
 
 /**
@@ -120,9 +118,8 @@ function adslight_seo_cat($cid)
             cid = ' . $cid . ' ';
     $result = $xoopsDB->query($query);
     $res    = $xoopsDB->fetchArray($result);
-    $ret    = adslight_seo_title($res['title']);
 
-    return $ret;
+    return adslight_seo_title($res['title']);
 }
 
 /**
@@ -143,9 +140,8 @@ function adslight_seo_titre($lid)
             lid = ' . $lid . ' ';
     $result = $xoopsDB->query($query);
     $res    = $xoopsDB->fetchArray($result);
-    $ret    = adslight_seo_title($res['title']);
 
-    return $ret;
+    return adslight_seo_title($res['title']);
 }
 
 /**
@@ -354,7 +350,6 @@ function adslight_absolutize($s)
         '$1($2' . $host . $req_dir . '/$3.$4$5$6',
         '<meta$1url=' . $host . $req_dir . '/$2.$3$4$5>',
     ];
-    $s       = preg_replace($in, $out, $s);
 
-    return $s;
+    return preg_replace($in, $out, $s);
 }

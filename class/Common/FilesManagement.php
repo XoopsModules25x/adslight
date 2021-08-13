@@ -96,18 +96,15 @@ trait FilesManagement
         // validate is a directory
         if ($dirInfo->isDir()) {
             $fileList = \array_diff(\scandir($src, \SCANDIR_SORT_NONE), ['..', '.']);
-            foreach ($fileList as $k => $v) {
+            foreach ($fileList as $v) {
                 $fileInfo = new \SplFileInfo("{$src}/{$v}");
                 if ($fileInfo->isDir()) {
                     // recursively handle subdirectories
                     if (!$success = self::deleteDirectory($fileInfo->getRealPath())) {
                         break;
                     }
-                } else {
-                    // delete the file
-                    if (!($success = \unlink($fileInfo->getRealPath()))) {
-                        break;
-                    }
+                } elseif (!($success = \unlink($fileInfo->getRealPath()))) {
+                    break;
                 }
             }
             // now delete this (sub)directory if all the files are gone
@@ -142,8 +139,6 @@ trait FilesManagement
         if (!\is_dir($src)) {
             return false;
         }
-
-        $success = true;
 
         // Open the source directory to read in files
         $iterator = new \DirectoryIterator($src);

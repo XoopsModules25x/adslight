@@ -63,10 +63,10 @@ class ClassifiedsTree
     public function getFirstChild($sel_id, $order = '')
     {
         $arr = [];
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . ' ';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . ' ';
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -98,7 +98,7 @@ class ClassifiedsTree
         $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id);
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $result .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -126,7 +126,7 @@ class ClassifiedsTree
         $sql    = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -158,7 +158,7 @@ class ClassifiedsTree
         $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -171,9 +171,8 @@ class ClassifiedsTree
             return $idarray;
         }
         $idarray[] = $r_id;
-        $idarray   = $this->getAllParentId($r_id, $order, $idarray);
 
-        return $idarray;
+        return $this->getAllParentId($r_id, $order, $idarray);
     }
 
     /**
@@ -189,7 +188,7 @@ class ClassifiedsTree
         //        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . "'");
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             //            $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
             $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
         }
@@ -200,15 +199,14 @@ class ClassifiedsTree
             return $path;
         }
         [$parentid, $name] = $this->db->fetchRow($result);
-        $myts = \MyTextSanitizer::getInstance();
+        \MyTextSanitizer::getInstance();
         $name = \htmlspecialchars($name, \ENT_QUOTES | \ENT_HTML5);
         $path = '/' . $name . $path . '';
         if (0 == $parentid) {
             return $path;
         }
-        $path = $this->getPathFromId($parentid, $title, $path);
 
-        return $path;
+        return $this->getPathFromId($parentid, $title, $path);
     }
 
     /**
@@ -234,7 +232,7 @@ class ClassifiedsTree
         $sql        = 'SELECT SQL_CACHE cid, title FROM ' . $this->table . ' WHERE pid=0';
         $categories = Adslight\Utility::getMyItemIds('adslight_submit');
 
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -243,7 +241,7 @@ class ClassifiedsTree
         }
 
         $result = $this->db->query($sql);
-        if ($none) {
+        if (0 !== $none) {
             echo '<option value="0">----</option>';
         }
         while (false !== (list($catid, $name) = $this->db->fetchRow($result))) {
@@ -283,7 +281,7 @@ class ClassifiedsTree
             return $path;
         }
         [$parentid, $name] = $this->db->fetchRow($result);
-        $myts = \MyTextSanitizer::getInstance();
+        \MyTextSanitizer::getInstance();
         $name = \htmlspecialchars($name, \ENT_QUOTES | \ENT_HTML5);
 
         $arrow = '<img src="' . XOOPS_URL . '/modules/adslight/assets/images/arrow.gif" alt="&raquo;" >';
@@ -293,9 +291,8 @@ class ClassifiedsTree
         if (0 == $parentid) {
             return $path;
         }
-        $path = $this->getNicePathFromId($parentid, $title, $funcURL, $path);
 
-        return $path;
+        return $this->getNicePathFromId($parentid, $title, $funcURL, $path);
     }
 
     /**
@@ -316,9 +313,8 @@ class ClassifiedsTree
         if (0 == $parentid) {
             return $path;
         }
-        $path = $this->getIdPathFromId($parentid, $path);
 
-        return $path;
+        return $this->getIdPathFromId($parentid, $path);
     }
 
     /**
@@ -330,10 +326,10 @@ class ClassifiedsTree
      */
     public function getAllChild($sel_id = 0, $order = '', $parray = [])
     {
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -365,10 +361,10 @@ class ClassifiedsTree
     public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
     {
 
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id;
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -457,10 +453,10 @@ class ClassifiedsTree
     public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
     {
         global $xoopsDB;
-        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . (int)$sel_id . ' ';
+        $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . ' ';
 
         $categories = Adslight\Utility::getMyItemIds('adslight_view');
-        if (\is_array($categories) && \count($categories) > 0) {
+        if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
 
@@ -488,7 +484,7 @@ class ClassifiedsTree
     {
         $result = $this->db->query('SELECT SQL_CACHE cid, pid, title FROM ' . $this->table);
         $ret    = [];
-        $myts   = \MyTextSanitizer::getInstance();
+        \MyTextSanitizer::getInstance();
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $ret[$myrow['cid']] = [
                 'title' => \htmlspecialchars($myrow['title'], \ENT_QUOTES | \ENT_HTML5),

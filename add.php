@@ -203,23 +203,6 @@ if (Request::hasVar('submit', 'POST')) {
     $form = new \XoopsThemeForm(_ADSLIGHT_ADD_LISTING, 'submitform', 'add.php', 'post', true);
     $form->setExtra('enctype="multipart/form-data"');
 
-    //    $GLOBALS['xoopsGTicket']->addTicketXoopsFormElement($form, __LINE__, 1800, 'token');
-
-    //@todo - this 'if' code doesn't do anything, what should happen for premium accounts?
-    if ($cat_moderate) {
-        if ('0' != $premium) {
-            echo '';
-        } else {
-            echo '';
-        }
-    } else {
-        if ('0' != $premium) {
-            echo '';
-        } else {
-            echo '';
-        }
-    }
-
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_diff_name']) {
         $form->addElement(new \XoopsFormText(_ADSLIGHT_SUBMITTER, 'submitter', 50, 50, $member_uname), true);
     } else {
@@ -243,7 +226,7 @@ if (Request::hasVar('submit', 'POST')) {
     //     $cid = $_GET['cid'];
     $cid       = 0;
     $cat_perms = Adslight\Utility::getMyItemIds('adslight_submit');
-    if (is_array($cat_perms) && count($cat_perms) > 0) {
+    if (is_array($cat_perms) && $cat_perms !== []) {
         if (!in_array($cid, $cat_perms)) {
             //mb            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }

@@ -973,12 +973,10 @@ class Utility
                     break;
                 }
             }
-        } else {
-            if (\strlen($text) <= $length) {
+        } elseif (\strlen($text) <= $length) {
                 return $text;
             } else {
                 $truncate = \substr($text, 0, $length - \strlen($ending));
-            }
         }
         // if the words shouldn't be cut in the middle...
         if (!$exact) {
@@ -1075,7 +1073,7 @@ class Utility
      * @param float $number
      * @param string $currency The 3-letter ISO 4217 currency code indicating the currency to use.
      * @param string $localeCode (local language code, e.g. en_US)
-     * @return string|false formatted currency value
+     * @return string formatted currency value
      */
     public static function formatCurrency($number, $currency='USD', $localeCode='')
     {

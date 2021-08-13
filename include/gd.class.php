@@ -154,9 +154,6 @@ class GD
         }
 
         $rgb         = $this->make_color($color);
-        $allocate    = imagecolorallocate($this->image, $rgb['r'], $rgb['g'], $rgb['b']);
-        $text_width  = imagefontwidth($font) * mb_strlen($text);
-        $text_height = imagefontheight($font);
 
         //Dokoncaj
     }

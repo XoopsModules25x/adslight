@@ -33,11 +33,7 @@ use XoopsModules\Adslight;
  */
 function adslight_search($queryarray, $andor, $limit, $offset, $userid)
 {
-    if (mb_strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php')) {
-        $visible = true;
-    } else {
-        $visible = false;
-    }
+    $visible = (bool) mb_strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php');
 
     global $xoopsDB;
 

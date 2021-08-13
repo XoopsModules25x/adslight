@@ -96,13 +96,8 @@ if ($trows > '0') {
         $useroffset = '';
         if ($GLOBALS['xoopsUser']) {
             $timezone = $GLOBALS['xoopsUser']->timezone();
-            if (isset($timezone)) {
-                $useroffset = $GLOBALS['xoopsUser']->timezone();
-            } else {
-                $useroffset = $xoopsConfig['default_TZ'];
-            }
+            $useroffset = isset($timezone) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
         }
-        $r_usid = $r_usid;
         $GLOBALS['xoopsTpl']->assign('submitter', " <a href='" . XOOPS_URL . "/userinfo.php?uid=$r_usid'>$submitter</a>");
         $date = ($useroffset * 3600) + $date;
         $date = formatTimestamp($date, 's');

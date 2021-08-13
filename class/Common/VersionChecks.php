@@ -76,11 +76,9 @@ trait VersionChecks
         $verNum = \PHP_VERSION;
         $reqVer = &$module->getInfo('min_php');
 
-        if (false !== $reqVer && '' !== $reqVer) {
-            if (\version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(\sprintf(\constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_PHP'), $reqVer, $verNum));
-                $success = false;
-            }
+        if (false !== $reqVer && '' !== $reqVer && \version_compare($verNum, $reqVer, '<')) {
+            $module->setErrors(\sprintf(\constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_PHP'), $reqVer, $verNum));
+            $success = false;
         }
 
         return $success;
@@ -106,44 +104,42 @@ trait VersionChecks
         //        $repository         = 'XoopsModules25x/publisher'; //for testing only
         $ret             = '';
         $infoReleasesUrl = "https://api.github.com/repos/$repository/releases";
-        if ('github' === $source) {
-            if (\function_exists('curl_init') && false !== ($curlHandle = \curl_init())) {
-                \curl_setopt($curlHandle, \CURLOPT_URL, $infoReleasesUrl);
-                \curl_setopt($curlHandle, \CURLOPT_RETURNTRANSFER, true);
-                \curl_setopt($curlHandle, \CURLOPT_SSL_VERIFYPEER, false);
-                \curl_setopt($curlHandle, \CURLOPT_HTTPHEADER, ["User-Agent:Publisher\r\n"]);
-                $curlReturn = \curl_exec($curlHandle);
-                if (false === $curlReturn) {
-                    \trigger_error(\curl_error($curlHandle));
-                } elseif (false !== \strpos($curlReturn, 'Not Found')) {
-                    \trigger_error('Repository Not Found: ' . $infoReleasesUrl);
-                } else {
-                    $file              = \json_decode($curlReturn, false);
-                    $latestVersionLink = \sprintf("https://github.com/$repository/archive/%s.zip", $file ? \reset($file)->tag_name : $default);
-                    $latestVersion     = $file[0]->tag_name;
-                    $prerelease        = $file[0]->prerelease;
-                    if ('master' !== $latestVersionLink) {
-                        $update = \constant('CO_' . $moduleDirNameUpper . '_' . 'NEW_VERSION') . $latestVersion;
-                    }
-                    //"PHP-standardized" version
-                    $latestVersion = \mb_strtolower($latestVersion);
-                    if (false !== \mb_strpos($latestVersion, 'final')) {
-                        $latestVersion = \str_replace('_', '', \mb_strtolower($latestVersion));
-                        $latestVersion = \str_replace('final', '', \mb_strtolower($latestVersion));
-                    }
-                    $moduleVersion = ($helper->getModule()->getInfo('version') . '_' . $helper->getModule()->getInfo('module_status'));
-                    //"PHP-standardized" version
-                    $moduleVersion = \str_replace(' ', '', \mb_strtolower($moduleVersion));
-                    //                    $moduleVersion = '1.0'; //for testing only
-                    //                    $moduleDirName = 'publisher'; //for testing only
-                    if (!$prerelease && \version_compare($moduleVersion, $latestVersion, '<')) {
-                        $ret   = [];
-                        $ret[] = $update;
-                        $ret[] = $latestVersionLink;
-                    }
+        if ('github' === $source && (\function_exists('curl_init') && false !== ($curlHandle = \curl_init()))) {
+            \curl_setopt($curlHandle, \CURLOPT_URL, $infoReleasesUrl);
+            \curl_setopt($curlHandle, \CURLOPT_RETURNTRANSFER, true);
+            \curl_setopt($curlHandle, \CURLOPT_SSL_VERIFYPEER, false);
+            \curl_setopt($curlHandle, \CURLOPT_HTTPHEADER, ["User-Agent:Publisher\r\n"]);
+            $curlReturn = \curl_exec($curlHandle);
+            if (false === $curlReturn) {
+                \trigger_error(\curl_error($curlHandle));
+            } elseif (false !== \strpos($curlReturn, 'Not Found')) {
+                \trigger_error('Repository Not Found: ' . $infoReleasesUrl);
+            } else {
+                $file              = \json_decode($curlReturn, false);
+                $latestVersionLink = \sprintf("https://github.com/$repository/archive/%s.zip", $file ? \reset($file)->tag_name : $default);
+                $latestVersion     = $file[0]->tag_name;
+                $prerelease        = $file[0]->prerelease;
+                if ('master' !== $latestVersionLink) {
+                    $update = \constant('CO_' . $moduleDirNameUpper . '_' . 'NEW_VERSION') . $latestVersion;
                 }
-                \curl_close($curlHandle);
+                //"PHP-standardized" version
+                $latestVersion = \mb_strtolower($latestVersion);
+                if (false !== \mb_strpos($latestVersion, 'final')) {
+                    $latestVersion = \str_replace('_', '', \mb_strtolower($latestVersion));
+                    $latestVersion = \str_replace('final', '', \mb_strtolower($latestVersion));
+                }
+                $moduleVersion = ($helper->getModule()->getInfo('version') . '_' . $helper->getModule()->getInfo('module_status'));
+                //"PHP-standardized" version
+                $moduleVersion = \str_replace(' ', '', \mb_strtolower($moduleVersion));
+                //                    $moduleVersion = '1.0'; //for testing only
+                //                    $moduleDirName = 'publisher'; //for testing only
+                if (!$prerelease && \version_compare($moduleVersion, $latestVersion, '<')) {
+                    $ret   = [];
+                    $ret[] = $update;
+                    $ret[] = $latestVersionLink;
+                }
             }
+            \curl_close($curlHandle);
         }
         return $ret;
     }

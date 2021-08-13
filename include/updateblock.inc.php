@@ -89,7 +89,7 @@ if ($record) {
         if (isset($fblock['options'])) {
             $old_vals = explode('|', $fblock['options']);
             $def_vals = explode('|', $modversion['blocks'][$i]['options']);
-            if (count($old_vals) == count($def_vals)) {
+            if (count($old_vals) === count($def_vals)) {
                 $modversion['blocks'][$i]['options'] = $fblock['options'];
                 $local_msgs[]                        = "Option's values of the block <b>" . $fblock['name'] . '</b> will be kept. (value = <b>' . $fblock['options'] . '</b>)';
             } elseif (count($old_vals) < count($def_vals)) {

@@ -132,7 +132,7 @@ function modAd($lid)
     [$lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid] = $xoopsDB->fetchRow($result);
 
     $categories = Adslight\Utility::getMyItemIds('adslight_submit');
-    if (is_array($categories) && count($categories) > 0) {
+    if (is_array($categories) && $categories !== []) {
         if (!in_array((int)$cide, $categories)) {
             redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
         }
@@ -170,9 +170,8 @@ function modAd($lid)
             $useroffset = '';
             if ($GLOBALS['xoopsUser']) {
                 $timezone   = $GLOBALS['xoopsUser']->timezone();
-                $useroffset = !empty($timezone) ? $GLOBALS['xoopsUser']->timezone() : $xoopsConfig['default_TZ'];
+                $useroffset = empty($timezone) ? $xoopsConfig['default_TZ'] : $GLOBALS['xoopsUser']->timezone();
             }
-            $dates = ($useroffset * 3600) + $date;
             $dates = formatTimestamp($date, 's');
 
             echo '<form action="modify.php" method=post enctype="multipart/form-data">';
@@ -327,13 +326,11 @@ function modAd($lid)
             //If no access
             if ($grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
                 echo '<input type="hidden" name="valid" value="Yes" >';
+            } elseif ('1' == $GLOBALS['xoopsModuleConfig']['adslight_moderated']) {
+                echo '<input type="hidden" name="valid" value="No" >';
+                echo '<br>' . _ADSLIGHT_MODIFBEFORE . '<br>';
             } else {
-                if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_moderated']) {
-                    echo '<input type="hidden" name="valid" value="No" >';
-                    echo '<br>' . _ADSLIGHT_MODIFBEFORE . '<br>';
-                } else {
-                    echo '<input type="hidden" name="valid" value="Yes" >';
-                }
+                echo '<input type="hidden" name="valid" value="Yes" >';
             }
             echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
             echo "<input type=\"hidden\" name=\"premium\" value=\"$premium\" >";

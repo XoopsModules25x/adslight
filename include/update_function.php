@@ -41,7 +41,7 @@ function xoops_module_update_adslight(\XoopsObject $xoopsModule)
         '..',
         '.',
     ]);
-    foreach ($template_list as $k => $v) {
+    foreach ($template_list as $v) {
         $fileinfo = new \SplFileInfo($template_directory . $v);
         if ('html' === $fileinfo->getExtension()
             && 'index.html' !== $fileinfo->getFilename()) {

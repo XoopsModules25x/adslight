@@ -82,11 +82,7 @@ function tips_writing()
 ######################################################
 
 $pa = Request::getInt('pa', null, 'GET');
-
-switch ($pa) {
-    default:
-        $GLOBALS['xoopsOption']['template_main'] = 'adslight_tips_writing_ad.tpl';
-        tips_writing();
-        break;
-}
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_tips_writing_ad.tpl';
+tips_writing();
+break;
 require_once XOOPS_ROOT_PATH . '/footer.php';

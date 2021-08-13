@@ -28,11 +28,7 @@ require_once __DIR__ . '/header.php';
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-if (is_object($GLOBALS['xoopsUser'])) {
-    $groups = $GLOBALS['xoopsUser']->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
-}
+$groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
 $perm_itemid      = Request::getInt('item_id', 0, 'POST');
@@ -40,11 +36,7 @@ $perm_itemid      = Request::getInt('item_id', 0, 'POST');
 if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if ($grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-    $prem_perm = '1';
-} else {
-    $prem_perm = '0';
-}
+$prem_perm = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? '1' : '0';
 
 #  function adslightMaps
 #####################################################
@@ -107,11 +99,7 @@ function adslightMaps()
 ######################################################
 
 $pa = Request::getInt('pa', null, 'GET');
-
-switch ($pa) {
-    default:
-        $GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
-        adslightMaps();
-        break;
-}
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
+adslightMaps();
+break;
 require_once XOOPS_ROOT_PATH . '/footer.php';

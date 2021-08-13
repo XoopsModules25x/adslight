@@ -75,14 +75,11 @@ if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
     /**
      * If it is an anonym
      */
-} else {
-    // user is anon
-    if (Request::hasVar('uid', 'GET')) {
+} elseif (Request::hasVar('uid', 'GET')) {
         $uid = Request::getInt('uid', 0, 'GET');
     } else {
         header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
         $isOwner = false;
-    }
 }
 
 /**

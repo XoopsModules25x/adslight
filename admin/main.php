@@ -41,7 +41,9 @@ function index()
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
-    echo "<table width=\"50%\" border=\"0\" cellspacing=\"8\" cellpadding=\"0\">\n" . "  <tr>\n" . '    <td class="top">';
+    echo '<table width="50%" border="0" cellspacing="8" cellpadding="0">
+  <tr>
+    <td class="top">';
 
     /*
     /// Test Release ///

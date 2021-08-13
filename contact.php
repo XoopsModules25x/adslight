@@ -141,11 +141,7 @@ if (Request::hasVar('submit', 'POST')) {
     global $xoopsConfig, $xoopsDB, $myts, $meta;
 
     $module_id = $xoopsModule->getVar('mid');
-    if (is_object($GLOBALS['xoopsUser'])) {
-        $groups = $GLOBALS['xoopsUser']->getGroups();
-    } else {
-        $groups = XOOPS_GROUP_ANONYMOUS;
-    }
+    $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     $perm_itemid      = Request::getInt('item_id', 0, 'POST');
@@ -218,7 +214,6 @@ if (Request::hasVar('submit', 'POST')) {
     </tr>";
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
-        $jlm_captcha = '';
         $jlm_captcha = new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
     }
