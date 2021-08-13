@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Adslight;
 
 /*
@@ -22,8 +24,6 @@ namespace XoopsModules\Adslight;
 /**
  * Gestion de la Currency
  */
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 class Currency
 {
     protected $decimalsCount;
@@ -38,18 +38,16 @@ class Currency
      */
     public function __construct()
     {
-        $moduleDirName = basename(__DIR__);
-        $helper        = Helper::getHelper($moduleDirName);
-
-        // Get the module's preferences
+        $moduleDirName          = \basename(__DIR__);
+        $helper                 = Helper::getHelper($moduleDirName); // Get the module's preferences
         $this->decimalsCount    = $helper->getConfig('decimals_count');
         $this->thousandsSep     = $helper->getConfig('thousands_sep');
         $this->decimalSep       = $helper->getConfig('decimal_sep');
         $this->moneyFull        = $helper->getConfig('money_full');
         $this->moneyShort       = $helper->getConfig('money_short');
         $this->currencyPosition = $helper->getConfig('currency_position');
-        $this->thousandsSep     = str_replace('[space]', ' ', $this->thousandsSep);
-        $this->decimalSep       = str_replace('[space]', ' ', $this->decimalSep);
+        $this->thousandsSep     = \str_replace('[space]', ' ', $this->thousandsSep);
+        $this->decimalSep       = \str_replace('[space]', ' ', $this->decimalSep);
     }
 
     /**
@@ -60,7 +58,7 @@ class Currency
      * @static
      * @staticvar   object
      */
-    public static function getInstance()
+    public static function getInstance(): object
     {
         static $instance;
         if (null === $instance) {
@@ -76,9 +74,9 @@ class Currency
      * @param float|int $amount The amount to work on
      * @return string    The amount formated according to the currency
      */
-    public function amountInCurrency($amount = 0)
+    public function amountInCurrency($amount = 0): string
     {
-        return number_format($amount, $this->decimalsCount, $this->decimalSep, $this->thousandsSep);
+        return \number_format($amount, $this->decimalsCount, $this->decimalSep, $this->thousandsSep);
     }
 
     /**
@@ -88,7 +86,7 @@ class Currency
      * @param string $format         Format to use, 's' for Short and 'l' for Long
      * @return string The amount formated
      */
-    public function amountForDisplay($originalAmount, $format = 's')
+    public function amountForDisplay($originalAmount, $format = 's'): string
     {
         $amount = $this->amountInCurrency($originalAmount);
 

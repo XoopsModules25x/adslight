@@ -1,24 +1,26 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Module\Admin;
 use Xmf\Request;
@@ -31,7 +33,7 @@ $op = Request::getString('op', 'list');
 #####################################################
 function index()
 {
-    global $xoopsDB,  $myts, $admin_lang;
+    global $xoopsDB, $myts, $admin_lang;
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
@@ -48,7 +50,7 @@ function index()
     echo '<br>';
 
     // Modifier un type
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type')));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type')));
     if ($numrows > 0) {
         echo '<form method="post" action="options.php">
              <b>' . _AM_ADSLIGHT_MODTYPE . '</b></font><br><br>';
@@ -56,7 +58,7 @@ function index()
         echo '' . _AM_ADSLIGHT_TYPE . ' <select name="id_type">';
 
         while (false !== (list($id_type, $nom_type) = $xoopsDB->fetchRow($result2))) {
-            $nom_type = $myts->htmlSpecialChars($nom_type);
+            $nom_type = \htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5);
             echo "<option value=\"$id_type\">$nom_type</option>";
         }
         echo '</select>
@@ -78,7 +80,7 @@ function index()
     echo '<br>';
 
     // Modifier un type de prix
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_price')));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_price')));
     if ($numrows > 0) {
         echo '<form method="post" action="options.php">
             <b>' . _AM_ADSLIGHT_MODPRICE . '</b></font><br><br>';
@@ -86,7 +88,7 @@ function index()
         echo '' . _AM_ADSLIGHT_TYPE . ' <select name="id_price">';
 
         while (false !== (list($id_price, $nom_price) = $xoopsDB->fetchRow($result3))) {
-            $nom_price = $myts->htmlSpecialChars($nom_price);
+            $nom_price = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
             echo "<option value=\"$id_price\">$nom_price</option>";
         }
         echo '</select>
@@ -97,30 +99,30 @@ function index()
         echo '<br>';
     }
 
-    // Ajouter un type d'usure
+    // Ajouter un type d'condition
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td valign='top'>\n";
     echo '<form method="post" action="options.php">
-        <b>' . _AM_ADSLIGHT_ADDUSURE . '</b><br><br>
+        <b>' . _AM_ADSLIGHT_ADDCONDITION . '</b><br><br>
         ' . _AM_ADSLIGHT_TYPE . '   <input type="text" name="type" size="30" maxlength="100">
-        <input type="hidden" name="op" value="ListingAddUsure">
+        <input type="hidden" name="op" value="ListingAddcondition">
         <input type="submit" value="' . _ADD . '">
         </form>';
     echo '<br>';
 
-    // Modifier un type d'usure
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure')));
+    // Modifier un type d'condition
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_condition')));
     if ($numrows > 0) {
         echo '<form method="post" action="options.php">
-            <b>' . _AM_ADSLIGHT_MODUSURE . '</b></font><br><br>';
-        $result8 = $xoopsDB->query('SELECT id_usure, nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
-        echo _AM_ADSLIGHT_TYPE . ' <select name="id_usure">';
+            <b>' . _AM_ADSLIGHT_MODCONDITION . '</b></font><br><br>';
+        $result8 = $xoopsDB->query('SELECT id_condition, nom_condition FROM ' . $xoopsDB->prefix('adslight_condition') . ' ORDER BY nom_condition');
+        echo _AM_ADSLIGHT_TYPE . ' <select name="id_condition">';
 
-        while (false !== (list($id_usure, $nom_usure) = $xoopsDB->fetchRow($result8))) {
-            $nom_usure = $myts->htmlSpecialChars($nom_usure);
-            echo "<option value=\"$id_usure\">$nom_usure</option>";
+        while (false !== (list($id_condition, $nom_condition) = $xoopsDB->fetchRow($result8))) {
+            $nom_condition = \htmlspecialchars($nom_condition, ENT_QUOTES | ENT_HTML5);
+            echo "<option value=\"$id_condition\">$nom_condition</option>";
         }
         echo '</select>
-            <input type="hidden" name="op" value="ListingModUsure">
+            <input type="hidden" name="op" value="ListingModcondition">
             <input type="submit" value="' . _AM_ADSLIGHT_MODIF . '">
             </form>';
         echo '</td></tr></table>';
@@ -139,9 +141,9 @@ function listingAddType($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='{$type}'"));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE nom_type='{$type}'"));
     if ($numrows > 0) {
-        $nom_type = $myts->htmlSpecialChars($numrows); //mb
+        $nom_type = \htmlspecialchars($numrows, ENT_QUOTES | ENT_HTML5); //mb
         //        require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
@@ -157,7 +159,7 @@ function listingAddType($type)
         echo '</td></tr></table>';
         xoops_cp_footer();
     } else {
-        $type = $myts->htmlSpecialChars($type);
+        $type = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
 
         if ('' == $type) {
             $type = '! ! ? ! !';
@@ -175,16 +177,16 @@ function listingAddType($type)
  */
 function listingModType($id_type)
 {
-    global $xoopsDB, $xoopsConfig,  $myts, $admin_lang;
+    global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     $id_type = (int)$id_type;
     //    loadModuleAdminMenu(2, "");
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODTYPE . '</legend>';
     $result = $xoopsDB->query('SELECT id_type, nom_type FROM ' . $xoopsDB->prefix('adslight_type') . " WHERE id_type={$id_type}");
-    list($id_type, $nom_type) = $xoopsDB->fetchRow($result);
+    [$id_type, $nom_type] = $xoopsDB->fetchRow($result);
 
-    $nom_type = $myts->htmlSpecialChars($nom_type);
+    $nom_type = \htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5);
 
     echo '<form action="options.php" method="post">';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -219,7 +221,7 @@ function listingModTypeS($id_type, $nom_type)
     global $xoopsDB, $myts;
 
     $id_type  = (int)$id_type;
-    $nom_type = $myts->htmlSpecialChars($nom_type);
+    $nom_type = \htmlspecialchars($nom_type, ENT_QUOTES | ENT_HTML5);
     $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_type') . " SET nom_type='{$nom_type}' WHERE id_type='{$id_type}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_TYPEMOD);
 }
@@ -247,9 +249,9 @@ function listingAddPrice($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='{$nom_price}'"));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT  COUNT(*)  FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE nom_price='{$nom_price}'"));
     if ($numrows > 0) {
-        $nom_price = $myts->htmlSpecialChars($numrows); //mb
+        $nom_price = \htmlspecialchars($numrows, ENT_QUOTES | ENT_HTML5); //mb
         //        require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
@@ -265,7 +267,7 @@ function listingAddPrice($type)
         echo '</td></tr></table>';
         xoops_cp_footer();
     } else {
-        $nom_price = $myts->htmlSpecialChars($price);
+        $nom_price = \htmlspecialchars($price, ENT_QUOTES | ENT_HTML5);
         if ('' == $nom_price) {
             $nom_price = '! ! ? ! !';
         }
@@ -291,9 +293,9 @@ function listingModPrice($id_price)
     echo '<b>' . _AM_ADSLIGHT_MODPRICE . '</b><br><br>';
     $id_price = (int)$id_price;
     $result   = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price={$id_price}");
-    list($nom_price) = $xoopsDB->fetchRow($result);
+    [$nom_price] = $xoopsDB->fetchRow($result);
 
-    $nom_price = $myts->htmlSpecialChars($nom_price);
+    $nom_price = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
 
     echo '<form action="options.php" method="post">';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -327,7 +329,7 @@ function listingModPriceS($id_price, $nom_price)
     global $xoopsDB, $myts;
 
     $id_price  = (int)$id_price;
-    $nom_price = $myts->htmlSpecialChars($nom_price);
+    $nom_price = \htmlspecialchars($nom_price, ENT_QUOTES | ENT_HTML5);
     $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_price') . " SET nom_price='{$nom_price}' WHERE id_price='{$id_price}'");
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEMOD);
 }
@@ -345,77 +347,77 @@ function listingDelPrice($id_price)
     redirect_header('options.php', 1, _AM_ADSLIGHT_PRICEDEL);
 }
 
-#  function listingAddUsure
+#  function listingAddcondition
 #####################################################
 /**
  * @param $type
  */
-function listingAddUsure($type)
+function listingAddcondition($type)
 {
     global $xoopsDB, $xoopsConfig, $myts, $admin_lang;
 
-    $type = $myts->htmlSpecialChars($type);
+    $type = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
 
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE nom_usure='{$type}'"));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_condition') . " WHERE nom_condition='{$type}'"));
     if ($numrows > 0) {
-        $nom_usure = $myts->htmlSpecialChars($numrows); //mb
+        $nom_condition = \htmlspecialchars($numrows, ENT_QUOTES | ENT_HTML5); //mb
 
         //        require_once __DIR__ . '/admin_header.php';
         xoops_cp_header();
         //    loadModuleAdminMenu(2, "");
 
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
-        echo '<br><div style="text-align:center;"><b>' . _AM_ADSLIGHT_ERRORUSURE . " {$nom_usure} " . _AM_ADSLIGHT_EXIST . '</b></div><br><br>';
+        echo '<br><div style="text-align:center;"><b>' . _AM_ADSLIGHT_ERRORCONDITION . " {$nom_condition} " . _AM_ADSLIGHT_EXIST . '</b></div><br><br>';
         echo '<form method="post" action="options.php">
-            <b>' . _AM_ADSLIGHT_ADDUSURE . '</b><br><br>
+            <b>' . _AM_ADSLIGHT_ADDCONDITION . '</b><br><br>
             ' . _AM_ADSLIGHT_TYPE . '   <input type="text" name="type" size="30" maxlength="100">
-            <input type="hidden" name="op" value="ListingAddUsure">
+            <input type="hidden" name="op" value="ListingAddcondition">
             <input type="submit" value="' . _ADD . '">
             </form>';
         echo '</td></tr></table>';
         xoops_cp_footer();
     } else {
-        $type = $myts->htmlSpecialChars($type);
+        $type = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
         if ('' == $type) {
             $type = '! ! ? ! !';
         }
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_usure') . " VALUES (NULL, '{$type}')");
-        redirect_header('options.php', 1, _AM_ADSLIGHT_ADDUSURE2);
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_condition') . " VALUES (NULL, '{$type}')");
+        redirect_header('options.php', 1, _AM_ADSLIGHT_ADDCONDITION2);
     }
 }
 
-#  function listingModUsure
+#  function listingModcondition
 #####################################################
 /**
- * @param $id_usure
+ * @param $id_condition
  */
-function listingModUsure($id_usure)
+function listingModcondition($id_condition)
 {
     global $xoopsDB, $myts;
 
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(2, "");
-    echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODUSURE . '</legend>';
-    echo '<b>' . _AM_ADSLIGHT_MODUSURE . '</b><br><br>';
-    $result9 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure={$id_usure}");
-    list($nom_usure) = $xoopsDB->fetchRow($result9);
+    echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODCONDITION . '</legend>';
+    echo '<b>' . _AM_ADSLIGHT_MODCONDITION . '</b><br><br>';
+    $result9 = $xoopsDB->query('SELECT nom_condition FROM ' . $xoopsDB->prefix('adslight_condition') . " WHERE id_condition={$id_condition}");
+    [$nom_condition] = $xoopsDB->fetchRow($result9);
 
-    $nom_usure = $myts->htmlSpecialChars($nom_usure);
+    $nom_condition = \htmlspecialchars($nom_condition, ENT_QUOTES | ENT_HTML5);
 
     echo '<form action="options.php" method="post">';
     echo $GLOBALS['xoopsSecurity']->getTokenHTML();
-    echo _AM_ADSLIGHT_USURE
-         . " <input type=\"text\" name=\"nom_usure\" value=\"{$nom_usure}\" size=\"51\" maxlength=\"50\"><br>"
-         . "<input type=\"hidden\" name=\"id_usure\" value=\"{$id_usure}\">"
-         . '<input type="hidden" name="op" value="ListingModUsureS">'
+    echo _AM_ADSLIGHT_CONDITION
+         . " <input type=\"text\" name=\"nom_condition\" value=\"{$nom_condition}\" size=\"51\" maxlength=\"50\"><br>"
+         . "<input type=\"hidden\" name=\"id_condition\" value=\"{$id_condition}\">"
+         . '<input type="hidden" name="op" value="ListingModconditionS">'
          . '<table border="0"><tr><td>'
          . '<input type="submit" value="'
          . _AM_ADSLIGHT_SAVMOD
          . '"></form>'
          . '<form action="options.php" method="post">'
-         . "<input type=\"hidden\" name=\"id_usure\" value=\"{$id_usure}\">"
-         . '<input type="hidden" name="op" value="ListingDelUsure">'
+         . "<input type=\"hidden\" name=\"id_condition\" value=\"{$id_condition}\">"
+         . '<input type="hidden" name="op" value="ListingDelcondition">'
          . '<input type="submit" value="'
          . _DELETE
          . '"></form></td></tr></table>';
@@ -424,35 +426,35 @@ function listingModUsure($id_usure)
     xoops_cp_footer();
 }
 
-#  function listingModUsureS
+#  function listingModconditionS
 #####################################################
 /**
- * @param $id_usure
- * @param $nom_usure
+ * @param $id_condition
+ * @param $nom_condition
  */
-function listingModUsureS($id_usure, $nom_usure)
+function listingModconditionS($id_condition, $nom_condition)
 {
-    global $xoopsDB,  $myts;
+    global $xoopsDB, $myts;
 
-    $nom_usure = $myts->htmlSpecialChars($nom_usure);
+    $nom_condition = \htmlspecialchars($nom_condition, ENT_QUOTES | ENT_HTML5);
 
-    $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_usure') . " SET nom_usure='{$nom_usure}' WHERE id_usure='{$id_usure}'");
-    redirect_header('options.php', 1, _AM_ADSLIGHT_USUREMOD);
+    $xoopsDB->query('UPDATE ' . $xoopsDB->prefix('adslight_condition') . " SET nom_condition='{$nom_condition}' WHERE id_condition='{$id_condition}'");
+    redirect_header('options.php', 1, _AM_ADSLIGHT_CONDITIONMOD);
 }
 
-#  function listingDelUsure
+#  function listingDelcondition
 #####################################################
 /**
- * @param $id_usure
+ * @param $id_condition
  */
-function listingDelUsure($id_usure)
+function listingDelcondition($id_condition)
 {
     global $xoopsDB, $admin_lang;
 
-    $id_usure = (int)$id_usure;
-    $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_usure') . " WHERE id_usure='{$id_usure}'");
+    $id_condition = (int)$id_condition;
+    $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_condition') . " WHERE id_condition='{$id_condition}'");
 
-    redirect_header('options.php', 1, _AM_ADSLIGHT_USUREDEL);
+    redirect_header('options.php', 1, _AM_ADSLIGHT_CONDITIONDEL);
 }
 
 #####################################################
@@ -479,17 +481,17 @@ switch ($op) {
     case 'ListingAddPrice':
         listingAddPrice($type);
         break;
-    case 'ListingDelUsure':
-        listingDelUsure($id_usure);
+    case 'ListingDelcondition':
+        listingDelcondition($id_condition);
         break;
-    case 'ListingModUsure':
-        listingModUsure($id_usure);
+    case 'ListingModcondition':
+        listingModcondition($id_condition);
         break;
-    case 'ListingModUsureS':
-        listingModUsureS($id_usure, $nom_usure);
+    case 'ListingModconditionS':
+        listingModconditionS($id_condition, $nom_condition);
         break;
-    case 'ListingAddUsure':
-        listingAddUsure($type);
+    case 'ListingAddcondition':
+        listingAddcondition($type);
         break;
     case 'ListingDelType':
         listingDelType($id_type);

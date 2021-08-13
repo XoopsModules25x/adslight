@@ -85,7 +85,7 @@
                                     <{$item.title}>&nbsp;
                                 </strong><br>
                                 <{$item.type}><br>
-                                <{if $item.price!=""}>
+                                <{if $item.price|default:'' !=""}>
                                 <strong><{$item.price}></strong>&nbsp;-&nbsp;<{$item.price_typeprice}>
                                 <{else}>&nbsp;
                                 <{/if}><br>
@@ -116,7 +116,7 @@
                                     <{$item.title}>&nbsp;
                                 </strong><br>
                                 <{$item.type}><br>
-                                <{if $item.price!=""}>
+                                <{if $item.price|default:'' !=""}>
                                 <strong><{$item.price}></strong>&nbsp;-&nbsp;<{$item.price_typeprice}>
                                 <{else}>&nbsp;
                                 <{/if}><br>

@@ -1,24 +1,26 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 
@@ -38,10 +40,10 @@ $result      = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_p
 $recordexist = $xoopsDB->getRowsNum($result);
 
 if ($recordexist) {
-    list($url) = $xoopsDB->fetchRow($result);
-    echo "<br><br><div style='text-align:center'><img class=\"thumb\" src=\"photo/{$url}\" border=0></div>";
+    [$url] = $xoopsDB->fetchRow($result);
+    echo "<br><br><div style='text-align:center'><img class=\"thumb\" src=\"photo/{$url}\" border=0></div>";
 }
 
-echo "<table><tr><td><div style='text-align:center'><a href=#  onClick='window.close()'>" . _ADSLIGHT_CLOSEF . '</a></div></td></tr></table>';
+echo "<table><tr><td><div style='text-align:center'><a href=#  onClick='window.close()'>" . _ADSLIGHT_CLOSEF . '</a></div></td></tr></table>';
 
 xoops_footer();

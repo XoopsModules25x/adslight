@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Adslight;
 
 /*
@@ -14,12 +16,10 @@ namespace XoopsModules\Adslight;
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
-defined('XOOPS_ROOT_PATH') || die('Restricted access');
+\defined('XOOPS_ROOT_PATH') || exit('Restricted access');
 
 /**
  * Class Helper
@@ -34,7 +34,7 @@ class Helper extends \Xmf\Module\Helper
     public function __construct($debug = false)
     {
         $this->debug   = $debug;
-        $moduleDirName = basename(dirname(__DIR__));
+        $moduleDirName = \basename(\dirname(__DIR__));
         parent::__construct($moduleDirName);
     }
 
@@ -43,7 +43,7 @@ class Helper extends \Xmf\Module\Helper
      *
      * @return \XoopsModules\Adslight\Helper
      */
-    public static function getInstance($debug = false)
+    public static function getInstance($debug = false): Helper
     {
         static $instance;
         if (null === $instance) {
@@ -56,7 +56,7 @@ class Helper extends \Xmf\Module\Helper
     /**
      * @return string
      */
-    public function getDirname()
+    public function getDirname(): string
     {
         return $this->dirname;
     }
@@ -71,10 +71,10 @@ class Helper extends \Xmf\Module\Helper
     public function getHandler($name)
     {
         /** @var \XoopsMySQLDatabase $xoopsDB */
-        $ret   = false;
-        $xoopsDB    = \XoopsDatabaseFactory::getDatabaseConnection();
-        $class = '\\XoopsModules\\' . ucfirst(mb_strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
-        $ret   = new $class($xoopsDB);
+        $ret     = false;
+        $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
+        $class   = '\\XoopsModules\\' . \ucfirst(\mb_strtolower(\basename(\dirname(__DIR__)))) . '\\' . $name . 'Handler';
+        $ret     = new $class($xoopsDB);
 
         return $ret;
     }

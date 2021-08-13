@@ -1,38 +1,41 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 use XoopsModules\Adslight;
+use XoopsModules\Adslight\Helper;
 
-$moduleDirName = basename(__DIR__);
+$moduleDirName = \basename(__DIR__);
 //@todo replace the following code - use Filters
 foreach ($_REQUEST as $key => $val) {
-    $val            = preg_replace("/[^_A-Za-z0-9-\.&=]/i", '', $val);
+    $val            = preg_replace('/[^_A-Za-z0-9-\.&=]/i', '', $val);
     $_REQUEST[$key] = $val;
 }
 
 $xoopsOption['pagetype'] = 'search';
 
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once \dirname(__DIR__, 2) . '/mainfile.php';
 
 $xmid = $xoopsModule->getVar('mid');
 /** @var \XoopsConfigHandler $configHandler */
@@ -160,19 +163,19 @@ switch ($action) {
                         echo '<style type="text/css" media="all">@import url(' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css);</style>';
                         echo '<table width="100%" class="outer"><tr>';
                         echo '<td width="30%">';
-                        echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
+                        echo '<strong>' . htmlspecialchars($results[$i]['type'], ENT_QUOTES | ENT_HTML5) . '</strong><br>';
                         if (isset($results[$i]['photo'])
                             && '' !== $results[$i]['photo']) {
-                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
+                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['photo'] . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         }
-                        if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                        if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                             $results[$i]['link'] = '' . $results[$i]['link'];
                         }
                         echo '<td width="50%">';
 
-                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
+                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . htmlspecialchars($results[$i]['title'], ENT_QUOTES | ENT_HTML5) . '</a></strong><br><br>';
 
                         if (!XOOPS_USE_MULTIBYTES) {
                             if (mb_strlen($results[$i]['desctext']) >= 14) {
@@ -183,7 +186,7 @@ switch ($action) {
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
                         echo '</td><td width="20%">';
-                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
+                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . htmlspecialchars($results[$i]['price'], ENT_QUOTES | ENT_HTML5) . '</a>&nbsp;' . htmlspecialchars($results[$i]['typeprice'], ENT_QUOTES | ENT_HTML5) . '</a>';
 
                         echo '</td></tr><tr><td>';
                         echo '<small>';
@@ -214,21 +217,20 @@ switch ($action) {
 
         require_once XOOPS_ROOT_PATH . '/header.php';
 
-        /** @var \XoopsModules\Adslight\Helper $helper */
-        $helper = \XoopsModules\Adslight\Helper::getInstance();
+        $helper = Helper::getInstance();
         $helper->loadLanguage('admin');
 
         $GLOBALS['xoopsTpl']->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->get($mid);
-        $results       = &$module->search($queries, $andor, 20, $start, $uid);
+        $results       = $module->search($queries, $andor, 20, $start, $uid);
         $count         = 0;
         if (is_array($results)) {
             $count = count($results);
         }
         if ($count > 0) {
-            $next_results = &$module->search($queries, $andor, 1, $start + 20, $uid);
+            $next_results = $module->search($queries, $andor, 1, $start + 20, $uid);
             $count        = 0;
             if (is_array($next_results)) {
                 $count = count($next_results);
@@ -255,19 +257,19 @@ switch ($action) {
             for ($i = 0; $i < $count; ++$i) {
                 echo '<table width="100%" class="outer"><tr>';
                 echo '<td width="30%">';
-                echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
+                echo '<strong>' . htmlspecialchars($results[$i]['type'], ENT_QUOTES | ENT_HTML5) . '</strong><br>';
                 if (isset($results[$i]['photo'])
                     && '' !== $results[$i]['photo']) {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 } else {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 }
-                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                     $results[$i]['link'] = '' . $results[$i]['link'];
                 }
                 echo '<td width="50%">';
 
-                echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
+                echo "<strong><a href='" . $results[$i]['link'] . "'>" . htmlspecialchars($results[$i]['title'], ENT_QUOTES | ENT_HTML5) . '</a></strong><br><br>';
 
                 if (!XOOPS_USE_MULTIBYTES) {
                     if (mb_strlen($results[$i]['desctext']) >= 14) {
@@ -275,11 +277,11 @@ switch ($action) {
                     }
                 }
 
-                echo '' . $myts->htmlSpecialChars($results[$i]['desctext']) . '';
+                echo '' . htmlspecialchars($results[$i]['desctext'], ENT_QUOTES | ENT_HTML5) . '';
 
                 echo '</td><td width="20%">';
                 echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '
-' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
+' . htmlspecialchars($results[$i]['price'], ENT_QUOTES | ENT_HTML5) . '</a>&nbsp;' . htmlspecialchars($results[$i]['typeprice'], ENT_QUOTES | ENT_HTML5) . '</a>';
 
                 echo '</td></tr><tr><td>';
                 echo '<small>';

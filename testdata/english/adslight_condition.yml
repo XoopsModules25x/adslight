@@ -1,0 +1,12 @@
+-
+    id_condition: '1'
+    nom_condition: 'In very good condition'
+-
+    id_condition: '2'
+    nom_condition: 'Middle condition'
+-
+    id_condition: '3'
+    nom_condition: Damaged
+-
+    id_condition: '4'
+    nom_condition: 'In Poor Condition'

@@ -2,12 +2,12 @@
 <table>
     <tr>
         <td>
-            {HELLO} {FNAME},
+            {HELLO} {ADMIN},
         </td>
     </tr>
     <tr>
         <td>
-            {YNAME} {THINKS_INTERESTING} <br><br>
+            {YNAME} {THINKS_REPORT} <br><br>
         </td>
     </tr>
     <tr>

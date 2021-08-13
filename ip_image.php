@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -25,7 +27,7 @@ $backcolor  = imagecolorallocate($img_number, 102, 102, 153);
 $textcolor  = imagecolorallocate($img_number, 255, 255, 255);
 
 imagefill($img_number, 0, 0, $backcolor);
-$number = (string)$_SERVER['REMOTE_ADDR'];
+$number = $_SERVER['REMOTE_ADDR'];
 
 imagestring($img_number, 10, 5, 5, $number, $textcolor);
 

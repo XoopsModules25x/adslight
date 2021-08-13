@@ -1,31 +1,33 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use XoopsModules\Adslight;
 
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName = \basename(dirname(__DIR__));
 $admin_lang    = '_AM_' . mb_strtoupper($moduleDirName);
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once \dirname(__DIR__, 3) . '/include/cp_header.php';
 xoops_cp_header();
 
 if (($xoopsUser instanceof \XoopsUser)
@@ -36,8 +38,8 @@ if (($xoopsUser instanceof \XoopsUser)
         $sql = 'CREATE TABLE ' . $xoopsDB->prefix('adslight_pictures') . " (
               cod_img INT(11) NOT NULL AUTO_INCREMENT,
               title VARCHAR(255) NOT NULL DEFAULT '',
-              date_added INT(10)NOT NULL DEFAULT '0',
-              date_modified INT(10) NOT NULL DEFAULT '0',
+              date_created INT(10)NOT NULL DEFAULT '0',
+              date_updated INT(10) NOT NULL DEFAULT '0',
               lid INT(11) NOT NULL DEFAULT '0',
               uid_owner VARCHAR(50) NOT NULL DEFAULT '',
               url VARCHAR(50) NOT NULL DEFAULT '',
@@ -56,7 +58,7 @@ if (($xoopsUser instanceof \XoopsUser)
       r_lid INT(11) NOT NULL AUTO_INCREMENT,
       lid INT(5) UNSIGNED NOT NULL DEFAULT '0',
       title VARCHAR(50) NOT NULL DEFAULT '',
-      date INT(10) NOT NULL DEFAULT '0',
+      date_created INT(10) NOT NULL DEFAULT '0',
       submitter VARCHAR(60) NOT NULL DEFAULT '',
       message TEXT NULL,
       tele VARCHAR(20) NOT NULL DEFAULT '0',

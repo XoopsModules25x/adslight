@@ -1,24 +1,26 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 use XoopsModules\Adslight;
@@ -28,7 +30,7 @@ require_once __DIR__ . '/admin_header.php';
 $op = Request::getString('op', 'list');
 
 global $moduleDirName;
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName = \basename(dirname(__DIR__));
 
 #  function Index
 #####################################################
@@ -36,7 +38,7 @@ function index()
 {
     global $xoopsDB, $xoopsModule, $myts, $desctext, $admin_lang;
 
-    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\Tree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $photo3 = '';
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
@@ -46,20 +48,14 @@ function index()
     $photo_dir         = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'];
     $photo_thumb_dir   = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/thumbs';
     $photo_resized_dir = $GLOBALS['xoopsModuleConfig']['adslight_path_upload'] . '/midsize';
-    if (!is_dir($photo_dir)) {
-        if (!mkdir($photo_dir) && !is_dir($photo_dir)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_dir));
-        }
+    if (!is_dir($photo_dir) && (!mkdir($photo_dir) && !is_dir($photo_dir))) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_dir));
     }
-    if (!is_dir($photo_thumb_dir)) {
-        if (!mkdir($photo_thumb_dir) && !is_dir($photo_thumb_dir)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_thumb_dir));
-        }
+    if (!is_dir($photo_thumb_dir) && (!mkdir($photo_thumb_dir) && !is_dir($photo_thumb_dir))) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_thumb_dir));
     }
-    if (!is_dir($photo_resized_dir)) {
-        if (!mkdir($photo_resized_dir) && !is_dir($photo_resized_dir)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_resized_dir));
-        }
+    if (!is_dir($photo_resized_dir) && (!mkdir($photo_resized_dir) && !is_dir($photo_resized_dir))) {
+        throw new \RuntimeException(sprintf('Directory "%s" was not created', $photo_resized_dir));
     }
     if (!is_writable($photo_dir) || !is_readable($photo_dir)) {
         echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_CHECKER . '</legend><br>';
@@ -79,8 +75,8 @@ function index()
         echo '</fieldset><br>';
     }
 
-    $sql  = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid";
-    $result = $xoopsDB->query($sql);
+    $sql     = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typecondition, date_created, email, submitter, town, country, contactby, premium, photo, usid FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='no' ORDER BY lid";
+    $result  = $xoopsDB->query($sql);
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
         ///////// Il y a [..] Annonces en attente d'être approuvées //////
@@ -93,8 +89,8 @@ function index()
         echo "<table width='100%' border='0' class='outer'>";
         $rank = 1;
 
-        while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo, $usid) = $xoopsDB->fetchRow($result))) {
-            $title    = $myts->htmlSpecialChars($title);
+        while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $photo, $usid) = $xoopsDB->fetchRow($result))) {
+            $title    = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
             $desctext = $myts->displayTarea($desctext, 1, 0, 1, 1, 1);
 
             if (mb_strlen($desctext) >= 200) {
@@ -102,18 +98,14 @@ function index()
             } else {
                 $desctext = $myts->displayTarea($desctext, 1, 1, 1);
             }
-            $date2 = formatTimestamp($date, 's');
+            $date2 = formatTimestamp($date_created, 's');
 
-            if (is_int($rank / 2)) {
-                $color = '#ffffff';
-            } else {
-                $color = 'head';
-            }
+            $color = is_int($rank / 2) ? '#ffffff' : 'head';
 
-            $status = $myts->htmlSpecialChars($status);
-            $expire = $myts->htmlSpecialChars($expire);
-            $type   = $myts->htmlSpecialChars($type);
-            $tel    = $myts->htmlSpecialChars($tel);
+            $status = \htmlspecialchars($status, ENT_QUOTES | ENT_HTML5);
+            $expire = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+            $type   = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
+            $tel    = \htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
             //            $price     = number_format($price, 2, ',', ' ');
 
             xoops_load('XoopsLocal');
@@ -123,16 +115,16 @@ function index()
             //  For other countries uncomment the below line and comment out the above line
             //      $price = $tempXoopsLocal->number_format($price);
 
-            $typeprice = $myts->htmlSpecialChars($typeprice);
-            $typeusure = $myts->htmlSpecialChars($typeusure);
-            $submitter = $myts->htmlSpecialChars($submitter);
-            $town      = $myts->htmlSpecialChars($town);
-            $country   = $myts->htmlSpecialChars($country);
-            $contactby = $myts->htmlSpecialChars($contactby);
-            $premium   = $myts->htmlSpecialChars($premium);
+            $typeprice = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+            $typecondition = \htmlspecialchars($typecondition, ENT_QUOTES | ENT_HTML5);
+            $submitter = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+            $town      = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+            $country   = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+            $contactby = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+            $premium   = \htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
 
             $updir   = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'];
-            $sql     = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE  uid_owner=' . (int)$usid . ' AND lid=' . (int)$lid . ' ORDER BY date_added ASC LIMIT 1';
+            $sql     = 'SELECT cod_img, lid, uid_owner, url FROM ' . $xoopsDB->prefix('adslight_pictures') . ' WHERE  uid_owner=' . (int)$usid . ' AND lid=' . (int)$lid . ' ORDER BY date_created ASC LIMIT 1';
             $resultp = $xoopsDB->query($sql);
             while (false !== (list($cod_img, $pic_lid, $uid_owner, $url) = $xoopsDB->fetchRow($resultp))) {
                 if ($photo) {
@@ -146,13 +138,13 @@ function index()
             $photo4 = ($photo > 0) ? (string)$photo : '0';
 
             $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
-            list($nom_type) = $xoopsDB->fetchRow($result7);
+            [$nom_type] = $xoopsDB->fetchRow($result7);
 
             $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
-            list($nom_price) = $xoopsDB->fetchRow($result8);
+            [$nom_price] = $xoopsDB->fetchRow($result8);
 
-            /*        $result9 = $xoopsDB->query("select nom_usure from ".$xoopsDB->prefix('adslight_usure')." where id_usure=".(int)$typeusure."");
-                list($nom_usure) = $xoopsDB->fetchRow($result9); */
+            /*        $result9 = $xoopsDB->query("select nom_condition from ".$xoopsDB->prefix('adslight_condition')." where id_condition=".(int)$typecondition."");
+                list($nom_condition) = $xoopsDB->fetchRow($result9); */
 
             echo '<form action="validate_ads.php" method="post">';
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -185,8 +177,8 @@ function index()
             echo "<input type=\"hidden\" name=\"tel\" value=\"{$tel}\">";
             echo "<input type=\"hidden\" name=\"price\" value=\"{$price}\">";
             echo "<input type=\"hidden\" name=\"typeprice\" value=\"{$typeprice}\">";
-            echo "<input type=\"hidden\" name=\"typeusure\" value=\"{$typeusure}\">";
-            echo "<input type=\"hidden\" name=\"date\" value=\"{$date}\">";
+            echo "<input type=\"hidden\" name=\"typecondition\" value=\"{$typecondition}\">";
+            echo "<input type=\"hidden\" name=\"date_created\" value=\"{$date_created}\">";
             echo "<input type=\"hidden\" name=\"email\" value=\"{$email}\">";
             echo "<input type=\"hidden\" name=\"submitter\" value=\"{$submitter}\">";
             echo "<input type=\"hidden\" name=\"town\" value=\"{$town}\">";
@@ -208,7 +200,7 @@ function index()
     }
 
     // Modify Annonces
-    list($numrows) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' '));
+    [$numrows] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . ' '));
     if ($numrows > 0) {
         echo "<table class='outer width100 bnone'><tr class='bg4'><td class='top'>";
         echo '<form method="post" action="validate_ads.php">'
@@ -241,28 +233,28 @@ function indexView($lid)
 {
     global $xoopsDB, $xoopsModule, $myts, $desctext, $admin_lang;
 
-    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\Tree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/admin_header.php';
     xoops_cp_header();
     //    loadModuleAdminMenu(0, "");
 
-    $sql  = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='No' AND lid='" . (int)$lid . "'";
-    $result = $xoopsDB->query($sql);
+    $sql     = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typecondition, date_created, email, submitter, town, country, contactby, premium, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='No' AND lid='" . (int)$lid . "'";
+    $result  = $xoopsDB->query($sql);
     $numrows = $xoopsDB->getRowsNum($result);
     if ($numrows > 0) {
         echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #DFE0E0;'><tr class='bg4'><td valign='top'>";
         echo '<b>' . _AM_ADSLIGHT_WAIT . '</b><br><br>';
 
-        list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $photo) = $xoopsDB->fetchRow($result);
+        [$lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $photo] = $xoopsDB->fetchRow($result);
 
-        $date2    = formatTimestamp($date, 's');
-        $title    = $myts->htmlSpecialChars($title);
-        $status   = $myts->htmlSpecialChars($status);
-        $expire   = $myts->htmlSpecialChars($expire);
-        $type     = $myts->htmlSpecialChars($type);
+        $date2    = formatTimestamp($date_created, 's');
+        $title    = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+        $status   = \htmlspecialchars($status, ENT_QUOTES | ENT_HTML5);
+        $expire   = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+        $type     = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
         $desctext = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel      = $myts->htmlSpecialChars($tel);
+        $tel      = \htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
         //        $price     = number_format($price, 2, ',', ' ');
         xoops_load('XoopsLocal');
         $tempXoopsLocal = new \XoopsLocal();
@@ -271,13 +263,13 @@ function indexView($lid)
         //  For other countries uncomment the below line and comment out the above line
         //      $price = $tempXoopsLocal->number_format($price);
 
-        $typeprice = $myts->htmlSpecialChars($typeprice);
-        $typeusure = $myts->htmlSpecialChars($typeusure);
-        $submitter = $myts->htmlSpecialChars($submitter);
-        $town      = $myts->htmlSpecialChars($town);
-        $country   = $myts->htmlSpecialChars($country);
-        $contactby = $myts->htmlSpecialChars($contactby);
-        $premium   = $myts->htmlSpecialChars($premium);
+        $typeprice = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+        $typecondition = \htmlspecialchars($typecondition, ENT_QUOTES | ENT_HTML5);
+        $submitter = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+        $town      = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+        $country   = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+        $contactby = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+        $premium   = \htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
 
         echo '<form action="validate_ads.php" method="post">';
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -332,17 +324,17 @@ function indexView($lid)
 
         echo '</select></td></tr>';
 
-        ////// Etat d'usure
+        ////// Etat d'condition
         echo "<tr class='head' border='1'>
-            <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
+            <td>" . _AM_ADSLIGHT_TYPE_CONDITION . ' </td><td><select name="typecondition">';
 
-        $result6 = $xoopsDB->query('SELECT nom_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
-        while (false !== (list($nom_usure) = $xoopsDB->fetchRow($result6))) {
+        $result6 = $xoopsDB->query('SELECT nom_condition FROM ' . $xoopsDB->prefix('adslight_condition') . ' ORDER BY nom_condition');
+        while (false !== (list($nom_condition) = $xoopsDB->fetchRow($result6))) {
             $sel = '';
-            if ($nom_usure == $typeusure) {
+            if ($nom_condition == $typecondition) {
                 $sel = 'selected';
             }
-            echo "<option value=\"{$nom_usure}\"{$sel}>{$nom_usure}</option>";
+            echo "<option value=\"{$nom_condition}\"{$sel}>{$nom_condition}</option>";
         }
         echo '</select></td></tr>';
 
@@ -373,7 +365,7 @@ function indexView($lid)
         </tr></table>';
         echo '<input type="hidden" name="valid" value="Yes">';
         echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
-        echo "<input type=\"hidden\" name=\"date\" value=\"{$date}\">";
+        echo "<input type=\"hidden\" name=\"date_created\" value=\"{$date_created}\">";
         echo "<input type=\"hidden\" name=\"submitter\" value=\"{$submitter}\">
             </form>";
         echo '</td></tr></table>';
@@ -392,7 +384,7 @@ function modifyAds($lid)
 {
     global $xoopsDB, $xoopsModule, $myts, $desctext, $admin_lang;
 
-    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\Tree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     $id_price      = '';
     $nom_price     = '';
@@ -405,15 +397,15 @@ function modifyAds($lid)
 
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_MODANN . '</legend>';
 
-    $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}";
+    $sql    = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typecondition, date_created, email, submitter, town, country, contactby, premium, valid, photo FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}";
     $result = $xoopsDB->query($sql);
-    while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result))) {
-        $title    = $myts->htmlSpecialChars($title);
-        $status   = $myts->htmlSpecialChars($status);
-        $expire   = $myts->htmlSpecialChars($expire);
-        $type     = $myts->htmlSpecialChars($type);
+    while (false !== (list($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo) = $xoopsDB->fetchRow($result))) {
+        $title    = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+        $status   = \htmlspecialchars($status, ENT_QUOTES | ENT_HTML5);
+        $expire   = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+        $type     = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
         $desctext = $myts->displayTarea($desctext, 1, 1, 1);
-        $tel      = $myts->htmlSpecialChars($tel);
+        $tel      = \htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
         //        $price     = number_format($price, 2, ',', ' ');
 
         xoops_load('XoopsLocal');
@@ -423,15 +415,15 @@ function modifyAds($lid)
         //  For other countries uncomment the below line and comment out the above line
         //      $price = $tempXoopsLocal->number_format($price);
 
-        $typeprice = $myts->htmlSpecialChars($typeprice);
-        $typeusure = $myts->htmlSpecialChars($typeusure);
-        $submitter = $myts->htmlSpecialChars($submitter);
-        $town      = $myts->htmlSpecialChars($town);
-        $country   = $myts->htmlSpecialChars($country);
-        $contactby = $myts->htmlSpecialChars($contactby);
-        $premium   = $myts->htmlSpecialChars($premium);
+        $typeprice = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+        $typecondition = \htmlspecialchars($typecondition, ENT_QUOTES | ENT_HTML5);
+        $submitter = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+        $town      = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+        $country   = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+        $contactby = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+        $premium   = \htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
 
-        $date2 = formatTimestamp($date, 's');
+        $date2 = formatTimestamp($date_created, 's');
 
         echo '<form action="validate_ads.php" method=post>';
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -505,17 +497,17 @@ function modifyAds($lid)
         }
         echo '</select></td></tr>';
 
-        ////// Etat d'usure
+        ////// Etat d'condition
         echo "<tr class='head' border='1'>
-                 <td>" . _AM_ADSLIGHT_TYPE_USURE . ' </td><td><select name="typeusure">';
+                 <td>" . _AM_ADSLIGHT_TYPE_CONDITION . ' </td><td><select name="typecondition">';
 
-        $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
-        while (false !== (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6))) {
+        $result6 = $xoopsDB->query('SELECT nom_condition, id_condition FROM ' . $xoopsDB->prefix('adslight_condition') . ' ORDER BY nom_condition');
+        while (false !== (list($nom_condition, $id_condition) = $xoopsDB->fetchRow($result6))) {
             $sel = '';
-            if ($id_usure == $typeusure) {
+            if ($id_condition == $typecondition) {
                 $sel = 'selected';
             }
-            echo "<option value=\"{$id_usure}\"{$sel}>{$nom_usure}</option>";
+            echo "<option value=\"{$id_condition}\"{$sel}>{$nom_condition}</option>";
         }
         echo '</select></td></tr>';
 
@@ -561,7 +553,7 @@ function modifyAds($lid)
             </tr></table>';
         echo '<input type="hidden" name="valid" value="Yes">';
         echo "<input type=\"hidden\" name=\"lid\" value=\"{$lid}\">";
-        echo "<input type=\"hidden\" name=\"date\" value=\"{$time}\">";
+        echo "<input type=\"hidden\" name=\"date_created\" value=\"{$time}\">";
         echo "<input type=\"hidden\" name=\"submitter\" value=\"{$submitter}\">
         </form><br>";
         echo '</fieldset><br>';
@@ -583,8 +575,8 @@ function modifyAds($lid)
  * @param $tel
  * @param $price
  * @param $typeprice
- * @param $typeusure
- * @param $date
+ * @param $typecondition
+ * @param $date_created
  * @param $email
  * @param $submitter
  * @param $town
@@ -594,41 +586,41 @@ function modifyAds($lid)
  * @param $valid
  * @param $photo
  */
-function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
+function modifyAdsS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
     global $xoopsDB, $myts, $admin_lang;
 
     $lid   = (int)$lid;
     $cat   = (int)$cat;
-    $title = $myts->htmlSpecialChars($title);
-    //    $status    = $myts->htmlSpecialChars($status);
+    $title = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+    //    $status    = \htmlspecialchars($status);
     $status    = (int)$status;
-    $expire    = $myts->htmlSpecialChars($expire);
-    $type      = $myts->htmlSpecialChars($type);
+    $expire    = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+    $type      = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-    $tel       = $myts->htmlSpecialChars($tel);
+    $tel       = \htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
     $price     = str_replace([' '], '', $price);
-    $typeprice = $myts->htmlSpecialChars($typeprice);
-    $typeusure = $myts->htmlSpecialChars($typeusure);
-    $submitter = $myts->htmlSpecialChars($submitter);
-    $town      = $myts->htmlSpecialChars($town);
-    $country   = $myts->htmlSpecialChars($country);
-    $contactby = $myts->htmlSpecialChars($contactby);
-    $premium   = $myts->htmlSpecialChars($premium);
+    $typeprice = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+    $typecondition = \htmlspecialchars($typecondition, ENT_QUOTES | ENT_HTML5);
+    $submitter = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+    $town      = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+    $country   = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+    $contactby = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+    $premium   = \htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
 
-//    $xoopsDB->query('UPDATE '
-//                    . $xoopsDB->prefix('adslight_listing')
-//                    . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typeusure='{$typeusure}', date='{$date}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}");
+    //    $xoopsDB->query('UPDATE '
+    //                    . $xoopsDB->prefix('adslight_listing')
+    //                    . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typecondition='{$typecondition}', date_created='{$date_created}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}");
 
     $sql = 'UPDATE '
            . $xoopsDB->prefix('adslight_listing')
-           . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typeusure='{$typeusure}', date='{$date}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}";
+           . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typecondition='{$typecondition}', date_created='{$date_created}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}";
 
     $result = $xoopsDB->query($sql);
-    if (!$result) {
-        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
-    } else {
+    if ($result) {
         redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
+    } else {
+        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
     }
 }
 
@@ -649,15 +641,15 @@ function listingDel($lid, $photo)
     while (false !== (list($purl) = $xoopsDB->fetchRow($result2))) {
         if ($purl) {
             $destination = XOOPS_ROOT_PATH . '/uploads/adslight';
-            if (file_exists("{$destination}/{$purl}")) {
+            if (is_file("{$destination}/{$purl}")) {
                 unlink("{$destination}/{$purl}");
             }
             $destination2 = XOOPS_ROOT_PATH . '/uploads/adslight/thumbs';
-            if (file_exists("{$destination2}/thumb_{$purl}")) {
+            if (is_file("{$destination2}/thumb_{$purl}")) {
                 unlink("{$destination2}/thumb_{$purl}");
             }
             $destination3 = XOOPS_ROOT_PATH . '/uploads/adslight/midsize';
-            if (file_exists("{$destination3}/resized_{$purl}")) {
+            if (is_file("{$destination3}/resized_{$purl}")) {
                 unlink("{$destination3}/resized_{$purl}");
             }
             $xoopsDB->query('DELETE FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE lid={$lid}");
@@ -682,8 +674,8 @@ function listingDel($lid, $photo)
  * @param $tel
  * @param $price
  * @param $typeprice
- * @param $typeusure
- * @param $date
+ * @param $typecondition
+ * @param $date_created
  * @param $email
  * @param $submitter
  * @param $town
@@ -693,35 +685,37 @@ function listingDel($lid, $photo)
  * @param $valid
  * @param $photo
  */
-function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
+function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta, $admin_lang;
 
     $lid   = (int)$lid;
     $cat   = (int)$cat;
-    $title = $myts->htmlSpecialChars($title);
-    //    $status    = $myts->htmlSpecialChars($status);
+    $title = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
+    //    $status    = \htmlspecialchars($status);
     $status    = (int)$status;
-    $expire    = $myts->htmlSpecialChars($expire);
-    $type      = $myts->htmlSpecialChars($type);
+    $expire    = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
+    $type      = \htmlspecialchars($type, ENT_QUOTES | ENT_HTML5);
     $desctext  = $myts->displayTarea($desctext, 1, 1, 1);
-    $tel       = $myts->htmlSpecialChars($tel);
+    $tel       = \htmlspecialchars($tel, ENT_QUOTES | ENT_HTML5);
     $price     = str_replace([' '], '', $price);
-    $typeprice = $myts->htmlSpecialChars($typeprice);
-    $typeusure = $myts->htmlSpecialChars($typeusure);
-    $submitter = $myts->htmlSpecialChars($submitter);
-    $town      = $myts->htmlSpecialChars($town);
-    $country   = $myts->htmlSpecialChars($country);
-    $contactby = $myts->htmlSpecialChars($contactby);
-    $premium   = $myts->htmlSpecialChars($premium);
+    $typeprice = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
+    $typecondition = \htmlspecialchars($typecondition, ENT_QUOTES | ENT_HTML5);
+    $submitter = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
+    $town      = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
+    $country   = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
+    $contactby = \htmlspecialchars($contactby, ENT_QUOTES | ENT_HTML5);
+    $premium   = \htmlspecialchars($premium, ENT_QUOTES | ENT_HTML5);
     $now       = time();
-    $sql = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typeusure='{$typeusure}', date='{$now}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}";
+    $sql       = 'UPDATE '
+                 . $xoopsDB->prefix('adslight_listing')
+                 . " SET cid='{$cat}', title='{$title}', status='{$status}', expire='{$expire}', type='{$type}', desctext='{$desctext}', tel='{$tel}', price='{$price}', typeprice='{$typeprice}', typecondition='{$typecondition}', date_created='{$now}', email='{$email}', submitter='{$submitter}', town='{$town}', country='{$country}', contactby='{$contactby}', premium='{$premium}', valid='{$valid}', photo='{$photo}' WHERE lid={$lid}";
 
     $result = $xoopsDB->query($sql);
-    if (!$result) {
-        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
-    } else {
+    if ($result) {
         redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_ANNMOD);
+    } else {
+        redirect_header('validate_ads.php', 1, _AM_ADSLIGHT_UPGRADEFAILED);
     }
 
     if ('' !== $email) {
@@ -746,7 +740,7 @@ function listingValid($lid, $cat, $title, $status, $expire, $type, $desctext, $t
         $tags['APPROVED']   = _AM_ADSLIGHT_APPROVED;
 
         $subject = '' . _AM_ADSLIGHT_ANNACCEPT . '';
-        $mail    = &getMailer();
+        $mail    = getMailer();
         $mail->setTemplateDir(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . "/language/{$xoopsConfig['language']}/mail_template/");
         $mail->setTemplate('listing_approve.tpl');
         $mail->useMail();
@@ -813,13 +807,13 @@ switch ($op) {
         listingDel($lid, $photo);
         break;
     case 'ListingValid':
-        listingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
+        listingValid($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
     case 'modifyAds':
         modifyAds($lid);
         break;
     case 'modifyAdsS':
-        modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
+        modifyAdsS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $valid, $photo);
         break;
     default:
         index();

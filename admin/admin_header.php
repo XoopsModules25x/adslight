@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,37 +13,38 @@
 
 /**
  * @copyright    XOOPS Project (https://xoops.org)
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
 
+use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Adslight;
+use XoopsModules\Adslight\Helper;
+use XoopsModules\Adslight\Utility;
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
-require dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-require dirname(dirname(dirname(__DIR__))) . '/class/xoopsformloader.php';
-require  dirname(__DIR__) . '/include/common.php';
-require_once dirname(dirname(dirname(__DIR__))) . '/class/xoopsform/grouppermform.php';
+require \dirname(__DIR__) . '/preloads/autoloader.php';
+require \dirname(__DIR__, 3) . '/include/cp_header.php';
+require \dirname(__DIR__, 3) . '/class/xoopsformloader.php';
+require \dirname(__DIR__) . '/include/common.php';
+require_once \dirname(__DIR__, 3) . '/class/xoopsform/grouppermform.php';
 
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName = \basename(dirname(__DIR__));
 
-/** @var \XoopsModules\Adslight\Helper $helper */
-$helper = \XoopsModules\Adslight\Helper::getInstance();
+$helper = Helper::getInstance();
+$utility = new Utility();
 /** @var \Xmf\Module\Admin $adminObject */
-$adminObject = \Xmf\Module\Admin::getInstance();
+$adminObject = Admin::getInstance();
 
-$pathIcon16    = \Xmf\Module\Admin::iconUrl('', 16);
-$pathIcon32    = \Xmf\Module\Admin::iconUrl('', 32);
+$pathIcon16    = Admin::iconUrl('', 16);
+$pathIcon32    = Admin::iconUrl('', 32);
 $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 
 // Load language files
 $helper->loadLanguage('admin');
 $helper->loadLanguage('modinfo');
 $helper->loadLanguage('main');
-
+$helper->loadLanguage('common');
 $myts = \MyTextSanitizer::getInstance();
 
 if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {
