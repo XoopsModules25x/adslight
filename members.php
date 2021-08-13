@@ -174,13 +174,13 @@ if ($trows > '0') {
 
         //Fix bug for type and typeprice
         $result7 = $xoopsDB->query('SELECT nom_type FROM ' . $xoopsDB->prefix('adslight_type') . ' WHERE id_type=' . (int)$type);
-        list($nom_type) = $xoopsDB->fetchRow($result7);
+        [$nom_type] = $xoopsDB->fetchRow($result7);
 
         //        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . " WHERE id_price='" . $xoopsDB->escape($typeprice) . "'");
         //        [$nom_price] = $xoopsDB->fetchRow($result8);
 
         $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$typeprice);
-        list($nom_price) = $xoopsDB->fetchRow($result8);
+        [$nom_price] = $xoopsDB->fetchRow($result8);
 
 
         if ($isadmin) {
