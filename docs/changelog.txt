@@ -47,7 +47,7 @@
 - Permission name too long (geekwright)
 - Fix helper name (geekwright)
 - Establish access to global $xoopsUser (geekwright)
-- Remove failing include of classifiedstree.php  (geekwright)
+- Remove failing include of Tree.php  (geekwright)
 - Kill logger in rss feed (geekwright)
 - Correct invalid array syntax (geekwright)
 - Require /header.php (geekwright)
@@ -97,7 +97,7 @@
 - filter user input using XoopsRequest (zyspec)
 - changed jlm_pictures class to AdslightPictures class (zyspec)
 - changed from using HTTP_GET_VARS to _GET in ./rate-item.php on form submission (zyspec)
-- changed calling deprecated XoopsTree to using ClassifiedsTree (zyspec)
+- changed calling deprecated XoopsTree to using Tree (zyspec)
 - replaced all occurances of mysql_real_escape_string (deprecated) (zyspec)
 - removed unnecessary exit() statements (zyspec)
 - fixed rating bug in ./rate-item compare that would allow entering a zero rating (zyspec)
@@ -116,7 +116,7 @@
 - eliminate all 'extract' type code (i.e. foreach ($_POST as $k => $v)) in code for security reasons
 - refactor code to significantly reduce need for globals (change functions w/ switch statements)
 - refactor upgrade script(s) to include movement of assets to ./assets directory
-- change tree manipulation to XoopsObjectTree instead of using ClassifiedsTree class
+- change tree manipulation to XoopsObjectTree instead of using Tree class
 - change AdslightPicturesHandler to be a XoopsPersistableObjectHandler class
 - implement new error handling methods - XOOPS ErrorHandler has been deprecated
 - move ./style (css) files to ./assets/css (don't forget to modify upgrade script to del old files)
@@ -125,7 +125,7 @@
 - create and implement AdslightUserVotedata / AdslightUserVotedata classes
 - create and implement AdslightItemVotedata / AdslightItemVotedataHandler classes
 - create and implement AdslightIpLog / AdslightIpLogHandler classes
-- create and implement AdslightUsure / AdslightUsureHandler classes
+- create and implement Adslightcondition / AdslightconditionHandler classes
 - create and implement AdslightType / AdslightTypeHandler classes
 - create and implement AdslightCategories / AdslightCategoriesHandler classes
 - create and implement AdslightReplies / AdslightRepliesHandler classes

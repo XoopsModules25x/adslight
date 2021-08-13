@@ -3,25 +3,24 @@
 declare(strict_types=1);
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 use XoopsModules\Adslight;
@@ -39,13 +38,15 @@ function PrintAd($lid)
     $currenttheme = $xoopsConfig['theme_set'];
     $lid          = (int)$lid;
 
-    $result = $xoopsDB->query('SELECT l.lid, l.title, l.expire, l.type, l.desctext, l.tel, l.price, l.typeprice, l.date, l.email, l.submitter, l.town, l.country, l.photo, p.cod_img, p.lid, p.uid_owner, p.url FROM '
-                              . $xoopsDB->prefix('adslight_listing')
-                              . ' l LEFT JOIN '
-                              . $xoopsDB->prefix('adslight_pictures')
-                              . ' p ON l.lid=p.lid WHERE l.lid='
-                              . $xoopsDB->escape($lid));
-    [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url] = $xoopsDB->fetchRow($result);
+    $result = $xoopsDB->query(
+        'SELECT l.lid, l.title, l.expire, l.type, l.desctext, l.tel, l.price, l.typeprice, l.date_created, l.email, l.submitter, l.town, l.country, l.photo, p.cod_img, p.lid, p.uid_owner, p.url FROM '
+        . $xoopsDB->prefix('adslight_listing')
+        . ' l LEFT JOIN '
+        . $xoopsDB->prefix('adslight_pictures')
+        . ' p ON l.lid=p.lid WHERE l.lid='
+        . $xoopsDB->escape($lid)
+    );
+    [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date_created, $email, $submitter, $town, $country, $photo, $cod_img, $pic_lid, $uid_owner, $url] = $xoopsDB->fetchRow($result);
 
     $title     = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
     $expire    = \htmlspecialchars($expire, ENT_QUOTES | ENT_HTML5);
@@ -75,9 +76,9 @@ function PrintAd($lid)
         $timezone   = $GLOBALS['xoopsUser']->timezone();
         $useroffset = empty($timezone) ? $xoopsConfig['default_TZ'] : $GLOBALS['xoopsUser']->timezone();
     }
-    $date  = ($useroffset * 3600) + $date;
-    $date2 = $date + ($expire * 86400);
-    $date  = formatTimestamp($date, 's');
+    $date_created  = ($useroffset * 3600) + $date_created;
+    $date2 = $date_created + ($expire * 86400);
+    $date_created  = formatTimestamp($date_created, 's');
     $date2 = formatTimestamp($date2, 's');
 
     echo '<br><br><table width=99% border=0>
@@ -106,7 +107,7 @@ function PrintAd($lid)
     }
     echo '<hr>';
     echo '' . _ADSLIGHT_NOMAIL . ' <br>' . XOOPS_URL . '/modules/adslight/viewads.php?lid=' . $lid . '<br>';
-    echo '<br><br>' . _ADSLIGHT_DATE2 . " $date " . _ADSLIGHT_AND . ' ' . _ADSLIGHT_DISPO . " $date2<br><br>";
+    echo '<br><br>' . _ADSLIGHT_DATE2 . " $date_created " . _ADSLIGHT_AND . ' ' . _ADSLIGHT_DISPO . " $date2<br><br>";
     echo '</td>
     </tr>
     </table>';

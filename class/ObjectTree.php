@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace XoopsModules\Adslight;
 
 /**
- * Class ClassifiedObjectTree
+ * Class ObjectTree
  * @package XoopsModules\Adslight
  */
-class ClassifiedObjectTree extends \XoopsObjectTree
+class ObjectTree extends \XoopsObjectTree
 {
     //generates id path from the root id to a given id
     // the path is delimetered with "/"
@@ -37,6 +37,7 @@ class ClassifiedObjectTree extends \XoopsObjectTree
     }
 
     //generates nicely formatted linked path from the root id to a given id
+
     /**
      * @param        $sel_id
      * @param        $title

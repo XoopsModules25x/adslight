@@ -37,7 +37,6 @@ namespace XoopsModules\Adslight;
  */
 class FS_Storage
 {
-
     /**
      * @var String
      */
@@ -192,12 +191,10 @@ class FS_Storage
             } else {
                 $success[] = $mess[34] . ' ' . \basename($srcFile) . ' ' . $messagePart;
             }
-        } elseif (isSet($dirRes)) {
+        } elseif (isset($dirRes)) {
             $success[] = $mess[117] . ' ' . \basename($srcFile) . ' ' . $mess[73] . " $destDir (" . $dirRes . ' ' . $mess[116] . ')';
         } else {
             $success[] = $mess[34] . ' ' . \basename($srcFile) . ' ' . $mess[73] . " $destDir";
         }
-
     }
-
 }

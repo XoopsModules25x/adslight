@@ -3,25 +3,24 @@
 declare(strict_types=1);
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use XoopsModules\Adslight;
 
@@ -34,13 +33,13 @@ use XoopsModules\Adslight;
  *
  * @return array
  */
-function adslight_search($queryarray, $andor, $limit, $offset, $userid)
+function adslight_search($queryarray, $andor, $limit, $offset, $userid): array
 {
-    $visible = (bool) mb_strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php');
+    $visible = (bool)mb_strpos($_SERVER['REQUEST_URI'], '/modules/adslight/search.php');
 
     global $xoopsDB;
 
-    $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date,submitter,usid,town,country FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes' AND status!='1' AND date<=" . time() . ' ';
+    $sql = 'SELECT lid,title,type,desctext,tel,price,typeprice,date_created,submitter,usid,town,country FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE valid='Yes' AND status!='1' AND date_created<=" . time() . ' ';
 
     if (0 != $userid) {
         $sql .= " AND usid={$userid} ";
@@ -57,27 +56,27 @@ function adslight_search($queryarray, $andor, $limit, $offset, $userid)
         }
         $sql .= ') ';
     }
-    $sql    .= ' ORDER BY premium DESC, date DESC';
+    $sql    .= ' ORDER BY premium DESC, date_created DESC';
     $result = $xoopsDB->query($sql, $limit, $offset);
     $ret    = [];
     $i      = 0;
     while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
         $myts    = \MyTextSanitizer::getInstance();
-        $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE lid={$myrow['lid']} ORDER BY date_added LIMIT 1 ");
+        $result2 = $xoopsDB->query('SELECT url FROM ' . $xoopsDB->prefix('adslight_pictures') . " WHERE lid={$myrow['lid']} ORDER BY date_created LIMIT 1 ");
         [$url] = $xoopsDB->fetchRow($result2);
-        $url = \htmlspecialchars($url, ENT_QUOTES | ENT_HTML5);
+        $url = \htmlspecialchars($url??'', ENT_QUOTES | ENT_HTML5);
 
         $ret[$i]['image']     = 'assets/images/deco/icon.png';
         $ret[$i]['link']      = 'viewads.php?lid=' . $myrow['lid'] . '';
         $ret[$i]['title']     = $myrow['title'];
         $ret[$i]['type']      = Adslight\Utility::getNameType($myrow['type']);
-        $ret[$i]['price']     = number_format($myrow['price'], 2, '.', ',');
+        $ret[$i]['price']     = number_format((float)$myrow['price'], 2, '.', ',');
         $ret[$i]['typeprice'] = $myrow['typeprice'];
         $ret[$i]['town']      = $myrow['town'];
         $ret[$i]['desctext']  = $myts->displayTarea($myrow['desctext'], 1, 1, 1, 1, 1);
         $ret[$i]['nophoto']   = 'assets/images/nophoto.jpg';
         $ret[$i]['photo']     = $url;
-        $ret[$i]['time']      = $myrow['date'];
+        $ret[$i]['time']      = $myrow['date_created'];
         $ret[$i]['uid']       = $myrow['usid'];
         if ($visible) {
             $ret[$i]['sphoto'] = $GLOBALS['xoopsModuleConfig']['adslight_link_upload'] . "thumbs/thumb_{$url}";

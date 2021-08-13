@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 /**
  * @copyright    XOOPS Project (https://xoops.org)
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
 
@@ -23,16 +21,18 @@ use Xmf\Module\Admin;
 use Xmf\Request;
 use XoopsModules\Adslight;
 use XoopsModules\Adslight\Helper;
+use XoopsModules\Adslight\Utility;
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
-require dirname(__DIR__, 3) . '/include/cp_header.php';
-require dirname(__DIR__, 3) . '/class/xoopsformloader.php';
-require  dirname(__DIR__) . '/include/common.php';
-require_once dirname(__DIR__, 3) . '/class/xoopsform/grouppermform.php';
+require \dirname(__DIR__) . '/preloads/autoloader.php';
+require \dirname(__DIR__, 3) . '/include/cp_header.php';
+require \dirname(__DIR__, 3) . '/class/xoopsformloader.php';
+require \dirname(__DIR__) . '/include/common.php';
+require_once \dirname(__DIR__, 3) . '/class/xoopsform/grouppermform.php';
 
-$moduleDirName = basename(dirname(__DIR__));
+$moduleDirName = \basename(dirname(__DIR__));
 
 $helper = Helper::getInstance();
+$utility = new Utility();
 /** @var \Xmf\Module\Admin $adminObject */
 $adminObject = Admin::getInstance();
 
@@ -44,7 +44,7 @@ $pathModIcon32 = $helper->getModule()->getInfo('modicons32');
 $helper->loadLanguage('admin');
 $helper->loadLanguage('modinfo');
 $helper->loadLanguage('main');
-
+$helper->loadLanguage('common');
 $myts = \MyTextSanitizer::getInstance();
 
 if (!isset($GLOBALS['xoopsTpl']) || !($GLOBALS['xoopsTpl'] instanceof XoopsTpl)) {

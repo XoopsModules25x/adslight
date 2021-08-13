@@ -39,7 +39,6 @@ trait VersionChecks
         \xoops_loadLanguage('admin', $moduleDirName);
         \xoops_loadLanguage('common', $moduleDirName);
 
-
         //check for minimum XOOPS version
         $currentVer = \mb_substr(\XOOPS_VERSION, 6); // get the numeric part of string
         if (null === $requiredVer) {

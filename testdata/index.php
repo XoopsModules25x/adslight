@@ -12,7 +12,7 @@ declare(strict_types=1);
  *
  * @copyright       The XOOPS Project http://sourceforge.net/projects/xoops/
  * @license         GNU GPL 2 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)
-           2.5.9
+ * 2.5.9
  * @author          Michael Beck (aka Mamba)
  */
 
@@ -24,16 +24,17 @@ use XoopsModules\Adslight\{
     Common\Configurator,
     Utility
 };
+
 /** @var Helper $helper */
 /** @var Utility $utility */
 /** @var Configurator $configurator */
 
-require_once dirname(__DIR__, 3) . '/include/cp_header.php';
+require_once \dirname(__DIR__, 3) . '/include/cp_header.php';
 require \dirname(__DIR__) . '/preloads/autoloader.php';
 
 $op = Request::getCmd('op', '');
 
-$moduleDirName = \basename(\dirname(__DIR__));
+$moduleDirName      = \basename(\dirname(__DIR__));
 $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
 
 $helper = Helper::getInstance();
@@ -94,7 +95,7 @@ function loadSampleData()
 
     //  ---  COPY test folder files ---------------
     if (\is_array($configurator->copyTestFolders) && \count($configurator->copyTestFolders) > 0) {
-        //        $file =  dirname(__DIR__) . '/testdata/images/';
+        //        $file =  \dirname(__DIR__) . '/testdata/images/';
         foreach (\array_keys($configurator->copyTestFolders) as $i) {
             $src  = $configurator->copyTestFolders[$i][0];
             $dest = $configurator->copyTestFolders[$i][1];
@@ -162,7 +163,7 @@ function exportSchema()
  * @param        $replace
  * @return int number of rows inserted
  */
-function loadTableFromArrayWithReplace($table, $data, $search, $replace)
+function loadTableFromArrayWithReplace($table, $data, $search, $replace): int
 {
     /** @var \XoopsMySQLDatabase $db */
     $db = \XoopsDatabaseFactory::getDatabaseConnection();

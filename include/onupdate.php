@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @author       XOOPS Development Team
  */
 
-use Xmf\Database\Migrate;
 use Xmf\Database\Tables;
 use XoopsModules\Adslight;
 use XoopsModules\Adslight\Common\Configurator;
+use XoopsModules\Adslight\Common\Migrate;
 use XoopsModules\Adslight\Helper;
 use XoopsModules\Adslight\Utility;
 
@@ -36,7 +36,7 @@ if ((!defined('XOOPS_ROOT_PATH'))
  *
  * @return bool
  */
-function tableExists($tablename)
+function tableExists($tablename): bool
 {
     $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
 
@@ -49,15 +49,21 @@ function tableExists($tablename)
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_adslight(\XoopsModule $module)
+function xoops_module_pre_update_adslight(\XoopsModule $module): bool
 {
     /** @var \XoopsModules\Adslight\Helper $helper */
     /** @var \XoopsModules\Adslight\Utility $utility */
-    $helper        = Helper::getInstance();
-    $utility       = new Utility();
+    $helper  = Helper::getInstance();
+    $utility = new Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
+    $migrate = new Xmf\Database\Migrate('adslight');
+    $result = $migrate->synchronizeSchema();
+
+
+    return true;
 
     return $xoopsSuccess && $phpSuccess;
 }
@@ -69,19 +75,23 @@ function xoops_module_pre_update_adslight(\XoopsModule $module)
  *
  * @return bool true if update successful, false if not
  */
-function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = null)
+function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = null): bool
 {
     global $xoopsDB;
-    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirName = \basename(dirname(__DIR__));
 
-    /** @var \XoopsModules\Adslight\Helper $helper */ /** @var \XoopsModules\Adslight\Utility $utility */
+    /** @var \XoopsModules\Adslight\Helper $helper */
+    /** @var \XoopsModules\Adslight\Utility $utility */
     /** @var \XoopsModules\Adslight\Common\Configurator $configurator */
     $helper       = Helper::getInstance();
     $utility      = new Utility();
     $configurator = new Configurator();
 
-    if ($previousVersion < 230) {
+    $migrator = new Migrate();
+    $migrator->synchronizeSchema();
 
+
+    if ($previousVersion < 240) {
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -133,7 +143,7 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file = dirname(__DIR__) . '/assets/images/blank.png';
+            $file = \dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
@@ -145,4 +155,5 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
 
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
+    return true;
 }

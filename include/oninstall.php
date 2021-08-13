@@ -13,14 +13,14 @@ declare(strict_types=1);
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
 
 use XoopsModules\Adslight;
 use XoopsModules\Adslight\Utility;
 
-include dirname(__DIR__) . '/preloads/autoloader.php';
+include \dirname(__DIR__) . '/preloads/autoloader.php';
 
 /**
  * Prepares system prior to attempting to install module
@@ -28,7 +28,7 @@ include dirname(__DIR__) . '/preloads/autoloader.php';
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_install_adslight(\XoopsModule $module)
+function xoops_module_pre_install_adslight(\XoopsModule $module): bool
 {
     require_once __DIR__ . '/common.php';
     $utility = new Utility();
@@ -54,19 +54,19 @@ function xoops_module_pre_install_adslight(\XoopsModule $module)
  *
  * @return bool true if installation successful, false if not
  */
-function xoops_module_install_adslight(\XoopsModule $module)
+function xoops_module_install_adslight(\XoopsModule $module): bool
 {
-    require_once dirname(__DIR__, 3) . '/mainfile.php';
+    require_once \dirname(__DIR__, 3) . '/mainfile.php';
 
     global $xoopsDB;
     //    $moduleDirName = $module->getVar('dirname');
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(dirname(__DIR__));
     xoops_loadLanguage('admin', $moduleDirName);
     xoops_loadLanguage('modinfo', $moduleDirName);
 
     //    $configurator = require_once __DIR__   . '/config.php';
     $configurator = new Adslight\Common\Configurator();
-    $utility = new Utility();
+    $utility      = new Utility();
 
     /*
 
@@ -121,7 +121,7 @@ function xoops_module_install_adslight(\XoopsModule $module)
 
     //  ---  COPY blank.png FILES ---------------
     if (count($configurator->copyBlankFiles) > 0) {
-        $file = dirname(__DIR__) . '/assets/images/blank.png';
+        $file = \dirname(__DIR__) . '/assets/images/blank.png';
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
             $utility::copyFile($file, $dest);

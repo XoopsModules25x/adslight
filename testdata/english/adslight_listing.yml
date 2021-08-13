@@ -1,0 +1,116 @@
+-
+    lid: '1'
+    cid: '24'
+    title: Laptop
+    status: '0'
+    expire: '933'
+    type: '1'
+    desctext: 'An awesome laptop, the best in its class!<br>Super FAST!!!!'
+    tel: 123-568-8956
+    price: '1200.00'
+    typeprice: '1'
+    typecondition: '1'
+    date_created: '1628750233'
+    email: admin@2511forxoops.lo
+    submitter: admin
+    usid: '1'
+    town: Paris
+    country: France
+    contactby: '1'
+    premium: 'yes'
+    valid: 'Yes'
+    photo: '3'
+    hits: '0'
+    item_rating: '0.0000'
+    item_votes: '0'
+    user_rating: '0.0000'
+    user_votes: '0'
+    comments: '0'
+    remind: '0'
+-
+    lid: '2'
+    cid: '4'
+    title: 'BMW 525'
+    status: '0'
+    expire: '999'
+    type: '1'
+    desctext: 'The latest and fastest BMW on the market'
+    tel: '8098089'
+    price: '49000.00'
+    typeprice: '1'
+    typecondition: '1'
+    date_created: '1628850344'
+    email: admin@2511forxoops.lo
+    submitter: admin
+    usid: '1'
+    town: Chicago
+    country: USA
+    contactby: '1'
+    premium: 'yes'
+    valid: 'Yes'
+    photo: '6'
+    hits: '0'
+    item_rating: '0.0000'
+    item_votes: '0'
+    user_rating: '0.0000'
+    user_votes: '0'
+    comments: '0'
+    remind: '0'
+-
+    lid: '3'
+    cid: '24'
+    title: Laptop
+    status: '0'
+    expire: '999'
+    type: '1'
+    desctext: 'An excellent Laptop'
+    tel: '65465465456'
+    price: '1249.00'
+    typeprice: '1'
+    typecondition: '1'
+    date_created: '1628803879'
+    email: teste@2511forxoops.lo/
+    submitter: tester
+    usid: '2'
+    town: 'New York'
+    country: USA
+    contactby: '1'
+    premium: 'no'
+    valid: 'Yes'
+    photo: '7'
+    hits: '0'
+    item_rating: '0.0000'
+    item_votes: '0'
+    user_rating: '0.0000'
+    user_votes: '0'
+    comments: '0'
+    remind: '0'
+-
+    lid: '4'
+    cid: '4'
+    title: Porsche
+    status: '0'
+    expire: '14'
+    type: '1'
+    desctext: 'Brand new Porsche'
+    tel: 648-654-5468
+    price: '99000.00'
+    typeprice: '1'
+    typecondition: '1'
+    date_created: '1628849461'
+    email: admin@2511forxoops.lo
+    submitter: admin
+    usid: '1'
+    town: Berlin
+    country: Germany
+    contactby: '1'
+    premium: 'yes'
+    valid: 'Yes'
+    photo: '2'
+    hits: '0'
+    item_rating: '0.0000'
+    item_votes: '0'
+    user_rating: '0.0000'
+    user_votes: '0'
+    comments: '0'
+    remind: '0'

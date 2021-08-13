@@ -3,25 +3,24 @@
 declare(strict_types=1);
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 use XoopsModules\Adslight;
@@ -31,7 +30,7 @@ require_once __DIR__ . '/header.php';
 if (Request::hasVar('submit', 'POST')) {
     // Define Variables for register_globals Off. contribution by Peekay
     $id        = Request::getString('id', null);
-    $date      = Request::getString('date', null);
+    $date_created      = Request::getString('date_created', null);
     $namep     = Request::getString('namep', null);
     $ipnumber  = Request::getString('ipnumber', null);
     $messtext  = Request::getString('messtext', null);
@@ -58,13 +57,13 @@ if (Request::hasVar('submit', 'POST')) {
     global $xoopsConfig, $xoopsDB, $myts, $meta;
 
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
+        $helper->redirect('viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
     if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
-            redirect_header(XOOPS_URL . '/modules/adslight/contact.php?lid=' . addslashes($id) . '', 2, $xoopsCaptcha->getMessage());
+            $helper->redirect('contact.php?lid=' . addslashes($id) . '', 2, $xoopsCaptcha->getMessage());
         }
     }
     $lid    = Request::getInt('id', 0, 'POST');
@@ -79,7 +78,7 @@ if (Request::hasVar('submit', 'POST')) {
             $price = '';
         }
 
-        $date   = time();
+        $date_created   = time();
         $r_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
 
         $tags                = [];
@@ -130,9 +129,9 @@ if (Request::hasVar('submit', 'POST')) {
         $mail->send();
         echo $mail->getErrors();
 
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date', '$namep', '$ipnumber', '" . Request::getString('post', '', 'POST') . "')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date_created', '$namep', '$ipnumber', '" . Request::getString('post', '', 'POST') . "')");
 
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '" . Request::getString('post', '', 'POST') . "', '$r_usid')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date_created', '$namep', '$messtext', '$tele', '" . Request::getString('post', '', 'POST') . "', '$r_usid')");
 
         redirect_header('index.php', 3, _ADSLIGHT_MESSEND);
     }
@@ -144,7 +143,7 @@ if (Request::hasVar('submit', 'POST')) {
     global $xoopsConfig, $xoopsDB, $myts, $meta;
 
     $module_id = $xoopsModule->getVar('mid');
-    $groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups    = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     $perm_itemid      = Request::getInt('item_id', 0, 'POST');
@@ -229,7 +228,7 @@ if (Request::hasVar('submit', 'POST')) {
     echo '<input type="hidden" name="ip_id" value="" >';
     echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
     echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" >";
-    echo "<input type=\"hidden\" name=\"date\" value=\"$time\" >";
+    echo "<input type=\"hidden\" name=\"date_created\" value=\"$time\" >";
     echo '<p><input type="submit" name="submit" value="' . _ADSLIGHT_SENDFR . '" ></p>
 ' . $GLOBALS['xoopsSecurity']->getTokenHTML() . '
     </form>';

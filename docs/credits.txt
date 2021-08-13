@@ -3,7 +3,7 @@ Credits
 
 Originally developed by Pascal Le Boustouller as "MyAds" module.
 
-Persons who participated in the improvement of the module
+Developers who participated in the improvement of the module
 
 Nickname:Luc Bizet
 Website:www.luc-bizet.fr
@@ -77,3 +77,23 @@ Overview:Original Author
 ----------------------------------
 Franch map was obtained from:
 http://www.ligams.com/blog/serveur-web/carte-de-france-flash
+
+
+-------------------------------------------------------------------------
+                     ADSLIGHT 2 : Module for Xoops
+
+        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
+        Started with the Classifieds module and made MANY changes
+        Website : http://www.luc-bizet.fr
+        Contact : adslight.translate@gmail.com
+-------------------------------------------------------------------------
+             Original credits below Version History
+##########################################################################
+#                    Classified Module for Xoops                         #
+#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
+#      Started with the MyAds module and made MANY changes               #
+##########################################################################
+ Original Author: Pascal Le Boustouller
+ Author Website : pascal.e-xoops@perso-search.com
+ Licence Type   : GPL
+-------------------------------------------------------------------------

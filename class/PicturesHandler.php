@@ -5,25 +5,24 @@ declare(strict_types=1);
 namespace XoopsModules\Adslight;
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 use XoopsModules\Adslight;
@@ -31,7 +30,6 @@ use XoopsModules\Adslight;
 /**
  * Protection against inclusion outside the site
  */
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Includes of form objects and uploader
@@ -114,7 +112,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param bool         $force
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-    public function insert(\XoopsObject $adslightPictures, $force = false)
+    public function insert(\XoopsObject $adslightPictures, $force = false): bool
     {
         global $lid;
         if (!$adslightPictures instanceof Pictures) {
@@ -134,13 +132,13 @@ class PicturesHandler extends \XoopsObjectHandler
             // add/modify of Pictures
             $adslightPictures = new Adslight\Pictures();
 
-            $format = 'INSERT INTO `%s` (cod_img, title, date_added, date_modified, lid, uid_owner, url)';
+            $format = 'INSERT INTO `%s` (cod_img, title, date_created, date_updated, lid, uid_owner, url)';
             $format .= 'VALUES (%u, %s, %s, %s, %s, %s, %s)';
             $sql    = \sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url));
             $force  = true;
         } else {
             $format = 'UPDATE `%s` SET ';
-            $format .= 'cod_img=%u, title=%s, date_added=%s, date_modified=%s, lid=%s, uid_owner=%s, url=%s';
+            $format .= 'cod_img=%u, title=%s, date_created=%s, date_updated=%s, lid=%s, uid_owner=%s, url=%s';
             $format .= ' WHERE cod_img = %u';
             $sql    = \sprintf($format, $this->db->prefix('adslight_pictures'), $cod_img, $this->db->quoteString($title), $now, $now, $this->db->quoteString($lid), $this->db->quoteString($uid_owner), $this->db->quoteString($url), $cod_img);
         }
@@ -171,7 +169,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param bool         $force
      * @return bool        FALSE if failed.
      */
-    public function delete(\XoopsObject $adslightPictures, $force = false)
+    public function delete(\XoopsObject $adslightPictures, $force = false): bool
     {
         if (!$adslightPictures instanceof Pictures) {
             return false;
@@ -245,7 +243,7 @@ class PicturesHandler extends \XoopsObjectHandler
         }
         [$count] = $this->db->fetchRow($result);
 
-        return $count;
+        return (int)$count;
     }
 
     /**
@@ -280,7 +278,7 @@ class PicturesHandler extends \XoopsObjectHandler
      */
     public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl): bool
     {
-    	global $xoopsUser;
+        global $xoopsUser;
         $uid        = (int)$uid;
         $lid        = (int)$lid;
         $form       = new \XoopsThemeForm(\_ADSLIGHT_SUBMIT_PIC_TITLE, 'form_picture', XOOPS_URL . "/modules/adslight/add_photo.php?lid={$lid}&uid=" . $xoopsUser->getVar('uid'), 'post', true);
@@ -368,7 +366,7 @@ class PicturesHandler extends \XoopsObjectHandler
         $lid = Request::getInt('lid', 0, 'POST');
         //create a hash so it does not erase another file
         $hash1 = \time();
-        $hash  = \mb_substr($hash1, 0, 4);
+        $hash  = \mb_substr((string)$hash1, 0, 4);
         // mimetypes and settings put this in admin part later
         $allowed_mimetypes = [
             'image/jpeg',
@@ -428,7 +426,7 @@ class PicturesHandler extends \XoopsObjectHandler
         $yratio = $thumbheight / \imagesy($img);
         if ($xratio < 1 || $yratio < 1) {
             if ($xratio < $yratio) {
-                $resized = \imagecreatetruecolor($thumbwidth, \floor(\imagesy($img) * $xratio));
+                $resized = \imagecreatetruecolor((int)$thumbwidth, (int)\floor(\imagesy($img) * $xratio));
             } else {
                 $resized = \imagecreatetruecolor(\floor(\imagesx($img) * $yratio), $thumbheight);
             }
@@ -445,9 +443,9 @@ class PicturesHandler extends \XoopsObjectHandler
         $yratio2 = $pictheight / \imagesy($img2);
         if ($xratio2 < 1 || $yratio2 < 1) {
             if ($xratio2 < $yratio2) {
-                $resized2 = \imagecreatetruecolor($pictwidth, \floor(\imagesy($img2) * $xratio2));
+                $resized2 = \imagecreatetruecolor((int)$pictwidth, (int)\floor(\imagesy($img2) * $xratio2));
             } else {
-                $resized2 = \imagecreatetruecolor(\floor(\imagesx($img2) * $yratio2), $pictheight);
+                $resized2 = \imagecreatetruecolor((int)\floor(\imagesx($img2) * $yratio2), (int)$pictheight);
             }
             \imagecopyresampled($resized2, $img2, 0, 0, 0, 0, \imagesx($resized2) + 1, \imagesy($resized2) + 1, \imagesx($img2), \imagesy($img2));
             \imagejpeg($resized2, "{$path_upload}/midsize/resized_{$path2['basename']}");

@@ -24,8 +24,6 @@ namespace XoopsModules\Adslight;
 /**
  * Gestion de la Currency
  */
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 class Currency
 {
     protected $decimalsCount;
@@ -40,10 +38,8 @@ class Currency
      */
     public function __construct()
     {
-        $moduleDirName = \basename(__DIR__);
-        $helper        = Helper::getHelper($moduleDirName);
-
-        // Get the module's preferences
+        $moduleDirName          = \basename(__DIR__);
+        $helper                 = Helper::getHelper($moduleDirName); // Get the module's preferences
         $this->decimalsCount    = $helper->getConfig('decimals_count');
         $this->thousandsSep     = $helper->getConfig('thousands_sep');
         $this->decimalSep       = $helper->getConfig('decimal_sep');
@@ -62,7 +58,7 @@ class Currency
      * @static
      * @staticvar   object
      */
-    public static function getInstance()
+    public static function getInstance(): object
     {
         static $instance;
         if (null === $instance) {

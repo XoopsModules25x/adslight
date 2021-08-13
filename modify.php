@@ -3,31 +3,35 @@
 declare(strict_types=1);
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    Helper,
+    Tree,
+    Utility
+};
+
+/** @var Helper $helper */
 
 require_once __DIR__ . '/header.php';
-
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
@@ -38,7 +42,7 @@ $perm_itemid      = Request::getInt('item_id', 0, 'POST');
 
 //If no access
 if (!$grouppermHandler->checkRight('adslight_submit', $perm_itemid, $groups, $module_id)) {
-    redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
+    $helper->redirect('index.php', 3, _NOPERM);
 }
 
 /**
@@ -97,8 +101,8 @@ function delReply($r_lid, $ok)
 {
     global $xoopsDB;
 
-    $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_replies') . ' r ON l.lid=r.lid  WHERE r.r_lid=' . $xoopsDB->escape($r_lid));
-    [$usid, $r_lid, $rlid, $title, $date, $submitter, $message, $tele, $email, $r_usid] = $xoopsDB->fetchRow($result);
+    $result = $xoopsDB->query('SELECT l.usid, r.r_lid, r.lid, r.title, r.date_created, r.submitter, r.message, r.tele, r.email, r.r_usid FROM ' . $xoopsDB->prefix('adslight_listing') . ' l LEFT JOIN ' . $xoopsDB->prefix('adslight_replies') . ' r ON l.lid=r.lid  WHERE r.r_lid=' . $xoopsDB->escape($r_lid));
+    [$usid, $r_lid, $rlid, $title, $date_created, $submitter, $message, $tele, $email, $r_usid] = $xoopsDB->fetchRow($result);
 
     if ($GLOBALS['xoopsUser']) {
         $currentid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
@@ -128,16 +132,16 @@ function modAd($lid)
 
     echo "<script language=\"javascript\">\nfunction CLA(CLA) { var MainWindow = window.open (CLA, \"_blank\",\"width=500,height=300,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,copyhistory=no\");}\n</script>";
 
-    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Tree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
-    $sql = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typeusure, date, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid);
+    $sql    = 'SELECT lid, cid, title, status, expire, type, desctext, tel, price, typeprice, typecondition, date_created, email, submitter, usid, town, country, contactby, premium, valid FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid);
     $result = $xoopsDB->query($sql);
-    [$lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid] = $xoopsDB->fetchRow($result);
+    [$lid, $cide, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $usid, $town, $country, $contactby, $premium, $valid] = $xoopsDB->fetchRow($result);
 
-    $categories = Adslight\Utility::getMyItemIds('adslight_submit');
+    $categories = Utility::getMyItemIds('adslight_submit');
     if (is_array($categories) && $categories !== []) {
         if (!in_array((int)$cide, $categories)) {
-            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, _NOPERM);
+            $helper->redirect('index.php', 3, _NOPERM);
         }
     } else {    // User can't see any category
         redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
@@ -164,7 +168,7 @@ function modAd($lid)
             //      $price = $tempXoopsLocal->number_format($price);
 
             $typeprice  = \htmlspecialchars($typeprice, ENT_QUOTES | ENT_HTML5);
-            $typeusure  = \htmlspecialchars($typeusure, ENT_QUOTES | ENT_HTML5);
+            $typecondition  = \htmlspecialchars($typecondition, ENT_QUOTES | ENT_HTML5);
             $submitter  = \htmlspecialchars($submitter, ENT_QUOTES | ENT_HTML5);
             $town       = \htmlspecialchars($town, ENT_QUOTES | ENT_HTML5);
             $country    = \htmlspecialchars($country, ENT_QUOTES | ENT_HTML5);
@@ -175,7 +179,7 @@ function modAd($lid)
                 $timezone   = $GLOBALS['xoopsUser']->timezone();
                 $useroffset = empty($timezone) ? $xoopsConfig['default_TZ'] : $GLOBALS['xoopsUser']->timezone();
             }
-            $dates = formatTimestamp($date, 's');
+            $dates = formatTimestamp($date_created, 's');
 
             echo '<form action="modify.php" method=post enctype="multipart/form-data">';
             echo $GLOBALS['xoopsSecurity']->getTokenHTML();
@@ -292,15 +296,15 @@ function modAd($lid)
 
             /// Etat de l'objet
             echo '<tr>
-    <td class="head">' . _ADSLIGHT_TYPE_USURE . ' </td><td class="head"><select name="typeusure">';
+    <td class="head">' . _ADSLIGHT_TYPE_CONDITION . ' </td><td class="head"><select name="typecondition">';
 
-            $result6 = $xoopsDB->query('SELECT nom_usure, id_usure FROM ' . $xoopsDB->prefix('adslight_usure') . ' ORDER BY nom_usure');
-            while (false !== (list($nom_usure, $id_usure) = $xoopsDB->fetchRow($result6))) {
+            $result6 = $xoopsDB->query('SELECT nom_condition, id_condition FROM ' . $xoopsDB->prefix('adslight_condition') . ' ORDER BY nom_condition');
+            while (false !== (list($nom_condition, $id_condition) = $xoopsDB->fetchRow($result6))) {
                 $sel = '';
-                if ($id_usure == $typeusure) {
+                if ($id_condition == $typecondition) {
                     $sel = 'selected';
                 }
-                echo "<option value=\"$id_usure\" $sel>$nom_usure</option>";
+                echo "<option value=\"$id_condition\" $sel>$nom_condition</option>";
             }
             echo '</select></td></tr>';
 
@@ -310,7 +314,7 @@ function modAd($lid)
             echo '</td>
     </tr><tr>
     <td class="head">' . _ADSLIGHT_DESC . ' </td><td class="head">';
-            $wysiwyg_text_area = Adslight\Utility::getEditor(_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px');
+            $wysiwyg_text_area = Utility::getEditor(_ADSLIGHT_DESC, 'desctext', $desctext, '100%', '200px');
             echo $wysiwyg_text_area->render();
             echo '</td></tr>
     <td colspan=2><br><input type="submit" value="' . _ADSLIGHT_MODIFANN . '" ></td>
@@ -337,7 +341,7 @@ function modAd($lid)
             }
             echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
             echo "<input type=\"hidden\" name=\"premium\" value=\"$premium\" >";
-            echo "<input type=\"hidden\" name=\"date\" value=\"$date\" >
+            echo "<input type=\"hidden\" name=\"date_created\" value=\"$date_created\" >
     " . $GLOBALS['xoopsSecurity']->getTokenHTML() . '';
             echo '</form><br></fieldset><br>';
         }
@@ -355,8 +359,8 @@ function modAd($lid)
  * @param $tel
  * @param $price
  * @param $typeprice
- * @param $typeusure
- * @param $date
+ * @param $typecondition
+ * @param $date_created
  * @param $email
  * @param $submitter
  * @param $town
@@ -365,12 +369,12 @@ function modAd($lid)
  * @param $premium
  * @param $valid
  */
-function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid)
+function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $valid)
 {
     global $xoopsDB, $myts;
 
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header(XOOPS_URL . '/modules/adslight/index.php', 3, $GLOBALS['xoopsSecurity']->getErrors());
+        $helper->redirect('index.php', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
     $title     = $myts->addSlashes($title);
     $status    = $myts->addSlashes($status);
@@ -380,16 +384,18 @@ function modAdS($lid, $cat, $title, $status, $expire, $type, $desctext, $tel, $p
     $tel       = $myts->addSlashes($tel);
     $price     = str_replace([' '], '', $price);
     $typeprice = $myts->addSlashes($typeprice);
-    $typeusure = $myts->addSlashes($typeusure);
+    $typecondition = $myts->addSlashes($typecondition);
     $submitter = $myts->addSlashes($submitter);
     $town      = $myts->addSlashes($town);
     $country   = $myts->addSlashes($country);
     $contactby = $myts->addSlashes($contactby);
     $premium   = $myts->addSlashes($premium);
 
-    $xoopsDB->query('UPDATE '
-                    . $xoopsDB->prefix('adslight_listing')
-                    . " SET cid='$cat', title='$title', status='$status',  expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typeusure='$typeusure', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid' WHERE lid=$lid");
+    $xoopsDB->query(
+        'UPDATE '
+        . $xoopsDB->prefix('adslight_listing')
+        . " SET cid='$cat', title='$title', status='$status',  expire='$expire', type='$type', desctext='$desctext', tel='$tel', price='$price', typeprice='$typeprice', typecondition='$typecondition', email='$email', submitter='$submitter', town='$town', country='$country', contactby='$contactby', premium='$premium', valid='$valid' WHERE lid=$lid"
+    );
 
     redirect_header('index.php', 1, _ADSLIGHT_ANNMOD2);
 }
@@ -416,7 +422,7 @@ switch ($op) {
         require_once XOOPS_ROOT_PATH . '/footer.php';
         break;
     case 'ModAdS':
-        modAdS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typeusure, $date, $email, $submitter, $town, $country, $contactby, $premium, $valid);
+        modAdS($lid, $cid, $title, $status, $expire, $type, $desctext, $tel, $price, $typeprice, $typecondition, $date_created, $email, $submitter, $town, $country, $contactby, $premium, $valid);
         break;
     case 'ListingDel':
         require_once XOOPS_ROOT_PATH . '/header.php';

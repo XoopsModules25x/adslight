@@ -13,14 +13,12 @@ declare(strict_types=1);
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
- * @since
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author       XOOPS Development Team
  */
-function getConfig()
+function getConfig(): object
 {
-    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirName      = \basename(dirname(__DIR__));
     $moduleDirNameUpper = mb_strtoupper($moduleDirName);
 
     return (object)[

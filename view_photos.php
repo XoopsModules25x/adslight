@@ -3,35 +3,37 @@
 declare(strict_types=1);
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    PicturesHandler,
+    Utility
+};
 
 require_once __DIR__ . '/header.php';
 
 /**
  * Xoops header
  */
-require_once dirname(__DIR__, 2) . '/mainfile.php';
+require_once \dirname(__DIR__, 2) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_view_photos.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 
@@ -41,7 +43,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 
 $lid = Request::getInt('lid', 0, 'GET');
 if (empty($lid)) {
-    header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
+    $helper->redirect('index.php');
 }
 
 // Is a member looking ?
@@ -50,7 +52,7 @@ if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
     if (Request::hasVar('uid', 'GET')) {
         $uid = Request::getInt('uid', 0, 'GET');
     } else {
-        header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
+        $helper->redirect('index.php');
     }
 
     /**
@@ -74,15 +76,14 @@ if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
     } else {
         $permit = '0';
     }
-
     /**
      * If it is an anonym
      */
 } elseif (Request::hasVar('uid', 'GET')) {
-        $uid = Request::getInt('uid', 0, 'GET');
-    } else {
-        header('Location: ' . XOOPS_URL . '/modules/adslight/index.php');
-        $isOwner = false;
+    $uid = Request::getInt('uid', 0, 'GET');
+} else {
+    $helper->redirect('index.php');
+    $isOwner = false;
 }
 
 /**
@@ -92,9 +93,7 @@ $criteria_lid = new \Criteria('lid', $lid);
 $criteria_uid = new \Criteria('uid', $uid);
 
 // Creating a factory of pictures
-
-$album_factory = new Adslight\PicturesHandler($xoopsDB);
-
+$album_factory = new PicturesHandler($xoopsDB);
 /**
  * Fetch pictures from the factory
  */
@@ -143,7 +142,7 @@ $identifier = $owner::getUnameFromId($uid);
 /**
  * Adding to the module js and css of the lightbox and new ones
  */
- Adslight\Utility::load_lib_js(); // JJDai
+Utility::load_lib_js(); // JJDai
 // if (1 == $GLOBALS['xoopsModuleConfig']['adslight_lightbox']) {
 //     $header_lightbox = '<script type="text/javascript" src="lightbox/js/prototype.js"></script>
 // <script type="text/javascript" src="lightbox/js/scriptaculous.js?load=effects"></script>
@@ -174,7 +173,7 @@ $GLOBALS['xoopsTpl']->assign('lang_upgrade_now', $upgrade);
 $GLOBALS['xoopsTpl']->assign('lang_max_nb_pict', sprintf(_ADSLIGHT_YOUCANHAVE, $GLOBALS['xoopsModuleConfig']['adslight_nb_pict']));
 $GLOBALS['xoopsTpl']->assign('lang_nb_pict', sprintf(_ADSLIGHT_YOUHAVE, $pictures_number));
 
-$GLOBALS['xoopsTpl']->assign('lang_albumtitle', sprintf(_ADSLIGHT_ALBUMTITLE, '<a href=' . XOOPS_URL . '/userinfo.php?uid=' . addslashes($uid) . '>' . $identifier . '</a>'));
+$GLOBALS['xoopsTpl']->assign('lang_albumtitle', sprintf(_ADSLIGHT_ALBUMTITLE, '<a href=' . XOOPS_URL . '/userinfo.php?uid=' . addslashes((string)$uid) . '>' . $identifier . '</a>'));
 
 $GLOBALS['xoopsTpl']->assign('path_uploads', $GLOBALS['xoopsModuleConfig']['adslight_link_upload']);
 

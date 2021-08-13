@@ -11,7 +11,7 @@
                 <h1><{$title}></h1>
                 <strong><{$type}></strong>
                 <strong><{$price_price}></strong>
-                <{$price_typeprice}>&nbsp;-&nbsp;<{$user_typeuser|default:''}>&nbsp;
+                <{$price_typeprice}>&nbsp;-&nbsp;<{$user_typecondition|default:''}>&nbsp;
                 <{$admin|default:false}>
                 <hr>
                 <br>
@@ -62,7 +62,7 @@
                 <table border="0" cellspacing="1" class="outer" style="width:200px;">
                     <tr>
                         <td class="blockright">
-                            <{$date|default:false}><br>
+                            <{$date_created|default:false}><br>
                             <strong><{$local_head}></strong> <{$local_town}><br>
                             <strong><{$country_head}></strong> <{$local_country}><br>
                             <hr>

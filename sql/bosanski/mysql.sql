@@ -9,8 +9,8 @@ CREATE TABLE adslight_listing (
   tel         VARCHAR(15)      NOT NULL DEFAULT '',
   price       DECIMAL(20, 2)   NOT NULL DEFAULT '0.00',
   typeprice   VARCHAR(15)      NOT NULL DEFAULT '',
-  typeusure   VARCHAR(15)      NOT NULL DEFAULT '',
-  date        INT(10)          NOT NULL DEFAULT '0',
+  typecondition   VARCHAR(15)      NOT NULL DEFAULT '',
+  date_created INT(11) UNSIGNED NOT NULL DEFAULT 0,
   email       VARCHAR(100)     NOT NULL DEFAULT '',
   submitter   VARCHAR(60)      NOT NULL DEFAULT '',
   usid        VARCHAR(6)       NOT NULL DEFAULT '',
@@ -111,23 +111,23 @@ INSERT INTO adslight_price VALUES (1, 'Farma');
 INSERT INTO adslight_price VALUES (2, 'Maksimum');
 INSERT INTO adslight_price VALUES (3, 'Po dogovoru');
 
-CREATE TABLE adslight_usure (
-  id_usure  INT(11)      NOT NULL AUTO_INCREMENT,
-  nom_usure VARCHAR(150) NOT NULL DEFAULT '',
-  PRIMARY KEY (id_usure)
+CREATE TABLE adslight_user (
+  id_user  INT(11)      NOT NULL AUTO_INCREMENT,
+  nom_user VARCHAR(150) NOT NULL DEFAULT '',
+  PRIMARY KEY (id_user)
 )
   ENGINE = MyISAM;
 
 
-INSERT INTO adslight_usure VALUES (1, 'u vrlo dobrom stanju');
-INSERT INTO adslight_usure VALUES (2, 'državnog prosjeka');
-INSERT INTO adslight_usure VALUES (3, 'razmažen');
-INSERT INTO adslight_usure VALUES (4, 'lošem stanju');
+INSERT INTO adslight_user VALUES (1, 'u vrlo dobrom stanju');
+INSERT INTO adslight_user VALUES (2, 'državnog prosjeka');
+INSERT INTO adslight_user VALUES (3, 'razmažen');
+INSERT INTO adslight_user VALUES (4, 'lošem stanju');
 
 CREATE TABLE adslight_ip_log (
   ip_id     INT(11)      NOT NULL AUTO_INCREMENT,
   lid       INT(11)      NOT NULL DEFAULT '0',
-  date      VARCHAR(25)           DEFAULT NULL,
+  date_created INT(11) UNSIGNED NOT NULL DEFAULT 0,
   submitter VARCHAR(60)  NOT NULL DEFAULT '',
   ipnumber  VARCHAR(150) NOT NULL DEFAULT '',
   email     VARCHAR(100) NOT NULL DEFAULT '',
@@ -146,7 +146,7 @@ CREATE TABLE adslight_item_votedata (
   ratinguser      INT(11) UNSIGNED    NOT NULL DEFAULT '0',
   rating          TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   ratinghostname  VARCHAR(60)         NOT NULL DEFAULT '',
-  ratingtimestamp INT(10)             NOT NULL DEFAULT '0',
+  date_created INT(11) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (ratingid),
   KEY ratinguser (ratinguser),
   KEY ratinghostname (ratinghostname)
@@ -163,7 +163,7 @@ CREATE TABLE adslight_user_votedata (
   ratinguser      INT(11) UNSIGNED    NOT NULL DEFAULT '0',
   rating          TINYINT(3) UNSIGNED NOT NULL DEFAULT '0',
   ratinghostname  VARCHAR(60)         NOT NULL DEFAULT '',
-  ratingtimestamp INT(10)             NOT NULL DEFAULT '0',
+  date_created INT(11) UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (ratingid),
   KEY ratinguser (ratinguser),
   KEY ratinghostname (ratinghostname)
@@ -173,8 +173,8 @@ CREATE TABLE adslight_user_votedata (
 CREATE TABLE adslight_pictures (
   cod_img       INT(11)      NOT NULL AUTO_INCREMENT,
   title         VARCHAR(255) NOT NULL,
-  date_added    INT(10)      NOT NULL DEFAULT '0',
-  date_modified INT(10)      NOT NULL DEFAULT '0',
+  date_created    INT(10)      NOT NULL DEFAULT '0',
+  date_updated INT(10)      NOT NULL DEFAULT '0',
   lid           INT(11)      NOT NULL DEFAULT '0',
   uid_owner     VARCHAR(50)  NOT NULL,
   url           TEXT         NOT NULL,
@@ -186,7 +186,7 @@ CREATE TABLE adslight_replies (
   r_lid     INT(11)      NOT NULL AUTO_INCREMENT,
   lid       INT(11)      NOT NULL DEFAULT '0',
   title     VARCHAR(50)  NOT NULL DEFAULT '',
-  date      INT(10)      NOT NULL DEFAULT '0',
+  date_created INT(11) UNSIGNED NOT NULL DEFAULT 0,
   submitter VARCHAR(60)  NOT NULL DEFAULT '',
   message   TEXT         NOT NULL,
   tele      VARCHAR(15)  NOT NULL DEFAULT '',

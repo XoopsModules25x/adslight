@@ -5,33 +5,31 @@ declare(strict_types=1);
 namespace XoopsModules\Adslight;
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
-
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
-
-use Xmf\Module\Admin;
-use XoopsModules\Adslight;
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
 /**
- * Class ClassifiedsTree
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
  */
-class ClassifiedsTree
+
+use Xmf\Module\Admin;
+
+/**
+ * Class Tree
+ */
+class Tree
 {
     public $table;
     public $id;
@@ -67,7 +65,7 @@ class ClassifiedsTree
         $arr = [];
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . ' ';
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
@@ -99,7 +97,7 @@ class ClassifiedsTree
         $sel_id  = (int)$sel_id;
         $result  = $this->db->query('SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id);
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             $result .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
@@ -127,7 +125,7 @@ class ClassifiedsTree
         $sel_id = (int)$sel_id;
         $sql    = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
@@ -159,7 +157,7 @@ class ClassifiedsTree
     {
         $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
@@ -189,7 +187,7 @@ class ClassifiedsTree
         $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id . '';
         //        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . "'");
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             //            $result .= ' AND cid IN (' . implode(',', $categories) . ') ';
             $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
@@ -232,7 +230,7 @@ class ClassifiedsTree
         echo '>';
 
         $sql        = 'SELECT SQL_CACHE cid, title FROM ' . $this->table . ' WHERE pid=0';
-        $categories = Adslight\Utility::getMyItemIds('adslight_submit');
+        $categories = Utility::getMyItemIds('adslight_submit');
 
         if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
@@ -330,7 +328,7 @@ class ClassifiedsTree
     {
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }
@@ -362,10 +360,9 @@ class ClassifiedsTree
      */
     public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = ''): array
     {
-
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND cid IN (' . \implode(',', $categories) . ') ';
         }
@@ -457,7 +454,7 @@ class ClassifiedsTree
         global $xoopsDB;
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . ' ';
 
-        $categories = Adslight\Utility::getMyItemIds('adslight_view');
+        $categories = Utility::getMyItemIds('adslight_view');
         if (\is_array($categories) && $categories !== []) {
             $sql .= ' AND ' . $this->pid . ' IN (' . \implode(',', $categories) . ') ';
         }

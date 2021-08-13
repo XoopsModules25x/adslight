@@ -3,25 +3,24 @@
 declare(strict_types=1);
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 use XoopsModules\Adslight;
@@ -40,7 +39,7 @@ function adsNewCat($cid)
 {
     global $xoopsDB, $myts;
 
-    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\Tree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     echo "<fieldset><legend style='font-weight: bold; color: #900;'>" . _AM_ADSLIGHT_ADDSUBCAT . '</legend>';
 
@@ -129,7 +128,7 @@ function adsModCat($cid)
 {
     global $xoopsDB, $myts;
 
-    $mytree = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $mytree = new Adslight\Tree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
 
     //    require_once __DIR__ . '/admin_header.php';
 
@@ -260,9 +259,9 @@ function adsModCatS($cidd, $cid, $img, $title, $cat_desc, $cat_keywords, $cat_or
     $title = \htmlspecialchars($title, ENT_QUOTES | ENT_HTML5);
     $cidd  = (int)$cidd;
 
-    $xoopsDB->query('UPDATE '
-                    . $xoopsDB->prefix('adslight_categories')
-                    . " SET title='$title', cat_desc='$cat_desc', cat_keywords='$cat_keywords', pid='$cid', img='$img', cat_order='$cat_order', affprice='$affprice', cat_moderate='$cat_moderate', moderate_subcat='$moderate_subcat' WHERE cid={$cidd}");
+    $xoopsDB->query(
+        'UPDATE ' . $xoopsDB->prefix('adslight_categories') . " SET title='$title', cat_desc='$cat_desc', cat_keywords='$cat_keywords', pid='$cid', img='$img', cat_order='$cat_order', affprice='$affprice', cat_moderate='$cat_moderate', moderate_subcat='$moderate_subcat' WHERE cid={$cidd}"
+    );
 
     if (1 != $moderate_subcat) {
         $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_categories') . " SET cat_moderate=0, moderate_subcat=0 WHERE pid={$cidd}");
