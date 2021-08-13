@@ -76,7 +76,7 @@ class Currency
      * @param float|int $amount The amount to work on
      * @return string    The amount formated according to the currency
      */
-    public function amountInCurrency($amount = 0)
+    public function amountInCurrency($amount = 0): string
     {
         return \number_format($amount, $this->decimalsCount, $this->decimalSep, $this->thousandsSep);
     }
@@ -88,7 +88,7 @@ class Currency
      * @param string $format         Format to use, 's' for Short and 'l' for Long
      * @return string The amount formated
      */
-    public function amountForDisplay($originalAmount, $format = 's')
+    public function amountForDisplay($originalAmount, $format = 's'): string
     {
         $amount = $this->amountInCurrency($originalAmount);
 

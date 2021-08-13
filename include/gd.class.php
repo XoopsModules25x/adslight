@@ -58,7 +58,7 @@ class GD
      * @param $sizex
      * @param $sizey
      */
-    public function resize($sizex, $sizey)
+    public function resize($sizex, $sizey): void
     {
         $org = round($this->width / $this->height, 2);
         $new = round($sizex / $sizey, 2);
@@ -84,7 +84,7 @@ class GD
      *
      * @return array
      */
-    public function make_color($color)
+    public function make_color($color): array
     {
         $rgb = [];
 
@@ -119,7 +119,7 @@ class GD
      * @param $width
      * @param $color
      */
-    public function add_border($width, $color)
+    public function add_border($width, $color): void
     {
         $rgb      = $this->make_color($color);
         $allocate = imagecolorallocate($this->image, $rgb['r'], $rgb['g'], $rgb['b']);
@@ -147,7 +147,7 @@ class GD
      * @param $x
      * @param $y
      */
-    public function add_text($text, $font, $color, $x, $y)
+    public function add_text($text, $font, $color, $x, $y): void
     {
         if ($font < 1 || $font > 5) {
             exit('Wrong font');
@@ -166,7 +166,7 @@ class GD
      * @param        $y
      * @param string $font
      */
-    public function add_ttf_text($text, $size, $color, $x, $y, $font = './tahoma.ttf')
+    public function add_ttf_text($text, $size, $color, $x, $y, $font = './tahoma.ttf'): void
     {
         if (!is_file($font)) {
             exit('Unknown font');
@@ -181,7 +181,7 @@ class GD
      * @param        $location
      * @param string $quality
      */
-    public function save($location, $quality = '80')
+    public function save($location, $quality = '80'): void
     {
         imagejpeg($this->image, $location, $quality);
         imagedestroy($this->image);

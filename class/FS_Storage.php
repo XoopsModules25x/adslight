@@ -53,7 +53,7 @@ class FS_Storage
     /**
      * @param $location
      */
-    public static function deldir($location)
+    public static function deldir($location): void
     {
         if (\is_dir($location)) {
             $all = \opendir($location);
@@ -103,7 +103,7 @@ class FS_Storage
      * @param bool $verbose
      * @return int
      */
-    public static function dircopy($srcdir, $dstdir, &$errors, &$success, $verbose = false)
+    public static function dircopy($srcdir, $dstdir, &$errors, &$success, $verbose = false): int
     {
         $num = 0;
         if (!\is_dir($dstdir) && (!\mkdir($dstdir) && !\is_dir($dstdir))) {
@@ -148,7 +148,7 @@ class FS_Storage
      * @param      $success
      * @param bool $move
      */
-    public static function copyOrMoveFile($destDir, $srcFile, &$error, &$success, $move = false)
+    public static function copyOrMoveFile($destDir, $srcFile, &$error, &$success, $move = false): void
     {
         $mess        = ConfService::getMessages();
         $destFile    = ConfService::getRootDir() . $destDir . '/' . \basename($srcFile);

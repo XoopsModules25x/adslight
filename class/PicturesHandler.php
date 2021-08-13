@@ -194,7 +194,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param bool                  $id_as_key use the UID as key for the array?
      * @return array  array of {@link Pictures} objects
      */
-    public function &getObjects(\CriteriaElement $criteria = null, $id_as_key = false)
+    public function &getObjects(\CriteriaElement $criteria = null, $id_as_key = false): array
     {
         $ret   = [];
         $limit = $start = 0;
@@ -231,7 +231,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link \CriteriaElement} to match
      * @return int    count of Pictures
      */
-    public function getCount(\CriteriaElement $criteria = null)
+    public function getCount(\CriteriaElement $criteria = null): int
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->db->prefix('adslight_pictures');
         if (isset($criteria) && $criteria instanceof \CriteriaElement) {
@@ -252,7 +252,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param \CriteriaElement|null $criteria {@link \CriteriaElement}
      * @return bool   FALSE if deletion failed
      */
-    public function deleteAll(\CriteriaElement $criteria = null)
+    public function deleteAll(\CriteriaElement $criteria = null): bool
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('adslight_pictures');
         if (isset($criteria) && $criteria instanceof \CriteriaElement) {
@@ -276,7 +276,7 @@ class PicturesHandler extends \XoopsObjectHandler
      *
      * obs: Some functions wont work on php 4 so edit lines down under acording to your version
      */
-    public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl)
+    public function renderFormSubmit($uid, $lid, $maxbytes, $xoopsTpl): bool
     {
     	global $xoopsUser;
         $uid        = (int)$uid;
@@ -319,7 +319,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param string $filename the url to the thumb of the image so it can be displayed
      * @return bool   TRUE
      */
-    public function renderFormEdit($caption, $cod_img, $filename)
+    public function renderFormEdit($caption, $cod_img, $filename): bool
     {
         $form       = new \XoopsThemeForm(\_ADSLIGHT_EDIT_CAPTION, 'form_picture', 'editdesc.php', 'post', true);
         $field_desc = new \XoopsFormText($caption, 'caption', 35, 55);
@@ -358,7 +358,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param int    $maxfileheight the maximum height in pixels that a pic can have
      * @return bool FALSE if upload fails or database fails
      */
-    public function receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)
+    public function receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight): bool
     {
         global $lid;
         //busca id do user logado
@@ -417,7 +417,7 @@ class PicturesHandler extends \XoopsObjectHandler
      * @param int    $pictheight  the height in pixels that the pic will have
      * @param string $path_upload The path to where the files should be saved after resizing
      */
-    public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload)
+    public function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $path_upload): void
     {
         $img2   = $img;
         $path   = \pathinfo($img);

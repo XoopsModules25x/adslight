@@ -60,7 +60,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getFirstChild($sel_id, $order = '')
+    public function getFirstChild($sel_id, $order = ''): array
     {
         $arr = [];
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . ' ';
@@ -91,7 +91,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getFirstChildId($sel_id)
+    public function getFirstChildId($sel_id): array
     {
         $idarray = [];
         $sel_id  = (int)$sel_id;
@@ -120,7 +120,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getAllChildId($sel_id, $order = '', $idarray = [])
+    public function getAllChildId($sel_id, $order = '', $idarray = []): array
     {
         $sel_id = (int)$sel_id;
         $sql    = 'SELECT SQL_CACHE ' . $this->id . ' FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
@@ -153,7 +153,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getAllParentId($sel_id, $order = '', $idarray = [])
+    public function getAllParentId($sel_id, $order = '', $idarray = []): array
     {
         $sql = 'SELECT ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
 
@@ -182,7 +182,7 @@ class ClassifiedsTree
      *
      * @return string
      */
-    public function getPathFromId($sel_id, $title, $path = '')
+    public function getPathFromId($sel_id, $title, $path = ''): string
     {
         $sql = 'SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id . '';
         //        $result = $this->db->query('SELECT ' . $this->pid . ', ' . $title . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $this->db->escape($sel_id) . "'");
@@ -217,7 +217,7 @@ class ClassifiedsTree
      * @param string $sel_name
      * @param string $onchange
      */
-    public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '')
+    public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = ''): void
     {
         if ('' == $sel_name) {
             $sel_name = $this->id;
@@ -273,7 +273,7 @@ class ClassifiedsTree
      *
      * @return string
      */
-    public function getNicePathFromId($sel_id, $title, $funcURL, $path = '')
+    public function getNicePathFromId($sel_id, $title, $funcURL, $path = ''): string
     {
         $sql    = 'SELECT SQL_CACHE ' . $this->pid . ", {$title} FROM " . $this->table . ' WHERE ' . $this->id . '=' . (int)$sel_id;
         $result = $this->db->query($sql);
@@ -301,7 +301,7 @@ class ClassifiedsTree
      *
      * @return string
      */
-    public function getIdPathFromId($sel_id, $path = '')
+    public function getIdPathFromId($sel_id, $path = ''): string
     {
         $sel_id = (int)$sel_id;
         $result = $this->db->query('SELECT SQL_CACHE ' . $this->pid . ' FROM ' . $this->table . ' WHERE ' . $this->id . '=' . $sel_id);
@@ -324,7 +324,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getAllChild($sel_id = 0, $order = '', $parray = [])
+    public function getAllChild($sel_id = 0, $order = '', $parray = []): array
     {
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
 
@@ -358,7 +358,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
+    public function getChildTreeArray($sel_id = 0, $order = '', $parray = [], $r_prefix = ''): array
     {
 
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id;
@@ -393,7 +393,7 @@ class ClassifiedsTree
      * @param string $sel_name
      * @param string $onchange
      */
-    public function makeAdSelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '')
+    public function makeAdSelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = ''): void
     {
         global $myts, $xoopsDB;
         $pathIcon16 = Admin::iconUrl('', 16);
@@ -450,7 +450,7 @@ class ClassifiedsTree
      *
      * @return array
      */
-    public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = [], $r_prefix = '')
+    public function getChildTreeMapArray($sel_id = 0, $order = '', $parray = [], $r_prefix = ''): array
     {
         global $xoopsDB;
         $sql = 'SELECT SQL_CACHE * FROM ' . $this->table . ' WHERE ' . $this->pid . '=' . $sel_id . ' ';
@@ -480,7 +480,7 @@ class ClassifiedsTree
     /**
      * @return array
      */
-    public function getCategoryList()
+    public function getCategoryList(): array
     {
         $result = $this->db->query('SELECT SQL_CACHE cid, pid, title FROM ' . $this->table);
         $ret    = [];

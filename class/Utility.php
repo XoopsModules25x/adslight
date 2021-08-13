@@ -51,7 +51,7 @@ class Utility
 
     //--------------- Custom module methods -----------------------------
 
-    public static function expireAd()
+    public static function expireAd(): void
     {
         global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $meta;
 
@@ -181,7 +181,7 @@ class Utility
     /**
      * @param $sel_id
      */
-    public static function updateUserRating($sel_id)
+    public static function updateUserRating($sel_id): void
     {
         global $xoopsDB;
 
@@ -207,7 +207,7 @@ class Utility
     /**
      * @param $sel_id
      */
-    public static function updateItemRating($sel_id)
+    public static function updateItemRating($sel_id): void
     {
         global $xoopsDB;
 
@@ -234,7 +234,7 @@ class Utility
      *
      * @return int
      */
-    public static function getTotalItems($sel_id, $status = '')
+    public static function getTotalItems($sel_id, $status = ''): int
     {
         global $xoopsDB, $mytree;
         $categories = self::getMyItemIds('adslight_view');
@@ -328,7 +328,7 @@ class Utility
         return $retval;
     }
 
-    public static function showImage()
+    public static function showImage(): void
     {
         echo "<script type=\"text/javascript\">\n";
         echo "<!--\n\n";
@@ -349,7 +349,7 @@ class Utility
      *
      * @return string
      */
-    public static function convertOrderByIn($orderby)
+    public static function convertOrderByIn($orderby): string
     {
         switch (\trim($orderby)) {
             case 'titleA':
@@ -387,7 +387,7 @@ class Utility
      *
      * @return string
      */
-    public static function convertOrderByTrans($orderby)
+    public static function convertOrderByTrans($orderby): string
     {
         $orderbyTrans = '';
         if ('hits ASC' === $orderby) {
@@ -423,7 +423,7 @@ class Utility
      *
      * @return string
      */
-    public static function convertOrderByOut($orderby)
+    public static function convertOrderByOut($orderby): string
     {
         if ('title ASC' === $orderby) {
             $orderby = 'titleA';
@@ -495,7 +495,7 @@ class Utility
      *
      * @return bool
      */
-    public static function checkTableExists($tablename)
+    public static function checkTableExists($tablename): bool
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW TABLES LIKE '$tablename'");
@@ -509,7 +509,7 @@ class Utility
      *
      * @return bool
      */
-    public static function checkFieldExists($fieldname, $table)
+    public static function checkFieldExists($fieldname, $table): bool
     {
         global $xoopsDB;
         $result = $xoopsDB->queryF("SHOW COLUMNS FROM $table LIKE '$fieldname'");
@@ -536,7 +536,7 @@ class Utility
      *
      * @return bool
      */
-    public static function getCatNameFromId($cid)
+    public static function getCatNameFromId($cid): bool
     {
         global $xoopsDB, $myts;
 
@@ -558,7 +558,7 @@ class Utility
     /**
      * @return array
      */
-    public static function goCategory()
+    public static function goCategory(): array
     {
         global $xoopsDB;
 
@@ -577,7 +577,7 @@ class Utility
     /**
      * @return array
      */
-    public static function returnAllAdsRss()
+    public static function returnAllAdsRss(): array
     {
         global $xoopsDB;
 
@@ -600,7 +600,7 @@ class Utility
     /**
      * @return array
      */
-    public static function returnAllAdsFluxRss()
+    public static function returnAllAdsFluxRss(): array
     {
         global $xoopsDB;
 
@@ -737,7 +737,7 @@ class Utility
      * @param        $permName
      * @return bool : TRUE if the no errors occured
      */
-    public static function saveCategoryPermissions($groups, $categoryId, $permName)
+    public static function saveCategoryPermissions($groups, $categoryId, $permName): bool
     {
         global $xoopsModule;
         $helper = \XoopsModules\Adslight\Helper::getInstance();
@@ -770,7 +770,7 @@ class Utility
      * @param $form_sort
      * @return string
      */
-    public static function selectSorting($text, $form_sort)
+    public static function selectSorting($text, $form_sort): string
     {
         global $start, $order, $file_cat, $sort, $xoopsModule;
 
@@ -801,7 +801,7 @@ class Utility
      * @param array $cats
      * @return string
      */
-    public static function blockAddCatSelect($cats)
+    public static function blockAddCatSelect($cats): string
     {
         $cat_sql = '';
         if (\is_array($cats)) {
@@ -819,7 +819,7 @@ class Utility
     /**
      * @param $content
      */
-    public static function metaKeywords($content)
+    public static function metaKeywords($content): void
     {
         global $xoopsTpl, $xoTheme;
         $myts    = \MyTextSanitizer::getInstance();
@@ -834,7 +834,7 @@ class Utility
     /**
      * @param $content
      */
-    public static function metaDescription($content)
+    public static function metaDescription($content): void
     {
         global $xoopsTpl, $xoTheme;
         $myts    = \MyTextSanitizer::getInstance();
@@ -852,7 +852,7 @@ class Utility
      *
      * @return array
      */
-    public static function enumerate($tableName, $columnName)
+    public static function enumerate($tableName, $columnName): array
     {
         $table = $GLOBALS['xoopsDB']->prefix($tableName);
 
@@ -909,7 +909,7 @@ class Utility
      *
      * @return string Trimmed string.
      */
-    public static function truncateHtml($text, $length = 100, $ending = '...', $exact = false, $considerHtml = true)
+    public static function truncateHtml($text, $length = 100, $ending = '...', $exact = false, $considerHtml = true): string
     {
         if ($considerHtml) {
             // if the plain text is shorter than the maximum length, return the whole text
@@ -1002,7 +1002,7 @@ class Utility
     /***********************************************************************
      * $fldVersion : dossier version de fancybox
      ***********************************************************************/
-    public static function load_lib_js()
+    public static function load_lib_js(): void
     {
         global $xoTheme, $xoopsModuleConfig;
 
@@ -1075,7 +1075,7 @@ class Utility
      * @param string $localeCode (local language code, e.g. en_US)
      * @return string formatted currency value
      */
-    public static function formatCurrency($number, $currency='USD', $localeCode='')
+    public static function formatCurrency($number, $currency='USD', $localeCode=''): ?string
     {
         $localeCode?? locale_get_default();
         $fmt = new \NumberFormatter( $localeCode, \NumberFormatter::CURRENCY );
@@ -1091,7 +1091,7 @@ class Utility
      * @param int $currencyPosition
      * @return string formatted currency value
      */
-    public static function formatCurrencyTemp($number, $currency='USD', $currencySymbol='$', $currencyPosition=0)
+    public static function formatCurrencyTemp($number, $currency='USD', $currencySymbol='$', $currencyPosition=0): string
     {
         $currentDefault = locale_get_default();
         $fmt = new \NumberFormatter( $currentDefault, \NumberFormatter::DECIMAL  );

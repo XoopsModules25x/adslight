@@ -16,7 +16,7 @@ class ClassifiedObjectTree extends \XoopsObjectTree
      *
      * @return string
      */
-    public function getIdPathFromId($sel_id, $path = '')
+    public function getIdPathFromId($sel_id, $path = ''): string
     {
         global $xoopsDB;
         $sel_id = (int)$sel_id;
@@ -43,7 +43,7 @@ class ClassifiedObjectTree extends \XoopsObjectTree
      *
      * @return string
      */
-    public function getNicePathFromId($sel_id, $title, $funcURL, $path = '')
+    public function getNicePathFromId($sel_id, $title, $funcURL, $path = ''): string
     {
         global $xoopsDB;
         $path   = !empty($path) ? '&nbsp;:&nbsp;' . $path : $path;

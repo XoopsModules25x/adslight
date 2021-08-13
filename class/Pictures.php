@@ -75,7 +75,7 @@ class Pictures extends \XoopsObject
     /**
      * @param $id
      */
-    public function load($id)
+    public function load($id): void
     {
         $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' ';
         $myrow = $this->db->fetchArray($this->db->query($sql));
@@ -96,7 +96,7 @@ class Pictures extends \XoopsObject
      * @internal   param string $order
      * @deprecated this should be handled through {@see PicturesHandler}
      */
-    public function getAllPictures($criteria = [], $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
+    public function getAllPictures($criteria = [], $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0): array
     {
         /** @var \XoopsMySQLDatabase $xoopsDB */
         $xoopsDB          = \XoopsDatabaseFactory::getDatabaseConnection();
