@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
