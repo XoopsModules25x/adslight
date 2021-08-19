@@ -11,7 +11,7 @@
                 <h1><{$title}></h1>
                 <strong><{$type}></strong>
                 <strong><{$price_price}></strong>
-                <{$price_typeprice}>&nbsp;-&nbsp;<{$user_typeuser|default:''}>&nbsp;
+                <{$price_typeprice}>&nbsp;-&nbsp;<{$user_typecondition|default:''}>&nbsp;
                 <{$admin|default:false}>
                 <hr>
                 <br>
@@ -46,7 +46,7 @@
                     </div>
                 <{/if}>
                 <{if $xoops_isuser}>
-                <{if $adslight_active_xpayement|default:false == 1 }>
+                <{if $adslight_active_xpayement|default:false === 1 }>
                 <!-- xpayment -->
                 <{if $purchasable && !$sold && $price_amount > 0}>
                 <{include file="db:adslight_xpayment_form.tpl"}>
@@ -62,9 +62,9 @@
                 <table border="0" cellspacing="1" class="outer" style="width:200px;">
                     <tr>
                         <td class="blockright">
-                            <{$date|default:false}><br>
+                            <{$date_created|default:false}><br>
                             <strong><{$local_head}></strong> <{$local_town}><br>
-                            <strong><{$country_head}></strong> <{$local_country}><br>
+                            <strong><{$country_head|default:''}></strong> <{$local_country|default:''}><br>
                             <hr>
                             <{$submitter}><br>
                             <{$user_profile}><br>
@@ -76,7 +76,7 @@
                             <{$deleteads|default:false}><br>
                             <{$alerteabus}><br>
                             <br>
-                            <{if $local_country}>
+                            <{if $local_country|default:''}> <{* JJDai ajouter la clé google dans les preference du module et tester si elle existe*}>
                                 <img class="mapsgoogle"
                                      src="http://maps.google.com/maps/api/staticmap?size=200x200&maptype=roadmap\&markers=size:mid|color:red|<{$local_town}>+<{$local_country}>&sensor=false">
                             <{/if}>
@@ -93,11 +93,11 @@
         <{$lang_notice|default:false}>
     </div>
     <div style="margin:3px; padding: 3px;">
-        <{if $comment_mode|default:false == "flat"}>
+        <{if $comment_mode|default:false === "flat"}>
             <{include file="db:system_comments_flat.tpl"}>
-        <{elseif $comment_mode|default:false == "thread"}>
+        <{elseif $comment_mode|default:false === "thread"}>
             <{include file="db:system_comments_thread.tpl"}>
-        <{elseif $comment_mode|default:false == "nest"}>
+        <{elseif $comment_mode|default:false === "nest"}>
             <{include file="db:system_comments_nest.tpl"}>
         <{/if}>
     </div>

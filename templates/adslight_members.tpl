@@ -15,9 +15,9 @@
 <{if $istheirs|default:'' == "1"}><{if $rate !='0'}>
     <strong><{$lang_user_rating}></strong>
     <{$rating}> (<{$user_votes}>)<{/if}><{else}>
-    <{if $rate !='0'}><strong><{$lang_user_rating}></strong> <{$rating}> (<{$user_votes}>)
+    <{if $rate !='0'}><strong><{$lang_user_rating}></strong> <{$rating|default:''}> (<{$user_votes|default:''}>)
         <br>
-        <a href="rate-user.php?usid=<{$usid}>" rel="nofollow"><{$lang_ratethisuser}></a><{/if}>
+        <a href="rate-user.php?usid=<{$usid|default:''}>" rel="nofollow"><{$lang_ratethisuser}></a><{/if}>
 <{/if}>
 <br><br><{$nav_page|default:false}><br><br>
 <table cellspacing="0" class="outer" style="width:100%;">
@@ -55,7 +55,7 @@
 <{*                            <strong><{$item.price}></strong>&nbsp;<{$money_sign}>&nbsp;<{$item.typeprice}><br><br>*}>
 
 <{*                        <td align="left"><{$type}></td>*}>
-                            <{$type}> <br><{$priceHtml|default:''}>
+                            <{$type}> <br><{$item.price|default:''}>
 
                             <{if $item.sold}><{$item.sold}><{/if}><br>
                         </td>

@@ -1,47 +1,55 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    Helper,
+    Utility
+};
 
-$moduleDirName = basename(__DIR__);
+/** @var Helper $helper */
+
+$moduleDirName = \basename(__DIR__);
 //@todo replace the following code - use Filters
 foreach ($_REQUEST as $key => $val) {
-    $val            = preg_replace("/[^_A-Za-z0-9-\.&=]/i", '', $val);
+    $val            = preg_replace('/[^_A-Za-z0-9-\.&=]/i', '', $val);
     $_REQUEST[$key] = $val;
 }
 
 $xoopsOption['pagetype'] = 'search';
 
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once \dirname(__DIR__, 2) . '/mainfile.php';
+$helper = Helper::getInstance();
+$helper->loadLanguage('admin');
 
 $xmid = $xoopsModule->getVar('mid');
 /** @var \XoopsConfigHandler $configHandler */
 $configHandler     = xoops_getHandler('config');
 $xoopsConfigSearch = $configHandler->getConfigsByCat(XOOPS_CONF_SEARCH);
-
-if (1 != $xoopsConfigSearch['enable_search']) {
+if (1 !== (int)$xoopsConfigSearch['enable_search']) {
     //    header("Location: '.XOOPS_URL.'modules/adslight/index.php");
-    redirect_header('index.php', 1);
+    $helper->redirect('index.php', 1);
 }
 
 $action = Request::getString('action', 'search');
@@ -55,15 +63,15 @@ $queries = [];
 
 if ('results' === $action) {
     if ('' === $query) {
-        redirect_header('search.php', 1, _SR_PLZENTER);
+        $helper->redirect('search.php', 1, _SR_PLZENTER);
     }
 } elseif ('showall' === $action) {
     if ('' === $query || empty($mid)) {
-        redirect_header('search.php', 1, _SR_PLZENTER);
+        $helper->redirect('search.php', 1, _SR_PLZENTER);
     }
 } elseif ('showallbyuser' === $action) {
     if (empty($mid) || empty($uid)) {
-        redirect_header('search.php', 1, _SR_PLZENTER);
+        $helper->redirect('search.php', 1, _SR_PLZENTER);
     }
 }
 
@@ -97,13 +105,13 @@ if ('showallbyuser' !== $action) {
                 $ignored_queries[] = $myts->addSlashes($q);
             }
         }
-        if (0 == count($queries)) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+        if (0 === count($queries)) {
+            $helper->redirect('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
     } else {
         $query = trim($query);
         if (mb_strlen($query) < $xoopsConfigSearch['keyword_min']) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+            $helper->redirect('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
         }
         $queries = [$myts->addSlashes($query)];
     }
@@ -124,7 +132,7 @@ switch ($action) {
         require_once XOOPS_ROOT_PATH . '/header.php';
 
         // for xoops 2.2.x versions
-        xoops_loadLanguage('main', $moduleDirName);
+//        xoops_loadLanguage('main', $moduleDirName);
         // end
 
         echo '<h3>' . _ADSLIGHT_SEARCHRESULTS . "</h3>\n";
@@ -146,33 +154,34 @@ switch ($action) {
         echo '<br>';
         foreach ($mids as $mid) {
             $mid = (int)$mid;
-            if (in_array($mid, $available_modules)) {
+            if (in_array($mid, $available_modules, true)) {
                 $module  = $modules[$mid];
                 $results = $module->search($queries, $andor, 5, 0);
                 $count   = 0;
                 if (is_array($results)) {
                     $count = count($results);
                 }
-                if (!is_array($results) || 0 == $count) {
+                if (!is_array($results) || 0 === $count) {
                     echo '<p>' . _SR_NOMATCH . '</p>';
                 } else {
                     for ($i = 0; $i < $count; ++$i) {
-                        echo '<style type="text/css" media="all">@import url(' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css);</style>';
+//                        echo '<style type="text/css" media="all">@import url(' . XOOPS_URL . '/modules/adslight/assets/css/adslight.css);</style>';
+                        echo '<style type="text/css" media="all">@import url(' . $helper->url('assets/css/adslight.css') .');</style>';
                         echo '<table width="100%" class="outer"><tr>';
                         echo '<td width="30%">';
-                        echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
+                        echo '<strong>' . htmlspecialchars($results[$i]['type'], ENT_QUOTES | ENT_HTML5) . '</strong><br>';
                         if (isset($results[$i]['photo'])
                             && '' !== $results[$i]['photo']) {
-                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
+                            echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['photo'] . "' alt='' width='100' ></a></td>&nbsp;";
                         } else {
                             echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                         }
-                        if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                        if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                             $results[$i]['link'] = '' . $results[$i]['link'];
                         }
                         echo '<td width="50%">';
 
-                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
+                        echo "<strong><a href='" . $results[$i]['link'] . "'>" . htmlspecialchars($results[$i]['title'], ENT_QUOTES | ENT_HTML5) . '</a></strong><br><br>';
 
                         if (!XOOPS_USE_MULTIBYTES) {
                             if (mb_strlen($results[$i]['desctext']) >= 14) {
@@ -182,8 +191,19 @@ switch ($action) {
 
                         echo '' . $myts->displayTarea($results[$i]['desctext'], 1, 1, 1, 1, 1) . '';
 
+                        $result8 = $xoopsDB->query('SELECT nom_price FROM ' . $xoopsDB->prefix('adslight_price') . ' WHERE id_price=' . (int)$results[$i]['typeprice']);
+                        [$nom_price] = $xoopsDB->fetchRow($result8);
+//                        $a_item['typeprice']    = $nom_price;
+
+                        $currencyCode                 = $helper->getConfig('adslight_currency_code');
+                        $currencySymbol               = $helper->getConfig('adslight_currency_symbol');
+                        $currencyPosition             = $helper->getConfig('currency_position');
+                        $formattedCurrencyUtilityTemp = Utility::formatCurrencyTemp((float)$results[$i]['price'], $currencyCode, $currencySymbol, $currencyPosition);
+
+                        $priceHtml = $formattedCurrencyUtilityTemp . ' - ' . $nom_price;
+
                         echo '</td><td width="20%">';
-                        echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
+                        echo '' . $priceHtml . '</a>';
 
                         echo '</td></tr><tr><td>';
                         echo '<small>';
@@ -198,7 +218,7 @@ switch ($action) {
                     }
                     if ($count >= 5) {
                         $search_url = XOOPS_URL . '/modules/adslight/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
-                        $search_url .= "&mid=$mid&action=showall&andor=$andor";
+                        $search_url .= "&mid=${mid}&action=showall&andor=${andor}";
                         echo '<br><a href="' . htmlspecialchars($search_url, ENT_QUOTES | ENT_HTML5) . '">' . _SR_SHOWALLR . '</a>';
                     }
                     echo '<table>';
@@ -214,27 +234,24 @@ switch ($action) {
 
         require_once XOOPS_ROOT_PATH . '/header.php';
 
-        /** @var \XoopsModules\Adslight\Helper $helper */
-        $helper = \XoopsModules\Adslight\Helper::getInstance();
-        $helper->loadLanguage('admin');
 
-        $GLOBALS['xoopsTpl']->assign('imgscss', XOOPS_URL . '/modules/adslight/assets/css/adslight.css');
+        $GLOBALS['xoopsTpl']->assign('imgscss', $helper->url('assets/css/adslight.css') );
         /** @var \XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->get($mid);
-        $results       = &$module->search($queries, $andor, 20, $start, $uid);
+        $results       = $module->search($queries, $andor, 20, $start, $uid);
         $count         = 0;
         if (is_array($results)) {
             $count = count($results);
         }
         if ($count > 0) {
-            $next_results = &$module->search($queries, $andor, 1, $start + 20, $uid);
+            $next_results = $module->search($queries, $andor, 1, $start + 20, $uid);
             $count        = 0;
             if (is_array($next_results)) {
                 $count = count($next_results);
             }
             $has_next = false;
-            if (is_array($next_results) && 1 == $next_count) {
+            if (is_array($next_results) && 1 === $next_count) {
                 $has_next = true;
             }
             echo '<h4>' . _ADSLIGHT_SEARCHRESULTS . "</h4>\n";
@@ -255,19 +272,19 @@ switch ($action) {
             for ($i = 0; $i < $count; ++$i) {
                 echo '<table width="100%" class="outer"><tr>';
                 echo '<td width="30%">';
-                echo '<strong>' . $myts->htmlSpecialChars($results[$i]['type']) . '</strong><br>';
+                echo '<strong>' . htmlspecialchars($results[$i]['type'], ENT_QUOTES | ENT_HTML5) . '</strong><br>';
                 if (isset($results[$i]['photo'])
                     && '' !== $results[$i]['photo']) {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['sphoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 } else {
                     echo "<a href='" . $results[$i]['link'] . "'><img class='thumb' src='" . $results[$i]['nophoto'] . "' alt='' width='100' ></a></td>&nbsp;";
                 }
-                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                if (!preg_match('/^http[s]*:\/\//i', $results[$i]['link'])) {
                     $results[$i]['link'] = '' . $results[$i]['link'];
                 }
                 echo '<td width="50%">';
 
-                echo "<strong><a href='" . $results[$i]['link'] . "'>" . $myts->htmlSpecialChars($results[$i]['title']) . '</a></strong><br><br>';
+                echo "<strong><a href='" . $results[$i]['link'] . "'>" . htmlspecialchars($results[$i]['title'], ENT_QUOTES | ENT_HTML5) . '</a></strong><br><br>';
 
                 if (!XOOPS_USE_MULTIBYTES) {
                     if (mb_strlen($results[$i]['desctext']) >= 14) {
@@ -275,11 +292,11 @@ switch ($action) {
                     }
                 }
 
-                echo '' . $myts->htmlSpecialChars($results[$i]['desctext']) . '';
+                echo '' . htmlspecialchars($results[$i]['desctext'], ENT_QUOTES | ENT_HTML5) . '';
 
                 echo '</td><td width="20%">';
                 echo '' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . '
-' . $myts->htmlSpecialChars($results[$i]['price']) . '</a>&nbsp;' . $myts->htmlSpecialChars($results[$i]['typeprice']) . '</a>';
+' . htmlspecialchars($results[$i]['price'], ENT_QUOTES | ENT_HTML5) . '</a>&nbsp;' . htmlspecialchars($results[$i]['typeprice'], ENT_QUOTES | ENT_HTML5) . '</a>';
 
                 echo '</td></tr><tr><td>';
                 echo '<small>';
@@ -298,15 +315,15 @@ switch ($action) {
           <tr>
         ';
             $search_url = XOOPS_URL . '/modules/adslight/search.php?query=' . urlencode(stripslashes(implode(' ', $queries)));
-            $search_url .= "&mid=$mid&action=$action&andor=$andor";
+            $search_url .= "&mid=${mid}&action=${action}&andor=${andor}";
             if ('showallbyuser' === $action) {
-                $search_url .= "&uid=$uid";
+                $search_url .= "&uid=${uid}";
             }
             if ($start > 0) {
                 $prev = $start - 20;
                 echo '<td align="left">
             ';
-                $search_url_prev = $search_url . "&start=$prev";
+                $search_url_prev = $search_url . "&start=${prev}";
                 echo '<a href="' . htmlspecialchars($search_url_prev, ENT_QUOTES | ENT_HTML5) . '">' . _SR_PREVIOUS . '</a></td>
             ';
             }
@@ -314,7 +331,7 @@ switch ($action) {
         ';
             if (false !== $has_next) {
                 $next            = $start + 20;
-                $search_url_next = $search_url . "&start=$next";
+                $search_url_next = $search_url . "&start=${next}";
                 echo '<td align="right"><a href="' . htmlspecialchars($search_url_next, ENT_QUOTES | ENT_HTML5) . '">' . _SR_NEXT . '</a></td>
             ';
             }

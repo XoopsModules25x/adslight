@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -11,31 +13,37 @@
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
- * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
  * @package
  * @author       XOOPS Development Team
  */
 
-use Xmf\Database\Migrate;
 use Xmf\Database\Tables;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    Common\Configurator,
+    Common\Migrate,
+    Helper,
+    Utility
+};
+
+/** @var Helper $helper */
+/** @var Utility $utility */
+/** @var Configurator $configurator */
 
 if ((!defined('XOOPS_ROOT_PATH'))
     || !($GLOBALS['xoopsUser'] instanceof \XoopsUser)
-    || !$GLOBALS['xoopsUser']->IsAdmin()) {
+    || !$GLOBALS['xoopsUser']->isAdmin()) {
     exit('Restricted access' . PHP_EOL);
 }
 
 /**
  * @param string $tablename
- *
- * @return bool
  */
-function tableExists($tablename)
+function tableExists($tablename): bool
 {
-    $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '$tablename'");
+    $result = $GLOBALS['xoopsDB']->queryF("SHOW TABLES LIKE '${tablename}'");
 
-    return ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) ? true : false;
+    return $GLOBALS['xoopsDB']->getRowsNum($result) > 0;
 }
 
 /**
@@ -44,15 +52,18 @@ function tableExists($tablename)
  *
  * @return bool true if ready to install, false if not
  */
-function xoops_module_pre_update_adslight(\XoopsModule $module)
+function xoops_module_pre_update_adslight(\XoopsModule $module): bool
 {
-    /** @var \XoopsModules\Adslight\Helper $helper */
-    /** @var \XoopsModules\Adslight\Utility $utility */
-    $helper        = \XoopsModules\Adslight\Helper::getInstance();
-    $utility       = new \XoopsModules\Adslight\Utility();
+    $helper  = Helper::getInstance();
+    $utility = new Utility();
 
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
+
+    $migrate = new Xmf\Database\Migrate('adslight');
+    $result  = $migrate->synchronizeSchema();
+
+    return true;
 
     return $xoopsSuccess && $phpSuccess;
 }
@@ -64,19 +75,18 @@ function xoops_module_pre_update_adslight(\XoopsModule $module)
  *
  * @return bool true if update successful, false if not
  */
-function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = null)
+function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = null): bool
 {
     global $xoopsDB;
-    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
+    $helper        = Helper::getInstance();
+    $utility       = new Utility();
+    $configurator  = new Configurator();
 
-    /** @var \XoopsModules\Adslight\Helper $helper */ /** @var \XoopsModules\Adslight\Utility $utility */
-    /** @var \XoopsModules\Adslight\Common\Configurator $configurator */
-    $helper       = \XoopsModules\Adslight\Helper::getInstance();
-    $utility      = new \XoopsModules\Adslight\Utility();
-    $configurator = new \XoopsModules\Adslight\Common\Configurator();
+    $migrator = new Migrate();
+    $migrator->synchronizeSchema();
 
-    if ($previousVersion < 230) {
-
+    if ($previousVersion < 240) {
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {
             foreach ($configurator->templateFolders as $folder) {
@@ -86,7 +96,7 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
                     foreach ($templateList as $k => $v) {
                         $fileInfo = new \SplFileInfo($templateFolder . $v);
                         if ('html' === $fileInfo->getExtension() && 'index.html' !== $fileInfo->getFilename()) {
-                            if (file_exists($templateFolder . $v)) {
+                            if (is_file($templateFolder . $v)) {
                                 unlink($templateFolder . $v);
                             }
                         }
@@ -128,16 +138,34 @@ function xoops_module_update_adslight(\XoopsModule $module, $previousVersion = n
 
         //  ---  COPY blank.png FILES ---------------
         if (count($configurator->copyBlankFiles) > 0) {
-            $file = dirname(__DIR__) . '/assets/images/blank.png';
+            $file = \dirname(__DIR__) . '/assets/images/blank.png';
             foreach (array_keys($configurator->copyBlankFiles) as $i) {
                 $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
                 $utility::copyFile($file, $dest);
             }
         }
 
+        //delete .html entries from the tpl table
+        $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+        $GLOBALS['xoopsDB']->queryF($sql);
+
+        //delete .tpl entries from the tpl table
+        $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.tpl%'";
+        $GLOBALS['xoopsDB']->queryF($sql);
+
+        //delete tdmdownloads entries from the tpl_source table
+        $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplsource') . " WHERE `tpl_source` LIKE '%" . $module->getVar('dirname', 'n') . "%'";
+        $GLOBALS['xoopsDB']->queryF($sql);
+
+
+        //delete block entries from the newblocks table
+        $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('newblocks') . " WHERE `dirname` = '" . $module->getVar('dirname', 'n') . "'";
+        $GLOBALS['xoopsDB']->queryF($sql);
+
         /** @var \XoopsGroupPermHandler $grouppermHandler */
         $grouppermHandler = xoops_getHandler('groupperm');
 
         return $grouppermHandler->deleteByModule($module->getVar('mid'), 'item_read');
     }
+    return true;
 }

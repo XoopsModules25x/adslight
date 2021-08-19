@@ -1,0 +1,407 @@
+-
+    cid: '1'
+    pid: '0'
+    title: 'Automotive / Motorcycle'
+    cat_desc: ''
+    cat_keywords: ''
+    img: car.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '2'
+    pid: '0'
+    title: 'Real Estate'
+    cat_desc: ''
+    cat_keywords: ''
+    img: home.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '3'
+    pid: '0'
+    title: 'Good Business'
+    cat_desc: ''
+    cat_keywords: ''
+    img: jewelry.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '4'
+    pid: '1'
+    title: Cars
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '5'
+    pid: '1'
+    title: 'Utility car'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '6'
+    pid: '1'
+    title: 'Motorcycles / scooters'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '7'
+    pid: '1'
+    title: Caravanning
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '8'
+    pid: '1'
+    title: Accessories
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '9'
+    pid: '2'
+    title: 'Sales Properties'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '10'
+    pid: '2'
+    title: 'Sales Apartments'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '11'
+    pid: '2'
+    title: 'Rental Homes'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '12'
+    pid: '2'
+    title: 'Apartments Rentals'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '13'
+    pid: '2'
+    title: 'Vacation Rentals'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '14'
+    pid: '3'
+    title: Hobbies
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '15'
+    pid: '3'
+    title: Bricolage
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '16'
+    pid: '0'
+    title: Computer
+    cat_desc: ''
+    cat_keywords: ''
+    img: computer.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '17'
+    pid: '0'
+    title: Telephony
+    cat_desc: ''
+    cat_keywords: ''
+    img: telephony.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '18'
+    pid: '0'
+    title: 'Sports and Bicycle'
+    cat_desc: ''
+    cat_keywords: ''
+    img: mountain_bike.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '19'
+    pid: '0'
+    title: Music
+    cat_desc: ''
+    cat_keywords: ''
+    img: guitar.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '20'
+    pid: '19'
+    title: 'Cd music'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '21'
+    pid: '19'
+    title: 'Dvd music'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '22'
+    pid: '19'
+    title: 'Musical instruments'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '23'
+    pid: '16'
+    title: Parts
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '24'
+    pid: '16'
+    title: Computers
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '25'
+    pid: '16'
+    title: Games
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '26'
+    pid: '16'
+    title: Software
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '27'
+    pid: '3'
+    title: 'Nursery accessories'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '28'
+    pid: '0'
+    title: Appliances
+    cat_desc: ''
+    cat_keywords: ''
+    img: appliances.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '29'
+    pid: '28'
+    title: TVs
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '30'
+    pid: '28'
+    title: 'Videos Players'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '31'
+    pid: '28'
+    title: 'Washing Machines'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '32'
+    pid: '28'
+    title: Ovens
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '33'
+    pid: '18'
+    title: Mtb
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '34'
+    pid: '18'
+    title: Equestrian
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '35'
+    pid: '18'
+    title: Clothes
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '36'
+    pid: '18'
+    title: 'Sport Shoes'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'
+-
+    cid: '37'
+    pid: '18'
+    title: 'Diving - Accessories'
+    cat_desc: ''
+    cat_keywords: ''
+    img: default.png
+    cat_order: '0'
+    affprice: '1'
+    cat_moderate: '1'
+    moderate_subcat: '1'

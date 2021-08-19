@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2 : Module for Xoops
@@ -90,7 +92,7 @@ define('_MI_ADSLIGHT_SUBMITFORM_DESC', 'Select, who can submit Ads');
 define('_MI_ADSLIGHT_VIEWFORM', 'View Ads Permissions');
 define('_MI_ADSLIGHT_VIEWFORM_DESC', 'Select, who can view Ads');
 define('_MI_ADSLIGHT_VIEW_RESUMEFORM_DESC', 'Select, who can view resumes');
-define('_MI_ADSLIGHT_SUPPORT', 'Support this software');
+define('_MI_ADSLIGHT_SUPPORT0', 'Support this software');
 define('_MI_ADSLIGHT_OP', 'Read my opinion');
 define('_MI_ADSLIGHT_PREMIUM', 'Ads Premium');
 define('_MI_ADSLIGHT_PREMIUM_DESC', 'Who can select days listing will last');
@@ -223,8 +225,11 @@ define('_MI_ADSLIGHT_ADSLIGHT_CATS_CODE_DESC', 'Google adsence code or code of a
 define('_MI_ADSLIGHT_THEMESET', 'Choice of template set');
 // Méta Description / keywords Categories
 define('_MI_ADSLIGHT_CAT_META', 'Allow the seizure Meta description, Meta keywords categories?');
-define('_MI_ADSLIGHT_CAT_META_DESCRIPTION', "If you set this option to 'Yes',<br>
-You can write data meta keywords and description for each category<br>( Recommend to a better ranking. )");
+define(
+    '_MI_ADSLIGHT_CAT_META_DESCRIPTION',
+    "If you set this option to 'Yes',<br>
+You can write data meta keywords and description for each category<br>( Recommend to a better ranking. )"
+);
 // Version 1.0.51
 // tips_writing_ad.php
 define('_MI_ADSLIGHT_USE_TIPS_WRITE', 'Customize page info / advice?');
@@ -262,11 +267,11 @@ define('_MI_ADSLIGHT_PURCHASELISTING_DESC', 'These are the categories that the c
 define('_MI_ADSLIGHT_ADVISE_TITLE', 'Our Advise');
 define('_MI_ADSLIGHT_ADVISE_TEXT', 'Here goes your text');
 //Help
-define('_MI_ADSLIGHT_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_ADSLIGHT_DIRNAME', basename(dirname(__DIR__, 2)));
 define('_MI_ADSLIGHT_HELP_HEADER', __DIR__ . '/help/helpheader.tpl');
 define('_MI_ADSLIGHT_BACK_2_ADMIN', 'Back to Administration of ');
 define('_MI_ADSLIGHT_HELP_OVERVIEW', 'Overview');
-
+define('_MI_ADSLIGHT_OVERVIEW', 'Overview');
 //2.2
 define('_MI_ADSLIGHT_CURRENCY_POSITION', 'Currency symbol position ?');
 define('_MI_ADSLIGHT_CURRENCY_POSITION_DESC', 'Yes = left (e.g. $25), No = right (e.g. 25 €)');
@@ -283,3 +288,28 @@ define('_MI_ADSLIGHT_HOME', 'Home');
 define('_MI_ADSLIGHT_ABOUT', 'About');
 
 define('MI_ADSLIGHT_ADMENU2', 'Listing');
+define('MI_ADSLIGHT_ADMENU3', 'Categories');
+define('MI_ADSLIGHT_ADMENU4', 'Ad Type');
+define('MI_ADSLIGHT_ADMENU5', 'Price Type');
+define('MI_ADSLIGHT_ADMENU6', 'Condition');
+define('MI_ADSLIGHT_ADMENU7', 'IPlog');
+define('MI_ADSLIGHT_ADMENU8', 'ItemVotes');
+define('MI_ADSLIGHT_ADMENU9', 'UserVotes');
+define('MI_ADSLIGHT_ADMENU10', 'Pictures');
+define('MI_ADSLIGHT_ADMENU11', 'Replies');
+define('MI_ADSLIGHT_ADMENU12', 'Feedback');
+define('MI_ADSLIGHT_ADMENU13', 'Migrate');
+//Menu
+define('_MI_ADSLIGHT_MENU_HOME', 'Home');
+define('_MI_ADSLIGHT_MENU_01', 'Admin');
+define('_MI_ADSLIGHT_MENU_ABOUT', 'About');
+//Config
+define('_MI_ADSLIGHT_EDITOR_ADMIN', 'Editor: Admin');
+define('_MI_ADSLIGHT_EDITOR_ADMIN_DESC', 'Select the Editor to use by the Admin');
+define('_MI_ADSLIGHT_EDITOR_USER', 'Editor: User');
+define('_MI_ADSLIGHT_EDITOR_USER_DESC', 'Select the Editor to use by the User');
+//define('_MI_ADSLIGHT_HELP_DIR', __DIR__);
+//help multi-page
+define('_MI_ADSLIGHT_DISCLAIMER', 'Disclaimer');
+define('_MI_ADSLIGHT_LICENSE', 'License');
+define('_MI_ADSLIGHT_SUPPORT', 'Support');

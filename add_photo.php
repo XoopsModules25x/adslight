@@ -1,35 +1,38 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\Helper;
+use XoopsModules\Adslight\PicturesHandler;
 
 /**
  * Xoops header ...
  */
-require_once dirname(dirname(__DIR__)) . '/mainfile.php';
+require_once \dirname(__DIR__, 2) . '/mainfile.php';
 $GLOBALS['xoopsOption']['template_main'] = 'adslight_index.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
-
+$helper = Helper::getInstance();
 /**
  * Modules class includes
  */
@@ -37,8 +40,7 @@ require_once XOOPS_ROOT_PATH . '/header.php';
 /**
  * Factory of pictures created
  */
-$album_factory = new Adslight\PicturesHandler($xoopsDB);
-
+$album_factory = new PicturesHandler($xoopsDB);
 /**
  * Getting the title
  */
@@ -67,12 +69,22 @@ if ('sel_photo' === Request::getArray('xoops_upload_file', '', 'POST')[0]) {
     /**
      * Try to upload picture resize it insert in database and then redirect to index
      */
-    if ($album_factory->receivePicture($title, $path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes, $maxfilewidth, $maxfileheight)) {
+    if ($album_factory->receivePicture(
+        $title,
+        $path_upload,
+        $thumbwidth,
+        $thumbheight,
+        $pictwidth,
+        $pictheight,
+        $maxfilebytes,
+        $maxfilewidth,
+        $maxfileheight
+    )) {
         header('Location: ' . XOOPS_URL . "/modules/adslight/view_photos.php?lid={$lid}&uid=" . $GLOBALS['xoopsUser']->getVar('uid'));
 
         $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo+1 WHERE lid={$lid}");
     } else {
-        redirect_header(XOOPS_URL . '/modules/adslight/view_photos.php?uid=' . $xoopsUser->getVar('uid'), 15, _ADSLIGHT_NOCACHACA);
+        $helper->redirect('view_photos.php?uid=' . $xoopsUser->getVar('uid'), 15, _ADSLIGHT_NOCACHACA);
     }
 }
 

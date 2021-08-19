@@ -1,34 +1,40 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    Helper,
+    Utility
+};
 
-require_once __DIR__ . '/header.php';
+/** @var Helper $helper */
 
+require __DIR__ . '/header.php';
 /**
  * @param $lid
  */
-function SendFriend($lid)
+function SendFriend($lid): void
 {
     global $xoopsDB, $xoopsTheme, $xoopsLogger;
     $idd = $idde = $iddee = '';
@@ -37,12 +43,12 @@ function SendFriend($lid)
     $GLOBALS['xoTheme']->addMeta('meta', 'robots', 'noindex, nofollow');
 
     $result = $xoopsDB->query('SELECT lid, title, type FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE lid={$lid}");
-    list($lid, $title, $type) = $xoopsDB->fetchRow($result);
+    [$lid, $title, $type] = $xoopsDB->fetchRow($result);
 
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>
-        <strong>" . _ADSLIGHT_SENDTO . " $lid \"<strong>$type : $title</strong>\" " . _ADSLIGHT_FRIEND . "<br><br>
+        <strong>" . _ADSLIGHT_SENDTO . " ${lid} \"<strong>${type} : ${title}</strong>\" " . _ADSLIGHT_FRIEND . "<br><br>
         <form action=\"sendfriend.php\" method=post>
-        <input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
+        <input type=\"hidden\" name=\"lid\" value=\"${lid}\" >";
 
     if ($GLOBALS['xoopsUser'] instanceof \XoopsUser) {
         $idd  = $GLOBALS['xoopsUser']->getVar('uname', 'E');
@@ -53,11 +59,11 @@ function SendFriend($lid)
     <table width='99%' class='outer' cellspacing='1'>
     <tr>
       <td class='head' width='30%'>" . _ADSLIGHT_NAME . " </td>
-      <td class='even'><input class='textbox' type='text' name='yname' value='$idd' ></td>
+      <td class='even'><input class='textbox' type='text' name='yname' value='${idd}' ></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_MAIL . " </td>
-      <td class='even'><input class='textbox' type='text' name='ymail' value='$idde' ></td>
+      <td class='even'><input class='textbox' type='text' name='ymail' value='${idde}' ></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_NAMEFR . " </td>
@@ -68,9 +74,8 @@ function SendFriend($lid)
       <td class='even'><input class='textbox' type='text' name='fmail' ></td>
     </tr>";
 
-    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
+    if ('1' === $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
-        $jlm_captcha = '';
         $jlm_captcha = new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
         echo '</td></tr>';
@@ -89,20 +94,22 @@ function SendFriend($lid)
  * @param $fname
  * @param $fmail
  */
-function MailAd($lid, $yname, $ymail, $fname, $fmail)
+function MailAd($lid, $yname, $ymail, $fname, $fmail): void
 {
     global $xoopsConfig, $xoopsTpl, $xoopsDB, $xoopsModule, $myts;
+    $helper = Helper::getInstance();
 
-    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
+    if ('1' === $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
+        $helper       = Helper::getInstance();
         if (!$xoopsCaptcha->verify()) {
-            redirect_header(XOOPS_URL . '/modules/adslight/index.php', 2, $xoopsCaptcha->getMessage());
+            $helper->redirect('index.php', 2, $xoopsCaptcha->getMessage());
         }
     }
 
-    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date, email, submitter, town, country, photo FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
-    list($lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date, $email, $submitter, $town, $country, $photo) = $xoopsDB->fetchRow($result);
+    $result = $xoopsDB->query('SELECT lid, title, expire, type, desctext, tel, price, typeprice, date_created, email, submitter, town, country, photo FROM ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid=' . $xoopsDB->escape($lid));
+    [$lid, $title, $expire, $type, $desctext, $tel, $price, $typeprice, $date_created, $email, $submitter, $town, $country, $photo] = $xoopsDB->fetchRow($result);
 
     $title     = $myts->addSlashes($title);
     $expire    = $myts->addSlashes($expire);
@@ -124,7 +131,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $tags['LID']                = $lid;
     $tags['LISTING_NUMBER']     = _ADSLIGHT_LISTING_NUMBER;
     $tags['TITLE']              = $title;
-    $tags['TYPE']               = Adslight\Utility::getNameType($type);
+    $tags['TYPE']               = Utility::getNameType($type);
     $tags['DESCTEXT']           = $desctext;
     $tags['PRICE']              = $price;
     $tags['TYPEPRICE']          = $typeprice;
@@ -151,8 +158,7 @@ function MailAd($lid, $yname, $ymail, $fname, $fmail)
     $xoopsMailer->assign($tags);
     $xoopsMailer->send();
     echo $xoopsMailer->getErrors();
-
-    redirect_header('index.php', 3, _ADSLIGHT_ANNSEND);
+    $helper->redirect('index.php', 3, _ADSLIGHT_ANNSEND);
 }
 
 ##############################################################
@@ -174,6 +180,6 @@ switch ($op) {
         MailAd($lid, $yname, $ymail, $fname, $fmail);
         break;
     default:
-        redirect_header('index.php', 1, ' ' . _RETURNANN . ' ');
+        $helper->redirect('index.php', 1, ' ' . _RETURNANN . ' ');
         break;
 }

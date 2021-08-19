@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Adslight;
 
 // ------------------------------------------------------------------------- //
 //                       XOOPS - Module MP Manager                           //
-//                       <http://www.xoops.org/>                             //
+//                       <https://www.xoops.org>                             //
 // ------------------------------------------------------------------------- //
 //  This program is free software; you can redistribute it and/or modify     //
 //  it under the terms of the GNU General Public License as published by     //
@@ -35,9 +37,8 @@ namespace XoopsModules\Adslight;
  */
 class FS_Storage
 {
-
     /**
-     * @var String
+     * @var string
      */
     public $rootDir;
 
@@ -53,30 +54,28 @@ class FS_Storage
     /**
      * @param $location
      */
-    public static function deldir($location)
+    public static function deldir($location): void
     {
-        if (is_dir($location)) {
-            $all = opendir($location);
-            while ($file = readdir($all)) {
-                if ('..' !== $file && '.' !== $file && is_dir("$location/$file")) {
-                    self::deldir("$location/$file");
-                    if (file_exists("$location/$file")) {
-                        rmdir("$location/$file");
+        if (\is_dir($location)) {
+            $all = \opendir($location);
+            while ($file = \readdir($all)) {
+                if ('..' !== $file && '.' !== $file && \is_dir("${location}/${file}")) {
+                    self::deldir("${location}/${file}");
+                    if (\file_exists("${location}/${file}")) {
+                        \rmdir("${location}/${file}");
                     }
                     unset($file);
-                } elseif (!is_dir("$location/$file")) {
-                    if (file_exists("$location/$file")) {
-                        unlink("$location/$file");
+                } elseif (!\is_dir("${location}/${file}")) {
+                    if (\file_exists("${location}/${file}")) {
+                        \unlink("${location}/${file}");
                     }
                     unset($file);
                 }
             }
-            closedir($all);
-            rmdir($location);
-        } else {
-            if (file_exists((string)$location)) {
-                unlink((string)$location);
-            }
+            \closedir($all);
+            \rmdir($location);
+        } elseif (\is_file((string)$location)) {
+            \unlink((string)$location);
         }
     }
 
@@ -86,10 +85,9 @@ class FS_Storage
      */
     public static function date_modif($fichier)
     {
-        $tmp = filemtime($fichier);
-        return date('d/m/Y H:i', $tmp);
+        $tmp = \filemtime($fichier);
+        return \date('d/m/Y H:i', $tmp);
     }
-
 
     // A function to copy files from one directory to another one, including subdirectories and
     // nonexisting or newer files. Function returns number of files copied.
@@ -103,33 +101,26 @@ class FS_Storage
      * @param      $errors
      * @param      $success
      * @param bool $verbose
-     * @return int
      */
-    public static function dircopy($srcdir, $dstdir, &$errors, &$success, $verbose = false)
+    public static function dircopy($srcdir, $dstdir, &$errors, &$success, $verbose = false): int
     {
         $num = 0;
-        if (!is_dir($dstdir)) {
-            if (!mkdir($dstdir) && !is_dir($dstdir)) {
-                throw new \RuntimeException(sprintf('Directory "%s" was not created', $dstdir));
-            }
+        if (!\is_dir($dstdir) && (!\mkdir($dstdir) && !\is_dir($dstdir))) {
+            throw new \RuntimeException(\sprintf('Directory "%s" was not created', $dstdir));
         }
-        if ($curdir = opendir($srcdir)) {
-            while ($file = readdir($curdir)) {
+        if ($curdir = \opendir($srcdir)) {
+            while ($file = \readdir($curdir)) {
                 if ('.' !== $file && '..' !== $file) {
-                    $srcfile = $srcdir . DIRECTORY_SEPARATOR . $file;
-                    $dstfile = $dstdir . DIRECTORY_SEPARATOR . $file;
-                    if (is_file($srcfile)) {
-                        if (is_file($dstfile)) {
-                            $ow = filemtime($srcfile) - filemtime($dstfile);
-                        } else {
-                            $ow = 1;
-                        }
+                    $srcfile = $srcdir . \DIRECTORY_SEPARATOR . $file;
+                    $dstfile = $dstdir . \DIRECTORY_SEPARATOR . $file;
+                    if (\is_file($srcfile)) {
+                        $ow = \is_file($dstfile) ? \filemtime($srcfile) - \filemtime($dstfile) : 1;
                         if ($ow > 0) {
                             if ($verbose) {
-                                echo "Copying '$srcfile' to '$dstfile'...";
+                                echo "Copying '${srcfile}' to '${dstfile}'...";
                             }
-                            if (copy($srcfile, $dstfile)) {
-                                touch($dstfile, filemtime($srcfile));
+                            if (\copy($srcfile, $dstfile)) {
+                                \touch($dstfile, \filemtime($srcfile));
                                 $num++;
                                 if ($verbose) {
                                     echo "OK\n";
@@ -139,12 +130,12 @@ class FS_Storage
                                 $errors[] = $srcfile;
                             }
                         }
-                    } else if (is_dir($srcfile)) {
+                    } elseif (\is_dir($srcfile)) {
                         $num += self::dircopy($srcfile, $dstfile, $errors, $success, $verbose);
                     }
                 }
             }
-            closedir($curdir);
+            \closedir($curdir);
         }
         return $num;
     }
@@ -156,30 +147,30 @@ class FS_Storage
      * @param      $success
      * @param bool $move
      */
-    public static function copyOrMoveFile($destDir, $srcFile, &$error, &$success, $move = false)
+    public static function copyOrMoveFile($destDir, $srcFile, &$error, &$success, $move = false): void
     {
         $mess        = ConfService::getMessages();
-        $destFile    = ConfService::getRootDir() . $destDir . '/' . basename($srcFile);
-        $realSrcFile = ConfService::getRootDir() . "/$srcFile";
-        if (!file_exists($realSrcFile)) {
+        $destFile    = ConfService::getRootDir() . $destDir . '/' . \basename($srcFile);
+        $realSrcFile = ConfService::getRootDir() . "/${srcFile}";
+        if (!\file_exists($realSrcFile)) {
             $error[] = $mess[100] . $srcFile;
             return;
         }
-        if ($realSrcFile == $destFile) {
+        if ($realSrcFile === $destFile) {
             $error[] = $mess[101];
             return;
         }
-        if (is_dir($realSrcFile)) {
+        if (\is_dir($realSrcFile)) {
             $errors    = [];
             $succFiles = [];
             $dirRes    = self::dircopy($realSrcFile, $destFile, $errors, $succFiles);
-            if (count($errors)) {
+            if (\count($errors) > 0) {
                 $error[] = $mess[114];
                 return;
             }
         } else {
-            $res = copy($realSrcFile, $destFile);
-            if (1 != $res) {
+            $res = \copy($realSrcFile, $destFile);
+            if (1 !== $res) {
                 $error[] = $mess[114];
                 return;
             }
@@ -187,24 +178,21 @@ class FS_Storage
 
         if ($move) {
             // Now delete original
-            self::deldir($realSrcFile); // both file and dir
-            $messagePart = $mess[74] . " $destDir";
-            if ($destDir == '/' . ConfService::getRecycleBinDir()) {
+            self::deldir($realSrcFile);
+            // both file and dir
+            $messagePart = $mess[74] . " ${destDir}";
+            if ($destDir === '/' . ConfService::getRecycleBinDir()) {
                 $messagePart = $mess[123] . ' ' . $mess[122];
             }
             if (isset($dirRes)) {
-                $success[] = $mess[117] . ' ' . basename($srcFile) . ' ' . $messagePart . " ($dirRes " . $mess[116] . ') ';
+                $success[] = $mess[117] . ' ' . \basename($srcFile) . ' ' . $messagePart . " (${dirRes} " . $mess[116] . ') ';
             } else {
-                $success[] = $mess[34] . ' ' . basename($srcFile) . ' ' . $messagePart;
+                $success[] = $mess[34] . ' ' . \basename($srcFile) . ' ' . $messagePart;
             }
+        } elseif (isset($dirRes)) {
+            $success[] = $mess[117] . ' ' . \basename($srcFile) . ' ' . $mess[73] . " ${destDir} (" . $dirRes . ' ' . $mess[116] . ')';
         } else {
-            if (isSet($dirRes)) {
-                $success[] = $mess[117] . ' ' . basename($srcFile) . ' ' . $mess[73] . " $destDir (" . $dirRes . ' ' . $mess[116] . ')';
-            } else {
-                $success[] = $mess[34] . ' ' . basename($srcFile) . ' ' . $mess[73] . " $destDir";
-            }
+            $success[] = $mess[34] . ' ' . \basename($srcFile) . ' ' . $mess[73] . " ${destDir}";
         }
-
     }
-
 }

@@ -1,38 +1,37 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
 
 require_once __DIR__ . '/header.php';
 //require_once XOOPS_ROOT_PATH . '/modules/adslight/include/gtickets.php';
+global $xoopsModule;
 
 $myts      = \MyTextSanitizer::getInstance();
 $module_id = $xoopsModule->getVar('mid');
 
-if (is_object($GLOBALS['xoopsUser'])) {
-    $groups = $GLOBALS['xoopsUser']->getGroups();
-} else {
-    $groups = XOOPS_GROUP_ANONYMOUS;
-}
+$groups = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
 /** @var \XoopsGroupPermHandler $grouppermHandler */
 $grouppermHandler = xoops_getHandler('groupperm');
 $perm_itemid      = Request::getInt('item_id', 0, 'POST');
@@ -40,15 +39,11 @@ $perm_itemid      = Request::getInt('item_id', 0, 'POST');
 if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
     redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
 }
-if (!$grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id)) {
-    $prem_perm = '0';
-} else {
-    $prem_perm = '1';
-}
+$prem_perm = $grouppermHandler->checkRight('adslight_premium', $perm_itemid, $groups, $module_id) ? '1' : '0';
 
 #  function adslightMaps
 #####################################################
-function adslightMaps()
+function adslightMaps(): void
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule, $myts, $prem_perm;
 
@@ -96,22 +91,18 @@ function adslightMaps()
         if ($usid = $member_usid) {
             $GLOBALS['xoopsTpl']->assign('istheirs', true);
 
-            list($show_user) = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=$member_usid"));
+            [$show_user] = $xoopsDB->fetchRow($xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_listing') . " WHERE usid=${member_usid}"));
 
             $GLOBALS['xoopsTpl']->assign('show_user', $show_user);
-            $GLOBALS['xoopsTpl']->assign('show_user_link', "members.php?usid=$member_usid");
+            $GLOBALS['xoopsTpl']->assign('show_user_link', "members.php?usid=${member_usid}");
         }
     }
 }
 
 ######################################################
 
-$pa = Request::getInt('pa', null, 'GET');
-
-switch ($pa) {
-    default:
-        $GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
-        adslightMaps();
-        break;
-}
+$pa                                      = Request::getInt('pa', null, 'GET');
+$GLOBALS['xoopsOption']['template_main'] = 'adslight_maps.tpl';
+adslightMaps();
+//break;
 require_once XOOPS_ROOT_PATH . '/footer.php';

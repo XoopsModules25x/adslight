@@ -1,30 +1,33 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    Tree
+};
 
 require_once __DIR__ . '/admin_header.php';
-
 $op = Request::getString('op', 'list');
 xoops_cp_header();
 //loadModuleAdminMenu(3, '');
@@ -32,10 +35,10 @@ $adminObject->displayNavigation(basename(__FILE__));
 echo '<br><br>';
 global $xoopsDB;
 $countresult = $xoopsDB->query('SELECT COUNT(*) FROM ' . $xoopsDB->prefix('adslight_categories'));
-list($cat_row) = $xoopsDB->fetchRow($countresult);
+[$cat_row] = $xoopsDB->fetchRow($countresult);
 $cat_rows = $cat_row;
 
-if ('0' == $cat_rows) {
+if ('0' === $cat_rows) {
     echo _MI_ADSLIGHT_MUST_ADD_CAT;
 } else {
     //$permtoset= isset($_POST['permtoset']) ? (int)$_POST['permtoset'] : 1;
@@ -80,7 +83,7 @@ if ('0' == $cat_rows) {
     }
 
     $permform = new \XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/groupperms.php');
-    $cattree  = new Adslight\ClassifiedsTree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
+    $cattree  = new Tree($xoopsDB->prefix('adslight_categories'), 'cid', 'pid');
     $allcats  = $cattree->getCategoryList();
     foreach ($allcats as $cid => $category) {
         $permform->addItem($cid, $category['title'], $category['pid']);

@@ -1,48 +1,50 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\{
+    Utility
+};
+
+/** @var Helper $helper */
 
 require_once __DIR__ . '/header.php';
-
 if (Request::hasVar('submit', 'POST')) {
     // Define Variables for register_globals Off. contribution by Peekay
-    $id        = Request::getString('id', null);
-    $date      = Request::getString('date', null);
-    $namep     = Request::getString('namep', null);
-    $ipnumber  = Request::getString('ipnumber', null);
-    $messtext  = Request::getString('messtext', null);
-    $typeprice = Request::getString('typeprice', null);
-    $price     = Request::getString('price', null);
-    $tele      = Request::getString('tele', null);
+    $id           = Request::getString('id', null);
+    $date_created = Request::getString('date_created', null);
+    $namep        = Request::getString('namep', null);
+    $ipnumber     = Request::getString('ipnumber', null);
+    $messtext     = Request::getString('messtext', null);
+    $typeprice    = Request::getString('typeprice', null);
+    $price        = Request::getString('price', null);
+    $tele         = Request::getString('tele', null);
     // end define vars
 
     //    require_once __DIR__ . '/header.php';
-
     $module_id = $xoopsModule->getVar('mid');
-
-    $module_id = $xoopsModule->getVar('mid');
-    $groups    = ($xoopsUser instanceof \XoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups    = $xoopsUser instanceof \XoopsUser ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
 
@@ -50,38 +52,38 @@ if (Request::hasVar('submit', 'POST')) {
 
     //If no access
     if (!$grouppermHandler->checkRight('adslight_view', $perm_itemid, $groups, $module_id)) {
-        redirect_header(XOOPS_URL . '/index.php', 3, _NOPERM);
+        $helper->redirect('index.php', 3, _NOPERM);
     }
     global $xoopsConfig, $xoopsDB, $myts, $meta;
 
     if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header(XOOPS_URL . '/modules/adslight/viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
+        $helper->redirect('viewads.php?lid=' . addslashes($id) . '', 3, $GLOBALS['xoopsSecurity']->getErrors());
     }
-    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
+    if ('1' === $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         xoops_load('xoopscaptcha');
         $xoopsCaptcha = XoopsCaptcha::getInstance();
         if (!$xoopsCaptcha->verify()) {
-            redirect_header(XOOPS_URL . '/modules/adslight/contact.php?lid=' . addslashes($id) . '', 2, $xoopsCaptcha->getMessage());
+            $helper->redirect('contact.php?lid=' . addslashes($id) . '', 2, $xoopsCaptcha->getMessage());
         }
     }
     $lid    = Request::getInt('id', 0, 'POST');
     $result = $xoopsDB->query('SELECT email, submitter, title, type, desctext, price, typeprice FROM  ' . $xoopsDB->prefix('adslight_listing') . ' WHERE lid = ' . $xoopsDB->escape($id));
 
-    while (false !== (list($email, $submitter, $title, $type, $desctext, $price, $typeprice) = $xoopsDB->fetchRow($result))) {
+    while (false !== [$email, $submitter, $title, $type, $desctext, $price, $typeprice] = $xoopsDB->fetchRow($result)) {
         $teles = Request::getString('tele', '', 'POST');
 
         if ($price) {
-            $price = '' . _ADSLIGHT_PRICE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . " $price";
+            $price = '' . _ADSLIGHT_PRICE . ' ' . $GLOBALS['xoopsModuleConfig']['adslight_currency_symbol'] . " ${price}";
         } else {
             $price = '';
         }
 
-        $date   = time();
-        $r_usid = $GLOBALS['xoopsUser']->getVar('uid', 'E');
+        $date_created = time();
+        $r_usid       = $GLOBALS['xoopsUser']->getVar('uid', 'E');
 
         $tags                = [];
         $tags['TITLE']       = $title;
-        $tags['TYPE']        = Adslight\Utility::getNameType($type);
+        $tags['TYPE']        = Utility::getNameType($type);
         $tags['PRICE']       = $price;
         $tags['DESCTEXT']    = stripslashes($desctext);
         $tags['MY_SITENAME'] = $xoopsConfig['sitename'];
@@ -127,9 +129,9 @@ if (Request::hasVar('submit', 'POST')) {
         $mail->send();
         echo $mail->getErrors();
 
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '$lid', '$date', '$namep', '$ipnumber', '" . Request::getString('post', '', 'POST') . "')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_ip_log') . " values ( '', '${lid}', '${date_created}', '${namep}', '${ipnumber}', '" . Request::getString('post', '', 'POST') . "')");
 
-        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','$id', '$title', '$date', '$namep', '$messtext', '$tele', '" . Request::getString('post', '', 'POST') . "', '$r_usid')");
+        $xoopsDB->query('INSERT INTO ' . $xoopsDB->prefix('adslight_replies') . " values ('','${id}', '${title}', '${date_created}', '${namep}', '${messtext}', '${tele}', '" . Request::getString('post', '', 'POST') . "', '${r_usid}')");
 
         redirect_header('index.php', 3, _ADSLIGHT_MESSEND);
     }
@@ -141,11 +143,7 @@ if (Request::hasVar('submit', 'POST')) {
     global $xoopsConfig, $xoopsDB, $myts, $meta;
 
     $module_id = $xoopsModule->getVar('mid');
-    if (is_object($GLOBALS['xoopsUser'])) {
-        $groups = $GLOBALS['xoopsUser']->getGroups();
-    } else {
-        $groups = XOOPS_GROUP_ANONYMOUS;
-    }
+    $groups    = is_object($GLOBALS['xoopsUser']) ? $GLOBALS['xoopsUser']->getGroups() : XOOPS_GROUP_ANONYMOUS;
     /** @var \XoopsGroupPermHandler $grouppermHandler */
     $grouppermHandler = xoops_getHandler('groupperm');
     $perm_itemid      = Request::getInt('item_id', 0, 'POST');
@@ -160,7 +158,7 @@ if (Request::hasVar('submit', 'POST')) {
     require_once XOOPS_ROOT_PATH . '/header.php';
     echo "<table width='100%' border='0' cellspacing='1' cellpadding='8'><tr class='bg4'><td valign='top'>\n";
     $time     = time();
-    $ipnumber = (string)$_SERVER['REMOTE_ADDR'];
+    $ipnumber = $_SERVER['REMOTE_ADDR'];
     echo '<script type="text/javascript">
           function verify()
           {
@@ -190,7 +188,7 @@ if (Request::hasVar('submit', 'POST')) {
     echo '<b>' . _ADSLIGHT_CONTACTAUTOR . '</b><br><br>';
     echo '' . _ADSLIGHT_TEXTAUTO . '<br>';
     echo '<form onSubmit="return verify();" method="post" action="contact.php" name="cont">';
-    echo "<input type=\"hidden\" name=\"id\" value=\"$lid\" >";
+    echo "<input type=\"hidden\" name=\"id\" value=\"${lid}\" >";
     echo '<input type="hidden" name="submit" value="1" >';
     echo "<table width='100%' class='outer' cellspacing='1'>
     <tr>
@@ -199,14 +197,14 @@ if (Request::hasVar('submit', 'POST')) {
         $idd  = $GLOBALS['xoopsUser']->getVar('uname', 'E');
         $idde = $GLOBALS['xoopsUser']->getVar('email', 'E');
 
-        echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" value=\"$idd\" >";
+        echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" value=\"${idd}\" >";
     } else {
         echo "<td class='even'><input type=\"text\" name=\"namep\" size=\"42\" ></td>";
     }
     echo "</tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_YOUREMAIL . "</td>
-      <td class='even'><input type=\"text\" name=\"post\" size=\"42\" value=\"$idde\" ></font></td>
+      <td class='even'><input type=\"text\" name=\"post\" size=\"42\" value=\"${idde}\" ></font></td>
     </tr>
     <tr>
       <td class='head'>" . _ADSLIGHT_YOURPHONE . "</td>
@@ -216,9 +214,8 @@ if (Request::hasVar('submit', 'POST')) {
       <td class='head'>" . _ADSLIGHT_YOURMESSAGE . "</td>
       <td class='even'><textarea rows=\"5\" name=\"messtext\" cols=\"40\" ></textarea></td>
     </tr>";
-    if ('1' == $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
+    if ('1' === $GLOBALS['xoopsModuleConfig']['adslight_use_captcha']) {
         echo "<tr><td class='head'>" . _ADSLIGHT_CAPTCHA . " </td><td class='even'>";
-        $jlm_captcha = '';
         $jlm_captcha = new \XoopsFormCaptcha(_ADSLIGHT_CAPTCHA, 'xoopscaptcha', false);
         echo $jlm_captcha->render();
     }
@@ -229,9 +226,9 @@ if (Request::hasVar('submit', 'POST')) {
         </td></tr></table>
     <br>';
     echo '<input type="hidden" name="ip_id" value="" >';
-    echo "<input type=\"hidden\" name=\"lid\" value=\"$lid\" >";
-    echo "<input type=\"hidden\" name=\"ipnumber\" value=\"$ipnumber\" >";
-    echo "<input type=\"hidden\" name=\"date\" value=\"$time\" >";
+    echo "<input type=\"hidden\" name=\"lid\" value=\"${lid}\" >";
+    echo "<input type=\"hidden\" name=\"ipnumber\" value=\"${ipnumber}\" >";
+    echo "<input type=\"hidden\" name=\"date_created\" value=\"${time}\" >";
     echo '<p><input type="submit" name="submit" value="' . _ADSLIGHT_SENDFR . '" ></p>
 ' . $GLOBALS['xoopsSecurity']->getTokenHTML() . '
     </form>';

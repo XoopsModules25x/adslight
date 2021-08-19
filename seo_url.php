@@ -1,30 +1,29 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 /////////////////////////////////////
 // AdsLight UrlRewrite By Nikita   //
 // http://www.aideordi.com         //
 /////////////////////////////////////
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 define('REAL_MODULE_NAME', 'adslight');
 define('SEO_MODULE_NAME', 'annonces');
@@ -34,7 +33,7 @@ ob_start('seo_urls');
 /**
  * @param $s
  *
- * @return mixed
+ * @return string|string[]|null
  */
 function seo_urls($s)
 {
@@ -50,17 +49,14 @@ function seo_urls($s)
         '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})' . $XPS_URL . '\/modules\/' . $module_name . '\/(index.php)([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
         //    '/<(a|meta)([^>]*)(href|url)=([\'\"]{0,1})'.$XPS_URL.'\/modules\/'.$module_name.'\/()([^>\'\"]*)([\'\"]{1})([^>]*)>/i',
     ];
-    $s      = preg_replace_callback($search, 'replace_links', $s);
 
-    return $s;
+    return preg_replace_callback($search, 'replace_links', $s);
 }
 
 /**
  * @param $matches
- *
- * @return string
  */
-function replace_links($matches)
+function replace_links($matches): string
 {
     $req_string = [];
     $add_to_url = '';
@@ -97,62 +93,59 @@ function replace_links($matches)
     if ('?' === $req_string) {
         $req_string = '';
     }
-    $ret = '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
 
-    return $ret;
+    return '<' . $matches[1] . $matches[2] . $matches[3] . '=' . $matches[4] . XOOPS_URL . '/' . SEO_MODULE_NAME . '/' . $add_to_url . $req_string . $matches[7] . $matches[8] . '>';
 }
 
 /**
  * @param $cid
  *
- * @return mixed|string
+ * @return string|string[]|null
  */
 function adslight_seo_cat($cid)
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
-    $xoopsDB     = \XoopsDatabaseFactory::getDatabaseConnection();
-    $query  = '
+    $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
+    $query   = '
         SELECT
             title
         FROM
             ' . $xoopsDB->prefix('adslight_categories') . '
         WHERE
             cid = ' . $cid . ' ';
-    $result = $xoopsDB->query($query);
-    $res    = $xoopsDB->fetchArray($result);
-    $ret    = adslight_seo_title($res['title']);
+    $result  = $xoopsDB->query($query);
+    $res     = $xoopsDB->fetchArray($result);
 
-    return $ret;
+    return adslight_seo_title($res['title']);
 }
 
 /**
  * @param $lid
  *
- * @return mixed|string
+ * @return string|string[]|null
  */
 function adslight_seo_titre($lid)
 {
     /** @var \XoopsMySQLDatabase $xoopsDB */
-    $xoopsDB     = \XoopsDatabaseFactory::getDatabaseConnection();
-    $query  = '
+    $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
+    $query   = '
         SELECT
             title
         FROM
             ' . $xoopsDB->prefix('adslight_listing') . '
         WHERE
             lid = ' . $lid . ' ';
-    $result = $xoopsDB->query($query);
-    $res    = $xoopsDB->fetchArray($result);
-    $ret    = adslight_seo_title($res['title']);
+    $result  = $xoopsDB->query($query);
+    $res     = $xoopsDB->fetchArray($result);
 
-    return $ret;
+    return adslight_seo_title($res['title']);
 }
 
 /**
  * @param string $title
  * @param bool   $withExt
  *
- * @return mixed|string
+ * @return string|string[]|null
  */
 function adslight_seo_title($title = '', $withExt = false)
 {
@@ -198,7 +191,7 @@ function adslight_seo_title($title = '', $withExt = false)
         '/%7C/', // |
         '/%7D/', // }
         '/%7E/', // ~
-        "/\./", // .
+        '/\./', // .
         '/%2A/',
         '/%2B/',
         '/quot/',
@@ -308,7 +301,7 @@ function adslight_seo_title($title = '', $withExt = false)
 /**
  * @param $s
  *
- * @return mixed
+ * @return string|string[]|null
  */
 function adslight_absolutize($s)
 {
@@ -319,7 +312,7 @@ function adslight_absolutize($s)
         $req_dir = dirname($_SERVER['REQUEST_URI']);
         $req_php = preg_replace('/.*(\/[a-zA-Z0-9_\-]+)\.php.*/', '\\1.php', $_SERVER['REQUEST_URI']);
     }
-    $req_dir = ('\\' === $req_dir || '/' === $req_dir) ? '' : $req_dir;
+    $req_dir = '\\' === $req_dir || '/' === $req_dir ? '' : $req_dir;
     $dir_arr = explode('/', $req_dir);
     $m       = count($dir_arr) - 1;
     $d1      = @str_replace('/' . $dir_arr[$m], '', $req_dir);
@@ -347,14 +340,13 @@ function adslight_absolutize($s)
         '<\\1\\2=\\3' . $host . $d2 . '/\\4\\5\\6>',
         '<\\1\\2=\\3' . $host . $d1 . '/\\4\\5\\6>',
         '<\\1\\2=\\3' . $host . '/\\4\\5\\6>',
-        '<\\1\\2=\\3' . $host . $_SERVER['PHP_SELF'] . '?\\4\\5\\6>'//This dir.
+        '<\\1\\2=\\3' . $host . $_SERVER['SCRIPT_NAME'] . '?\\4\\5\\6>'//This dir.
         ,
         '<\\1\\2=\\3' . $host . $req_dir . '/\\4\\5\\6\\7>',
         '<\\1\\2=\\3' . $host . $req_dir . '/\\4\\5\\6\\7.\\8\\9\\10>',
         '$1($2' . $host . $req_dir . '/$3.$4$5$6',
         '<meta$1url=' . $host . $req_dir . '/$2.$3$4$5>',
     ];
-    $s       = preg_replace($in, $out, $s);
 
-    return $s;
+    return preg_replace($in, $out, $s);
 }

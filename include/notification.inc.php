@@ -1,41 +1,41 @@
 <?php
+
+declare(strict_types=1);
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
-
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 /**
  * @param $category
  * @param $item_id
  *
- * @return mixed
+ * @return array|void
  */
-function adslight_notify_iteminfo($category, $item_id)
-{
+function adslight_notify_iteminfo(
+    $category,
+    $item_id
+) {
     global $xoopsDB;
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     /** @var \XoopsModuleHandler $moduleHandler */
     $moduleHandler = xoops_getHandler('module');
     $module        = $moduleHandler->getByDirname($moduleDirName);
-
     if ('global' === $category) {
         $item['name'] = '';
         $item['url']  = '';
@@ -49,18 +49,17 @@ function adslight_notify_iteminfo($category, $item_id)
         $sql = 'SELECT SQL_CACHE title  FROM ' . $xoopsDB->prefix('adslight_categories') . " WHERE cid ={$item_id} LIMIT 1";
 
         $result = $xoopsDB->query($sql);
-        if (!$result) {
-            /** @var \XoopsModuleHandler $moduleHandler */
-            $moduleHandler = xoops_getHandler('module');
-            $myModule      = $moduleHandler->getByDirname('adslight');
-            $myModule->setErrors('Could not query the database.');
-        } else {
+        if ($result) {
             $result_array = $xoopsDB->fetchArray($result);
             $item['name'] = $result_array['title'];
             $item['url']  = XOOPS_URL . '/modules/adslight/index.php?pa=adsview&amp;cid=' . $item_id;
 
             return $item;
         }
+            /** @var \XoopsModuleHandler $moduleHandler */
+            $moduleHandler = xoops_getHandler('module');
+            $myModule      = $moduleHandler->getByDirname('adslight');
+            $myModule->setErrors('Could not query the database.');
     }
 
     if ('listing' === $category) {

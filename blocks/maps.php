@@ -1,26 +1,29 @@
 <?php
+
+declare(strict_types=1);
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+use XoopsModules\Adslight\Helper;
+
+/** @var Helper $helper */
 
 // <{$xoops_url}>/modules/adslight/maps/<{$block.mapsname}>/assets/images/map.png
 
@@ -29,16 +32,20 @@
  *
  * @return array
  */
-function adslight_maps_show($options)
+function adslight_maps_show($options): array
 {
+    if (!class_exists(Helper::class)) {
+        return false;
+    }
+
+    $helper = Helper::getInstance();
+
     global $xoopsConfig, $block_lang;
-
     $maps_name = $xoopsConfig['language'];
+    $block     = [];
+    $myts      = \MyTextSanitizer::getInstance();
 
-    $block = [];
-    $myts  = \MyTextSanitizer::getInstance();
-
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $block['title'] = constant("{$block_lang}_TITLE");
@@ -56,14 +63,14 @@ function adslight_maps_show($options)
  *
  * @return string html form to display
  */
-function adslight_maps_edit($options)
+function adslight_maps_edit($options): string
 {
-    $moduleDirName = basename(dirname(__DIR__));
+    $moduleDirName = \basename(\dirname(__DIR__));
     $block_lang    = '_MB_' . mb_strtoupper($moduleDirName);
 
     $form = constant("{$block_lang}_ORDER") . "&nbsp;<select name='options[]'>";
-    $form .= "<option value='date'";
-    if ('date' === $options[0]) {
+    $form .= "<option value='date_created'";
+    if ('date_created' === $options[0]) {
         $form .= ' selected';
     }
     $form .= '>' . constant($block_lang . '_DATE') . "</option>\n";

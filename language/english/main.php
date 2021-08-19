@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 /*
 -------------------------------------------------------------------------
                      ADSLIGHT 2: Module for Xoops
@@ -89,7 +91,7 @@ define('_ADSLIGHT_DAY', 'days');
 define('_ADSLIGHT_CAT3', 'Category:');
 define('_ADSLIGHT_TITLE2', 'Title:');
 define('_ADSLIGHT_TYPE', 'Type:');
-define('_ADSLIGHT_TYPE_USURE', 'The state of wear:');
+define('_ADSLIGHT_TYPE_CONDITION', 'Item condition:');
 define('_ADSLIGHT_NOTYPE', 'No type');
 define('_ADSLIGHT_CLASSIFIED_AD', 'Classified Ads:');
 define('_ADSLIGHT_CHARMAX', '(255 Character max)');
@@ -355,9 +357,9 @@ define('_ADSLIGHT_CONTACT_SUBMITTER', 'Contact');
 define('_ADSLIGHT_SENDFRIENDS', 'Email this listing');
 //report-abuse.php
 define('_ADSLIGHT_REPORTSENDTO', '<b>Report this ad:</b><br><br>ad No. ');
-define('_ADSLIGHT_REPORTANNSEND', 'Thank you for your help!<br>The ad just be reported to Admin.');
-define('_ADSLIGHT_REPORTSUBJET', '[Alert] An ad undesirable ');
-define('_ADSLIGHT_REPORTMESSAGE', 'Believes that this announcement is illegal and you wanted to know.');
+define('_ADSLIGHT_REPORTANNSEND', 'Thank you for your help!<br>The ad has been just reported to Admin.');
+define('_ADSLIGHT_REPORTSUBJET', '[Alert] An ad is undesirable ');
+define('_ADSLIGHT_REPORTMESSAGE', 'believes that this announcement is illegal and wanted you to know about it.');
 //index.php >> Infos Bulle //
 define('_ADSLIGHT_ADD_LISTING_BULL', 'To add a listing<br>Thank you for ');
 define('_ADSLIGHT_ADD_LISTING_SUB', 'register');
@@ -381,7 +383,9 @@ define('_ADSLIGHT_ADD_LISTING_BULLCATSOK', 'To add one or more <br>ads in this c
 // tips_writing_ad.php
 define('_ADSLIGHT_TIPSWRITE', 'Our tips for you<br>on how to write your ads');
 define('_ADSLIGHT_TIPSWRITE_TITLE', 'The Tips on writing your ad');
-define('_ADSLIGHT_TIPSWRITE_TEXT', "<strong> 1. One or more photos </strong> <br> <br>
+define(
+    '_ADSLIGHT_TIPSWRITE_TEXT',
+    "<strong> 1. One or more photos </strong> <br> <br>
 The first contact with visitors qu'auront your ad will be a photo or photos of the item you sell. <br> It is advisable to put a photo or photos of your object. <Br >
 An ad with photo is viewed 7 times more than an ad without a photo! <br> It also gives a first idea of ??the state of your object. <br> <br> <br>
 - A proper object is always more attractive. <br> - Heal the quality of the photo. (Not too dark) <br>
@@ -395,7 +399,8 @@ After carefully preparing the photos of the item you sell. <br> Now you need to 
 - Do not write a novel, it must remain an ad. <br> <br>
 - The visitor must be able to obtain a maximum of information when reading your ad, and that quickly. <br> <br>
 More an ad is clear and precise, it has a chance to reach a deal. <br> <br> <strong>
-And do not forget, a good deal <br> this is when the buyer and seller find their happiness </strong>");
+And do not forget, a good deal <br> this is when the buyer and seller find their happiness </strong>"
+);
 //version 1.053
 // maps.php
 define('_ADSLIGHT_MAPS_TITLE', 'Search by region');
@@ -418,10 +423,12 @@ define('_MN_ADSLIGHT_YOUREMAIL', 'Billing Email:');
 
 //2.2 Beta 2
 define('_MN_ADSLIGHT_ERROR404', 'Error 404');
-define('_MN_ADSLIGHT_ERROR404_TEXT', '<table class="errorMsg" border="0" cellpadding="0" cellspacing="0">
+define(
+    '_MN_ADSLIGHT_ERROR404_TEXT',
+    '<table class="errorMsg" border="0" cellpadding="0" cellspacing="0">
 <tr>
 <td>
-<div style="text-align:center">
+<div style="text-align:center">
     <h1>Error 404</h1><br><br>
 </div>
 </td>
@@ -437,7 +444,8 @@ define('_MN_ADSLIGHT_ERROR404_TEXT', '<table class="errorMsg" border="0" cellpad
 <p>You can also use our <u><a href="search.php">search engine</a></u><br>
 </td>
 </tr>
-</table>');
+</table>'
+);
 
 define('_ADSLIGHT_CONTACTBY2', ' by:');
 

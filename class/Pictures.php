@@ -1,134 +1,97 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Adslight;
 
 /*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
-
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
+ You may not change or alter any portion of this comment or credits
+ of supporting developers from this source code or any supporting source code
+ which is considered copyrighted (c) material of the original comment or credit authors.
+ 
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
-
 /**
- * Protection against inclusion outside the site
+ * Module: Adslight
+ *
+ * @category        Module
+ * @author          XOOPS Development Team <https://xoops.org>
+ * @copyright       {@link https://xoops.org/ XOOPS Project}
+ * @license         GPL 2.0 or later
  */
-// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+
+use XoopsModules\Adslight;
+use XoopsModules\Adslight\Form;
+
+//$permHelper = new \Xmf\Module\Helper\Permission();
+
 
 /**
- * Includes of form objects and uploader
- */
-require_once XOOPS_ROOT_PATH . '/class/uploader.php';
-require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-require_once XOOPS_ROOT_PATH . '/kernel/object.php';
-
-/**
- * light_pictures class.
- * $this class is responsible for providing data access mechanisms to the data source
- * of XOOPS user class objects.
+ * Class Pictures
  */
 class Pictures extends \XoopsObject
 {
-    /** @var \XoopsMySQLDatabase $db */
-    public $db;
-    // constructor
+    public $helper, $permHelper;
+    /**
+     * Constructor
+     *
+     * @param null
+     */
+    public function __construct()
+    {
+        parent::__construct();
+//        /** @var  Adslight\Helper $helper */
+//        $this->helper = Adslight\Helper::getInstance();
+         $this->permHelper = new \Xmf\Module\Helper\Permission();
+
+        $this->initVar('cod_img', XOBJ_DTYPE_INT);
+        $this->initVar('title', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('date_created', XOBJ_DTYPE_INT);
+        $this->initVar('date_updated', XOBJ_DTYPE_INT);
+        $this->initVar('lid', XOBJ_DTYPE_INT);
+        $this->initVar('uid_owner', XOBJ_DTYPE_TXTBOX);
+        $this->initVar('url', XOBJ_DTYPE_OTHER);
+     }
 
     /**
-     * @param null       $id
-     * @param null|array $lid
+     * Get form
+     *
+     * @param null
+     * @return Adslight\Form\PicturesForm
      */
-    public function __construct($id = null, $lid = null)
+    public function getForm()
     {
-        $this->db = \XoopsDatabaseFactory::getDatabaseConnection();
-        $this->initVar('cod_img', XOBJ_DTYPE_INT, null, false, 10);
-        $this->initVar('title', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('date_added', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('date_modified', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('lid', XOBJ_DTYPE_INT, null, false, 10);
-        $this->initVar('uid_owner', XOBJ_DTYPE_TXTBOX, null, false);
-        $this->initVar('url', XOBJ_DTYPE_TXTBOX, null, false);
-        if (!empty($lid)) {
-            if (is_array($lid)) {
-                $this->assignVars($lid);
-            } else {
-                $this->load((int)$lid);
-            }
-        } else {
-            $this->setNew();
-        }
+        $form = new Form\PicturesForm($this);
+        return $form;
+    }
+
+        /**
+     * @return array|null
+     */
+    public function getGroupsRead()
+    {
+        //$permHelper = new \Xmf\Module\Helper\Permission();
+        return $this->permHelper->getGroupsForItem('sbcolumns_read', $this->getVar('cod_img'));
     }
 
     /**
-     * @param $id
+     * @return array|null
      */
-    public function load($id)
+    public function getGroupsSubmit()
     {
-        $sql   = 'SELECT * FROM ' . $this->db->prefix('adslight_pictures') . ' WHERE cod_img=' . $id . ' ';
-        $myrow = $this->db->fetchArray($this->db->query($sql));
-        $this->assignVars($myrow);
-        if (!$myrow) {
-            $this->setNew();
-        }
+          //$permHelper = new \Xmf\Module\Helper\Permission();
+          return $this->permHelper->getGroupsForItem('sbcolumns_submit', $this->getVar('cod_img'));
     }
 
     /**
-     * @param array  $criteria
-     * @param bool   $asobject
-     * @param string $sort
-     * @param string $cat_order
-     * @param int    $limit
-     * @param int    $start
-     * @return array
-     * @internal   param string $order
-     * @deprecated this should be handled through {@see PicturesHandler}
+     * @return array|null
      */
-    public function getAllPictures($criteria = [], $asobject = false, $sort = 'cod_img', $cat_order = 'ASC', $limit = 0, $start = 0)
+    public function getGroupsModeration()
     {
-        /** @var \XoopsMySQLDatabase $xoopsDB */
-        $xoopsDB          = \XoopsDatabaseFactory::getDatabaseConnection();
-        $ret         = [];
-        $where_query = '';
-        if (is_array($criteria) && count($criteria) > 0) {
-            $where_query = ' WHERE';
-            foreach ($criteria as $c) {
-                $where_query .= " {$c} AND";
-            }
-            $where_query = mb_substr($where_query, 0, -4);
-        } elseif (!is_array($criteria) && $criteria) {
-            $where_query = " WHERE {$criteria}";
-        }
-        if (!$asobject) {
-            $sql    = 'SELECT cod_img FROM ' . $xoopsDB->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
-            $result = $xoopsDB->query($sql, $limit, $start);
-            while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-                $ret[] = $myrow['cog_img'];
-            }
-        } else {
-            $sql    = 'SELECT * FROM ' . $xoopsDB->prefix('adslight_pictures') . "$where_query ORDER BY $sort $cat_order";
-            $result = $xoopsDB->query($sql, $limit, $start);
-            while (false !== ($myrow = $xoopsDB->fetchArray($result))) {
-                $ret[] = new self($myrow);
-            }
-        }
-
-        return $ret;
+        //$permHelper = new \Xmf\Module\Helper\Permission();
+        return $this->permHelper->getGroupsForItem('sbcolumns_moderation', $this->getVar('cod_img'));
     }
 }
 
-// -------------------------------------------------------------------------
-// ------------------light_pictures user handler class -------------------
-// -------------------------------------------------------------------------

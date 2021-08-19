@@ -1,24 +1,26 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 /**
  * Class GD
@@ -58,7 +60,7 @@ class GD
      * @param $sizex
      * @param $sizey
      */
-    public function resize($sizex, $sizey)
+    public function resize($sizex, $sizey): void
     {
         $org = round($this->width / $this->height, 2);
         $new = round($sizex / $sizey, 2);
@@ -71,8 +73,8 @@ class GD
             $sizey = round($this->height / ($this->width / $sizex), 0);
         }
 
-        $resized = imagecreatetruecolor($sizex, $sizey);
-        imagecopyresampled($resized, $this->image, 0, 0, 0, 0, $sizex, $sizey, $this->width, $this->height);
+        $resized = imagecreatetruecolor((int)$sizex, (int)$sizey);
+        imagecopyresampled($resized, $this->image, 0, 0, 0, 0, (int)$sizex, (int)$sizey, $this->width, $this->height);
 
         $this->image  = $resized;
         $this->width  = $sizex;
@@ -81,18 +83,15 @@ class GD
 
     /**
      * @param $color
-     *
-     * @return array
      */
-    public function make_color($color)
+    public function make_color($color): array
     {
         $rgb = [];
-
-        if (is_array($color) && '3' == count($color)) {
+        if (is_iterable($color) && '3' === count($color)) {
             $rgb['r'] = $color['0'];
             $rgb['g'] = $color['1'];
             $rgb['b'] = $color['2'];
-        } elseif (preg_match('/^#?([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$/i', $color, $results)) {
+        } elseif (preg_match('#^#?([a-f0-9]{2})([a-f0-9]{2})([a-f0-9]{2})$#i', $color, $results)) {
             $rgb['r'] = hexdec($results['1']);
             $rgb['g'] = hexdec($results['2']);
             $rgb['b'] = hexdec($results['3']);
@@ -100,11 +99,13 @@ class GD
             exit('Unknown color');
         }
 
-        foreach ([
-                     'r',
-                     'g',
-                     'b',
-                 ] as $value) {
+        foreach (
+            [
+                'r',
+                'g',
+                'b',
+            ] as $value
+        ) {
             if (!array_key_exists($value, $rgb) || $rgb[$value] < 0
                 || $rgb[$value] > 255
                 || !is_numeric($rgb[$value])) {
@@ -119,7 +120,7 @@ class GD
      * @param $width
      * @param $color
      */
-    public function add_border($width, $color)
+    public function add_border($width, $color): void
     {
         $rgb      = $this->make_color($color);
         $allocate = imagecolorallocate($this->image, $rgb['r'], $rgb['g'], $rgb['b']);
@@ -133,8 +134,18 @@ class GD
         $new_image = imagecreatetruecolor($sizex, $sizey);
 
         imagefill($new_image, 0, 0, $allocate);
-        imagecopyresampled($new_image, $this->image, $width, $width, 0, 0, $this->width, $this->height, $this->width, $this->height);
-
+        imagecopyresampled(
+            $new_image,
+            $this->image,
+            $width,
+            $width,
+            0,
+            0,
+            $this->width,
+            $this->height,
+            $this->width,
+            $this->height
+        );
         $this->image  = $new_image;
         $this->width  = $sizex;
         $this->height = $sizey;
@@ -147,8 +158,13 @@ class GD
      * @param $x
      * @param $y
      */
-    public function add_text($text, $font, $color, $x, $y)
-    {
+    public function add_text(
+        $text,
+        $font,
+        $color,
+        $x,
+        $y
+    ): void {
         if ($font < 1 || $font > 5) {
             exit('Wrong font');
         }
@@ -157,7 +173,6 @@ class GD
         $allocate    = imagecolorallocate($this->image, $rgb['r'], $rgb['g'], $rgb['b']);
         $text_width  = imagefontwidth($font) * mb_strlen($text);
         $text_height = imagefontheight($font);
-
         //Dokoncaj
     }
 
@@ -169,8 +184,14 @@ class GD
      * @param        $y
      * @param string $font
      */
-    public function add_ttf_text($text, $size, $color, $x, $y, $font = './tahoma.ttf')
-    {
+    public function add_ttf_text(
+        $text,
+        $size,
+        $color,
+        $x,
+        $y,
+        $font = './tahoma.ttf'
+    ): void {
         if (!is_file($font)) {
             exit('Unknown font');
         }
@@ -184,8 +205,10 @@ class GD
      * @param        $location
      * @param string $quality
      */
-    public function save($location, $quality = '80')
-    {
+    public function save(
+        $location,
+        $quality = '80'
+    ): void {
         imagejpeg($this->image, $location, $quality);
         imagedestroy($this->image);
     }

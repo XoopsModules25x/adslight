@@ -1,27 +1,31 @@
 <?php
-/*
--------------------------------------------------------------------------
-                     ADSLIGHT 2 : Module for Xoops
 
-        Redesigned and ameliorate By Luc Bizet user at www.frxoops.org
-        Started with the Classifieds module and made MANY changes
-        Website : http://www.luc-bizet.fr
-        Contact : adslight.translate@gmail.com
--------------------------------------------------------------------------
-             Original credits below Version History
-##########################################################################
-#                    Classified Module for Xoops                         #
-#  By John Mordo user jlm69 at www.xoops.org and www.jlmzone.com         #
-#      Started with the MyAds module and made MANY changes               #
-##########################################################################
- Original Author: Pascal Le Boustouller
- Author Website : pascal.e-xoops@perso-search.com
- Licence Type   : GPL
--------------------------------------------------------------------------
-*/
+declare(strict_types=1);
+
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project (https://xoops.org)
+ * @license      GNU GPL 2 or later (https://www.gnu.org/licenses/gpl-2.0.html)
+ * @author       XOOPS Development Team
+ * @author       Pascal Le Boustouller: original author (pascal.e-xoops@perso-search.com)
+ * @author       Luc Bizet (www.frxoops.org)
+ * @author       jlm69 (www.jlmzone.com)
+ * @author       mamba (www.xoops.org)
+ */
 
 use Xmf\Request;
-use XoopsModules\Adslight;
+use XoopsModules\Adslight\Helper;
+
+/** @var Helper $helper */
 
 /**
  * Xoops Header
@@ -47,7 +51,7 @@ $cod_img = Request::getString('cod_img', '', 'POST');
  * Creating the factory  and the criteria to delete the picture
  * The user must be the owner
  */
-$album_factory = new Adslight\PicturesHandler($xoopsDB);
+$album_factory = $helper->getHandler('Pictures');
 $criteria_img  = new \Criteria('cod_img', $cod_img);
 $uid           = $GLOBALS['xoopsUser']->getVar('uid');
 $criteria_uid  = new \Criteria('uid_owner', $uid);
@@ -67,12 +71,11 @@ if ($album_factory->deleteAll($criteria)) {
     unlink("{$path_upload}/midsize/resized_{$image_name}");
 
     $lid = Request::getInt('lid', 0, 'POST');
-
-    $xoopsDB->queryF('UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo-1 WHERE lid='{$lid}'");
-
-    redirect_header("view_photos.php?lid={$lid}&uid={$uid}", 10, _ADSLIGHT_DELETED);
+    $sql = 'UPDATE ' . $xoopsDB->prefix('adslight_listing') . " SET photo=photo-1 WHERE lid='{$lid}'";
+    $xoopsDB->queryF($sql);
+    $helper->redirect("view_photos.php?lid={$lid}&uid={$uid}", 10, _ADSLIGHT_DELETED);
 } else {
-    redirect_header("view_photos.php?lid={$lid}&uid={$uid}", 10, _ADSLIGHT_NOCACHACA);
+    $helper->redirect("view_photos.php?lid={$lid}&uid={$uid}", 10, _ADSLIGHT_NOCACHACA);
 }
 
 /**
