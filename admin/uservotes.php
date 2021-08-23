@@ -30,6 +30,9 @@ $op    = \Xmf\Request::getString('op', 'list');
 $order = \Xmf\Request::getString('order', 'desc');
 $sort  = \Xmf\Request::getString('sort', '');
 
+//$xoTheme->addStylesheet('browse.php?Frameworks/jquery/plugins/css/tablesorter/theme.blue.min.css');
+$xoTheme->addStylesheet($helper->url( 'assets/css/tablesorter/theme.blue.min.css'));
+
 $moduleDirName = \basename(\dirname(__DIR__));
 
 $adminObject->displayNavigation(basename(__FILE__));

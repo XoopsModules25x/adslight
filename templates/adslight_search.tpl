@@ -66,6 +66,6 @@
 </table>
 <script type='text/javascript'>
 
-<{*    function xoopsFormValidate_search() {}*}>
+    <{*    function xoopsFormValidate_search() {}*}>
 
 </script>

@@ -51,10 +51,10 @@
                             <td align="left"><{$item.status}></td><{/if}><{/if}>
                         <td align="left"><a href="viewads.php?lid=<{$item.id}>"><strong><{$item.title}></strong></a>&nbsp;<{$item.new}>
                             <br>
-<{*                            <{$item.type}><br>*}>
-<{*                            <strong><{$item.price}></strong>&nbsp;<{$money_sign}>&nbsp;<{$item.typeprice}><br><br>*}>
+                            <{*                            <{$item.type}><br>*}>
+                            <{*                            <strong><{$item.price}></strong>&nbsp;<{$money_sign}>&nbsp;<{$item.typeprice}><br><br>*}>
 
-<{*                        <td align="left"><{$type}></td>*}>
+                            <{*                        <td align="left"><{$type}></td>*}>
                             <{$type}> <br><{$item.price|default:''}>
 
                             <{if $item.sold}><{$item.sold}><{/if}><br>

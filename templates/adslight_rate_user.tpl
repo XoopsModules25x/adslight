@@ -30,7 +30,7 @@
                     <option>1</option>
                 </select>&nbsp;&nbsp;
                 <input type="submit" name="submit" value="<{$lang_rateit}>"><input type=button value="<{$lang_cancel}>"
-                                                                                    onclick="location='<{$xoops_url}>/modules/adslight/index.php?pa=viewmyads&usid=<{$link.usid}>'">
+                                                                                   onclick="location='<{$xoops_url}>/modules/adslight/index.php?pa=viewmyads&usid=<{$link.usid}>'">
             </form>
         </td>
     </tr>

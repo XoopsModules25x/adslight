@@ -50,41 +50,41 @@
                 <!-- xpayment -->
                 <{if $purchasable && !$sold && $price_amount > 0}>
                 <{include file="db:adslight_xpayment_form.tpl"}>
-            </tr>
-            <{/if}>
-            <!-- xpayment -->
-            <{/if}><{/if}>
+        </tr>
+        <{/if}>
+        <!-- xpayment -->
+        <{/if}><{/if}>
+        <br>
+        <div align="center"><strong>[ <{$link_main}> | <{$link_cat}> ]</strong></div>
+        </td><!-- End Block Ads -->
+        <td><!-- Start Block Right -->
             <br>
-            <div align="center"><strong>[ <{$link_main}> | <{$link_cat}> ]</strong></div>
-            </td><!-- End Block Ads -->
-            <td><!-- Start Block Right -->
-                <br>
-                <table border="0" cellspacing="1" class="outer" style="width:200px;">
-                    <tr>
-                        <td class="blockright">
-                            <{$date_created|default:false}><br>
-                            <strong><{$local_head}></strong> <{$local_town}><br>
-                            <strong><{$country_head|default:''}></strong> <{$local_country|default:''}><br>
-                            <hr>
-                            <{$submitter}><br>
-                            <{$user_profile}><br>
-                            <{$printA}><br>
-                            <{$friend}><br>
-                            <hr>
-                            <{$add_photos|default:false}><br>
-                            <{$modifyads|default:false}><br>
-                            <{$deleteads|default:false}><br>
-                            <{$alerteabus}><br>
-                            <br>
-                            <{if $local_country|default:''}> <{* JJDai ajouter la clé google dans les preference du module et tester si elle existe*}>
-                                <img class="mapsgoogle"
-                                     src="http://maps.google.com/maps/api/staticmap?size=200x200&maptype=roadmap\&markers=size:mid|color:red|<{$local_town}>+<{$local_country}>&sensor=false">
-                            <{/if}>
-                        </td>
-                    </tr>
-                </table>
-                <!-- End Block de Droite -->
-            </td>
+            <table border="0" cellspacing="1" class="outer" style="width:200px;">
+                <tr>
+                    <td class="blockright">
+                        <{$date_created|default:false}><br>
+                        <strong><{$local_head}></strong> <{$local_town}><br>
+                        <strong><{$country_head|default:''}></strong> <{$local_country|default:''}><br>
+                        <hr>
+                        <{$submitter}><br>
+                        <{$user_profile}><br>
+                        <{$printA}><br>
+                        <{$friend}><br>
+                        <hr>
+                        <{$add_photos|default:false}><br>
+                        <{$modifyads|default:false}><br>
+                        <{$deleteads|default:false}><br>
+                        <{$alerteabus}><br>
+                        <br>
+                        <{if $local_country|default:''}> <{* JJDai ajouter la clé google dans les preference du module et tester si elle existe*}>
+                            <img class="mapsgoogle"
+                                 src="http://maps.google.com/maps/api/staticmap?size=200x200&maptype=roadmap\&markers=size:mid|color:red|<{$local_town}>+<{$local_country}>&sensor=false">
+                        <{/if}>
+                    </td>
+                </tr>
+            </table>
+            <!-- End Block de Droite -->
+        </td>
         </tr>
     </table>
     <!-- Block Comment -->

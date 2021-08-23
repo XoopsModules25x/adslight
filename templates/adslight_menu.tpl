@@ -25,8 +25,8 @@
 
     <{else}>
         <a href="<{$show_user_link|default:false}>"><img src="<{$xoops_url}>/modules/adslight/assets/images/menu/edit.png" border="0"
-                                           title="<{$smarty.const._ADSLIGHT_ADD_TITLEMENU1}>"
-                                           alt="<{$smarty.const._ADSLIGHT_ADD_TITLEMENU1}>"></a>
+                                                         title="<{$smarty.const._ADSLIGHT_ADD_TITLEMENU1}>"
+                                                         alt="<{$smarty.const._ADSLIGHT_ADD_TITLEMENU1}>"></a>
         &nbsp;
         <a href="<{$xoops_url}>/modules/adslight/add.php"><img
                     src="<{$xoops_url}>/modules/adslight/assets/images/menu/newdoc.png" border="0"

@@ -15,7 +15,8 @@
             </div>
 
 
-            <table class="$condition" cellpadding="0" cellspacing="0" width="100%">
+            <table id="sortTable" class="tablesorter-blue"  cellpadding="0" cellspacing="0" width="100%">
+                <thead>
                 <tr>
                     <th align="center" width="5%"><input name="allbox" title="allbox" id="allbox" onclick="xoopsCheckAll('select', 'allbox');" type="checkbox" title="Check All" value="Check All"></th>
                     <th class="left"><{$selectorid_condition}></th>
@@ -23,6 +24,9 @@
 
                     <th class="center width5"><{$smarty.const.AM_ADSLIGHT_FORM_ACTION}></th>
                 </tr>
+                </thead>
+
+                <tbody>
                 <{foreach item=conditionArray from=$conditionArrays}>
                     <tr class="<{cycle values="odd,even"}>">
 
@@ -32,11 +36,12 @@
                         <td class="center width5"><{$conditionArray.edit_delete}></td>
                     </tr>
                 <{/foreach}>
+                </tbody>
             </table>
             <br>
             <br>
             <{else}>
-            <table width="100%" cellspacing="1" class="outer">
+            <table class="tablesorter-blue" width="100%" cellspacing="1" class="outer">
                 <tr>
                     <th align="center" width="5%"><input name="allbox" title="allbox" id="allbox" onclick="xoopsCheckAll('select', 'allbox');" type="checkbox" title="Check All" value="Check All"></th>
                     <th class="left"><{$selectorid_condition}></th>

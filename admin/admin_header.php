@@ -29,6 +29,8 @@ require \dirname(__DIR__, 3) . '/include/cp_header.php';
 require \dirname(__DIR__, 3) . '/class/xoopsformloader.php';
 require \dirname(__DIR__) . '/include/common.php';
 require_once \dirname(__DIR__, 3) . '/class/xoopsform/grouppermform.php';
+require_once XOOPS_ROOT_PATH . '/class/theme.php';
+
 $db            = XoopsDatabaseFactory::getDatabaseConnection();
 $moduleDirName = \basename(\dirname(__DIR__));
 
@@ -75,3 +77,18 @@ $uservotesHandler = $helper->getHandler('Uservotes');
 $picturesHandler = $helper->getHandler('Pictures');
 /** @var \XoopsPersistableObjectHandler $repliesHandler */
 $repliesHandler = $helper->getHandler('Replies');
+
+global  $xoTheme;
+
+if (!isset($xoTheme)) {
+    include_once $GLOBALS['xoops']->path('/class/theme.php');
+    $GLOBALS['xoTheme'] = new \xos_opal_Theme();
+    $xoTheme = $GLOBALS['xoTheme'];
+}
+
+$xoTheme->addStylesheet($helper->url( 'assets/css/tablesorter/theme.blue.css'));
+
+
+
+
+

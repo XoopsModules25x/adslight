@@ -48,8 +48,8 @@ if (file_exists(XOOPS_ROOT_PATH . '/modules/adslight/sql/' . $xoopsConfig['langu
 }
 
 $modversion['version']             = '2.4';
-$modversion['module_status']       = 'Alpha 1 NOT RELEASED';
-$modversion['release_date']        = '2021/08/19';
+$modversion['module_status']       = 'Alpha 2 NOT RELEASED';
+$modversion['release_date']        = '2021/08/23';
 $modversion['name']                = _MI_ADSLIGHT_NAME;
 $modversion['description']         = _MI_ADSLIGHT_DESC;
 $modversion['credits']             = 'AdsLight';
@@ -121,6 +121,9 @@ $modversion['templates'] = [
     ['file' => 'adslight_menu.tpl', 'description' => ''],
     ['file' => 'adslight_bookmark.tpl', 'description' => ''],
     ['file' => 'adslight_xpayment_form.tpl', 'description' => ''],
+
+    ['file' => 'admin/adslight_admin_testtablesorter.tpl', 'description' => ''],
+
 ];
 
 // ------------------- Blocks ------------------- //

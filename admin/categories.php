@@ -27,9 +27,12 @@ use Xmf\Request;
 require __DIR__ . '/admin_header.php';
 xoops_cp_header();
 //It recovered the value of argument op in URL$
-$op    = \Xmf\Request::getString('op', 'list');
-$order = \Xmf\Request::getString('order', 'desc');
-$sort  = \Xmf\Request::getString('sort', '');
+$op    = Request::getString('op', 'list');
+$order = Request::getString('order', 'desc');
+$sort  = Request::getString('sort', '');
+
+//$xoTheme->addStylesheet('browse.php?Frameworks/jquery/plugins/css/tablesorter/theme.blue.min.css');
+$xoTheme->addStylesheet($helper->url( 'assets/css/tablesorter/theme.blue.min.css'));
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
@@ -53,7 +56,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('categories.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (0 !== \Xmf\Request::getInt('cid', 0)) {
+        if (0 !== Request::getInt('cid', 0)) {
             $categoriesObject = $categoriesHandler->get(Request::getInt('cid', 0));
         } else {
             $categoriesObject = $categoriesHandler->create();
@@ -109,7 +112,7 @@ switch ($op) {
 
     case 'delete':
         $categoriesObject = $categoriesHandler->get(Request::getString('cid', ''));
-        if (1 == \Xmf\Request::getInt('ok', 0)) {
+        if (1 == Request::getInt('ok', 0)) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('categories.php', 3, implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -125,7 +128,7 @@ switch ($op) {
 
     case 'clone':
 
-        $id_field = \Xmf\Request::getString('cid', '');
+        $id_field = Request::getString('cid', '');
 
         if ($utility::cloneRecord('adslight_categories', 'cid', $id_field)) {
             redirect_header('categories.php', 3, AM_ADSLIGHT_CLONED_OK);
@@ -138,7 +141,7 @@ switch ($op) {
     default:
         $adminObject->addItemButton(AM_ADSLIGHT_ADD_CATEGORIES, 'categories.php?op=new', 'add');
         $adminObject->displayButton('left');
-        $start                     = \Xmf\Request::getInt('start', 0);
+        $start                     = Request::getInt('start', 0);
         $categoriesPaginationLimit = $helper->getConfig('userpager');
 
         $criteria = new \CriteriaCompo();
@@ -292,4 +295,7 @@ switch ($op) {
 
         break;
 }
+
+
+
 require __DIR__ . '/admin_footer.php';

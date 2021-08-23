@@ -198,3 +198,21 @@ img#thumb:hover {
     padding-bottom: 30px;
     padding-left: 30px;
 }
+
+/* @group tablesorter */
+
+.header {
+    cursor: pointer;
+}
+
+.headerSortDown:after {
+    content: " ▾";
+    font-family: Arial, sans-serif;
+}
+
+.headerSortUp:after {
+    content: " ▴";
+    font-family: Arial, sans-serif;
+}
+
+/* @end */

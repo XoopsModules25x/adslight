@@ -15,7 +15,8 @@
             </div>
 
 
-            <table class="$listing" cellpadding="0" cellspacing="0" width="100%">
+            <table id="sortTable" class="tablesorter-blue" cellspacing="1" cellpadding="0"  width="100%">
+                <thead>
                 <tr>
                     <th align="center" width="5%"><input name="allbox" title="allbox" id="allbox" onclick="xoopsCheckAll('select', 'allbox');" type="checkbox" title="Check All" value="Check All"></th>
                     <th class="left"><{$selectorlid}></th>
@@ -49,6 +50,9 @@
 
                     <th class="center width5"><{$smarty.const.AM_ADSLIGHT_FORM_ACTION}></th>
                 </tr>
+                </thead>
+
+                <tbody>
                 <{foreach item=listingArray from=$listingArrays}>
                     <tr class="<{cycle values="odd,even"}>">
 
@@ -86,11 +90,12 @@
                         <td class="center width5"><{$listingArray.edit_delete}></td>
                     </tr>
                 <{/foreach}>
+                </tbody>
             </table>
             <br>
             <br>
             <{else}>
-            <table width="100%" cellspacing="1" class="outer">
+            <table class="tablesorter-blue"  cellspacing="1" width="100%" cellspacing="1" >
                 <tr>
 
                     <th align="center" width="5%"><input name="allbox" title="allbox" id="allbox" onclick="xoopsCheckAll('select', 'allbox');" type="checkbox" title="Check All" value="Check All"></th>
@@ -133,3 +138,6 @@
     <br>
     <br>
 <{/if}>
+
+<{*<script src="<{xoAppUrl browse.php?Frameworks/jquery/jquery.js}>"></script>*}>
+<{*<script src="<{$mod_url|default:false}>/assets/js/functions.js"></script>*}>

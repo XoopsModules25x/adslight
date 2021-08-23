@@ -1,3 +1,7 @@
+<h5>2.4.0 Alpha-2   [NOT RELEASED]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.22, PHP 8.0.9, PHP 8.1.0 Beta 3
+<hr>
+- added tablesorter to Admin tables (mamba)
+
 <h5>2.4.0 Alpha-1   [2021-08-19]</h5>  Dev: XOOPS 2.5.11, PHP 7.4.22, PHP 8.0.9, PHP 8.1.0 Beta 3
 <hr>
 - added several new Admin views and classes (mamba)

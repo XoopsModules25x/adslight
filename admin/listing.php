@@ -22,18 +22,24 @@ declare(strict_types=1);
  */
 
 use Xmf\Request;
+/** @var ListingHandler $listingHandler */
+/** @var Admin $adminObject */
+/** @var Helper $helper */
+/** @var \Xmf\Module\Helper\Permission $permHelper */
 
 require __DIR__ . '/admin_header.php';
 xoops_cp_header();
 //It recovered the value of argument op in URL$
-$op    = \Xmf\Request::getString('op', 'list');
-$order = \Xmf\Request::getString('order', 'desc');
-$sort  = \Xmf\Request::getString('sort', '');
+$op    = Request::getString('op', 'list');
+$order = Request::getString('order', 'desc');
+$sort  = Request::getString('sort', '');
+
+//$xoTheme->addStylesheet('browse.php?Frameworks/jquery/plugins/css/tablesorter/theme.blue.min.css');
+$xoTheme->addStylesheet($helper->url( 'assets/css/tablesorter/theme.blue.min.css'));
 
 $moduleDirName = \basename(\dirname(__DIR__));
 
 $adminObject->displayNavigation(basename(__FILE__));
-/** @var \Xmf\Module\Helper\Permission $permHelper */
 $permHelper = new \Xmf\Module\Helper\Permission();
 $uploadDir  = XOOPS_UPLOAD_PATH . "/$moduleDirName/listing/";
 $uploadUrl  = XOOPS_UPLOAD_URL . "/$moduleDirName/listing/";
@@ -52,7 +58,7 @@ switch ($op) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('listing.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
         }
-        if (0 !== \Xmf\Request::getInt('lid', 0)) {
+        if (0 !== Request::getInt('lid', 0)) {
             $listingObject = $listingHandler->get(Request::getInt('lid', 0));
         } else {
             $listingObject = $listingHandler->create();
@@ -129,7 +135,7 @@ switch ($op) {
 
     case 'delete':
         $listingObject = $listingHandler->get(Request::getString('lid', ''));
-        if (1 == \Xmf\Request::getInt('ok', 0)) {
+        if (1 == Request::getInt('ok', 0)) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 redirect_header('listing.php', 3, implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
@@ -145,7 +151,7 @@ switch ($op) {
 
     case 'clone':
 
-        $id_field = \Xmf\Request::getString('lid', '');
+        $id_field = Request::getString('lid', '');
 
         if ($utility::cloneRecord('adslight_listing', 'lid', $id_field)) {
             redirect_header('listing.php', 3, AM_ADSLIGHT_CLONED_OK);
@@ -158,7 +164,7 @@ switch ($op) {
     default:
         $adminObject->addItemButton(AM_ADSLIGHT_ADD_LISTING, 'listing.php?op=new', 'add');
         $adminObject->displayButton('left');
-        $start                  = \Xmf\Request::getInt('start', 0);
+        $start                  = Request::getInt('start', 0);
         $listingPaginationLimit = $helper->getConfig('userpager');
 
         $criteria = new \CriteriaCompo();
@@ -224,7 +230,7 @@ switch ($op) {
                 $listingArray['expire'] = $listingTempArray[$i]->getVar('expire');
 
                 $GLOBALS['xoopsTpl']->assign('selectortype', AM_ADSLIGHT_LISTING_TYPE);
-                $listingArray['type'] = $listingTempArray[$i]->getVar('type');
+                $listingArray['type'] = $typeHandler->get($listingTempArray[$i]->getVar('type'))->getVar('nom_type');
 
                 $GLOBALS['xoopsTpl']->assign('selectordesctext', AM_ADSLIGHT_LISTING_DESCTEXT);
                 $listingArray['desctext'] = $listingTempArray[$i]->getVar('desctext');
@@ -340,4 +346,5 @@ switch ($op) {
 
         break;
 }
+
 require __DIR__ . '/admin_footer.php';

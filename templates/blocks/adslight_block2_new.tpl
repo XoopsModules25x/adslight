@@ -14,9 +14,9 @@
             <td align="left"><strong><{$item.type}></strong><br><{$item.link}><{if $item.sold|default:false}><{$item.sold}><{/if}>
             </td>
             <td><{if $item.price|default:'' !=''}><{$item.price}>&nbsp;
-<{*                    <{$item.typeprice}>*}>
+                    <{*                    <{$item.typeprice}>*}>
                 <{else}>&nbsp;<{/if}></td>
-                        <td><{$item.date_created}></td>
+            <td><{$item.date_created}></td>
             <td><{$item.town}></td>
             <td align="center"><{$item.hits}></td>
         </tr>
